@@ -1026,20 +1026,30 @@ function loadSim(key){
 
 function renderTopicPicker(sub){
   var pt = sub.lang==='pt';
-  var html = '<div class="exam-header" style="background:linear-gradient(135deg,'+sub.color+','+darken(sub.color)+')"><h2>'+sub.label+'</h2><p>'+(pt?'Escolha o tópico que quer praticar:':'Choose the topic you want to practice:')+'</p></div>';
-  html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:4px">';
+  var wrap = document.getElementById('sim-questions');
+  wrap.innerHTML = '';
+  var header = document.createElement('div');
+  header.className = 'exam-header';
+  header.style.background = 'linear-gradient(135deg,'+sub.color+','+darken(sub.color)+')';
+  header.innerHTML = '<h2>'+sub.label+'</h2><p>'+(pt?'Escolha o tópico que quer praticar:':'Choose the topic you want to practice:')+'</p>';
+  wrap.appendChild(header);
+  var grid = document.createElement('div');
+  grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:4px';
+  wrap.appendChild(grid);
   sub.subtopics.forEach(function(t){
     var isAll = t.label.toLowerCase().includes('todo') || t.label.toLowerCase().includes('all');
-    var border = isAll ? '2px solid '+sub.color : '1.5px solid var(--border)';
-    var bg = isAll ? 'linear-gradient(135deg,'+sub.color+','+darken(sub.color)+')' : 'var(--card)';
-    var col = isAll ? '#fff' : 'var(--color-text-primary,#1a1a1a)';
-    html += '<button onclick="startSimTopic(''+sub.key+'',''+encodeURIComponent(t.label)+'',''+encodeURIComponent(t.topics)+'')" style="border:'+border+';background:'+bg+';color:'+col+';border-radius:14px;padding:14px 16px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;text-align:left;transition:transform .15s,box-shadow .15s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">';
-    html += t.label+'<div style="font-size:11px;font-weight:400;margin-top:4px;opacity:.75">'+(pt?'5 questões geradas na hora':'5 questions generated now')+'</div></button>';
+    var btn = document.createElement('button');
+    btn.style.cssText = 'border-radius:14px;padding:14px 16px;cursor:pointer;font-size:13px;font-weight:700;text-align:left;transition:transform .15s;width:100%;font-family:Nunito,sans-serif';
+    btn.style.background = isAll ? 'linear-gradient(135deg,'+sub.color+','+darken(sub.color)+')' : 'var(--card)';
+    btn.style.color = isAll ? '#fff' : '#1a1a1a';
+    btn.style.border = isAll ? '2px solid '+sub.color : '1.5px solid #e0ddd8';
+    btn.innerHTML = t.label+'<div style="font-size:11px;font-weight:400;margin-top:4px;opacity:.75">'+(pt?'5 questões na hora':'5 questions now')+'</div>';
+    btn.addEventListener('mouseover',function(){this.style.transform='translateY(-2px)';});
+    btn.addEventListener('mouseout',function(){this.style.transform='';});
+    (function(key,label,topics){btn.addEventListener('click',function(){startSimTopic(key,label,topics);});})(sub.key,t.label,t.topics);
+    grid.appendChild(btn);
   });
-  html += '</div>';
-  document.getElementById('sim-questions').innerHTML = html;
 }
-
 function startSimTopic(key, labelEnc, topicsEnc){
   currentSimKey = key;
   currentTopicLabel = decodeURIComponent(labelEnc);
@@ -1083,7 +1093,14 @@ function renderSimQuestions(sub, questions, topicLabel){
   var lang = sub.lang;
   var tLabel = topicLabel || sub.label;
 
-  var html = '<div style="margin-bottom:10px"><button onclick="loadSim(currentSimKey)" style="border:1.5px solid var(--border);background:var(--card);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;color:var(--color-text-primary,#1a1a1a)">'+(lang==='pt'?'← Escolher outro tópico':'← Choose another topic')+'</button></div>';
+  var backBtn = document.createElement('div');
+  backBtn.style.marginBottom = '10px';
+  var bb = document.createElement('button');
+  bb.style.cssText = 'border:1.5px solid #e0ddd8;background:#fff;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:Nunito,sans-serif;color:#1a1a1a';
+  bb.textContent = lang==='pt' ? '← Escolher outro tópico' : '← Choose another topic';
+  bb.onclick = function(){ loadSim(currentSimKey); };
+  backBtn.appendChild(bb);
+  var html = '';
   html += '<div class="exam-header" style="background:linear-gradient(135deg,'+color+','+darken(color)+')">';
   html += '<h2>'+sub.label+' — '+tLabel+'</h2>';
   html += '<p style="font-size:12px;opacity:.85">'+(lang==='pt'?'Questões geradas dinamicamente ✨':'Dynamically generated questions ✨')+'</p>';
@@ -1110,7 +1127,12 @@ function renderSimQuestions(sub, questions, topicLabel){
   html += '<button class="retry-s" onclick="loadSim(currentSimKey)" style="background:rgba(0,0,0,.15)">'+(lang==='pt'?'Escolher outro tópico ←':'Choose another topic ←')+'</button>';
   html += '</div></div>';
 
-  document.getElementById('sim-questions').innerHTML = html;
+  var qwrap = document.getElementById('sim-questions');
+  qwrap.innerHTML = '';
+  qwrap.appendChild(backBtn);
+  var tmp = document.createElement('div');
+  tmp.innerHTML = html;
+  while(tmp.firstChild) qwrap.appendChild(tmp.firstChild);
 }
 
 function pickSimMC(el,qIdx,optIdx){
