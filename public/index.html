@@ -141,9 +141,10 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   <div id="dash-main">
     <div class="dash-grid">
       <button class="subj-card" style="background:linear-gradient(135deg,#1D9E75,#0F6E56)" onclick="showDetail('science')"><span class="lang">EN</span><span class="emoji">🌿</span><h3>Science</h3><p>Food web, photosynthesis, producers &amp; consumers</p><span class="date">Exam: Mon 13/04</span><div class="bg-ico">🌿</div></button>
-      <button class="subj-card" style="background:linear-gradient(135deg,#378ADD,#185FA5)" onclick="showDetail('ciencias')"><span class="lang">PT</span><span class="emoji">🗺️</span><h3>Ciências</h3><p>Biomas: Amazônia, Mata Atlântica, Cerrado, Caatinga</p><span class="date">Prova: qui 16/04</span><div class="bg-ico">🗺️</div></button>
       <button class="subj-card" style="background:linear-gradient(135deg,#D4537E,#993556)" onclick="showDetail('portugues')"><span class="lang">PT</span><span class="emoji">✏️</span><h3>Língua Portuguesa</h3><p>Relato pessoal, sílabas, pronomes</p><span class="date">Prova: ter 14/04</span><div class="bg-ico">✏️</div></button>
-      <button class="subj-card" style="background:linear-gradient(135deg,#BA7517,#854F0B)" onclick="showDetail('mat')"><span class="lang">EN</span><span class="emoji">🔢</span><h3>Math</h3><p>Place value, time, quadrilaterals, word problems</p><span class="date">Exam: Mon 22/04</span><div class="bg-ico">🔢</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#378ADD,#185FA5)" onclick="showDetail('ciencias')"><span class="lang">PT</span><span class="emoji">🗺️</span><h3>Ciências</h3><p>Biomas: Amazônia, Mata Atlântica, Cerrado, Caatinga</p><span class="date">Prova: qui 16/04</span><div class="bg-ico">🗺️</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#BA7517,#854F0B)" onclick="showDetail('matpt')"><span class="lang">PT</span><span class="emoji">🔢</span><h3>Matemática</h3><p>Números, operações, gráficos e situações-problema</p><span class="date">Prova: seg 22/04</span><div class="bg-ico">🔢</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#633806,#412402)" onclick="showDetail('mat')"><span class="lang">EN</span><span class="emoji">🔢</span><h3>Math</h3><p>Place value, time, quadrilaterals, word problems</p><span class="date">Exam: Mon 22/04</span><div class="bg-ico">🔢</div></button>
       <button class="subj-card" style="background:linear-gradient(135deg,#E24B4A,#A32D2D)" onclick="showDetail('la')"><span class="lang">EN</span><span class="emoji">📖</span><h3>Language Arts</h3><p>Adjectives, verb tenses, types of sentences</p><span class="date">Exam: Mon 27/04</span><div class="bg-ico">📖</div></button>
       <button class="subj-card" style="background:linear-gradient(135deg,#7F77DD,#534AB7)" onclick="showDetail('geohist')"><span class="lang">PT</span><span class="emoji">🏛️</span><h3>Geo &amp; História</h3><p>Tipos de mapas, influências indígenas</p><span class="date">Prova: seg 28/04</span><div class="bg-ico">🏛️</div></button>
       <button class="subj-card" style="background:linear-gradient(135deg,#5F5E5A,#2C2C2A)" onclick="showDetail('social')"><span class="lang">EN</span><span class="emoji">🌎</span><h3>Social Studies</h3><p>Nomadic people, Mayas, Aztecs, Incas</p><span class="date">Exam: Wed 29/04</span><div class="bg-ico">🌎</div></button>
@@ -796,235 +797,12 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 <!-- ===== SIMULADOS ===== -->
 <div class="screen" id="sim">
   <div class="sim-nav" id="sim-nav"></div>
-
-  <!-- Science -->
-  <div class="sim-panel active" id="sp-science">
-    <div class="exam-header" style="background:linear-gradient(135deg,#1D9E75,#0F6E56)"><h2>🌿 Science — Exam Practice</h2><p>Photosynthesis · Food chains · Food webs · Producers &amp; Consumers</p><span class="exam-score" id="sc-science">— / 6</span></div>
-    <div class="q-block"><div class="q-num">Question 1 · Multiple choice</div><div class="q-stem">Which of the following correctly describes photosynthesis?</div><div class="mc-opts"><button class="mc-opt" onclick="pickMC(this,'s1q1',1)"><span class="mc-letter">A</span>Animals break down dead plants to release energy.</button><button class="mc-opt" onclick="pickMC(this,'s1q1',1)"><span class="mc-letter">B</span>Plants use sunlight, water, and CO₂ to produce glucose and oxygen.</button><button class="mc-opt" onclick="pickMC(this,'s1q1',1)"><span class="mc-letter">C</span>Plants absorb energy from soil to grow their roots.</button><button class="mc-opt" onclick="pickMC(this,'s1q1',1)"><span class="mc-letter">D</span>Consumers convert sunlight into sugar for other organisms.</button></div><div class="q-fb" id="fb-s1q1"></div></div>
-    <div class="q-block"><div class="q-num">Question 2 · Fill in the blanks — word bank: grass · grasshopper · frog · hawk</div><div class="q-stem">Complete the food chain:</div><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;font-weight:700"><input class="fill-input" id="s1f1" placeholder="______"> → <input class="fill-input" id="s1f2" placeholder="______"> → <input class="fill-input" id="s1f3" placeholder="______"> → <input class="fill-input" id="s1f4" placeholder="______"></div><div class="q-fb" id="fb-s1q2"></div></div>
-    <div class="q-block"><div class="q-num">Question 3 · Classify each animal</div><div class="q-stem">Choose the correct classification for each.</div>
-      <div class="match-row"><span class="match-label">🐄 Cow</span><select class="match-sel" id="s1m1"><option value="">Choose…</option><option>Herbivore</option><option>Carnivore</option><option>Omnivore</option><option>Decomposer</option></select></div>
-      <div class="match-row"><span class="match-label">🐺 Wolf</span><select class="match-sel" id="s1m2"><option value="">Choose…</option><option>Herbivore</option><option>Carnivore</option><option>Omnivore</option><option>Decomposer</option></select></div>
-      <div class="match-row"><span class="match-label">🐻 Bear</span><select class="match-sel" id="s1m3"><option value="">Choose…</option><option>Herbivore</option><option>Carnivore</option><option>Omnivore</option><option>Decomposer</option></select></div>
-      <div class="match-row"><span class="match-label">🍄 Mushroom</span><select class="match-sel" id="s1m4"><option value="">Choose…</option><option>Herbivore</option><option>Carnivore</option><option>Omnivore</option><option>Decomposer</option></select></div>
-    <div class="q-fb" id="fb-s1q3"></div></div>
-    <div class="q-block"><div class="q-num">Question 4 · Multiple choice</div><div class="q-stem">In a food web, what happens if all the frogs disappear?</div><div class="mc-opts"><button class="mc-opt" onclick="pickMC(this,'s1q4',2)"><span class="mc-letter">A</span>Nothing changes.</button><button class="mc-opt" onclick="pickMC(this,'s1q4',2)"><span class="mc-letter">B</span>Only the hawks are affected.</button><button class="mc-opt" onclick="pickMC(this,'s1q4',2)"><span class="mc-letter">C</span>Insects increase and hawks have less food.</button><button class="mc-opt" onclick="pickMC(this,'s1q4',2)"><span class="mc-letter">D</span>Plants stop doing photosynthesis.</button></div><div class="q-fb" id="fb-s1q4"></div></div>
-    <div class="q-block"><div class="q-num">Question 5 · True or False</div><div class="q-stem">Read each statement.</div>
-      <div class="match-row"><span style="flex:1;font-size:12.5px">Plants are called consumers because they consume sunlight.</span><select class="match-sel" id="s1tf1"><option value="">T/F</option><option>True</option><option>False</option></select></div>
-      <div class="match-row"><span style="flex:1;font-size:12.5px">Decomposers help recycle nutrients back into the soil.</span><select class="match-sel" id="s1tf2"><option value="">T/F</option><option>True</option><option>False</option></select></div>
-      <div class="match-row"><span style="flex:1;font-size:12.5px">A food web is more complex than a food chain.</span><select class="match-sel" id="s1tf3"><option value="">T/F</option><option>True</option><option>False</option></select></div>
-    <div class="q-fb" id="fb-s1q5"></div></div>
-    <div class="q-block"><div class="q-num">Question 6 · Short answer</div><div class="q-stem">What is the difference between a producer and a consumer? Give one example of each.</div><textarea class="short-ta" id="s1sa" placeholder="Write your answer here…"></textarea><div class="q-fb" id="fb-s1q6"></div></div>
-    <button class="check-btn" style="background:#1D9E75" onclick="checkSim('science')">Check my answers ✓</button>
-    <div class="result-box" id="rb-science"><h3 id="rb-science-h"></h3><p id="rb-science-p"></p><button class="retry-s" onclick="resetSim('science')">Try again 🔄</button></div>
-  </div>
-
-  <!-- Ciências -->
-  <div class="sim-panel" id="sp-ciencias">
-    <div class="exam-header" style="background:linear-gradient(135deg,#378ADD,#185FA5)"><h2>🗺️ Ciências — Simulado</h2><p>Biomas brasileiros · Biodiversidade · Impacto humano</p><span class="exam-score" id="sc-ciencias">— / 6</span></div>
-    <div class="q-block"><div class="q-num">Questão 1 · Múltipla escolha</div><div class="q-stem">Qual bioma possui a maior diversidade de espécies e fica principalmente na região Norte?</div><div class="mc-opts"><button class="mc-opt" onclick="pickMC(this,'s2q1',0)"><span class="mc-letter">A</span>Amazônia</button><button class="mc-opt" onclick="pickMC(this,'s2q1',0)"><span class="mc-letter">B</span>Cerrado</button><button class="mc-opt" onclick="pickMC(this,'s2q1',0)"><span class="mc-letter">C</span>Caatinga</button><button class="mc-opt" onclick="pickMC(this,'s2q1',0)"><span class="mc-letter">D</span>Pampa</button></div><div class="q-fb" id="fb-s2q1"></div></div>
-    <div class="q-block"><div class="q-num">Questão 2 · Ligue cada bioma ao seu animal símbolo</div>
-      <div class="match-row"><span class="match-label">🌳 Amazônia</span><select class="match-sel" id="s2m1"><option value="">Animal…</option><option>Onça-pintada</option><option>Lobo-guará</option><option>Mico-leão-dourado</option><option>Asa-branca</option></select></div>
-      <div class="match-row"><span class="match-label">🌾 Cerrado</span><select class="match-sel" id="s2m2"><option value="">Animal…</option><option>Onça-pintada</option><option>Lobo-guará</option><option>Mico-leão-dourado</option><option>Asa-branca</option></select></div>
-      <div class="match-row"><span class="match-label">🌊 Mata Atlântica</span><select class="match-sel" id="s2m3"><option value="">Animal…</option><option>Onça-pintada</option><option>Lobo-guará</option><option>Mico-leão-dourado</option><option>Asa-branca</option></select></div>
-      <div class="match-row"><span class="match-label">🏜️ Caatinga</span><select class="match-sel" id="s2m4"><option value="">Animal…</option><option>Onça-pintada</option><option>Lobo-guará</option><option>Mico-leão-dourado</option><option>Asa-branca</option></select></div>
-    <div class="q-fb" id="fb-s2q2"></div></div>
-    <div class="q-block"><div class="q-num">Questão 3 · Verdadeiro ou Falso</div>
-      <div class="match-row"><span style="flex:1;font-size:12.5px">A Caatinga é o único bioma exclusivamente brasileiro.</span><select class="match-sel" id="s2tf1"><option value="">V/F</option><option>Verdadeiro</option><option>Falso</option></select></div>
-      <div class="match-row"><span style="flex:1;font-size:12.5px">A Mata Atlântica cobre hoje mais de 50% de sua área original.</span><select class="match-sel" id="s2tf2"><option value="">V/F</option><option>Verdadeiro</option><option>Falso</option></select></div>
-      <div class="match-row"><span style="flex:1;font-size:12.5px">O Cerrado é a savana tropical com maior biodiversidade do mundo.</span><select class="match-sel" id="s2tf3"><option value="">V/F</option><option>Verdadeiro</option><option>Falso</option></select></div>
-    <div class="q-fb" id="fb-s2q3"></div></div>
-    <div class="q-block"><div class="q-num">Questão 4 · Múltipla escolha</div><div class="q-stem">Qual descreve corretamente a Caatinga?</div><div class="mc-opts"><button class="mc-opt" onclick="pickMC(this,'s2q4',1)"><span class="mc-letter">A</span>Bioma úmido no litoral, com alta pluviosidade.</button><button class="mc-opt" onclick="pickMC(this,'s2q4',1)"><span class="mc-letter">B</span>Bioma semiárido, com seca intensa e plantas como o cacto.</button><button class="mc-opt" onclick="pickMC(this,'s2q4',1)"><span class="mc-letter">C</span>Grande savana com chuvas bem distribuídas o ano todo.</button><button class="mc-opt" onclick="pickMC(this,'s2q4',1)"><span class="mc-letter">D</span>Floresta densa no Sul do Brasil.</button></div><div class="q-fb" id="fb-s2q4"></div></div>
-    <div class="q-block"><div class="q-num">Questão 5 · Complete — biomas: Amazônia · Cerrado · Mata Atlântica · Caatinga</div><div class="q-stem">Preencha com o bioma correto.</div>
-      <div style="font-size:13px;line-height:2.8">
-        a) O bioma <input class="fill-input" id="s2f1" placeholder="_______"> sofre com a expansão da agropecuária.<br>
-        b) A <input class="fill-input" id="s2f2" placeholder="_______"> já foi desmatada em quase 90% de sua área.<br>
-        c) O único bioma 100% brasileiro é a <input class="fill-input" id="s2f3" placeholder="_______">.<br>
-        d) A <input class="fill-input" id="s2f4" placeholder="_______"> é a maior floresta tropical do mundo.
-      </div>
-    <div class="q-fb" id="fb-s2q5"></div></div>
-    <div class="q-block"><div class="q-num">Questão 6 · Resposta curta</div><div class="q-stem">Cite duas ações humanas que degradam os biomas e explique como cada uma causa danos.</div><textarea class="short-ta" id="s2sa" placeholder="Escreva aqui…"></textarea><div class="q-fb" id="fb-s2q6"></div></div>
-    <button class="check-btn" style="background:#378ADD" onclick="checkSim('ciencias')">Corrigir ✓</button>
-    <div class="result-box" id="rb-ciencias"><h3 id="rb-ciencias-h"></h3><p id="rb-ciencias-p"></p><button class="retry-s" onclick="resetSim('ciencias')">Tentar novamente 🔄</button></div>
-  </div>
-
-  <!-- Português -->
-  <div class="sim-panel" id="sp-portugues">
-    <div class="exam-header" style="background:linear-gradient(135deg,#D4537E,#993556)"><h2>✏️ Língua Portuguesa — Simulado</h2><p>Relato pessoal · Sílabas · Pronomes pessoais, possessivos e demonstrativos</p><span class="exam-score" id="sc-portugues">— / 6</span></div>
-    <div class="q-block"><div class="q-num">Questão 1 · Leitura e interpretação</div><div class="q-ctx">"No sábado passado, eu fui com minha família ao parque. Primeiro, nós brincamos na área de esportes. Depois, sentamos na grama e comemos juntos. Foi um dia muito especial para mim."</div><div class="q-stem">Esse texto é um relato pessoal porque:</div><div class="mc-opts"><button class="mc-opt" onclick="pickMC(this,'s3q1',1)"><span class="mc-letter">A</span>Conta uma história inventada com personagens fictícios.</button><button class="mc-opt" onclick="pickMC(this,'s3q1',1)"><span class="mc-letter">B</span>Narra uma experiência vivida pelo autor, em 1ª pessoa e em ordem cronológica.</button><button class="mc-opt" onclick="pickMC(this,'s3q1',1)"><span class="mc-letter">C</span>Descreve um personagem famoso e seus feitos.</button><button class="mc-opt" onclick="pickMC(this,'s3q1',1)"><span class="mc-letter">D</span>Apresenta argumentos para defender uma opinião.</button></div><div class="q-fb" id="fb-s3q1"></div></div>
-    <div class="q-block"><div class="q-num">Questão 2 · Separação silábica e classificação</div>
-      <div style="font-size:13px;line-height:3;display:flex;flex-direction:column;gap:4px">
-        <div class="match-row"><b style="min-width:110px">ESCOLA</b> Sep: <input class="fill-input" id="s3f1" placeholder="es-co-la" style="width:100px"> Class: <select class="match-sel" id="s3s1"><option value="">...</option><option>Monossílaba</option><option>Dissílaba</option><option>Trissílaba</option><option>Polissílaba</option></select></div>
-        <div class="match-row"><b style="min-width:110px">SOL</b> Sep: <input class="fill-input" id="s3f2" placeholder="sol" style="width:70px"> Class: <select class="match-sel" id="s3s2"><option value="">...</option><option>Monossílaba</option><option>Dissílaba</option><option>Trissílaba</option><option>Polissílaba</option></select></div>
-        <div class="match-row"><b style="min-width:110px">BORBOLETA</b> Sep: <input class="fill-input" id="s3f3" placeholder="bor-bo-le-ta" style="width:130px"> Class: <select class="match-sel" id="s3s3"><option value="">...</option><option>Monossílaba</option><option>Dissílaba</option><option>Trissílaba</option><option>Polissílaba</option></select></div>
-      </div>
-    <div class="q-fb" id="fb-s3q2"></div></div>
-    <div class="q-block"><div class="q-num">Questão 3 · Sílaba tônica — classifique</div>
-      <div class="match-row"><span class="match-label">CAFÉ</span><select class="match-sel" id="s3t1"><option value="">...</option><option>Oxítona</option><option>Paroxítona</option><option>Proparoxítona</option></select></div>
-      <div class="match-row"><span class="match-label">CADERNO</span><select class="match-sel" id="s3t2"><option value="">...</option><option>Oxítona</option><option>Paroxítona</option><option>Proparoxítona</option></select></div>
-      <div class="match-row"><span class="match-label">MÉDICO</span><select class="match-sel" id="s3t3"><option value="">...</option><option>Oxítona</option><option>Paroxítona</option><option>Proparoxítona</option></select></div>
-    <div class="q-fb" id="fb-s3q3"></div></div>
-    <div class="q-block"><div class="q-num">Questão 4 · Complete com pronome — banco: este · ela · aquele · sua</div>
-      <div style="font-size:13px;line-height:3">
-        a) <input class="fill-input" id="s3p1" placeholder="_____"> livro que está na minha mão é novo.<br>
-        b) A Ana disse que <input class="fill-input" id="s3p2" placeholder="_____"> gosta de Matemática.<br>
-        c) <input class="fill-input" id="s3p3" placeholder="_____"> prédio lá no fundo é muito antigo.<br>
-        d) O cachorro levantou <input class="fill-input" id="s3p4" placeholder="_____"> pata e olhou para mim.
-      </div>
-    <div class="q-fb" id="fb-s3q4"></div></div>
-    <div class="q-block"><div class="q-num">Questão 5 · Múltipla escolha</div><div class="q-stem">Em "Esse caderno que você tem é lindo!", a palavra ESSE é um pronome:</div><div class="mc-opts"><button class="mc-opt" onclick="pickMC(this,'s3q5',2)"><span class="mc-letter">A</span>Pessoal do caso reto</button><button class="mc-opt" onclick="pickMC(this,'s3q5',2)"><span class="mc-letter">B</span>Possessivo</button><button class="mc-opt" onclick="pickMC(this,'s3q5',2)"><span class="mc-letter">C</span>Demonstrativo — indica algo próximo de quem ouve</button><button class="mc-opt" onclick="pickMC(this,'s3q5',2)"><span class="mc-letter">D</span>Pessoal oblíquo</button></div><div class="q-fb" id="fb-s3q5"></div></div>
-    <div class="q-block"><div class="q-num">Questão 6 · Produção de texto</div><div class="q-stem">Escreva um relato pessoal (5 a 7 linhas) sobre algo que você fez recentemente. Use 1ª pessoa e pelo menos 2 marcadores temporais.</div><textarea class="short-ta" id="s3sa" placeholder="Escreva seu relato aqui…" style="min-height:100px"></textarea><div class="q-fb" id="fb-s3q6"></div></div>
-    <button class="check-btn" style="background:#D4537E" onclick="checkSim('portugues')">Corrigir ✓</button>
-    <div class="result-box" id="rb-portugues"><h3 id="rb-portugues-h"></h3><p id="rb-portugues-p"></p><button class="retry-s" onclick="resetSim('portugues')">Tentar novamente 🔄</button></div>
-  </div>
-
-  <!-- Matemática PT -->
-  <div class="sim-panel" id="sp-matpt">
-    <div class="exam-header" style="background:linear-gradient(135deg,#BA7517,#854F0B)"><h2>🔢 Matemática — Simulado</h2><p>Números até o milhar · Operações · Gráficos e tabelas · Situações-problema</p><span class="exam-score" id="sc-matpt">— / 6</span></div>
-    <div class="q-block"><div class="q-num">Questão 1 · Valor posicional — número: 3.746</div>
-      <div style="font-size:13px;line-height:3">
-        a) O algarismo 3 representa: <input class="fill-input" id="mp1f1" placeholder="3 milhares" style="width:130px"><br>
-        b) O algarismo 7 está na posição das <input class="fill-input" id="mp1f2" placeholder="centenas">.<br>
-        c) Forma decomposta: <input class="fill-input" id="mp1f3" placeholder="3000+700+40+6" style="width:200px">
-      </div>
-    <div class="q-fb" id="fb-mp1q1"></div></div>
-    <div class="q-block"><div class="q-num">Questão 2 · Múltipla escolha</div><div class="q-stem">Qual é o valor posicional do algarismo 8 no número 2.849?</div><div class="mc-opts"><button class="mc-opt" onclick="pickMC(this,'mp1q2',1)"><span class="mc-letter">A</span>8 unidades</button><button class="mc-opt" onclick="pickMC(this,'mp1q2',1)"><span class="mc-letter">B</span>8 centenas</button><button class="mc-opt" onclick="pickMC(this,'mp1q2',1)"><span class="mc-letter">C</span>8 dezenas</button><button class="mc-opt" onclick="pickMC(this,'mp1q2',1)"><span class="mc-letter">D</span>8 milhares</button></div><div class="q-fb" id="fb-mp1q2"></div></div>
-    <div class="q-block"><div class="q-num">Questão 3 · Operações</div>
-      <div style="font-size:13px;line-height:3">
-        a) 7 × 8 = <input class="fill-input" id="mp1op1" placeholder="56" style="width:60px"><br>
-        b) 63 ÷ 9 = <input class="fill-input" id="mp1op2" placeholder="7" style="width:60px"><br>
-        c) 456 + 237 = <input class="fill-input" id="mp1op3" placeholder="693" style="width:70px"><br>
-        d) 802 − 348 = <input class="fill-input" id="mp1op4" placeholder="454" style="width:70px">
-      </div>
-    <div class="q-fb" id="fb-mp1q3"></div></div>
-    <div class="q-block"><div class="q-num">Questão 4 · Situação-problema</div><div class="q-ctx">Uma escola tem 1.240 livros na biblioteca. Os alunos devolveram 85 livros e foram doados 120 novos. Depois, 38 livros foram emprestados. Quantos livros a biblioteca tem agora?</div>
-      <div style="font-size:13px;line-height:3">
-        Passo 1 — após devoluções: <input class="fill-input" id="mp1wp1" placeholder="1325"><br>
-        Passo 2 — após doações: <input class="fill-input" id="mp1wp2" placeholder="1445"><br>
-        Passo 3 — após empréstimos: <input class="fill-input" id="mp1wp3" placeholder="1407"><br>
-        Resposta: <input class="fill-input" id="mp1wp4" placeholder="1407"> livros.
-      </div>
-    <div class="q-fb" id="fb-mp1q4"></div></div>
-    <div class="q-block"><div class="q-num">Questão 5 · Leitura de tabela — Livros lidos por mês: Jan:5 · Fev:8 · Mar:4 · Abr:9 · Mai:7</div>
-      <div style="font-size:13px;line-height:3">
-        a) Qual mês teve mais livros lidos? <input class="fill-input" id="mp1g1" placeholder="Abril"><br>
-        b) Quantos livros a mais em Abril do que em Março? <input class="fill-input" id="mp1g2" placeholder="5" style="width:60px"><br>
-        c) Total de livros nos 5 meses: <input class="fill-input" id="mp1g3" placeholder="33" style="width:60px">
-      </div>
-    <div class="q-fb" id="fb-mp1q5"></div></div>
-    <div class="q-block"><div class="q-num">Questão 6 · Números ordinais e classificação</div><div class="q-stem">Responda as perguntas abaixo.</div>
-      <div style="font-size:13px;line-height:3">
-        a) Escreva por extenso o número ordinal: 5º = <input class="fill-input" id="mp1ord1" placeholder="quinto" style="width:100px"><br>
-        b) Escreva por extenso: 3.456 = <input class="fill-input" id="mp1ext1" placeholder="três mil..." style="width:220px"><br>
-        c) Qual é o maior número: 3.908 · 3.980 · 3.089? <input class="fill-input" id="mp1max1" placeholder="3.980" style="width:80px">
-      </div>
-    <div class="q-fb" id="fb-mp1q6"></div></div>
-    <button class="check-btn" style="background:#BA7517" onclick="checkSim('matpt')">Corrigir ✓</button>
-    <div class="result-box" id="rb-matpt"><h3 id="rb-matpt-h"></h3><p id="rb-matpt-p"></p><button class="retry-s" onclick="resetSim('matpt')">Tentar novamente 🔄</button></div>
-  </div>
-
-  <!-- Math EN -->
-  <div class="sim-panel" id="sp-mat">
-    <div class="exam-header" style="background:linear-gradient(135deg,#BA7517,#854F0B)"><h2>🔢 Math — Exam Practice</h2><p>Place value · Word problems · Telling time · Quadrilaterals · Graphs</p><span class="exam-score" id="sc-mat">— / 6</span></div>
-    <div class="q-block"><div class="q-num">Question 1 · Place Value — number: 4,758</div>
-      <div style="font-size:13px;line-height:3">
-        a) The digit 4 represents: <input class="fill-input" id="s4f1" placeholder="4 thousands" style="width:130px"><br>
-        b) The digit 5 is in the <input class="fill-input" id="s4f2" placeholder="tens"> place.<br>
-        c) Expanded form: <input class="fill-input" id="s4f3" placeholder="4000+700+50+8" style="width:200px">
-      </div>
-    <div class="q-fb" id="fb-s4q1"></div></div>
-    <div class="q-block"><div class="q-num">Question 2 · Word Problem</div><div class="q-ctx">A school library has 1,250 books. Students borrowed 348 books and 120 new books were donated. How many books does the library have now?</div>
-      <div style="font-size:13px;line-height:3">
-        Step 1 — Books after lending: <input class="fill-input" id="s4wp1" placeholder="902"><br>
-        Step 2 — Books after donation: <input class="fill-input" id="s4wp2" placeholder="1022"><br>
-        Answer: <input class="fill-input" id="s4wp3" placeholder="1022"> books.
-      </div>
-    <div class="q-fb" id="fb-s4q2"></div></div>
-    <div class="q-block"><div class="q-num">Question 3 · Telling Time &amp; Elapsed Time</div>
-      <div style="font-size:13px;line-height:3">
-        a) "Quarter past seven" in digital format: <input class="fill-input" id="s4t1" placeholder="7:15" style="width:70px"><br>
-        b) Movie starts 3:20 PM, lasts 1h45min. End time: <input class="fill-input" id="s4t2" placeholder="5:05 PM" style="width:90px"><br>
-        c) Now: 9:50 AM, school ends in 3h25min. End time: <input class="fill-input" id="s4t3" placeholder="1:15 PM" style="width:90px">
-      </div>
-    <div class="q-fb" id="fb-s4q3"></div></div>
-    <div class="q-block"><div class="q-num">Question 4 · Quadrilaterals — match each shape to its description</div>
-      <div class="match-row"><span class="match-label">Square</span><select class="match-sel" id="s4sh1"><option value="">Description…</option><option>4 equal sides, 4 right angles</option><option>Opposite sides equal, 4 right angles</option><option>4 equal sides, no right angles</option><option>Only one pair of parallel sides</option></select></div>
-      <div class="match-row"><span class="match-label">Rectangle</span><select class="match-sel" id="s4sh2"><option value="">Description…</option><option>4 equal sides, 4 right angles</option><option>Opposite sides equal, 4 right angles</option><option>4 equal sides, no right angles</option><option>Only one pair of parallel sides</option></select></div>
-      <div class="match-row"><span class="match-label">Rhombus</span><select class="match-sel" id="s4sh3"><option value="">Description…</option><option>4 equal sides, 4 right angles</option><option>Opposite sides equal, 4 right angles</option><option>4 equal sides, no right angles</option><option>Only one pair of parallel sides</option></select></div>
-      <div class="match-row"><span class="match-label">Trapezoid</span><select class="match-sel" id="s4sh4"><option value="">Description…</option><option>4 equal sides, 4 right angles</option><option>Opposite sides equal, 4 right angles</option><option>4 equal sides, no right angles</option><option>Only one pair of parallel sides</option></select></div>
-    <div class="q-fb" id="fb-s4q4"></div></div>
-    <div class="q-block"><div class="q-num">Question 5 · Reading a table — Books read per month: Jan:4 · Feb:7 · Mar:5 · Apr:9 · May:6</div>
-      <div style="font-size:13px;line-height:3">
-        a) Month with most books: <input class="fill-input" id="s4g1" placeholder="April"><br>
-        b) How many more in April than January? <input class="fill-input" id="s4g2" placeholder="5" style="width:60px"><br>
-        c) Total for all 5 months: <input class="fill-input" id="s4g3" placeholder="31" style="width:60px">
-      </div>
-    <div class="q-fb" id="fb-s4q5"></div></div>
-    <div class="q-block"><div class="q-num">Question 6 · Multiplication &amp; Division</div>
-      <div style="font-size:13px;line-height:3">
-        a) 6 × 8 = <input class="fill-input" id="s4op1" placeholder="48" style="width:60px"><br>
-        b) 54 ÷ 9 = <input class="fill-input" id="s4op2" placeholder="6" style="width:60px"><br>
-        c) 7 trays with 9 muffins each = <input class="fill-input" id="s4op3" placeholder="63" style="width:60px"> muffins total.
-      </div>
-    <div class="q-fb" id="fb-s4q6"></div></div>
-    <button class="check-btn" style="background:#BA7517" onclick="checkSim('mat')">Check my answers ✓</button>
-    <div class="result-box" id="rb-mat"><h3 id="rb-mat-h"></h3><p id="rb-mat-p"></p><button class="retry-s" onclick="resetSim('mat')">Try again 🔄</button></div>
-  </div>
-
-  <!-- Language Arts -->
-  <div class="sim-panel" id="sp-la">
-    <div class="exam-header" style="background:linear-gradient(135deg,#E24B4A,#A32D2D)"><h2>📖 Language Arts — Exam Practice</h2><p>Adjectives that compare · Verb tenses · Types of sentences</p><span class="exam-score" id="sc-la">— / 5</span></div>
-    <div class="q-block"><div class="q-num">Question 1 · Comparative &amp; Superlative — fill in the blanks</div>
-      <div style="font-size:13px;line-height:3">
-        a) My dog is <input class="fill-input" id="s5f1" placeholder="smaller"> than your cat. (small)<br>
-        b) This is the <input class="fill-input" id="s5f2" placeholder="hottest"> day of the year! (hot)<br>
-        c) She is a <input class="fill-input" id="s5f3" placeholder="faster"> runner than her brother. (fast)<br>
-        d) That was the <input class="fill-input" id="s5f4" placeholder="best"> movie I've ever seen. (good)
-      </div>
-    <div class="q-fb" id="fb-s5q1"></div></div>
-    <div class="q-block"><div class="q-num">Question 2 · Verb Tenses — choose the correct form</div>
-      <div class="match-row"><span style="flex:1;font-size:12.5px">Every morning, she ___ her teeth. (brush)</span><select class="match-sel" id="s5v1"><option value="">Choose…</option><option>brushed</option><option>brushes</option><option>brushing</option></select></div>
-      <div class="match-row"><span style="flex:1;font-size:12.5px">Yesterday, we ___ to the museum. (go)</span><select class="match-sel" id="s5v2"><option value="">Choose…</option><option>go</option><option>goes</option><option>went</option></select></div>
-      <div class="match-row"><span style="flex:1;font-size:12.5px">Last week, they ___ a great movie. (watch)</span><select class="match-sel" id="s5v3"><option value="">Choose…</option><option>watch</option><option>watches</option><option>watched</option></select></div>
-      <div class="match-row"><span style="flex:1;font-size:12.5px">He always ___ his homework after school. (do)</span><select class="match-sel" id="s5v4"><option value="">Choose…</option><option>did</option><option>does</option><option>do</option></select></div>
-    <div class="q-fb" id="fb-s5q2"></div></div>
-    <div class="q-block"><div class="q-num">Question 3 · Types of Sentences — identify each</div>
-      <div class="match-row"><span style="flex:1;font-size:12.5px">"Please close the door."</span><select class="match-sel" id="s5st1"><option value="">Type…</option><option>Statement</option><option>Question</option><option>Exclamation</option><option>Command</option></select></div>
-      <div class="match-row"><span style="flex:1;font-size:12.5px">"What an amazing goal!"</span><select class="match-sel" id="s5st2"><option value="">Type…</option><option>Statement</option><option>Question</option><option>Exclamation</option><option>Command</option></select></div>
-      <div class="match-row"><span style="flex:1;font-size:12.5px">"Do you like reading?"</span><select class="match-sel" id="s5st3"><option value="">Type…</option><option>Statement</option><option>Question</option><option>Exclamation</option><option>Command</option></select></div>
-      <div class="match-row"><span style="flex:1;font-size:12.5px">"My favorite subject is Science."</span><select class="match-sel" id="s5st4"><option value="">Type…</option><option>Statement</option><option>Question</option><option>Exclamation</option><option>Command</option></select></div>
-    <div class="q-fb" id="fb-s5q3"></div></div>
-    <div class="q-block"><div class="q-num">Question 4 · Multiple choice</div><div class="q-stem">"The baby elephant is ___ than its mother."</div><div class="mc-opts"><button class="mc-opt" onclick="pickMC(this,'s5q4',1)"><span class="mc-letter">A</span>more small</button><button class="mc-opt" onclick="pickMC(this,'s5q4',1)"><span class="mc-letter">B</span>smaller</button><button class="mc-opt" onclick="pickMC(this,'s5q4',1)"><span class="mc-letter">C</span>smallest</button><button class="mc-opt" onclick="pickMC(this,'s5q4',1)"><span class="mc-letter">D</span>small</button></div><div class="q-fb" id="fb-s5q4"></div></div>
-    <div class="q-block"><div class="q-num">Question 5 · Write your own</div><div class="q-stem">Write one sentence of EACH type about your school day. (statement · question · exclamation · command)</div><textarea class="short-ta" id="s5sa" placeholder="1. Statement: &#10;2. Question: &#10;3. Exclamation: &#10;4. Command: " style="min-height:110px"></textarea><div class="q-fb" id="fb-s5q5"></div></div>
-    <button class="check-btn" style="background:#E24B4A" onclick="checkSim('la')">Check my answers ✓</button>
-    <div class="result-box" id="rb-la"><h3 id="rb-la-h"></h3><p id="rb-la-p"></p><button class="retry-s" onclick="resetSim('la')">Try again 🔄</button></div>
-  </div>
-
-  <!-- Social Studies -->
-  <div class="sim-panel" id="sp-social">
-    <div class="exam-header" style="background:linear-gradient(135deg,#5F5E5A,#2C2C2A)"><h2>🌎 Social Studies — Exam Practice</h2><p>Nomadic people · Mayas · Aztecs · Incas</p><span class="exam-score" id="sc-social">— / 5</span></div>
-    <div class="q-block"><div class="q-num">Question 1 · Multiple choice</div><div class="q-stem">Which best describes nomadic people?</div><div class="mc-opts"><button class="mc-opt" onclick="pickMC(this,'s6q1',2)"><span class="mc-letter">A</span>They built large cities and never moved.</button><button class="mc-opt" onclick="pickMC(this,'s6q1',2)"><span class="mc-letter">B</span>They were farmers who stayed in one place.</button><button class="mc-opt" onclick="pickMC(this,'s6q1',2)"><span class="mc-letter">C</span>They moved following food sources and seasons.</button><button class="mc-opt" onclick="pickMC(this,'s6q1',2)"><span class="mc-letter">D</span>They traded goods across ocean routes.</button></div><div class="q-fb" id="fb-s6q1"></div></div>
-    <div class="q-block"><div class="q-num">Question 2 · Match each fact to the correct civilization</div>
-      <div class="match-row"><span style="flex:1;font-size:12px">Built Machu Picchu in the Andes mountains.</span><select class="match-sel" id="s6m1"><option value="">Civ…</option><option>Mayas</option><option>Aztecs</option><option>Incas</option></select></div>
-      <div class="match-row"><span style="flex:1;font-size:12px">Built capital Tenochtitlan on an island in a lake.</span><select class="match-sel" id="s6m2"><option value="">Civ…</option><option>Mayas</option><option>Aztecs</option><option>Incas</option></select></div>
-      <div class="match-row"><span style="flex:1;font-size:12px">Developed an advanced calendar and wrote using glyphs.</span><select class="match-sel" id="s6m3"><option value="">Civ…</option><option>Mayas</option><option>Aztecs</option><option>Incas</option></select></div>
-      <div class="match-row"><span style="flex:1;font-size:12px">Used quipu (knotted strings) to record information.</span><select class="match-sel" id="s6m4"><option value="">Civ…</option><option>Mayas</option><option>Aztecs</option><option>Incas</option></select></div>
-    <div class="q-fb" id="fb-s6q2"></div></div>
-    <div class="q-block"><div class="q-num">Question 3 · True or False</div>
-      <div class="match-row"><span style="flex:1;font-size:12.5px">The Incas had a writing system using an alphabet.</span><select class="match-sel" id="s6tf1"><option value="">T/F</option><option>True</option><option>False</option></select></div>
-      <div class="match-row"><span style="flex:1;font-size:12.5px">The Aztec empire was conquered by the Spanish in 1521.</span><select class="match-sel" id="s6tf2"><option value="">T/F</option><option>True</option><option>False</option></select></div>
-      <div class="match-row"><span style="flex:1;font-size:12.5px">The Mayas developed an advanced understanding of astronomy.</span><select class="match-sel" id="s6tf3"><option value="">T/F</option><option>True</option><option>False</option></select></div>
-    <div class="q-fb" id="fb-s6q3"></div></div>
-    <div class="q-block"><div class="q-num">Question 4 · Fill in — word bank: Mayas · Aztecs · Incas · nomads · quipu</div>
-      <div style="font-size:13px;line-height:3">
-        a) The <input class="fill-input" id="s6f1" placeholder="Mayas"> built pyramids and used glyphs to write.<br>
-        b) People who move following food are called <input class="fill-input" id="s6f2" placeholder="nomads">.<br>
-        c) The <input class="fill-input" id="s6f3" placeholder="Incas"> used knotted strings called <input class="fill-input" id="s6f4" placeholder="quipu">.
-      </div>
-    <div class="q-fb" id="fb-s6q4"></div></div>
-    <div class="q-block"><div class="q-num">Question 5 · Short answer</div><div class="q-stem">Choose ONE civilization (Mayas, Aztecs or Incas). Write 3–4 sentences: where they lived, what they built or created, and what happened to their empire.</div><textarea class="short-ta" id="s6sa" placeholder="Write your answer here…" style="min-height:100px"></textarea><div class="q-fb" id="fb-s6q5"></div></div>
-    <button class="check-btn" style="background:#5F5E5A" onclick="checkSim('social')">Check my answers ✓</button>
-    <div class="result-box" id="rb-social"><h3 id="rb-social-h"></h3><p id="rb-social-p"></p><button class="retry-s" onclick="resetSim('social')">Try again 🔄</button></div>
+  <div id="sim-content">
+    <div id="sim-loading" style="display:none;padding:2rem;text-align:center">
+      <div style="font-size:14px;color:var(--muted);margin-bottom:8px">Gerando questões novas... ✨</div>
+      <div style="font-size:12px;color:var(--muted)">Cada tentativa tem perguntas diferentes!</div>
+    </div>
+    <div id="sim-questions"></div>
   </div>
 </div><!-- end sim screen -->
 
@@ -1034,6 +812,7 @@ var DETAIL={
   science:{title:"🌿 Science",color:"#1D9E75",light:"#E1F5EE",dark:"#085041",lang:"en",topics:[{h:"☀️ Photosynthesis",items:["Plants make their own food","They use: sunlight + water + CO₂","They produce: glucose + oxygen","Plants = PRODUCERS"],act:"Draw: Sun → leaf → glucose → animal eating the plant"},{h:"🔗 Food Chain",items:["Producer → Primary consumer","Primary → Secondary consumer","Decomposers break down dead things","Energy flows ONE way"],act:"Chain: grass → grasshopper → frog → snake → hawk"},{h:"🕸️ Food Web",items:["Multiple chains connected","More realistic than one chain","Removing one species affects the whole web","Shows real nature dependencies"],act:"Build your own food web with 6 animals you choose!"},{h:"🏷️ Classify!",items:["Herbivores: plants only","Carnivores: meat only","Omnivores: both","Decomposers: dead matter"],act:"You are an omnivore! Name 3 examples of each type."}]},
   ciencias:{title:"🗺️ Ciências",color:"#378ADD",light:"#E6F1FB",dark:"#0C447C",lang:"pt",topics:[{h:"🌳 Amazônia",items:["Maior floresta tropical do mundo","Altíssima biodiversidade","Muita chuva (>2000mm/ano)","Ameaça: desmatamento"],act:"Animal símbolo: onça-pintada 🐆"},{h:"🌾 Cerrado",items:["Savana tropical brasileira","Seca no inverno","2ª maior biodiversidade do mundo","Ameaça: agropecuária"],act:"Animal símbolo: lobo-guará 🐺"},{h:"🌊 Mata Atlântica",items:["Cobre o litoral","Só 12% ainda existe","Clima úmido e quente","Ameaça: urbanização"],act:"Animal símbolo: mico-leão-dourado 🦁"},{h:"🏜️ Caatinga",items:["Único bioma 100% brasileiro","Semiárido: seca intensa","Plantas adaptadas (cactos)","Ameaça: desertificação"],act:"Planta símbolo: mandacaru 🌵"}]},
   portugues:{title:"✏️ Português",color:"#D4537E",light:"#FBEAF0",dark:"#72243E",lang:"pt",topics:[{h:"📖 Relato Pessoal",items:["Narrador conta o que viveu","1ª pessoa (eu, nós)","Sequência cronológica","Marcadores: ontem, depois, então…"],act:"Escreva 4 linhas sobre seu último fim de semana."},{h:"🔤 Sílabas",items:["Separação: ca-der-no","Tônica: sílaba mais forte","Oxítona: última sílaba","Paroxítona: penúltima","Proparoxítona: antepenúltima"],act:"Jogo de palmas: bata para cada sílaba!"},{h:"🙋 Pronomes",items:["Pessoais: eu, tu, ele, ela, nós","Possessivos: meu, teu, seu, nosso","Demonstrativos: este, esse, aquele","Este=perto · Esse=médio · Aquele=longe"],act:"Complete: '__ livro é __ e __ lá é seu.'"}]},
+  matpt:{title:"🔢 Matemática",color:"#BA7517",light:"#FAEEDA",dark:"#633806",lang:"pt",topics:[{h:"🔢 Valor Posicional",items:["Milhar · Centena · Dezena · Unidade","3.456 = 3M+4C+5D+6U","Cada posição vale 10x mais","Ordinais: 1º, 2º, 3º…"],act:"Decompõe: 2.748 = ___ + ___ + ___ + ___"},{h:"✖️ Multiplicação e Divisão",items:["7×8=56 · 6×9=54","63÷9=7 · 48÷6=8","Tabuada do 6, 7, 8 e 9","Verificação: quociente × divisor = dividendo"],act:"Jogo de dados: joga 2 dados e multiplica!"},{h:"📊 Gráficos e Tabelas",items:["Ler título e legenda primeiro","Barras: comparar quantidades","Tabela dupla entrada: linhas e colunas","Sempre leia os eixos!"],act:"Qual mês teve mais? Qual menos? Qual o total?"},{h:"🧩 Situação-Problema",items:["Leia 2 vezes com atenção","O que você sabe? O que precisa?","Escolha a operação certa","A resposta faz sentido?"],act:"Você tem R$100. Compra 3 itens de R$28. Sobra quanto?"}]},
   mat:{title:"🔢 Math",color:"#BA7517",light:"#FAEEDA",dark:"#633806",lang:"en",topics:[{h:"🔢 Place Value",items:["Ones · Tens · Hundreds · Thousands","3,456 = 3T+4H+5tens+6ones","Each position = 10x the right","Ordinals: 1st, 2nd, 3rd…"],act:"Decompose: 2,748 = ___ + ___ + ___ + ___"},{h:"🕐 Telling Time",items:["Hour hand=short · Minute hand=long","Quarter past=:15 · Half past=:30","Quarter to=:45","Elapsed time = start + duration"],act:"Draw 4:35. If class adds 25 min, when does it end?"},{h:"🔷 Quadrilaterals",items:["Square: 4 equal, 4 right angles","Rectangle: opposite equal, right angles","Rhombus: 4 equal, NO right angles","Trapezoid: 1 pair parallel sides"],act:"Find 3 quadrilaterals in your room!"},{h:"🧩 Word Problems",items:["Read carefully — twice!","What do you know? What do you need?","Choose the right operation","Does your answer make sense?"],act:"Tom: 325 stickers, gives 48 away. How many left?"}]},
   la:{title:"📖 Language Arts",color:"#E24B4A",light:"#FCEBEB",dark:"#791F1F",lang:"en",topics:[{h:"🏆 Adjectives",items:["Comparative (-er): bigger, taller","Superlative (-est): biggest, tallest","Long words: more/most beautiful","Irregular: good→better→best"],act:"Compare 3 animals: big/bigger/biggest!"},{h:"⏱️ Verb Tenses",items:["Present: I walk, she walks","Past regular: add -ed → walked","Past irregular: go→went · run→ran","'Yesterday' → past tense!"],act:"Tell 3 things you did yesterday."},{h:"❓ Sentence Types",items:["Statement: ends with . ","Question: ends with ?","Exclamation: ends with !","Command: gives an order"],act:"Write one of each type about your day!"}]},
   geohist:{title:"🏛️ Geo & Hist",color:"#7F77DD",light:"#EEEDFE",dark:"#3C3489",lang:"pt",topics:[{h:"🗺️ Tipos de Mapas",items:["Político: países, estados, fronteiras","Físico: relevo, rios, montanhas","Temático: clima, população, vegetação","Elementos: título, legenda, escala"],act:"Google Maps: troca entre mapa e satélite!"},{h:"🪶 Influências Indígenas",items:["Língua: +1000 palavras do tupi","Alimentos: mandioca, milho, caju","Técnicas: pesca, plantio","Topônimos: Paraná, Ipiranga, Tijuca…"],act:"Ache 5 palavras de origem tupi no dia a dia!"}]},
@@ -1139,143 +918,273 @@ function doAns(i){
 }
 function nextQ(){qi++;renderQ();}
 
-// ===== SIMULADOS NAV =====
-var SIMS=[['science','🌿 Science','#1D9E75'],['ciencias','🗺️ Ciências','#378ADD'],['portugues','✏️ Português','#D4537E'],['matpt','🔢 Matemática PT','#BA7517'],['mat','🔢 Math EN','#633806'],['la','📖 Lang Arts','#E24B4A'],['social','🌎 Social','#5F5E5A']];
+// ===== SIMULADOS DINÂMICOS =====
+var SIMS=[
+  {key:'science', label:'🌿 Science', color:'#1D9E75', lang:'en',
+   allTopics:'Photosynthesis, Food Chain, Food Web, Animal Classification (herbivore/carnivore/omnivore/decomposer)',
+   subtopics:[
+     {label:'☀️ Photosynthesis', topics:'Photosynthesis only: sunlight+water+CO₂→glucose+oxygen, plants=producers, chlorophyll, why plants are called producers'},
+     {label:'🔗 Food Chain', topics:'Food Chain only: producer→primary consumer→secondary consumer, energy flows one direction, examples like grass→grasshopper→frog→hawk, levels of a food chain'},
+     {label:'🕸️ Food Web', topics:'Food Web only: multiple food chains connected, removing one species affects the whole web, difference between food chain and food web, complexity of ecosystems'},
+     {label:'🏷️ Classification', topics:'Animal Classification only: herbivore=plants only (examples: cow, rabbit), carnivore=meat only (examples: lion, wolf), omnivore=both (examples: bear, human), decomposers=break down dead matter (examples: mushroom, bacteria)'},
+     {label:'🌿 All topics', topics:'Photosynthesis (sunlight+water+CO₂→glucose+oxygen, plants=producers), Food Chain (producer→primary consumer→secondary consumer, energy flows one direction), Food Web (multiple chains connected, removing species affects whole web), Classification (herbivore=plants only, carnivore=meat only, omnivore=both, decomposers=break down dead matter)'}
+   ]},
+  {key:'ciencias', label:'🗺️ Ciências', color:'#378ADD', lang:'pt',
+   allTopics:'Amazônia, Cerrado, Mata Atlântica, Caatinga, Impacto humano',
+   subtopics:[
+     {label:'🌳 Amazônia', topics:'Amazônia apenas: maior floresta tropical do mundo, localização no Norte, alta biodiversidade, muita chuva, animal símbolo onça-pintada, principal ameaça desmatamento'},
+     {label:'🌾 Cerrado', topics:'Cerrado apenas: savana tropical brasileira, estações seca e chuvosa, segunda maior biodiversidade, animal símbolo lobo-guará, principal ameaça agropecuária'},
+     {label:'🌊 Mata Atlântica', topics:'Mata Atlântica apenas: cobre o litoral brasileiro, restam apenas 12% da área original, clima úmido e quente, animal símbolo mico-leão-dourado, principal ameaça urbanização'},
+     {label:'🏜️ Caatinga', topics:'Caatinga apenas: único bioma 100% exclusivamente brasileiro, semiárido com seca intensa, plantas adaptadas como cacto e mandacaru, animal símbolo asa-branca, principal ameaça desertificação'},
+     {label:'⚠️ Impacto humano', topics:'Impacto humano nos biomas: desmatamento, agropecuária, urbanização, desertificação, perda de biodiversidade, extinção de espécies, como cada ação humana afeta os diferentes biomas brasileiros'},
+     {label:'🗺️ Todos os biomas', topics:'Amazônia (maior floresta tropical, onça-pintada, desmatamento), Cerrado (savana brasileira, lobo-guará, agropecuária), Mata Atlântica (litoral, mico-leão-dourado, só 12% restante, urbanização), Caatinga (único bioma 100% brasileiro, semiárido, cacto, asa-branca, desertificação)'}
+   ]},
+  {key:'portugues', label:'✏️ Português', color:'#D4537E', lang:'pt',
+   allTopics:'Relato pessoal, Sílabas, Pronomes',
+   subtopics:[
+     {label:'📖 Relato pessoal', topics:'Relato pessoal apenas: narração em 1ª pessoa (eu, nós), sequência cronológica dos fatos, experiência real vivida pelo autor, marcadores de tempo (ontem, depois, então, primeiro, finalmente), características do gênero'},
+     {label:'🔤 Sílabas', topics:'Sílabas apenas: separação silábica (ca-der-no, bor-bo-le-ta), sílaba tônica (sílaba mais forte da palavra), classificação: oxítona=tônica na última (café, parabéns), paroxítona=tônica na penúltima (caderno, livro), proparoxítona=tônica na antepenúltima (médico, sábado), classificação por número de sílabas: monossílaba/dissílaba/trissílaba/polissílaba'},
+     {label:'🙋 Pronomes', topics:'Pronomes apenas: pronomes pessoais do caso reto (eu, tu, ele, ela, nós, vós, eles, elas), pronomes possessivos (meu, teu, seu, nosso, vosso, seus), pronomes demonstrativos (este/esta/isto=perto de quem fala, esse/essa/isso=perto de quem ouve, aquele/aquela/aquilo=longe de ambos), como identificar e usar cada tipo'},
+     {label:'✏️ Todos os tópicos', topics:'Relato pessoal (1ª pessoa, sequência cronológica, experiência real, marcadores: ontem/depois/então), Sílabas (separação silábica, sílaba tônica, oxítona=última, paroxítona=penúltima, proparoxítona=antepenúltima), Pronomes (pessoais: eu/tu/ele/ela/nós, possessivos: meu/teu/seu/nosso, demonstrativos: este=perto/esse=médio/aquele=longe)'}
+   ]},
+  {key:'matpt', label:'🔢 Matemática', color:'#BA7517', lang:'pt',
+   allTopics:'Valor posicional, Multiplicação e divisão, Situações-problema, Gráficos e tabelas',
+   subtopics:[
+     {label:'🔢 Valor posicional', topics:'Valor posicional apenas: milhar/centena/dezena/unidade, forma decomposta de números (3.456 = 3.000+400+50+6), identificar o valor de cada algarismo numa posição, números ordinais (1º, 2º, 3º, 4º, 5º)'},
+     {label:'✖️ Multiplicação e divisão', topics:'Multiplicação e divisão apenas: tabuadas do 6, 7, 8 e 9, algoritmo da multiplicação por unidade, algoritmo da divisão por unidade, relação entre multiplicação e divisão, verificação de resultados'},
+     {label:'🧩 Situações-problema', topics:'Situações-problema apenas: problemas com as 4 operações (adição, subtração, multiplicação, divisão), identificar a operação correta, resolver com 1 ou 2 etapas, verificar se a resposta faz sentido'},
+     {label:'📊 Gráficos e tabelas', topics:'Gráficos e tabelas apenas: leitura e interpretação de gráfico de barras, gráfico de pizza, tabela simples e de dupla entrada, identificar maior/menor valor, calcular totais, comparar dados, ler título e legenda'},
+     {label:'🔢 Todos os tópicos', topics:'Valor posicional (milhar/centena/dezena/unidade, forma decomposta), Multiplicação e divisão por unidade (tabuadas do 6 ao 9), Situações-problema com 4 operações, Gráficos e tabelas (leitura, interpretação, comparação de dados), Números ordinais (1º/2º/3º)'}
+   ]},
+  {key:'mat', label:'🔢 Math EN', color:'#633806', lang:'en',
+   allTopics:'Place value, Telling time, Quadrilaterals, Word problems',
+   subtopics:[
+     {label:'🔢 Place value', topics:'Place value only: thousands/hundreds/tens/ones positions, expanded form (3,456=3000+400+50+6), identifying the value of each digit, ordinal numbers (1st, 2nd, 3rd)'},
+     {label:'🕐 Telling time', topics:'Telling time only: reading analog clocks (hour hand=short, minute hand=long), digital time format, quarter past=:15, half past=:30, quarter to=:45, elapsed time (start time + duration = end time)'},
+     {label:'🔷 Quadrilaterals', topics:'Quadrilaterals only: square (4 equal sides, 4 right angles), rectangle (opposite sides equal, 4 right angles), rhombus (4 equal sides, no right angles), trapezoid (only one pair of parallel sides), identifying each shape by its properties'},
+     {label:'🧩 Word problems', topics:'Word problems only: multi-step addition and subtraction problems, identifying what you know and what you need to find, choosing the right operation, checking if the answer makes sense'},
+     {label:'🔢 All topics', topics:'Place value (thousands/hundreds/tens/ones, expanded form), Telling time (analog clock, quarter past=:15, half past=:30, quarter to=:45), Elapsed time (start+duration=end), Quadrilaterals (square=4equal+right angles, rectangle=opposite equal+right, rhombus=4equal no right, trapezoid=1 pair parallel), Word problems (read twice, identify what you know/need, choose operation)'}
+   ]},
+  {key:'la', label:'📖 Language Arts', color:'#E24B4A', lang:'en',
+   allTopics:'Adjectives, Verb tenses, Types of sentences',
+   subtopics:[
+     {label:'🏆 Adjectives', topics:'Adjectives that compare only: comparative form (add -er: bigger, taller, faster, older), superlative form (add -est: biggest, tallest, fastest, oldest), irregular adjectives (good→better→best, bad→worse→worst, many→more→most), when to use -er vs more'},
+     {label:'⏱️ Verb tenses', topics:'Verb tenses only: present simple (I walk, she walks, he runs), past simple regular verbs (add -ed: walked, jumped, played, watched), past simple irregular verbs (go→went, run→ran, eat→ate, see→saw, have→had), identifying time signal words (yesterday, last week, every day)'},
+     {label:'❓ Sentence types', topics:'Types of sentences only: statement (ends with period, gives information: I like cats.), question (ends with ?, asks something: Do you like cats?), exclamation (ends with !, expresses strong feeling: What a cute cat!), command (gives an order, often starts with verb: Feed the cat.), identifying each type'},
+     {label:'📖 All topics', topics:'Adjectives that compare (comparative: add -er like bigger/taller, superlative: add -est like biggest/tallest, irregular: good→better→best, bad→worse→worst), Verb tenses (present simple: I walk/she walks, past regular: add -ed like walked, past irregular: go→went/run→ran/eat→ate), Types of sentences (statement ends with period, question ends with ?, exclamation ends with !, command gives an order)'}
+   ]},
+  {key:'geohist', label:'🏛️ Geo & Hist', color:'#7F77DD', lang:'pt',
+   allTopics:'Tipos de mapas, Influências indígenas',
+   subtopics:[
+     {label:'🗺️ Tipos de mapas', topics:'Tipos de mapas apenas: mapa político (mostra países, estados, municípios e fronteiras), mapa físico (mostra relevo, rios, montanhas, planícies), mapa temático (mostra um tema específico: clima, população, vegetação), elementos obrigatórios de qualquer mapa (título, legenda, escala, rosa dos ventos)'},
+     {label:'🪶 Influências indígenas', topics:'Influências indígenas apenas: influências na língua portuguesa (mais de 1000 palavras de origem tupi como abacaxi, tatu, capivara, pipoca), influências na alimentação (mandioca, milho, caju, guaraná, amendoim), técnicas agrícolas e de pesca, topônimos de origem indígena (Paraná, Ipiranga, Tijuca, Itaquera, Pinheiros)'},
+     {label:'🏛️ Todos os tópicos', topics:'Tipos de mapas (político=países/fronteiras, físico=relevo/rios, temático=clima/população, elementos obrigatórios: título/legenda/escala/rosa dos ventos), Influências indígenas (língua: +1000 palavras do tupi, alimentos: mandioca/milho/caju/guaraná, técnicas agrícolas, topônimos: Paraná/Ipiranga/Tijuca)'}
+   ]},
+  {key:'social', label:'🌎 Social Studies', color:'#5F5E5A', lang:'en',
+   allTopics:'Nomadic people, Mayas, Aztecs, Incas',
+   subtopics:[
+     {label:'🧭 Nomadic people', topics:'Nomadic people only: definition (move from place to place following food and seasons), no permanent homes or cities, hunters and gatherers, contrast with settled/sedentary peoples, examples of nomadic groups past and present'},
+     {label:'🌽 Mayas', topics:'Mayas only: location in Mesoamerica (Mexico, Guatemala, Belize), advanced calendar system and astronomy knowledge, pyramids (most famous: Chichén Itzá), writing system using glyphs (picture-based), achievements in math and science'},
+     {label:'⚔️ Aztecs', topics:'Aztecs only: built capital Tenochtitlan on an island in Lake Texcoco (now Mexico City), powerful military empire that conquered neighbors, worshipped sun god Huitzilopochtli, Spanish conquest by Hernán Cortés in 1521, why building on an island was a smart defense strategy'},
+     {label:'🦙 Incas', topics:'Incas only: largest pre-Columbus empire in the Americas, lived in Andes mountains of Peru and Bolivia, famous site Machu Picchu, no writing system but used quipu (knotted strings of different colors) to record information, road system connecting the empire'},
+     {label:'🌎 All topics', topics:'Nomadic people (move following food and seasons, no permanent homes, hunters and gatherers), Mayas (Mesoamerica, advanced calendar and astronomy, pyramids like Chichén Itzá, wrote using glyphs), Aztecs (capital Tenochtitlan on an island in a lake, conquered by Cortés in 1521, sun god Huitzilopochtli), Incas (largest pre-Columbus empire in Americas, Andes mountains/Machu Picchu, no writing system/used quipu knotted strings)'}
+   ]}
+];
+
+var currentSimKey = 'science';
+var currentTopicLabel = '';
+var simQuestions = [];
+var simAnswers = {};
+
 function buildSimNav(){
-  var nav=document.getElementById('sim-nav');if(nav.childElementCount)return;
-
+  var nav=document.getElementById('sim-nav');
+  if(!nav||nav.childElementCount)return;
   SIMS.forEach((s,i)=>{
-    var b=document.createElement('button');b.className='sim-btn'+(i===0?' active':'');
-    b.textContent=s[1];if(i===0){b.style.background=s[2];b.style.color='#fff';b.style.borderColor=s[2];}
+    var b=document.createElement('button');
+    b.className='sim-btn'+(i===0?' active':'');
+    b.textContent=s.label;
+    if(i===0){b.style.background=s.color;b.style.color='#fff';b.style.borderColor=s.color;}
     b.onclick=()=>{
-      document.querySelectorAll('.sim-panel').forEach(p=>p.classList.remove('active'));
-      document.querySelectorAll('.sim-btn').forEach(x=>{x.classList.remove('active');x.style.background='';x.style.color='var(--muted)';x.style.borderColor='var(--border)'});
-      document.getElementById('sp-'+s[0]).classList.add('active');
-      b.classList.add('active');b.style.background=s[2];b.style.color='#fff';b.style.borderColor=s[2];
-    };nav.appendChild(b);
+      document.querySelectorAll('.sim-btn').forEach(x=>{x.classList.remove('active');x.style.background='';x.style.color='var(--muted)';x.style.borderColor='var(--border)';});
+      b.classList.add('active');b.style.background=s.color;b.style.color='#fff';b.style.borderColor=s.color;
+      loadSim(s.key);
+    };
+    nav.appendChild(b);
   });
+  loadSim('science');
 }
 
-// ===== MC pick =====
-var MC={};
-function pickMC(el,qid,correct){
-  var opts=el.parentElement.querySelectorAll('.mc-opt');
-  opts.forEach(o=>o.classList.remove('selected'));
-  el.classList.add('selected');
-  MC[qid]={el,correct,opts};
+function loadSim(key){
+  currentSimKey=key;
+  simAnswers={};
+  simQuestions=[];
+  var sub=SIMS.find(s=>s.key===key);
+  document.getElementById('sim-loading').style.display='none';
+  document.getElementById('sim-questions').innerHTML='';
+  renderTopicPicker(sub);
 }
 
-// ===== HELPERS =====
-function gv(id){var e=document.getElementById(id);return e?e.value.trim():'';}
-function norm(s){return s.toLowerCase().replace(/[^a-záéíóúàâãêîôõüç0-9:]/g,'').trim();}
-function si(id,ok){var e=document.getElementById(id);if(e){e.classList.remove('correct','wrong');e.classList.add(ok?'correct':'wrong');}}
-function ss(id,ok){var e=document.getElementById(id);if(e){e.classList.remove('correct','wrong');e.classList.add(ok?'correct':'wrong');}}
-function fb(id,ok,msg){var e=document.getElementById('fb-'+id);if(!e)return;e.className='q-fb show '+(ok?'ok':'bad');e.textContent=(ok?'✅ ':'❌ ')+msg;}
-function showResult(key,s,t){
-  var pct=Math.round(s/t*100);
-  var rb=document.getElementById('rb-'+key);
-  var rh=document.getElementById('rb-'+key+'-h');
-  var rp=document.getElementById('rb-'+key+'-p');
+function renderTopicPicker(sub){
+  var pt = sub.lang==='pt';
+  var html = '<div class="exam-header" style="background:linear-gradient(135deg,'+sub.color+','+darken(sub.color)+')"><h2>'+sub.label+'</h2><p>'+(pt?'Escolha o tópico que quer praticar:':'Choose the topic you want to practice:')+'</p></div>';
+  html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:4px">';
+  sub.subtopics.forEach(function(t){
+    var isAll = t.label.toLowerCase().includes('todo') || t.label.toLowerCase().includes('all');
+    var border = isAll ? '2px solid '+sub.color : '1.5px solid var(--border)';
+    var bg = isAll ? 'linear-gradient(135deg,'+sub.color+','+darken(sub.color)+')' : 'var(--card)';
+    var col = isAll ? '#fff' : 'var(--color-text-primary,#1a1a1a)';
+    html += '<button onclick="startSimTopic(''+sub.key+'',''+encodeURIComponent(t.label)+'',''+encodeURIComponent(t.topics)+'')" style="border:'+border+';background:'+bg+';color:'+col+';border-radius:14px;padding:14px 16px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;text-align:left;transition:transform .15s,box-shadow .15s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">';
+    html += t.label+'<div style="font-size:11px;font-weight:400;margin-top:4px;opacity:.75">'+(pt?'5 questões geradas na hora':'5 questions generated now')+'</div></button>';
+  });
+  html += '</div>';
+  document.getElementById('sim-questions').innerHTML = html;
+}
+
+function startSimTopic(key, labelEnc, topicsEnc){
+  currentSimKey = key;
+  currentTopicLabel = decodeURIComponent(labelEnc);
+  var topics = decodeURIComponent(topicsEnc);
+  var sub = SIMS.find(s=>s.key===key);
+  simAnswers={};
+  simQuestions=[];
+  document.getElementById('sim-questions').innerHTML='';
+  document.getElementById('sim-loading').style.display='block';
+  generateSimQuestions(sub, topics, currentTopicLabel);
+}
+
+async function generateSimQuestions(sub, topics, topicLabel){
+  var prompt = sub.lang==='pt'
+    ? 'Você é um professor de 4º ano do Ensino Fundamental. Gere EXATAMENTE 5 questões de múltipla escolha sobre: ' + topics + '. As questões devem ser no nível de uma criança de 9 anos, com 4 opções (A, B, C, D) cada. Responda SOMENTE em JSON válido, sem texto antes ou depois, no formato: [{"q":"pergunta","opts":["A","B","C","D"],"a":0,"exp":"explicação curta da resposta correta"}] onde "a" é o índice 0-3 da opção correta.'
+    : 'You are a Year 4 teacher (9-year-old students). Generate EXACTLY 5 multiple choice questions about: ' + topics + '. Questions must be at a 9-year-old level, with 4 options (A, B, C, D) each. Respond ONLY with valid JSON, no text before or after, format: [{"q":"question","opts":["A","B","C","D"],"a":0,"exp":"short explanation of correct answer"}] where "a" is the 0-3 index of the correct option.';
+
+  try {
+    var res = await fetch('/api/chat', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({messages:[{role:'user',content:prompt}], mode:'exam'})
+    });
+    var data = await res.json();
+    var text = data.reply || '';
+    var clean = text.replace(/```json|```/g,'').trim();
+    var questions = JSON.parse(clean);
+    simQuestions = questions;
+    simQuestions._topics = topics;
+    renderSimQuestions(sub, questions, topicLabel);
+  } catch(e) {
+    document.getElementById('sim-loading').style.display='none';
+    document.getElementById('sim-questions').innerHTML = '<div style="padding:1rem;color:var(--muted);font-size:13px">❌ Erro ao gerar questões. Verifique sua conexão e tente novamente.<br><br><button onclick="loadSim(currentSimKey)" style="padding:8px 16px;border-radius:20px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;font-family:inherit;font-size:13px">🔄 Tentar novamente</button></div>';
+    console.error(e);
+  }
+}
+
+function renderSimQuestions(sub, questions, topicLabel){
+  document.getElementById('sim-loading').style.display='none';
+  var color = sub.color;
+  var lang = sub.lang;
+  var tLabel = topicLabel || sub.label;
+
+  var html = '<div style="margin-bottom:10px"><button onclick="loadSim(currentSimKey)" style="border:1.5px solid var(--border);background:var(--card);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;color:var(--color-text-primary,#1a1a1a)">'+(lang==='pt'?'← Escolher outro tópico':'← Choose another topic')+'</button></div>';
+  html += '<div class="exam-header" style="background:linear-gradient(135deg,'+color+','+darken(color)+')">';
+  html += '<h2>'+sub.label+' — '+tLabel+'</h2>';
+  html += '<p style="font-size:12px;opacity:.85">'+(lang==='pt'?'Questões geradas dinamicamente ✨':'Dynamically generated questions ✨')+'</p>';
+  html += '<span class="exam-score" id="sc-dynamic">— / '+questions.length+'</span></div>';
+
+  questions.forEach(function(q,i){
+    var qid = 'dq'+i;
+    html += '<div class="q-block" id="qblock-'+i+'">';
+    html += '<div class="q-num">'+(lang==='pt'?'Questão':'Question')+' '+(i+1)+' · '+(lang==='pt'?'Múltipla escolha':'Multiple choice')+'</div>';
+    html += '<div class="q-stem">'+escHtml(q.q)+'</div>';
+    html += '<div class="mc-opts">';
+    var letters = ['A','B','C','D'];
+    q.opts.forEach(function(opt,j){
+      html += '<button class="mc-opt" onclick="pickSimMC(this,'+i+','+j+')"><span class="mc-letter" style="pointer-events:none">'+letters[j]+'</span>'+escHtml(opt)+'</button>';
+    });
+    html += '</div><div class="q-fb" id="qfb-'+i+'"></div></div>';
+  });
+
+  var btnLabel = lang==='pt'?'Corrigir ✓':'Check my answers ✓';
+  html += '<button class="check-btn" style="background:'+color+'" onclick="checkDynamicSim()">'+btnLabel+'</button>';
+  html += '<div class="result-box" id="rb-dynamic"><h3 id="rb-dynamic-h"></h3><p id="rb-dynamic-p"></p>';
+  html += '<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">';
+  html += '<button class="retry-s" onclick="retrySimTopic()" style="background:'+color+'">'+(lang==='pt'?'Nova tentativa mesmo tópico 🔄':'Try again same topic 🔄')+'</button>';
+  html += '<button class="retry-s" onclick="loadSim(currentSimKey)" style="background:rgba(0,0,0,.15)">'+(lang==='pt'?'Escolher outro tópico ←':'Choose another topic ←')+'</button>';
+  html += '</div></div>';
+
+  document.getElementById('sim-questions').innerHTML = html;
+}
+
+function pickSimMC(el,qIdx,optIdx){
+  var btn = el.closest('.mc-opt')||el;
+  var opts = btn.parentElement.querySelectorAll('.mc-opt');
+  opts.forEach(o=>{o.classList.remove('selected');o.style.outline='';});
+  btn.classList.add('selected');
+  btn.style.outline='2px solid #7F77DD';
+  simAnswers[qIdx]=optIdx;
+}
+
+function checkDynamicSim(){
+  var score=0;
+  var total=simQuestions.length;
+  var sub=SIMS.find(s=>s.key===currentSimKey);
+  var lang=sub?sub.lang:'en';
+
+  simQuestions.forEach(function(q,i){
+    var fb=document.getElementById('qfb-'+i);
+    var opts=document.querySelectorAll('#qblock-'+i+' .mc-opt');
+    var chosen=simAnswers[i];
+    var correct=q.a;
+
+    if(chosen===undefined){
+      if(fb) fb.className='q-fb show bad', fb.textContent='❌ '+(lang==='pt'?'Selecione uma opção!':'Select an option!');
+      if(opts[correct]) opts[correct].classList.add('correct');
+      return;
+    }
+
+    opts.forEach(o=>o.classList.remove('selected'));
+    if(chosen===correct){
+      score++;
+      opts[correct].classList.add('correct');
+      if(fb) fb.className='q-fb show ok', fb.textContent='✅ '+q.exp;
+    } else {
+      opts[chosen].classList.add('wrong');
+      opts[correct].classList.add('correct');
+      if(fb) fb.className='q-fb show bad', fb.textContent='❌ '+q.exp;
+    }
+  });
+
+  var pct=Math.round(score/total*100);
+  var rb=document.getElementById('rb-dynamic');
+  var rh=document.getElementById('rb-dynamic-h');
+  var rp=document.getElementById('rb-dynamic-p');
   var emoji=pct>=80?'🌟':pct>=60?'👍':'💪';
-  var msg=pct>=80?'Excellent! Ready for the exam!':pct>=60?'Good job! Review the corrections and try again.':'Keep practicing! Look at the red answers and try again.';
-  rh.textContent=emoji+' '+s+'/'+t+' ('+pct+'%)';
+  var msg=pct>=80?(lang==='pt'?'Excelente! Pronta para a prova!':'Excellent! Ready for the exam!')
+                 :pct>=60?(lang==='pt'?'Bom trabalho! Revise as vermelhas.':'Good job! Review the red answers.')
+                 :(lang==='pt'?'Continue praticando! Cada tentativa tem novas perguntas 🔄':'Keep practicing! Each attempt has new questions 🔄');
+  rh.textContent=emoji+' '+score+'/'+total+' ('+pct+'%)';
   rp.textContent=msg;
   rb.style.background=pct>=80?'var(--green-l)':'var(--amber-l)';
   rb.style.color=pct>=80?'var(--green-d)':'var(--amber-d)';
   rb.className='result-box show';
-  document.getElementById('sc-'+key).textContent=s+'/'+t;
-}
-function resetSim(key){location.reload();}
-
-// ===== CHECK SIMS =====
-function checkSim(key){
-  var s=0,t=0;
-  if(key==='science'){t=6;
-    var q1=MC['s1q1'];if(q1){var ok=Array.from(q1.opts).indexOf(q1.el)===1;if(ok){s++;q1.el.classList.add('correct');}else{q1.el.classList.add('wrong');q1.opts[1].classList.add('correct');}fb('s1q1',ok,ok?'Correct! Plants use sunlight+water+CO₂.':'Plants use sunlight+water+CO₂ to make glucose+oxygen.');}
-    var fa=['grass','grasshopper','frog','hawk'];var f=[norm(gv('s1f1')),norm(gv('s1f2')),norm(gv('s1f3')),norm(gv('s1f4'))];var q2ok=f.every((x,i)=>x===fa[i]);f.forEach((x,i)=>si('s1f'+(i+1),x===fa[i]));if(q2ok)s++;fb('s1q2',q2ok,q2ok?'Perfect food chain!':'grass → grasshopper → frog → hawk');
-    var ma=[gv('s1m1'),gv('s1m2'),gv('s1m3'),gv('s1m4')];var mca=['Herbivore','Carnivore','Omnivore','Decomposer'];var q3ok=ma.every((x,i)=>x===mca[i]);ma.forEach((x,i)=>ss('s1m'+(i+1),x===mca[i]));if(q3ok)s++;fb('s1q3',q3ok,q3ok?'All correct!':'Cow=Herbivore · Wolf=Carnivore · Bear=Omnivore · Mushroom=Decomposer');
-    var q4=MC['s1q4'];if(q4){var ok4=Array.from(q4.opts).indexOf(q4.el)===2;if(ok4){s++;q4.el.classList.add('correct');}else{q4.el.classList.add('wrong');q4.opts[2].classList.add('correct');}fb('s1q4',ok4,ok4?'Exactly right!':'Insects increase (no predator) and hawks have less food.');}
-    var tf=[gv('s1tf1'),gv('s1tf2'),gv('s1tf3')];var tfa=['False','True','True'];var q5ok=tf.every((x,i)=>x===tfa[i]);tf.forEach((x,i)=>ss('s1tf'+(i+1),x===tfa[i]));if(q5ok)s++;fb('s1q5',q5ok,q5ok?'All correct!':'F(plants=PRODUCERS,not consumers) · T · T');
-    var sa=gv('s1sa');if(sa.length>20)s++;fb('s1q6',sa.length>20,sa.length>20?'Great! Key: producers make food (plants), consumers eat organisms.':'Write at least one sentence for each!');
-    showResult('science',s,t);
-  }
-  else if(key==='ciencias'){t=6;
-    var q1=MC['s2q1'];if(q1){var ok=Array.from(q1.opts).indexOf(q1.el)===0;if(ok){s++;q1.el.classList.add('correct');}else{q1.el.classList.add('wrong');q1.opts[0].classList.add('correct');}fb('s2q1',ok,ok?'Correto!':'A Amazônia tem a maior biodiversidade — fica no Norte.');}
-    var ma2=[gv('s2m1'),gv('s2m2'),gv('s2m3'),gv('s2m4')];var mca2=['Onça-pintada','Lobo-guará','Mico-leão-dourado','Asa-branca'];var q2ok=ma2.every((x,i)=>x===mca2[i]);ma2.forEach((x,i)=>ss('s2m'+(i+1),x===mca2[i]));if(q2ok)s++;fb('s2q2',q2ok,q2ok?'Perfeito!':'Amazônia=Onça · Cerrado=Lobo-guará · M.Atlântica=Mico-leão · Caatinga=Asa-branca');
-    var tf2=[gv('s2tf1'),gv('s2tf2'),gv('s2tf3')];var tfa2=['Verdadeiro','Falso','Verdadeiro'];var q3ok=tf2.every((x,i)=>x===tfa2[i]);tf2.forEach((x,i)=>ss('s2tf'+(i+1),x===tfa2[i]));if(q3ok)s++;fb('s2q3',q3ok,q3ok?'Tudo certo!':'V · F(restam só ~12%) · V');
-    var q4=MC['s2q4'];if(q4){var ok4=Array.from(q4.opts).indexOf(q4.el)===1;if(ok4){s++;q4.el.classList.add('correct');}else{q4.el.classList.add('wrong');q4.opts[1].classList.add('correct');}fb('s2q4',ok4,ok4?'Correto!':'Caatinga = semiárida, seca intensa, plantas como cacto.');}
-    var ff=[norm(gv('s2f1')),norm(gv('s2f2')),norm(gv('s2f3')),norm(gv('s2f4'))];var ffa=['cerrado','mataatlântica','caatinga','amazônia'];var q5ok=ff.every((x,i)=>x===ffa[i]||x.includes(ffa[i])||ffa[i].includes(x));ff.forEach((x,i)=>si('s2f'+(i+1),(x===ffa[i]||x.includes(ffa[i])||ffa[i].includes(x))));if(q5ok)s++;fb('s2q5',q5ok,q5ok?'Perfeito!':'a)Cerrado b)Mata Atlântica c)Caatinga d)Amazônia');
-    var sa2=gv('s2sa');if(sa2.length>20)s++;fb('s2q6',sa2.length>20,sa2.length>20?'Ótimo! Ex: desmatamento e agropecuária destroem habitat.':'Escreva pelo menos 2 exemplos!');
-    showResult('ciencias',s,t);
-  }
-  else if(key==='portugues'){t=6;
-    var q1=MC['s3q1'];if(q1){var ok=Array.from(q1.opts).indexOf(q1.el)===1;if(ok){s++;q1.el.classList.add('correct');}else{q1.el.classList.add('wrong');q1.opts[1].classList.add('correct');}fb('s3q1',ok,ok?'Correto!':'Relato pessoal = 1ª pessoa, experiência real, ordem cronológica.');}
-    var pf1=norm(gv('s3f1')),ps1=gv('s3s1'),pf2=norm(gv('s3f2')),ps2=gv('s3s2'),pf3=norm(gv('s3f3')),ps3=gv('s3s3');
-    var q2ok=(pf1==='escola'||pf1==='es-co-la')&&ps1==='Trissílaba'&&(pf2==='sol')&&ps2==='Monossílaba'&&(pf3==='bor-bo-le-ta'||pf3==='borboleta')&&ps3==='Polissílaba';
-    si('s3f1',pf1==='escola'||pf1==='es-co-la');ss('s3s1',ps1==='Trissílaba');si('s3f2',pf2==='sol');ss('s3s2',ps2==='Monossílaba');si('s3f3',pf3==='bor-bo-le-ta'||pf3==='borboleta');ss('s3s3',ps3==='Polissílaba');
-    if(q2ok)s++;fb('s3q2',q2ok,q2ok?'Perfeito!':'es-co-la(trissílaba) · sol(monossílaba) · bor-bo-le-ta(polissílaba)');
-    var ton1=gv('s3t1'),ton2=gv('s3t2'),ton3=gv('s3t3');var q3ok=ton1==='Oxítona'&&ton2==='Paroxítona'&&ton3==='Proparoxítona';
-    ss('s3t1',ton1==='Oxítona');ss('s3t2',ton2==='Paroxítona');ss('s3t3',ton3==='Proparoxítona');
-    if(q3ok)s++;fb('s3q3',q3ok,q3ok?'Tudo certo!':'CAFÉ=oxítona · CADERNO=paroxítona · MÉDICO=proparoxítona');
-    var pp=[norm(gv('s3p1')),norm(gv('s3p2')),norm(gv('s3p3')),norm(gv('s3p4'))];var ppa=['este','ela','aquele','sua'];var q4ok=pp.every((x,i)=>x===ppa[i]);pp.forEach((x,i)=>si('s3p'+(i+1),x===ppa[i]));if(q4ok)s++;fb('s3q4',q4ok,q4ok?'Perfeito!':'a)Este b)ela c)Aquele d)sua');
-    var q5=MC['s3q5'];if(q5){var ok5=Array.from(q5.opts).indexOf(q5.el)===2;if(ok5){s++;q5.el.classList.add('correct');}else{q5.el.classList.add('wrong');q5.opts[2].classList.add('correct');}fb('s3q5',ok5,ok5?'Correto!':'ESSE = demonstrativo, indica algo perto de quem ouve.');}
-    var sap=gv('s3sa');if(sap.length>30)s++;fb('s3q6',sap.length>30,sap.length>30?'Ótimo relato! Verifique: 1ª pessoa ✓, marcadores temporais ✓':'Escreva pelo menos 3 frases com marcadores de tempo!');
-    showResult('portugues',s,t);
-  }
-  else if(key==='matpt'){t=6;
-    var f1=norm(gv('mp1f1')),f2=norm(gv('mp1f2')),f3=norm(gv('mp1f3'));
-    var q1ok=(f1.includes('3000')||f1.includes('3mil')||f1.includes('3milhares'))&&(f2==='centenas'||f2==='centena')&&(f3.includes('3000')||f3.includes('3.000'));
-    si('mp1f1',f1.includes('3000')||f1.includes('3mil')||f1.includes('3milhares'));si('mp1f2',f2==='centenas'||f2==='centena');si('mp1f3',f3.includes('3000')||f3.includes('3.000'));
-    if(q1ok)s++;fb('mp1q1',q1ok,q1ok?'Correto!':'3=3.000(milhares) · 7=centenas · forma: 3.000+700+40+6');
-    var q2=MC['mp1q2'];if(q2){var ok2=Array.from(q2.opts).indexOf(q2.el)===1;if(ok2){s++;q2.el.classList.add('correct');}else{q2.el.classList.add('wrong');q2.opts[1].classList.add('correct');}fb('mp1q2',ok2,ok2?'Correto!':'2.849 → o 8 está na posição das CENTENAS = 800.');}
-    var op1=norm(gv('mp1op1')),op2=norm(gv('mp1op2')),op3=norm(gv('mp1op3')),op4=norm(gv('mp1op4'));
-    var q3ok=op1==='56'&&op2==='7'&&op3==='693'&&op4==='454';
-    si('mp1op1',op1==='56');si('mp1op2',op2==='7');si('mp1op3',op3==='693');si('mp1op4',op4==='454');
-    if(q3ok)s++;fb('mp1q3',q3ok,q3ok?'Tudo certo!':'7×8=56 · 63÷9=7 · 456+237=693 · 802-348=454');
-    var w1=norm(gv('mp1wp1')),w2=norm(gv('mp1wp2')),w3=norm(gv('mp1wp3')),w4=norm(gv('mp1wp4'));
-    var q4ok=w1==='1325'&&w2==='1445'&&(w3==='1407'||w4==='1407');
-    si('mp1wp1',w1==='1325');si('mp1wp2',w2==='1445');si('mp1wp3',w3==='1407');si('mp1wp4',w4==='1407');
-    if(q4ok)s++;fb('mp1q4',q4ok,q4ok?'Perfeito!':'1240+85=1325 → +120=1445 → -38=1407');
-    var g1=norm(gv('mp1g1')),g2=norm(gv('mp1g2')),g3=norm(gv('mp1g3'));
-    var q5ok=(g1==='abril'||g1==='abr')&&g2==='5'&&g3==='33';
-    si('mp1g1',g1==='abril'||g1==='abr');si('mp1g2',g2==='5');si('mp1g3',g3==='33');
-    if(q5ok)s++;fb('mp1q5',q5ok,q5ok?'Correto!':'Mais=Abril(9) · Dif=9-4=5 · Total=5+8+4+9+7=33');
-    var ord=norm(gv('mp1ord1')),ext=norm(gv('mp1ext1')),mx=norm(gv('mp1max1'));
-    var q6ok=(ord==='quinto'||ord==='5º'||ord==='5o')&&ext.includes('trêsmil')&&(mx==='3980'||mx==='3.980');
-    si('mp1ord1',ord==='quinto'||ord==='5o');si('mp1ext1',ext.includes('trêsmil')||ext.includes('tresmil'));si('mp1max1',mx==='3980'||mx==='3.980');
-    if(q6ok)s++;fb('mp1q6',q6ok,q6ok?'Tudo certo!':'5º=quinto · 3.456=três mil quatrocentos e cinquenta e seis · maior=3.980');
-    showResult('matpt',s,t);
-  }
-  else if(key==='mat'){t=6;
-    var f1=norm(gv('s4f1')),f2=norm(gv('s4f2')),f3=norm(gv('s4f3'));
-    var q1ok=(f1.includes('4000')||f1.includes('4thousand')||f1.includes('4,000'))&&(f2==='tens'||f2==='ten')&&(f3.includes('4000')||f3.includes('4,000'));
-    si('s4f1',f1.includes('4000')||f1.includes('4thousand'));si('s4f2',f2==='tens'||f2==='ten');si('s4f3',f3.includes('4000')||f3.includes('4,000'));
-    if(q1ok)s++;fb('s4q1',q1ok,q1ok?'Correct!':'4=4,000(thousands) · 5=tens place · expanded: 4,000+700+50+8');
-    var w1=norm(gv('s4wp1')),w2=norm(gv('s4wp2')),w3=norm(gv('s4wp3'));var q2ok=w1==='902'&&w2==='1022'&&w3==='1022';si('s4wp1',w1==='902');si('s4wp2',w2==='1022');si('s4wp3',w3==='1022');if(q2ok)s++;fb('s4q2',q2ok,q2ok?'Perfect!':'1250-348=902 → 902+120=1,022');
-    var t1=norm(gv('s4t1')),t2=norm(gv('s4t2')),t3=norm(gv('s4t3'));var q3ok=(t1==='715'||t1==='7:15')&&(t2==='505'||t2==='5:05')&&(t3==='115'||t3==='1:15');si('s4t1',t1==='715'||t1==='7:15');si('s4t2',t2==='505'||t2==='5:05');si('s4t3',t3==='115'||t3==='1:15');if(q3ok)s++;fb('s4q3',q3ok,q3ok?'All correct!':'a)7:15 · b)5:05 PM · c)1:15 PM');
-    var sh1=gv('s4sh1'),sh2=gv('s4sh2'),sh3=gv('s4sh3'),sh4=gv('s4sh4');var sha=['4 equal sides, 4 right angles','Opposite sides equal, 4 right angles','4 equal sides, no right angles','Only one pair of parallel sides'];var q4ok=sh1===sha[0]&&sh2===sha[1]&&sh3===sha[2]&&sh4===sha[3];[sh1,sh2,sh3,sh4].forEach((x,i)=>ss('s4sh'+(i+1),x===sha[i]));if(q4ok)s++;fb('s4q4',q4ok,q4ok?'Perfect!':'Square=4equal+right · Rectangle=opp+right · Rhombus=4equal,no right · Trapezoid=1pair');
-    var g1=norm(gv('s4g1')),g2=norm(gv('s4g2')),g3=norm(gv('s4g3'));var q5ok=(g1==='april'||g1==='abril')&&g2==='5'&&g3==='31';si('s4g1',g1==='april'||g1==='abril');si('s4g2',g2==='5');si('s4g3',g3==='31');if(q5ok)s++;fb('s4q5',q5ok,q5ok?'Correct!':'Most=April(9) · Diff=9-4=5 · Total=4+7+5+9+6=31');
-    var op1=norm(gv('s4op1')),op2=norm(gv('s4op2')),op3=norm(gv('s4op3'));var q6ok=op1==='48'&&op2==='6'&&op3==='63';si('s4op1',op1==='48');si('s4op2',op2==='6');si('s4op3',op3==='63');if(q6ok)s++;fb('s4q6',q6ok,q6ok?'All correct!':'6×8=48 · 54÷9=6 · 7×9=63');
-    showResult('mat',s,t);
-  }
-  else if(key==='la'){t=5;
-    var lf=[norm(gv('s5f1')),norm(gv('s5f2')),norm(gv('s5f3')),norm(gv('s5f4'))];var lfa=['smaller','hottest','faster','best'];var q1ok=lf.every((x,i)=>x===lfa[i]);lf.forEach((x,i)=>si('s5f'+(i+1),x===lfa[i]));if(q1ok)s++;fb('s5q1',q1ok,q1ok?'All correct!':'smaller · hottest · faster · best(irregular)');
-    var lv=[gv('s5v1'),gv('s5v2'),gv('s5v3'),gv('s5v4')];var lva=['brushes','went','watched','does'];var q2ok=lv.every((x,i)=>x===lva[i]);lv.forEach((x,i)=>ss('s5v'+(i+1),x===lva[i]));if(q2ok)s++;fb('s5q2',q2ok,q2ok?'Perfect!':'brushes · went · watched · does');
-    var lst=[gv('s5st1'),gv('s5st2'),gv('s5st3'),gv('s5st4')];var lsta=['Command','Exclamation','Question','Statement'];var q3ok=lst.every((x,i)=>x===lsta[i]);lst.forEach((x,i)=>ss('s5st'+(i+1),x===lsta[i]));if(q3ok)s++;fb('s5q3',q3ok,q3ok?'Correct!':'Command · Exclamation · Question · Statement');
-    var q4=MC['s5q4'];if(q4){var ok4=Array.from(q4.opts).indexOf(q4.el)===1;if(ok4){s++;q4.el.classList.add('correct');}else{q4.el.classList.add('wrong');q4.opts[1].classList.add('correct');}fb('s5q4',ok4,ok4?'Correct! Comparing 2 = -er (smaller).':'Comparing 2 things = comparative: smaller. Superlative(-est) = 3 or more.');}
-    var lsa=gv('s5sa');if(lsa.length>40)s++;fb('s5q5',lsa.length>40,lsa.length>40?'Well done! Check: statement(.) · question(?) · exclamation(!) · command':'Write all 4 sentence types!');
-    showResult('la',s,t);
-  }
-  else if(key==='social'){t=5;
-    var q1=MC['s6q1'];if(q1){var ok=Array.from(q1.opts).indexOf(q1.el)===2;if(ok){s++;q1.el.classList.add('correct');}else{q1.el.classList.add('wrong');q1.opts[2].classList.add('correct');}fb('s6q1',ok,ok?'Correct!':'Nomadic = moving constantly following food and seasons.');}
-    var sm=[gv('s6m1'),gv('s6m2'),gv('s6m3'),gv('s6m4')];var sma=['Incas','Aztecs','Mayas','Incas'];var q2ok=sm.every((x,i)=>x===sma[i]);sm.forEach((x,i)=>ss('s6m'+(i+1),x===sma[i]));if(q2ok)s++;fb('s6q2',q2ok,q2ok?'All correct!':'Machu Picchu=Incas · Tenochtitlan=Aztecs · Glyphs=Mayas · Quipu=Incas');
-    var stf=[gv('s6tf1'),gv('s6tf2'),gv('s6tf3')];var stfa=['False','True','True'];var q3ok=stf.every((x,i)=>x===stfa[i]);stf.forEach((x,i)=>ss('s6tf'+(i+1),x===stfa[i]));if(q3ok)s++;fb('s6q3',q3ok,q3ok?'Correct!':'F(Incas had no alphabet, used quipu) · T · T');
-    var sf=[norm(gv('s6f1')),norm(gv('s6f2')),norm(gv('s6f3')),norm(gv('s6f4'))];var sfa=['mayas','nomads','incas','quipu'];var q4ok=sf.every((x,i)=>x===sfa[i]);sf.forEach((x,i)=>si('s6f'+(i+1),x===sfa[i]));if(q4ok)s++;fb('s6q4',q4ok,q4ok?'Perfect!':'Mayas · nomads · Incas · quipu');
-    var ssa=gv('s6sa');if(ssa.length>40)s++;fb('s6q5',ssa.length>40,ssa.length>40?'Great answer! Check: location ✓, achievements ✓, fate ✓':'Write 3-4 full sentences!');
-    showResult('social',s,t);
-  }
+  document.getElementById('sc-dynamic').textContent=score+'/'+total;
 }
 
+function retrySimTopic(){
+  var sub = SIMS.find(s=>s.key===currentSimKey);
+  var topics = simQuestions._topics || sub.allTopics;
+  simAnswers={};
+  simQuestions=[];
+  document.getElementById('sim-questions').innerHTML='';
+  document.getElementById('sim-loading').style.display='block';
+  generateSimQuestions(sub, topics, currentTopicLabel);
+}
+
+function darken(hex){
+  var r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  return '#'+[Math.max(0,r-40),Math.max(0,g-40),Math.max(0,b-40)].map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+function escHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// ===== MIND NAV =====
 // ===== MIND NAV =====
 var MINDS=[
   ['science','🌿 Science','#1D9E75'],
