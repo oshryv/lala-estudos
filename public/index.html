@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📚 Lala — Semana de Provas Year 4</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#1D9E75;--green-l:#E1F5EE;--green-d:#085041;
+  --blue:#378ADD;--blue-l:#E6F1FB;--blue-d:#0C447C;
+  --pink:#D4537E;--pink-l:#FBEAF0;--pink-d:#72243E;
+  --amber:#BA7517;--amber-l:#FAEEDA;--amber-d:#633806;
+  --purple:#7F77DD;--purple-l:#EEEDFE;--purple-d:#3C3489;
+  --red:#E24B4A;--red-l:#FCEBEB;--red-d:#791F1F;
+  --gray:#5F5E5A;--gray-l:#F1EFE8;--gray-d:#2C2C2A;
+  --bg:#f5f4f0;--card:#fff;--text:#1a1a1a;--muted:#666;--border:#e0ddd8;
+}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* TOPBAR */
+.topbar{background:#fff;padding:.6rem 1rem;display:flex;align-items:center;gap:8px;border-bottom:1.5px solid var(--border);flex-wrap:wrap;position:sticky;top:0;z-index:100}
+.topbar-title{font-size:15px;font-weight:900;color:var(--text);margin-right:6px;white-space:nowrap}
+.tab{padding:6px 14px;border-radius:20px;font-size:12.5px;font-weight:700;cursor:pointer;border:2px solid var(--border);background:transparent;color:var(--muted);font-family:'Nunito',sans-serif;transition:all .18s;white-space:nowrap}
+.tab.active{color:#fff!important;border-color:transparent!important}
+
+/* SCREENS */
+.screen{display:none;padding:1rem;max-width:920px;margin:0 auto}
+.screen.active{display:block}
+
+/* ===== PAINEL ===== */
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:.5rem}
+.subj-card{border-radius:18px;padding:1.1rem 1.25rem;cursor:pointer;transition:transform .15s,box-shadow .15s;position:relative;overflow:hidden;color:#fff;border:none;text-align:left;font-family:'Nunito',sans-serif;width:100%}
+.subj-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.13)}
+.subj-card .emoji{font-size:28px;margin-bottom:7px;display:block}
+.subj-card h3{font-size:14px;font-weight:800;margin-bottom:3px}
+.subj-card p{font-size:11.5px;line-height:1.5;opacity:.88}
+.subj-card .date{display:inline-block;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:10px;margin-top:7px;background:rgba(255,255,255,.25)}
+.subj-card .lang{position:absolute;top:10px;right:12px;font-size:9.5px;font-weight:800;padding:2px 8px;border-radius:8px;background:rgba(255,255,255,.25)}
+.subj-card .bg-ico{position:absolute;bottom:-8px;right:-6px;font-size:68px;opacity:.08;pointer-events:none;line-height:1}
+.detail-back{background:#fff;border:2px solid var(--border);border-radius:20px;padding:7px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;color:var(--text);margin-bottom:1.25rem;display:inline-flex;align-items:center;gap:6px;transition:background .15s}
+.detail-back:hover{background:#f0efea}
+.detail-title{font-size:20px;font-weight:800;margin-bottom:1.25rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.lang-pill{font-size:11px;font-weight:800;padding:3px 10px;border-radius:8px}
+.topic-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.topic-card{border-radius:14px;padding:1rem 1.1rem}
+.topic-card h4{font-size:13px;font-weight:800;margin-bottom:7px}
+.topic-card ul{font-size:12.5px;line-height:1.9;list-style:none}
+.topic-card ul li::before{content:"→ ";font-weight:700}
+.activity{margin-top:10px;border-radius:10px;padding:8px 10px;font-size:12px;line-height:1.6;background:rgba(255,255,255,.5)}
+.activity strong{display:block;font-size:10px;font-weight:800;margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em;opacity:.6}
+
+/* ===== MAPA MENTAL ===== */
+.mind-wrap{overflow:auto;background:var(--card);border-radius:16px;border:1.5px solid var(--border);padding:.5rem}
+.mind-wrap svg{min-width:640px;width:100%;display:block;margin:auto}
+
+/* ===== QUIZ ===== */
+.qf-wrap{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}
+.qf-btn{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;border:2px solid var(--border);background:var(--card);font-family:'Nunito',sans-serif;color:var(--muted);transition:all .15s}
+.qf-btn.active{color:#fff;border-color:transparent}
+.prog-bar{height:5px;background:#e0ddd8;border-radius:3px;margin-bottom:1.25rem;overflow:hidden}
+.prog-fill{height:100%;border-radius:3px;transition:width .3s;background:var(--green)}
+.quiz-box{max-width:560px}
+.q-meta{font-size:11px;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.q-text{font-size:15px;font-weight:700;line-height:1.55;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px;margin-bottom:1rem}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:11px;border:2px solid var(--border);cursor:pointer;font-size:13px;line-height:1.4;color:var(--text);transition:all .15s;background:var(--card);font-family:'Nunito',sans-serif;text-align:left;width:100%}
+.opt:hover{border-color:#bbb;background:#fafaf8}
+.opt.correct{border-color:var(--green);background:var(--green-l);color:var(--green-d)}
+.opt.wrong{border-color:var(--red);background:var(--red-l);color:var(--red-d)}
+.opt-letter{font-weight:800;font-size:12px;min-width:18px;margin-top:1px}
+.feedback{font-size:13px;font-weight:700;padding:8px 12px;border-radius:9px;display:none;margin-bottom:12px;line-height:1.5}
+.feedback.ok{display:block;background:var(--green-l);color:var(--green-d)}
+.feedback.bad{display:block;background:var(--red-l);color:var(--red-d)}
+.next-btn{padding:9px 24px;border-radius:20px;font-size:13px;font-weight:800;cursor:pointer;border:none;font-family:'Nunito',sans-serif;color:#fff;display:none}
+.next-btn:hover{opacity:.88}
+.score-card{border-radius:16px;padding:2rem;text-align:center;display:none}
+.score-card.show{display:block}
+.score-card h2{font-size:32px;font-weight:900;margin-bottom:8px}
+.score-card p{font-size:14px;margin-bottom:16px}
+.retry-btn{padding:10px 24px;border-radius:20px;font-size:13px;font-weight:800;cursor:pointer;border:none;font-family:'Nunito',sans-serif;color:#fff;background:rgba(0,0,0,.22)}
+
+/* ===== SIMULADOS ===== */
+.sim-nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}
+.sim-btn{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;border:2px solid var(--border);background:var(--card);font-family:'Nunito',sans-serif;color:var(--muted);transition:all .15s}
+.sim-btn.active{color:#fff;border-color:transparent}
+.sim-panel{display:none}
+.sim-panel.active{display:block}
+.exam-header{border-radius:14px;padding:1rem 1.25rem;margin-bottom:1.25rem;color:#fff;position:relative}
+.exam-header h2{font-size:17px;font-weight:800;margin-bottom:2px}
+.exam-header p{font-size:12px;opacity:.85}
+.exam-score{position:absolute;top:12px;right:14px;font-size:13px;font-weight:800;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:12px}
+.q-block{background:var(--card);border-radius:14px;border:1.5px solid var(--border);padding:1rem 1.25rem;margin-bottom:12px}
+.q-num{font-size:10px;font-weight:800;letter-spacing:.06em;opacity:.5;margin-bottom:6px;text-transform:uppercase}
+.q-stem{font-size:13.5px;font-weight:700;line-height:1.6;color:var(--text);margin-bottom:10px}
+.q-ctx{background:#f5f4f0;border-left:3px solid var(--border);border-radius:0 8px 8px 0;padding:8px 12px;font-size:12.5px;line-height:1.7;color:var(--muted);margin-bottom:10px;font-style:italic}
+.mc-opts{display:flex;flex-direction:column;gap:6px}
+.mc-opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border-radius:10px;border:2px solid var(--border);cursor:pointer;font-size:13px;line-height:1.4;color:var(--text);transition:all .15s;background:var(--card);font-family:'Nunito',sans-serif;text-align:left;width:100%}
+.mc-opt:hover{border-color:#bbb;background:#fafaf8}
+.mc-opt.correct{border-color:var(--green);background:var(--green-l);color:var(--green-d)}
+.mc-opt.wrong{border-color:var(--red);background:var(--red-l);color:var(--red-d)}
+.mc-letter{font-weight:800;font-size:12px;min-width:18px;margin-top:1px}
+.fill-input{border:none;border-bottom:2.5px solid var(--border);background:transparent;font-family:'Nunito',sans-serif;font-size:13px;font-weight:600;color:var(--text);padding:2px 4px;width:130px;text-align:center;outline:none;transition:border-color .15s}
+.fill-input:focus{border-color:var(--blue)}
+.fill-input.correct{border-color:var(--green);color:var(--green-d)}
+.fill-input.wrong{border-color:var(--red);color:var(--red-d)}
+.match-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;flex-wrap:wrap}
+.match-label{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;border:2px solid var(--border);background:#f5f4f0;color:var(--text);white-space:nowrap}
+.match-sel{padding:5px 8px;border-radius:8px;font-size:12px;font-weight:600;border:2px solid var(--border);background:var(--card);color:var(--text);font-family:'Nunito',sans-serif;cursor:pointer;flex:1;min-width:0}
+.match-sel.correct{border-color:var(--green);background:var(--green-l);color:var(--green-d)}
+.match-sel.wrong{border-color:var(--red);background:var(--red-l);color:var(--red-d)}
+.short-ta{width:100%;border:2px solid var(--border);border-radius:10px;padding:9px 11px;font-family:'Nunito',sans-serif;font-size:13px;color:var(--text);background:var(--card);resize:vertical;min-height:70px;outline:none;line-height:1.6;transition:border-color .15s}
+.short-ta:focus{border-color:var(--blue)}
+.q-fb{margin-top:8px;font-size:12px;font-weight:700;padding:7px 10px;border-radius:8px;display:none;line-height:1.5}
+.q-fb.show{display:block}
+.q-fb.ok{background:var(--green-l);color:var(--green-d)}
+.q-fb.bad{background:var(--red-l);color:var(--red-d)}
+.check-btn{margin-top:1rem;padding:10px 26px;border-radius:22px;font-size:13px;font-weight:800;cursor:pointer;border:none;font-family:'Nunito',sans-serif;color:#fff;transition:opacity .15s}
+.check-btn:hover{opacity:.88}
+.result-box{border-radius:14px;padding:1.5rem;text-align:center;margin-top:1rem;display:none}
+.result-box.show{display:block}
+.result-box h3{font-size:26px;font-weight:900;margin-bottom:6px}
+.result-box p{font-size:13px;margin-bottom:12px}
+.retry-s{padding:9px 22px;border-radius:20px;font-size:13px;font-weight:800;cursor:pointer;border:none;font-family:'Nunito',sans-serif;color:#fff;background:rgba(0,0,0,.2)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="topbar-title">📚 Lala — Year 4</span>
+  <button class="tab active" id="t-dash" onclick="showTab('dash','#2C2C2A')">🏠 Painel</button>
+  <button class="tab" id="t-mind" onclick="showTab('mind','#7F77DD')">🌿 Mapa Mental</button>
+  <button class="tab" id="t-quiz" onclick="showTab('quiz','#D4537E')">🎯 Quiz</button>
+  <button class="tab" id="t-sim" onclick="showTab('sim','#1D9E75')">📝 Simulados</button>
+</div>
+
+<!-- ===== PAINEL ===== -->
+<div class="screen active" id="dash">
+  <div id="dash-main">
+    <div class="dash-grid">
+      <button class="subj-card" style="background:linear-gradient(135deg,#1D9E75,#0F6E56)" onclick="showDetail('science')"><span class="lang">EN</span><span class="emoji">🌿</span><h3>Science</h3><p>Food web, photosynthesis, producers &amp; consumers</p><span class="date">Exam: Mon 13/04</span><div class="bg-ico">🌿</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#378ADD,#185FA5)" onclick="showDetail('ciencias')"><span class="lang">PT</span><span class="emoji">🗺️</span><h3>Ciências</h3><p>Biomas: Amazônia, Mata Atlântica, Cerrado, Caatinga</p><span class="date">Prova: qui 16/04</span><div class="bg-ico">🗺️</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#D4537E,#993556)" onclick="showDetail('portugues')"><span class="lang">PT</span><span class="emoji">✏️</span><h3>Língua Portuguesa</h3><p>Relato pessoal, sílabas, pronomes</p><span class="date">Prova: ter 14/04</span><div class="bg-ico">✏️</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#BA7517,#854F0B)" onclick="showDetail('mat')"><span class="lang">EN</span><span class="emoji">🔢</span><h3>Math</h3><p>Place value, time, quadrilaterals, word problems</p><span class="date">Exam: Mon 22/04</span><div class="bg-ico">🔢</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#E24B4A,#A32D2D)" onclick="showDetail('la')"><span class="lang">EN</span><span class="emoji">📖</span><h3>Language Arts</h3><p>Adjectives, verb tenses, types of sentences</p><span class="date">Exam: Mon 27/04</span><div class="bg-ico">📖</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#7F77DD,#534AB7)" onclick="showDetail('geohist')"><span class="lang">PT</span><span class="emoji">🏛️</span><h3>Geo &amp; História</h3><p>Tipos de mapas, influências indígenas</p><span class="date">Prova: seg 28/04</span><div class="bg-ico">🏛️</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#5F5E5A,#2C2C2A)" onclick="showDetail('social')"><span class="lang">EN</span><span class="emoji">🌎</span><h3>Social Studies</h3><p>Nomadic people, Mayas, Aztecs, Incas</p><span class="date">Exam: Wed 29/04</span><div class="bg-ico">🌎</div></button>
+    </div>
+  </div>
+  <div id="dash-detail" style="display:none"></div>
+</div>
+
+<!-- ===== MAPA MENTAL ===== -->
+<div class="screen" id="mind">
+  <style>
+    .mind-nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}
+    .mind-btn{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;border:2px solid var(--border);background:var(--card);font-family:'Nunito',sans-serif;color:var(--muted);transition:all .15s}
+    .mind-btn.active{color:#fff;border-color:transparent}
+    .mind-map{display:none;overflow:auto;background:var(--card);border-radius:16px;border:1.5px solid var(--border);padding:1rem}
+    .mind-map.active{display:block}
+    .mind-map svg{display:block;margin:auto}
+    .mind-hint{font-size:11px;color:var(--muted);text-align:center;margin-bottom:.5rem}
+  </style>
+
+  <div class="mind-nav" id="mind-nav"></div>
+  <p class="mind-hint">💡 Role para os lados se o mapa for grande</p>
+
+  <!-- SCIENCE -->
+  <div class="mind-map active" id="mm-science">
+    <svg viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg" style="font-family:'Nunito',sans-serif;min-width:700px;width:100%">
+      <!-- CENTER -->
+      <rect x="350" y="310" width="200" height="60" rx="30" fill="#1D9E75"/>
+      <text x="450" y="335" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">🌿 SCIENCE</text>
+      <text x="450" y="354" text-anchor="middle" fill="#E1F5EE" font-size="10">Food web · Photosynthesis</text>
+
+      <!-- BRANCH 1: PHOTOSYNTHESIS (top) -->
+      <line x1="430" y1="312" x2="280" y2="190" stroke="#1D9E75" stroke-width="2"/>
+      <rect x="140" y="148" width="190" height="50" rx="12" fill="#9FE1CB"/>
+      <text x="235" y="170" text-anchor="middle" fill="#085041" font-size="12" font-weight="800">☀️ Photosynthesis</text>
+      <text x="235" y="186" text-anchor="middle" fill="#085041" font-size="9.5">Plants make their own food</text>
+      <!-- sub: inputs -->
+      <line x1="190" y1="152" x2="130" y2="100" stroke="#5DCAA5" stroke-width="1.5"/>
+      <rect x="40" y="68" width="130" height="40" rx="10" fill="#E1F5EE"/>
+      <text x="105" y="84" text-anchor="middle" fill="#085041" font-size="10" font-weight="700">☀️ Sunlight</text>
+      <text x="105" y="98" text-anchor="middle" fill="#085041" font-size="9">+ 💧 Water + CO₂</text>
+      <!-- sub: outputs -->
+      <line x1="283" y1="152" x2="310" y2="100" stroke="#5DCAA5" stroke-width="1.5"/>
+      <rect x="260" y="68" width="130" height="40" rx="10" fill="#E1F5EE"/>
+      <text x="325" y="84" text-anchor="middle" fill="#085041" font-size="10" font-weight="700">🍬 Glucose</text>
+      <text x="325" y="98" text-anchor="middle" fill="#085041" font-size="9">+ 💨 Oxygen</text>
+
+      <!-- BRANCH 2: FOOD CHAIN (right) -->
+      <line x1="548" y1="335" x2="660" y2="260" stroke="#1D9E75" stroke-width="2"/>
+      <rect x="630" y="220" width="200" height="50" rx="12" fill="#9FE1CB"/>
+      <text x="730" y="242" text-anchor="middle" fill="#085041" font-size="12" font-weight="800">🔗 Food Chain</text>
+      <text x="730" y="258" text-anchor="middle" fill="#085041" font-size="9.5">Energy flows ONE direction →</text>
+      <!-- sub: example -->
+      <line x1="730" y1="220" x2="730" y2="160" stroke="#5DCAA5" stroke-width="1.5"/>
+      <rect x="640" y="118" width="185" height="50" rx="10" fill="#E1F5EE"/>
+      <text x="732" y="136" text-anchor="middle" fill="#085041" font-size="9.5" font-weight="700">🌱 grass</text>
+      <text x="732" y="151" text-anchor="middle" fill="#085041" font-size="9">→ 🦗 insect → 🐸 frog → 🦅 hawk</text>
+      <!-- sub: levels -->
+      <line x1="830" y1="248" x2="870" y2="220" stroke="#5DCAA5" stroke-width="1.5"/>
+      <rect x="840" y="186" width="50" height="38" rx="8" fill="#E1F5EE"/>
+      <text x="865" y="202" text-anchor="middle" fill="#085041" font-size="8.5" font-weight="700">Producer</text>
+      <text x="865" y="215" text-anchor="middle" fill="#085041" font-size="8">= plant 🌱</text>
+
+      <!-- BRANCH 3: FOOD WEB (bottom right) -->
+      <line x1="540" y1="365" x2="660" y2="450" stroke="#1D9E75" stroke-width="2"/>
+      <rect x="630" y="430" width="200" height="50" rx="12" fill="#9FE1CB"/>
+      <text x="730" y="452" text-anchor="middle" fill="#085041" font-size="12" font-weight="800">🕸️ Food Web</text>
+      <text x="730" y="468" text-anchor="middle" fill="#085041" font-size="9.5">Many chains connected</text>
+      <!-- sub -->
+      <line x1="730" y1="480" x2="730" y2="540" stroke="#5DCAA5" stroke-width="1.5"/>
+      <rect x="640" y="540" width="185" height="40" rx="10" fill="#E1F5EE"/>
+      <text x="732" y="557" text-anchor="middle" fill="#085041" font-size="9" font-weight="700">Remove one species →</text>
+      <text x="732" y="572" text-anchor="middle" fill="#085041" font-size="9">whole web changes! ⚠️</text>
+
+      <!-- BRANCH 4: CLASSIFY (bottom left) -->
+      <line x1="390" y1="368" x2="280" y2="460" stroke="#1D9E75" stroke-width="2"/>
+      <rect x="130" y="440" width="200" height="50" rx="12" fill="#9FE1CB"/>
+      <text x="230" y="462" text-anchor="middle" fill="#085041" font-size="12" font-weight="800">🏷️ Classify Animals</text>
+      <text x="230" y="478" text-anchor="middle" fill="#085041" font-size="9.5">What do they eat?</text>
+      <!-- sub: herbivore -->
+      <line x1="160" y1="490" x2="100" y2="540" stroke="#5DCAA5" stroke-width="1.5"/>
+      <rect x="30" y="530" width="115" height="38" rx="8" fill="#E1F5EE"/>
+      <text x="87" y="546" text-anchor="middle" fill="#085041" font-size="9" font-weight="700">🥦 Herbivore</text>
+      <text x="87" y="560" text-anchor="middle" fill="#085041" font-size="8.5">plants only</text>
+      <!-- sub: carnivore -->
+      <line x1="230" y1="490" x2="230" y2="540" stroke="#5DCAA5" stroke-width="1.5"/>
+      <rect x="165" y="530" width="115" height="38" rx="8" fill="#E1F5EE"/>
+      <text x="222" y="546" text-anchor="middle" fill="#085041" font-size="9" font-weight="700">🥩 Carnivore</text>
+      <text x="222" y="560" text-anchor="middle" fill="#085041" font-size="8.5">meat only</text>
+      <!-- sub: omnivore -->
+      <line x1="300" y1="490" x2="355" y2="540" stroke="#5DCAA5" stroke-width="1.5"/>
+      <rect x="305" y="530" width="115" height="38" rx="8" fill="#E1F5EE"/>
+      <text x="362" y="546" text-anchor="middle" fill="#085041" font-size="9" font-weight="700">🍕 Omnivore</text>
+      <text x="362" y="560" text-anchor="middle" fill="#085041" font-size="8.5">both! (like us 😄)</text>
+
+      <!-- BRANCH 5: DECOMPOSERS (top right) -->
+      <line x1="548" y1="320" x2="650" y2="180" stroke="#1D9E75" stroke-width="2"/>
+      <rect x="630" y="140" width="175" height="50" rx="12" fill="#9FE1CB"/>
+      <text x="717" y="161" text-anchor="middle" fill="#085041" font-size="11" font-weight="800">🍄 Decomposers</text>
+      <text x="717" y="178" text-anchor="middle" fill="#085041" font-size="9">Break down dead matter</text>
+      <line x1="717" y1="140" x2="717" y2="90" stroke="#5DCAA5" stroke-width="1.5"/>
+      <rect x="645" y="52" width="145" height="40" rx="8" fill="#E1F5EE"/>
+      <text x="717" y="69" text-anchor="middle" fill="#085041" font-size="9" font-weight="700">Recycle nutrients 🔄</text>
+      <text x="717" y="84" text-anchor="middle" fill="#085041" font-size="8.5">back to the soil</text>
+    </svg>
+  </div>
+
+  <!-- CIÊNCIAS -->
+  <div class="mind-map" id="mm-ciencias">
+    <svg viewBox="0 0 940 680" xmlns="http://www.w3.org/2000/svg" style="font-family:'Nunito',sans-serif;min-width:720px;width:100%">
+      <rect x="360" y="300" width="220" height="60" rx="30" fill="#378ADD"/>
+      <text x="470" y="325" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">🗺️ BIOMAS BRASILEIROS</text>
+      <text x="470" y="345" text-anchor="middle" fill="#E6F1FB" font-size="10">Impacto humano · Biodiversidade</text>
+
+      <!-- AMAZÔNIA top-left -->
+      <line x1="400" y1="302" x2="230" y2="170" stroke="#378ADD" stroke-width="2"/>
+      <rect x="100" y="128" width="200" height="52" rx="12" fill="#B5D4F4"/>
+      <text x="200" y="150" text-anchor="middle" fill="#0C447C" font-size="12" font-weight="800">🌳 Amazônia</text>
+      <text x="200" y="168" text-anchor="middle" fill="#0C447C" font-size="9.5">Maior floresta tropical</text>
+      <line x1="140" y1="132" x2="80" y2="80" stroke="#85B7EB" stroke-width="1.5"/>
+      <rect x="10" y="44" width="135" height="40" rx="8" fill="#E6F1FB"/>
+      <text x="77" y="61" text-anchor="middle" fill="#0C447C" font-size="9" font-weight="700">🐆 Onça-pintada</text>
+      <text x="77" y="76" text-anchor="middle" fill="#0C447C" font-size="8.5">⚠️ Desmatamento</text>
+      <line x1="200" y1="128" x2="200" y2="76" stroke="#85B7EB" stroke-width="1.5"/>
+      <rect x="130" y="38" width="135" height="40" rx="8" fill="#E6F1FB"/>
+      <text x="197" y="55" text-anchor="middle" fill="#0C447C" font-size="9" font-weight="700">🌧️ Muita chuva</text>
+      <text x="197" y="70" text-anchor="middle" fill="#0C447C" font-size="8.5">&gt;2000mm/ano</text>
+      <line x1="260" y1="132" x2="310" y2="78" stroke="#85B7EB" stroke-width="1.5"/>
+      <rect x="270" y="42" width="130" height="40" rx="8" fill="#E6F1FB"/>
+      <text x="335" y="59" text-anchor="middle" fill="#0C447C" font-size="9" font-weight="700">🦜 Maior</text>
+      <text x="335" y="74" text-anchor="middle" fill="#0C447C" font-size="8.5">biodiversidade</text>
+
+      <!-- CERRADO top-right -->
+      <line x1="540" y1="302" x2="700" y2="170" stroke="#378ADD" stroke-width="2"/>
+      <rect x="640" y="128" width="200" height="52" rx="12" fill="#B5D4F4"/>
+      <text x="740" y="150" text-anchor="middle" fill="#0C447C" font-size="12" font-weight="800">🌾 Cerrado</text>
+      <text x="740" y="168" text-anchor="middle" fill="#0C447C" font-size="9.5">Savana tropical brasileira</text>
+      <line x1="680" y1="132" x2="620" y2="78" stroke="#85B7EB" stroke-width="1.5"/>
+      <rect x="550" y="42" width="140" height="40" rx="8" fill="#E6F1FB"/>
+      <text x="620" y="59" text-anchor="middle" fill="#0C447C" font-size="9" font-weight="700">🐺 Lobo-guará</text>
+      <text x="620" y="74" text-anchor="middle" fill="#0C447C" font-size="8.5">animal símbolo</text>
+      <line x1="740" y1="128" x2="740" y2="76" stroke="#85B7EB" stroke-width="1.5"/>
+      <rect x="670" y="40" width="140" height="40" rx="8" fill="#E6F1FB"/>
+      <text x="740" y="57" text-anchor="middle" fill="#0C447C" font-size="9" font-weight="700">⚠️ Agropecuária</text>
+      <text x="740" y="72" text-anchor="middle" fill="#0C447C" font-size="8.5">principal ameaça</text>
+      <line x1="800" y1="132" x2="850" y2="78" stroke="#85B7EB" stroke-width="1.5"/>
+      <rect x="800" y="42" width="120" height="40" rx="8" fill="#E6F1FB"/>
+      <text x="860" y="59" text-anchor="middle" fill="#0C447C" font-size="9" font-weight="700">☀️🌧️ Estações</text>
+      <text x="860" y="74" text-anchor="middle" fill="#0C447C" font-size="8.5">seca e chuvosa</text>
+
+      <!-- MATA ATLÂNTICA bottom-left -->
+      <line x1="400" y1="358" x2="230" y2="490" stroke="#378ADD" stroke-width="2"/>
+      <rect x="100" y="468" width="200" height="52" rx="12" fill="#B5D4F4"/>
+      <text x="200" y="490" text-anchor="middle" fill="#0C447C" font-size="12" font-weight="800">🌊 Mata Atlântica</text>
+      <text x="200" y="508" text-anchor="middle" fill="#0C447C" font-size="9.5">Litoral brasileiro</text>
+      <line x1="140" y1="520" x2="80" y2="570" stroke="#85B7EB" stroke-width="1.5"/>
+      <rect x="10" y="562" width="135" height="38" rx="8" fill="#E6F1FB"/>
+      <text x="77" y="578" text-anchor="middle" fill="#0C447C" font-size="9" font-weight="700">🦁 Mico-leão-dourado</text>
+      <text x="77" y="592" text-anchor="middle" fill="#0C447C" font-size="8">animal símbolo</text>
+      <line x1="200" y1="520" x2="200" y2="570" stroke="#85B7EB" stroke-width="1.5"/>
+      <rect x="130" y="562" width="130" height="38" rx="8" fill="#E6F1FB"/>
+      <text x="195" y="578" text-anchor="middle" fill="#0C447C" font-size="9" font-weight="700">😱 Só 12%</text>
+      <text x="195" y="592" text-anchor="middle" fill="#0C447C" font-size="8.5">da área original</text>
+      <line x1="260" y1="520" x2="310" y2="570" stroke="#85B7EB" stroke-width="1.5"/>
+      <rect x="272" y="562" width="120" height="38" rx="8" fill="#E6F1FB"/>
+      <text x="332" y="578" text-anchor="middle" fill="#0C447C" font-size="9" font-weight="700">🏙️ Urbanização</text>
+      <text x="332" y="592" text-anchor="middle" fill="#0C447C" font-size="8.5">ameaça principal</text>
+
+      <!-- CAATINGA bottom-right -->
+      <line x1="540" y1="358" x2="700" y2="490" stroke="#378ADD" stroke-width="2"/>
+      <rect x="640" y="468" width="200" height="52" rx="12" fill="#B5D4F4"/>
+      <text x="740" y="490" text-anchor="middle" fill="#0C447C" font-size="12" font-weight="800">🏜️ Caatinga</text>
+      <text x="740" y="508" text-anchor="middle" fill="#0C447C" font-size="9.5">100% brasileira!</text>
+      <line x1="680" y1="520" x2="620" y2="570" stroke="#85B7EB" stroke-width="1.5"/>
+      <rect x="552" y="562" width="130" height="38" rx="8" fill="#E6F1FB"/>
+      <text x="617" y="578" text-anchor="middle" fill="#0C447C" font-size="9" font-weight="700">🕊️ Asa-branca</text>
+      <text x="617" y="592" text-anchor="middle" fill="#0C447C" font-size="8.5">animal símbolo</text>
+      <line x1="740" y1="520" x2="740" y2="570" stroke="#85B7EB" stroke-width="1.5"/>
+      <rect x="668" y="562" width="130" height="38" rx="8" fill="#E6F1FB"/>
+      <text x="733" y="578" text-anchor="middle" fill="#0C447C" font-size="9" font-weight="700">🌵 Cacto</text>
+      <text x="733" y="592" text-anchor="middle" fill="#0C447C" font-size="8.5">seca intensa</text>
+      <line x1="800" y1="520" x2="852" y2="568" stroke="#85B7EB" stroke-width="1.5"/>
+      <rect x="812" y="562" width="116" height="38" rx="8" fill="#E6F1FB"/>
+      <text x="870" y="578" text-anchor="middle" fill="#0C447C" font-size="9" font-weight="700">⚠️ Desertificação</text>
+      <text x="870" y="592" text-anchor="middle" fill="#0C447C" font-size="8.5">ameaça principal</text>
+    </svg>
+  </div>
+
+  <!-- PORTUGUÊS -->
+  <div class="mind-map" id="mm-portugues">
+    <svg viewBox="0 0 900 680" xmlns="http://www.w3.org/2000/svg" style="font-family:'Nunito',sans-serif;min-width:700px;width:100%">
+      <rect x="330" y="300" width="240" height="60" rx="30" fill="#D4537E"/>
+      <text x="450" y="325" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">✏️ LÍNGUA PORTUGUESA</text>
+      <text x="450" y="345" text-anchor="middle" fill="#FBEAF0" font-size="10">Relato · Sílabas · Pronomes</text>
+
+      <!-- RELATO top -->
+      <line x1="440" y1="302" x2="300" y2="175" stroke="#D4537E" stroke-width="2"/>
+      <rect x="150" y="135" width="200" height="50" rx="12" fill="#F4C0D1"/>
+      <text x="250" y="157" text-anchor="middle" fill="#72243E" font-size="12" font-weight="800">📖 Relato Pessoal</text>
+      <text x="250" y="174" text-anchor="middle" fill="#72243E" font-size="9.5">Eu conto o que vivi!</text>
+      <line x1="190" y1="137" x2="130" y2="85" stroke="#ED93B1" stroke-width="1.5"/>
+      <rect x="30" y="50" width="155" height="40" rx="8" fill="#FBEAF0"/>
+      <text x="107" y="67" text-anchor="middle" fill="#72243E" font-size="9" font-weight="700">👤 1ª pessoa</text>
+      <text x="107" y="82" text-anchor="middle" fill="#72243E" font-size="8.5">eu, nós, meu…</text>
+      <line x1="250" y1="135" x2="250" y2="80" stroke="#ED93B1" stroke-width="1.5"/>
+      <rect x="170" y="44" width="155" height="40" rx="8" fill="#FBEAF0"/>
+      <text x="247" y="61" text-anchor="middle" fill="#72243E" font-size="9" font-weight="700">⏰ Ordem cronológica</text>
+      <text x="247" y="76" text-anchor="middle" fill="#72243E" font-size="8.5">primeiro, depois, então…</text>
+      <line x1="310" y1="137" x2="360" y2="82" stroke="#ED93B1" stroke-width="1.5"/>
+      <rect x="318" y="46" width="130" height="40" rx="8" fill="#FBEAF0"/>
+      <text x="383" y="63" text-anchor="middle" fill="#72243E" font-size="9" font-weight="700">✍️ Experiência real</text>
+      <text x="383" y="78" text-anchor="middle" fill="#72243E" font-size="8.5">algo que aconteceu</text>
+
+      <!-- SÍLABAS right -->
+      <line x1="568" y1="325" x2="690" y2="250" stroke="#D4537E" stroke-width="2"/>
+      <rect x="660" y="215" width="200" height="50" rx="12" fill="#F4C0D1"/>
+      <text x="760" y="237" text-anchor="middle" fill="#72243E" font-size="12" font-weight="800">🔤 Sílabas</text>
+      <text x="760" y="254" text-anchor="middle" fill="#72243E" font-size="9.5">Separação e classificação</text>
+      <line x1="690" y1="217" x2="650" y2="160" stroke="#ED93B1" stroke-width="1.5"/>
+      <rect x="565" y="124" width="145" height="40" rx="8" fill="#FBEAF0"/>
+      <text x="637" y="141" text-anchor="middle" fill="#72243E" font-size="9" font-weight="700">🥁 Tônica = forte</text>
+      <text x="637" y="156" text-anchor="middle" fill="#72243E" font-size="8.5">bata palma pra achar!</text>
+      <line x1="760" y1="215" x2="760" y2="158" stroke="#ED93B1" stroke-width="1.5"/>
+      <rect x="685" y="118" width="155" height="44" rx="8" fill="#FBEAF0"/>
+      <text x="762" y="134" text-anchor="middle" fill="#72243E" font-size="9" font-weight="700">Oxítona → última</text>
+      <text x="762" y="147" text-anchor="middle" fill="#72243E" font-size="8.5">Paroxítona → penúltima</text>
+      <text x="762" y="160" text-anchor="middle" fill="#72243E" font-size="8">Proparoxítona → ante</text>
+      <line x1="830" y1="217" x2="868" y2="162" stroke="#ED93B1" stroke-width="1.5"/>
+      <rect x="820" y="124" width="70" height="42" rx="8" fill="#FBEAF0"/>
+      <text x="855" y="140" text-anchor="middle" fill="#72243E" font-size="9" font-weight="700">ca-FÉ</text>
+      <text x="855" y="154" text-anchor="middle" fill="#72243E" font-size="8.5">oxítona</text>
+
+      <!-- PRONOMES bottom-right -->
+      <line x1="568" y1="350" x2="680" y2="450" stroke="#D4537E" stroke-width="2"/>
+      <rect x="650" y="425" width="200" height="50" rx="12" fill="#F4C0D1"/>
+      <text x="750" y="447" text-anchor="middle" fill="#72243E" font-size="12" font-weight="800">🙋 Pronomes</text>
+      <text x="750" y="464" text-anchor="middle" fill="#72243E" font-size="9.5">Substituem o nome</text>
+      <line x1="680" y1="475" x2="635" y2="530" stroke="#ED93B1" stroke-width="1.5"/>
+      <rect x="556" y="522" width="140" height="42" rx="8" fill="#FBEAF0"/>
+      <text x="626" y="539" text-anchor="middle" fill="#72243E" font-size="9" font-weight="700">👤 Pessoais</text>
+      <text x="626" y="554" text-anchor="middle" fill="#72243E" font-size="8.5">eu, tu, ele, ela, nós</text>
+      <line x1="750" y1="475" x2="750" y2="530" stroke="#ED93B1" stroke-width="1.5"/>
+      <rect x="676" y="522" width="148" height="42" rx="8" fill="#FBEAF0"/>
+      <text x="750" y="539" text-anchor="middle" fill="#72243E" font-size="9" font-weight="700">🏠 Possessivos</text>
+      <text x="750" y="554" text-anchor="middle" fill="#72243E" font-size="8.5">meu, teu, seu, nosso</text>
+      <line x1="818" y1="475" x2="858" y2="526" stroke="#ED93B1" stroke-width="1.5"/>
+      <rect x="808" y="518" width="80" height="42" rx="8" fill="#FBEAF0"/>
+      <text x="848" y="534" text-anchor="middle" fill="#72243E" font-size="8.5" font-weight="700">📍 Demo</text>
+      <text x="848" y="547" text-anchor="middle" fill="#72243E" font-size="8">este/esse</text>
+      <text x="848" y="560" text-anchor="middle" fill="#72243E" font-size="8">aquele</text>
+
+      <!-- DICA PRONOMES DEMONSTRATIVOS -->
+      <line x1="450" y1="358" x2="450" y2="460" stroke="#D4537E" stroke-width="2"/>
+      <rect x="330" y="455" width="240" height="58" rx="12" fill="#F4C0D1"/>
+      <text x="450" y="476" text-anchor="middle" fill="#72243E" font-size="11" font-weight="800">📍 Dica dos Demonstrativos</text>
+      <text x="450" y="493" text-anchor="middle" fill="#72243E" font-size="9.5">ESTE = perto de mim 👈</text>
+      <text x="450" y="508" text-anchor="middle" fill="#72243E" font-size="9.5">ESSE = perto de você · AQUELE = longe 👉</text>
+    </svg>
+  </div>
+
+  <!-- MATEMÁTICA -->
+  <div class="mind-map" id="mm-matpt">
+    <svg viewBox="0 0 900 680" xmlns="http://www.w3.org/2000/svg" style="font-family:'Nunito',sans-serif;min-width:700px;width:100%">
+      <rect x="330" y="300" width="240" height="60" rx="30" fill="#BA7517"/>
+      <text x="450" y="325" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">🔢 MATEMÁTICA</text>
+      <text x="450" y="345" text-anchor="middle" fill="#FAEEDA" font-size="10">Números · Operações · Gráficos</text>
+
+      <!-- VALOR POSICIONAL top-left -->
+      <line x1="380" y1="302" x2="240" y2="175" stroke="#BA7517" stroke-width="2"/>
+      <rect x="110" y="135" width="210" height="50" rx="12" fill="#FAC775"/>
+      <text x="215" y="157" text-anchor="middle" fill="#633806" font-size="12" font-weight="800">🔢 Valor Posicional</text>
+      <text x="215" y="174" text-anchor="middle" fill="#633806" font-size="9.5">Cada lugar vale 10x mais</text>
+      <line x1="150" y1="137" x2="90" y2="82" stroke="#EF9F27" stroke-width="1.5"/>
+      <rect x="14" y="46" width="150" height="42" rx="8" fill="#FAEEDA"/>
+      <text x="89" y="63" text-anchor="middle" fill="#633806" font-size="9" font-weight="700">3.456 =</text>
+      <text x="89" y="78" text-anchor="middle" fill="#633806" font-size="8.5">3M + 4C + 5D + 6U</text>
+      <line x1="215" y1="135" x2="215" y2="80" stroke="#EF9F27" stroke-width="1.5"/>
+      <rect x="145" y="44" width="140" height="40" rx="8" fill="#FAEEDA"/>
+      <text x="215" y="61" text-anchor="middle" fill="#633806" font-size="9" font-weight="700">Milhar · Centena</text>
+      <text x="215" y="76" text-anchor="middle" fill="#633806" font-size="8.5">Dezena · Unidade</text>
+      <line x1="280" y1="137" x2="330" y2="80" stroke="#EF9F27" stroke-width="1.5"/>
+      <rect x="288" y="44" width="120" height="40" rx="8" fill="#FAEEDA"/>
+      <text x="348" y="61" text-anchor="middle" fill="#633806" font-size="9" font-weight="700">Ordinais 📋</text>
+      <text x="348" y="76" text-anchor="middle" fill="#633806" font-size="8.5">1º 2º 3º 4º 5º…</text>
+
+      <!-- OPERAÇÕES top-right -->
+      <line x1="520" y1="302" x2="650" y2="175" stroke="#BA7517" stroke-width="2"/>
+      <rect x="630" y="135" width="210" height="50" rx="12" fill="#FAC775"/>
+      <text x="735" y="157" text-anchor="middle" fill="#633806" font-size="12" font-weight="800">✖️ ÷ Operações</text>
+      <text x="735" y="174" text-anchor="middle" fill="#633806" font-size="9.5">As 4 operações básicas</text>
+      <line x1="665" y1="137" x2="610" y2="82" stroke="#EF9F27" stroke-width="1.5"/>
+      <rect x="540" y="46" width="130" height="40" rx="8" fill="#FAEEDA"/>
+      <text x="605" y="63" text-anchor="middle" fill="#633806" font-size="9" font-weight="700">× Multiplicação</text>
+      <text x="605" y="78" text-anchor="middle" fill="#633806" font-size="8.5">6×8=48 · 7×9=63</text>
+      <line x1="735" y1="135" x2="735" y2="80" stroke="#EF9F27" stroke-width="1.5"/>
+      <rect x="668" y="44" width="130" height="40" rx="8" fill="#FAEEDA"/>
+      <text x="733" y="61" text-anchor="middle" fill="#633806" font-size="9" font-weight="700">÷ Divisão</text>
+      <text x="733" y="76" text-anchor="middle" fill="#633806" font-size="8.5">54÷9=6 · 63÷7=9</text>
+      <line x1="805" y1="137" x2="845" y2="80" stroke="#EF9F27" stroke-width="1.5"/>
+      <rect x="810" y="44" width="80" height="40" rx="8" fill="#FAEEDA"/>
+      <text x="850" y="61" text-anchor="middle" fill="#633806" font-size="9" font-weight="700">+ −</text>
+      <text x="850" y="76" text-anchor="middle" fill="#633806" font-size="8.5">algoritmos</text>
+
+      <!-- SITUAÇÃO-PROBLEMA right -->
+      <line x1="568" y1="340" x2="690" y2="380" stroke="#BA7517" stroke-width="2"/>
+      <rect x="668" y="355" width="210" height="52" rx="12" fill="#FAC775"/>
+      <text x="773" y="377" text-anchor="middle" fill="#633806" font-size="11" font-weight="800">🧩 Situação-Problema</text>
+      <text x="773" y="394" text-anchor="middle" fill="#633806" font-size="9.5">Leia 2x · Identifique · Calcule</text>
+      <line x1="773" y1="407" x2="773" y2="460" stroke="#EF9F27" stroke-width="1.5"/>
+      <rect x="688" y="454" width="180" height="42" rx="8" fill="#FAEEDA"/>
+      <text x="778" y="471" text-anchor="middle" fill="#633806" font-size="9" font-weight="700">❓ O quê? Quantos?</text>
+      <text x="778" y="486" text-anchor="middle" fill="#633806" font-size="8.5">Qual operação usar?</text>
+
+      <!-- GRÁFICOS bottom -->
+      <line x1="440" y1="358" x2="310" y2="455" stroke="#BA7517" stroke-width="2"/>
+      <rect x="140" y="430" width="240" height="52" rx="12" fill="#FAC775"/>
+      <text x="260" y="452" text-anchor="middle" fill="#633806" font-size="12" font-weight="800">📊 Gráficos e Tabelas</text>
+      <text x="260" y="469" text-anchor="middle" fill="#633806" font-size="9.5">Ler, interpretar e comparar</text>
+      <line x1="190" y1="482" x2="140" y2="535" stroke="#EF9F27" stroke-width="1.5"/>
+      <rect x="60" y="526" width="140" height="40" rx="8" fill="#FAEEDA"/>
+      <text x="130" y="543" text-anchor="middle" fill="#633806" font-size="9" font-weight="700">📊 Barras</text>
+      <text x="130" y="558" text-anchor="middle" fill="#633806" font-size="8.5">comparar quantidades</text>
+      <line x1="260" y1="482" x2="260" y2="535" stroke="#EF9F27" stroke-width="1.5"/>
+      <rect x="186" y="526" width="145" height="40" rx="8" fill="#FAEEDA"/>
+      <text x="258" y="543" text-anchor="middle" fill="#633806" font-size="9" font-weight="700">📋 Tabela dupla entrada</text>
+      <text x="258" y="558" text-anchor="middle" fill="#633806" font-size="8.5">linhas e colunas</text>
+      <line x1="330" y1="482" x2="370" y2="532" stroke="#EF9F27" stroke-width="1.5"/>
+      <rect x="336" y="524" width="120" height="40" rx="8" fill="#FAEEDA"/>
+      <text x="396" y="541" text-anchor="middle" fill="#633806" font-size="9" font-weight="700">🔑 Sempre leia</text>
+      <text x="396" y="556" text-anchor="middle" fill="#633806" font-size="8.5">título e legenda!</text>
+    </svg>
+  </div>
+
+  <!-- MATH EN -->
+  <div class="mind-map" id="mm-mat">
+    <svg viewBox="0 0 900 660" xmlns="http://www.w3.org/2000/svg" style="font-family:'Nunito',sans-serif;min-width:700px;width:100%">
+      <rect x="340" y="295" width="220" height="60" rx="30" fill="#633806"/>
+      <text x="450" y="320" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">🔢 MATH (EN)</text>
+      <text x="450" y="340" text-anchor="middle" fill="#FAEEDA" font-size="10">Place value · Time · Geometry</text>
+
+      <!-- PLACE VALUE top-left -->
+      <line x1="390" y1="297" x2="240" y2="170" stroke="#633806" stroke-width="2"/>
+      <rect x="110" y="130" width="210" height="50" rx="12" fill="#FAC775"/>
+      <text x="215" y="152" text-anchor="middle" fill="#633806" font-size="12" font-weight="800">🔢 Place Value</text>
+      <text x="215" y="168" text-anchor="middle" fill="#633806" font-size="9.5">Each place = 10× the right</text>
+      <line x1="150" y1="132" x2="88" y2="78" stroke="#EF9F27" stroke-width="1.5"/>
+      <rect x="14" y="44" width="145" height="38" rx="8" fill="#FAEEDA"/>
+      <text x="86" y="60" text-anchor="middle" fill="#633806" font-size="9" font-weight="700">3,456 expanded:</text>
+      <text x="86" y="74" text-anchor="middle" fill="#633806" font-size="8.5">3000+400+50+6</text>
+      <line x1="280" y1="132" x2="330" y2="76" stroke="#EF9F27" stroke-width="1.5"/>
+      <rect x="290" y="44" width="120" height="36" rx="8" fill="#FAEEDA"/>
+      <text x="350" y="60" text-anchor="middle" fill="#633806" font-size="9" font-weight="700">Ordinals:</text>
+      <text x="350" y="74" text-anchor="middle" fill="#633806" font-size="8.5">1st 2nd 3rd…</text>
+
+      <!-- TELLING TIME top-right -->
+      <line x1="510" y1="297" x2="655" y2="170" stroke="#633806" stroke-width="2"/>
+      <rect x="626" y="130" width="210" height="50" rx="12" fill="#FAC775"/>
+      <text x="731" y="152" text-anchor="middle" fill="#633806" font-size="12" font-weight="800">🕐 Telling Time</text>
+      <text x="731" y="168" text-anchor="middle" fill="#633806" font-size="9.5">Analog &amp; Digital</text>
+      <line x1="660" y1="132" x2="606" y2="78" stroke="#EF9F27" stroke-width="1.5"/>
+      <rect x="534" y="44" width="145" height="38" rx="8" fill="#FAEEDA"/>
+      <text x="606" y="60" text-anchor="middle" fill="#633806" font-size="9" font-weight="700">Quarter past = :15</text>
+      <text x="606" y="74" text-anchor="middle" fill="#633806" font-size="8.5">Half past = :30 · to = :45</text>
+      <line x1="731" y1="130" x2="731" y2="76" stroke="#EF9F27" stroke-width="1.5"/>
+      <rect x="660" y="40" width="145" height="40" rx="8" fill="#FAEEDA"/>
+      <text x="732" y="56" text-anchor="middle" fill="#633806" font-size="9" font-weight="700">⏱️ Elapsed time</text>
+      <text x="732" y="70" text-anchor="middle" fill="#633806" font-size="8.5">start + duration = end</text>
+      <line x1="800" y1="132" x2="848" y2="76" stroke="#EF9F27" stroke-width="1.5"/>
+      <rect x="812" y="42" width="74" height="38" rx="8" fill="#FAEEDA"/>
+      <text x="849" y="58" text-anchor="middle" fill="#633806" font-size="9" font-weight="700">Short hand</text>
+      <text x="849" y="72" text-anchor="middle" fill="#633806" font-size="8.5">= hours</text>
+
+      <!-- QUADRILATERALS right -->
+      <line x1="558" y1="340" x2="690" y2="380" stroke="#633806" stroke-width="2"/>
+      <rect x="668" y="355" width="210" height="50" rx="12" fill="#FAC775"/>
+      <text x="773" y="377" text-anchor="middle" fill="#633806" font-size="11" font-weight="800">🔷 Quadrilaterals</text>
+      <text x="773" y="393" text-anchor="middle" fill="#633806" font-size="9.5">4-sided shapes</text>
+      <line x1="690" y1="405" x2="640" y2="456" stroke="#EF9F27" stroke-width="1.5"/>
+      <rect x="565" y="448" width="140" height="42" rx="8" fill="#FAEEDA"/>
+      <text x="635" y="465" text-anchor="middle" fill="#633806" font-size="9" font-weight="700">⬛ Square</text>
+      <text x="635" y="480" text-anchor="middle" fill="#633806" font-size="8.5">4 equal + right angles</text>
+      <line x1="773" y1="405" x2="773" y2="452" stroke="#EF9F27" stroke-width="1.5"/>
+      <rect x="700" y="444" width="145" height="42" rx="8" fill="#FAEEDA"/>
+      <text x="772" y="461" text-anchor="middle" fill="#633806" font-size="9" font-weight="700">▭ Rectangle</text>
+      <text x="772" y="476" text-anchor="middle" fill="#633806" font-size="8.5">opposite sides equal</text>
+      <line x1="856" y1="405" x2="876" y2="450" stroke="#EF9F27" stroke-width="1.5"/>
+      <rect x="840" y="444" width="50" height="42" rx="8" fill="#FAEEDA"/>
+      <text x="865" y="461" text-anchor="middle" fill="#633806" font-size="8" font-weight="700">◇ Rhom</text>
+      <text x="865" y="476" text-anchor="middle" fill="#633806" font-size="7.5">no right ∠</text>
+
+      <!-- WORD PROBLEMS bottom-left -->
+      <line x1="400" y1="354" x2="270" y2="450" stroke="#633806" stroke-width="2"/>
+      <rect x="130" y="428" width="210" height="50" rx="12" fill="#FAC775"/>
+      <text x="235" y="450" text-anchor="middle" fill="#633806" font-size="11" font-weight="800">🧩 Word Problems</text>
+      <text x="235" y="466" text-anchor="middle" fill="#633806" font-size="9.5">Read carefully — twice!</text>
+      <line x1="175" y1="478" x2="130" y2="530" stroke="#EF9F27" stroke-width="1.5"/>
+      <rect x="44" y="522" width="155" height="40" rx="8" fill="#FAEEDA"/>
+      <text x="121" y="539" text-anchor="middle" fill="#633806" font-size="9" font-weight="700">1. What do you know?</text>
+      <text x="121" y="554" text-anchor="middle" fill="#633806" font-size="8.5">2. What do you need?</text>
+      <line x1="295" y1="478" x2="330" y2="526" stroke="#EF9F27" stroke-width="1.5"/>
+      <rect x="284" y="518" width="130" height="40" rx="8" fill="#FAEEDA"/>
+      <text x="349" y="535" text-anchor="middle" fill="#633806" font-size="9" font-weight="700">3. Choose operation</text>
+      <text x="349" y="550" text-anchor="middle" fill="#633806" font-size="8.5">4. Does it make sense?</text>
+    </svg>
+  </div>
+
+  <!-- LANGUAGE ARTS -->
+  <div class="mind-map" id="mm-la">
+    <svg viewBox="0 0 900 660" xmlns="http://www.w3.org/2000/svg" style="font-family:'Nunito',sans-serif;min-width:700px;width:100%">
+      <rect x="330" y="295" width="240" height="60" rx="30" fill="#E24B4A"/>
+      <text x="450" y="320" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">📖 LANGUAGE ARTS</text>
+      <text x="450" y="340" text-anchor="middle" fill="#FCEBEB" font-size="10">Adjectives · Tenses · Sentences</text>
+
+      <!-- ADJECTIVES top -->
+      <line x1="430" y1="297" x2="270" y2="168" stroke="#E24B4A" stroke-width="2"/>
+      <rect x="130" y="128" width="220" height="50" rx="12" fill="#F7C1C1"/>
+      <text x="240" y="150" text-anchor="middle" fill="#791F1F" font-size="12" font-weight="800">🏆 Adjectives that Compare</text>
+      <text x="240" y="167" text-anchor="middle" fill="#791F1F" font-size="9.5">More? Most? -er? -est?</text>
+      <line x1="170" y1="130" x2="110" y2="74" stroke="#F09595" stroke-width="1.5"/>
+      <rect x="22" y="38" width="160" height="42" rx="8" fill="#FCEBEB"/>
+      <text x="102" y="55" text-anchor="middle" fill="#791F1F" font-size="9" font-weight="700">Comparative (-er)</text>
+      <text x="102" y="70" text-anchor="middle" fill="#791F1F" font-size="8.5">bigger · taller · faster</text>
+      <line x1="240" y1="128" x2="240" y2="74" stroke="#F09595" stroke-width="1.5"/>
+      <rect x="162" y="38" width="156" height="42" rx="8" fill="#FCEBEB"/>
+      <text x="240" y="55" text-anchor="middle" fill="#791F1F" font-size="9" font-weight="700">Superlative (-est)</text>
+      <text x="240" y="70" text-anchor="middle" fill="#791F1F" font-size="8.5">biggest · tallest · fastest</text>
+      <line x1="310" y1="130" x2="360" y2="74" stroke="#F09595" stroke-width="1.5"/>
+      <rect x="316" y="38" width="155" height="42" rx="8" fill="#FCEBEB"/>
+      <text x="393" y="55" text-anchor="middle" fill="#791F1F" font-size="9" font-weight="700">⚡ Irregular!</text>
+      <text x="393" y="70" text-anchor="middle" fill="#791F1F" font-size="8.5">good→better→best</text>
+
+      <!-- VERB TENSES right -->
+      <line x1="568" y1="320" x2="700" y2="240" stroke="#E24B4A" stroke-width="2"/>
+      <rect x="672" y="202" width="210" height="50" rx="12" fill="#F7C1C1"/>
+      <text x="777" y="224" text-anchor="middle" fill="#791F1F" font-size="12" font-weight="800">⏱️ Verb Tenses</text>
+      <text x="777" y="241" text-anchor="middle" fill="#791F1F" font-size="9.5">When did it happen?</text>
+      <line x1="702" y1="204" x2="650" y2="148" stroke="#F09595" stroke-width="1.5"/>
+      <rect x="566" y="112" width="155" height="42" rx="8" fill="#FCEBEB"/>
+      <text x="643" y="129" text-anchor="middle" fill="#791F1F" font-size="9" font-weight="700">Present simple</text>
+      <text x="643" y="144" text-anchor="middle" fill="#791F1F" font-size="8.5">I walk · she walks</text>
+      <line x1="777" y1="202" x2="777" y2="146" stroke="#F09595" stroke-width="1.5"/>
+      <rect x="700" y="108" width="158" height="42" rx="8" fill="#FCEBEB"/>
+      <text x="779" y="125" text-anchor="middle" fill="#791F1F" font-size="9" font-weight="700">Past: add -ed</text>
+      <text x="779" y="140" text-anchor="middle" fill="#791F1F" font-size="8.5">walked · jumped · played</text>
+      <line x1="852" y1="204" x2="868" y2="148" stroke="#F09595" stroke-width="1.5"/>
+      <rect x="828" y="110" width="62" height="42" rx="8" fill="#FCEBEB"/>
+      <text x="859" y="127" text-anchor="middle" fill="#791F1F" font-size="8.5" font-weight="700">Irregular</text>
+      <text x="859" y="141" text-anchor="middle" fill="#791F1F" font-size="8">go→went</text>
+
+      <!-- SENTENCE TYPES bottom -->
+      <line x1="450" y1="354" x2="450" y2="440" stroke="#E24B4A" stroke-width="2"/>
+      <rect x="310" y="436" width="280" height="52" rx="14" fill="#F7C1C1"/>
+      <text x="450" y="459" text-anchor="middle" fill="#791F1F" font-size="12" font-weight="800">❓ Types of Sentences</text>
+      <text x="450" y="476" text-anchor="middle" fill="#791F1F" font-size="9.5">Statement · Question · Exclamation · Command</text>
+      <!-- 4 sub boxes -->
+      <line x1="350" y1="488" x2="300" y2="540" stroke="#F09595" stroke-width="1.5"/>
+      <rect x="220" y="532" width="155" height="42" rx="8" fill="#FCEBEB"/>
+      <text x="297" y="549" text-anchor="middle" fill="#791F1F" font-size="9" font-weight="700">📄 Statement .</text>
+      <text x="297" y="564" text-anchor="middle" fill="#791F1F" font-size="8.5">I like pizza.</text>
+      <line x1="410" y1="488" x2="390" y2="540" stroke="#F09595" stroke-width="1.5"/>
+      <rect x="324" y="532" width="135" height="42" rx="8" fill="#FCEBEB"/>
+      <text x="391" y="549" text-anchor="middle" fill="#791F1F" font-size="9" font-weight="700">❓ Question ?</text>
+      <text x="391" y="564" text-anchor="middle" fill="#791F1F" font-size="8.5">Do you like pizza?</text>
+      <line x1="490" y1="488" x2="508" y2="540" stroke="#F09595" stroke-width="1.5"/>
+      <rect x="470" y="532" width="130" height="42" rx="8" fill="#FCEBEB"/>
+      <text x="535" y="549" text-anchor="middle" fill="#791F1F" font-size="9" font-weight="700">❗ Exclamation !</text>
+      <text x="535" y="564" text-anchor="middle" fill="#791F1F" font-size="8.5">What a pizza!</text>
+      <line x1="550" y1="488" x2="600" y2="540" stroke="#F09595" stroke-width="1.5"/>
+      <rect x="604" y="532" width="120" height="42" rx="8" fill="#FCEBEB"/>
+      <text x="664" y="549" text-anchor="middle" fill="#791F1F" font-size="9" font-weight="700">👆 Command</text>
+      <text x="664" y="564" text-anchor="middle" fill="#791F1F" font-size="8.5">Eat your pizza.</text>
+
+      <!-- CLUE left -->
+      <line x1="332" y1="340" x2="200" y2="400" stroke="#E24B4A" stroke-width="2"/>
+      <rect x="60" y="376" width="200" height="58" rx="12" fill="#F7C1C1"/>
+      <text x="160" y="398" text-anchor="middle" fill="#791F1F" font-size="11" font-weight="800">⚡ Key words for past</text>
+      <text x="160" y="414" text-anchor="middle" fill="#791F1F" font-size="9.5">yesterday · last week</text>
+      <text x="160" y="429" text-anchor="middle" fill="#791F1F" font-size="9.5">last night · ago</text>
+    </svg>
+  </div>
+
+  <!-- GEO & HISTÓRIA -->
+  <div class="mind-map" id="mm-geohist">
+    <svg viewBox="0 0 900 640" xmlns="http://www.w3.org/2000/svg" style="font-family:'Nunito',sans-serif;min-width:680px;width:100%">
+      <rect x="320" y="280" width="260" height="60" rx="30" fill="#7F77DD"/>
+      <text x="450" y="305" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">🏛️ GEO &amp; HISTÓRIA</text>
+      <text x="450" y="325" text-anchor="middle" fill="#EEEDFE" font-size="10">Mapas · Influências indígenas</text>
+
+      <!-- TIPOS DE MAPAS left -->
+      <line x1="360" y1="285" x2="210" y2="175" stroke="#7F77DD" stroke-width="2"/>
+      <rect x="90" y="135" width="220" height="50" rx="12" fill="#CECBF6"/>
+      <text x="200" y="157" text-anchor="middle" fill="#3C3489" font-size="12" font-weight="800">🗺️ Tipos de Mapas</text>
+      <text x="200" y="174" text-anchor="middle" fill="#3C3489" font-size="9.5">Elementos: título, legenda, escala</text>
+      <line x1="130" y1="137" x2="76" y2="82" stroke="#AFA9EC" stroke-width="1.5"/>
+      <rect x="10" y="46" width="130" height="42" rx="8" fill="#EEEDFE"/>
+      <text x="75" y="63" text-anchor="middle" fill="#3C3489" font-size="9" font-weight="700">🏛️ Político</text>
+      <text x="75" y="78" text-anchor="middle" fill="#3C3489" font-size="8.5">países · fronteiras</text>
+      <line x1="200" y1="135" x2="200" y2="80" stroke="#AFA9EC" stroke-width="1.5"/>
+      <rect x="130" y="44" width="130" height="42" rx="8" fill="#EEEDFE"/>
+      <text x="195" y="61" text-anchor="middle" fill="#3C3489" font-size="9" font-weight="700">⛰️ Físico</text>
+      <text x="195" y="76" text-anchor="middle" fill="#3C3489" font-size="8.5">relevo · rios</text>
+      <line x1="270" y1="137" x2="316" y2="80" stroke="#AFA9EC" stroke-width="1.5"/>
+      <rect x="276" y="44" width="130" height="42" rx="8" fill="#EEEDFE"/>
+      <text x="341" y="61" text-anchor="middle" fill="#3C3489" font-size="9" font-weight="700">🌡️ Temático</text>
+      <text x="341" y="76" text-anchor="middle" fill="#3C3489" font-size="8.5">clima · população</text>
+
+      <!-- INFLUÊNCIAS INDÍGENAS right -->
+      <line x1="540" y1="285" x2="680" y2="175" stroke="#7F77DD" stroke-width="2"/>
+      <rect x="590" y="135" width="240" height="50" rx="12" fill="#CECBF6"/>
+      <text x="710" y="157" text-anchor="middle" fill="#3C3489" font-size="12" font-weight="800">🪶 Influências Indígenas</text>
+      <text x="710" y="174" text-anchor="middle" fill="#3C3489" font-size="9.5">Presente na nossa vida!</text>
+      <line x1="630" y1="137" x2="580" y2="82" stroke="#AFA9EC" stroke-width="1.5"/>
+      <rect x="496" y="46" width="155" height="42" rx="8" fill="#EEEDFE"/>
+      <text x="573" y="63" text-anchor="middle" fill="#3C3489" font-size="9" font-weight="700">🗣️ Língua</text>
+      <text x="573" y="78" text-anchor="middle" fill="#3C3489" font-size="8.5">+1000 palavras tupi</text>
+      <line x1="710" y1="135" x2="710" y2="80" stroke="#AFA9EC" stroke-width="1.5"/>
+      <rect x="638" y="44" width="148" height="42" rx="8" fill="#EEEDFE"/>
+      <text x="712" y="61" text-anchor="middle" fill="#3C3489" font-size="9" font-weight="700">🍠 Alimentos</text>
+      <text x="712" y="76" text-anchor="middle" fill="#3C3489" font-size="8.5">mandioca · milho · caju</text>
+      <line x1="790" y1="137" x2="840" y2="80" stroke="#AFA9EC" stroke-width="1.5"/>
+      <rect x="796" y="44" width="95" height="42" rx="8" fill="#EEEDFE"/>
+      <text x="843" y="61" text-anchor="middle" fill="#3C3489" font-size="9" font-weight="700">📍 Topônimos</text>
+      <text x="843" y="76" text-anchor="middle" fill="#3C3489" font-size="8.5">Paraná · Ipiranga</text>
+
+      <!-- TÉCNICAS indígenas bottom-right -->
+      <line x1="580" y1="340" x2="700" y2="430" stroke="#7F77DD" stroke-width="2"/>
+      <rect x="640" y="408" width="210" height="50" rx="12" fill="#CECBF6"/>
+      <text x="745" y="430" text-anchor="middle" fill="#3C3489" font-size="11" font-weight="800">🌱 Técnicas Agrícolas</text>
+      <text x="745" y="447" text-anchor="middle" fill="#3C3489" font-size="9.5">Pesca · Plantio em rodízio</text>
+      <line x1="745" y1="458" x2="745" y2="510" stroke="#AFA9EC" stroke-width="1.5"/>
+      <rect x="660" y="503" width="175" height="40" rx="8" fill="#EEEDFE"/>
+      <text x="747" y="520" text-anchor="middle" fill="#3C3489" font-size="9" font-weight="700">🌿 Plantas medicinais</text>
+      <text x="747" y="535" text-anchor="middle" fill="#3C3489" font-size="8.5">ainda usamos hoje!</text>
+
+      <!-- ELEMENTOS MAPA bottom-left -->
+      <line x1="380" y1="340" x2="260" y2="430" stroke="#7F77DD" stroke-width="2"/>
+      <rect x="100" y="408" width="260" height="50" rx="12" fill="#CECBF6"/>
+      <text x="230" y="430" text-anchor="middle" fill="#3C3489" font-size="11" font-weight="800">📌 Elementos obrigatórios</text>
+      <text x="230" y="447" text-anchor="middle" fill="#3C3489" font-size="9.5">Todo mapa precisa ter:</text>
+      <line x1="160" y1="458" x2="120" y2="508" stroke="#AFA9EC" stroke-width="1.5"/>
+      <rect x="40" y="500" width="130" height="40" rx="8" fill="#EEEDFE"/>
+      <text x="105" y="517" text-anchor="middle" fill="#3C3489" font-size="9" font-weight="700">Título · Legenda</text>
+      <text x="105" y="532" text-anchor="middle" fill="#3C3489" font-size="8.5">Escala · Rosa dos ventos</text>
+      <line x1="300" y1="458" x2="326" y2="506" stroke="#AFA9EC" stroke-width="1.5"/>
+      <rect x="276" y="498" width="130" height="40" rx="8" fill="#EEEDFE"/>
+      <text x="341" y="515" text-anchor="middle" fill="#3C3489" font-size="9" font-weight="700">Norte = cima ⬆️</text>
+      <text x="341" y="530" text-anchor="middle" fill="#3C3489" font-size="8.5">na maioria dos mapas</text>
+    </svg>
+  </div>
+
+  <!-- SOCIAL STUDIES -->
+  <div class="mind-map" id="mm-social">
+    <svg viewBox="0 0 940 700" xmlns="http://www.w3.org/2000/svg" style="font-family:'Nunito',sans-serif;min-width:720px;width:100%">
+      <rect x="350" y="305" width="240" height="60" rx="30" fill="#2C2C2A"/>
+      <text x="470" y="330" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">🌎 SOCIAL STUDIES</text>
+      <text x="470" y="350" text-anchor="middle" fill="#D3D1C7" font-size="10">Ancient Civilizations · Nomads</text>
+
+      <!-- NOMADS top -->
+      <line x1="450" y1="307" x2="450" y2="178" stroke="#2C2C2A" stroke-width="2"/>
+      <rect x="320" y="138" width="260" height="50" rx="12" fill="#D3D1C7"/>
+      <text x="450" y="160" text-anchor="middle" fill="#2C2C2A" font-size="12" font-weight="800">🧭 Nomadic People</text>
+      <text x="450" y="177" text-anchor="middle" fill="#444441" font-size="9.5">Move following food &amp; seasons</text>
+      <line x1="380" y1="140" x2="316" y2="84" stroke="#888780" stroke-width="1.5"/>
+      <rect x="210" y="48" width="155" height="40" rx="8" fill="#F1EFE8"/>
+      <text x="287" y="65" text-anchor="middle" fill="#2C2C2A" font-size="9" font-weight="700">No permanent home</text>
+      <text x="287" y="80" text-anchor="middle" fill="#2C2C2A" font-size="8.5">hunters &amp; gatherers</text>
+      <line x1="520" y1="140" x2="576" y2="84" stroke="#888780" stroke-width="1.5"/>
+      <rect x="546" y="48" width="135" height="40" rx="8" fill="#F1EFE8"/>
+      <text x="613" y="65" text-anchor="middle" fill="#2C2C2A" font-size="9" font-weight="700">Still exist today!</text>
+      <text x="613" y="80" text-anchor="middle" fill="#2C2C2A" font-size="8.5">some groups worldwide</text>
+
+      <!-- MAYAS top-left -->
+      <line x1="390" y1="308" x2="210" y2="185" stroke="#2C2C2A" stroke-width="2"/>
+      <rect x="80" y="148" width="210" height="50" rx="12" fill="#D3D1C7"/>
+      <text x="185" y="170" text-anchor="middle" fill="#2C2C2A" font-size="12" font-weight="800">🌽 Mayas</text>
+      <text x="185" y="187" text-anchor="middle" fill="#444441" font-size="9.5">Mesoamerica</text>
+      <line x1="115" y1="150" x2="60" y2="94" stroke="#888780" stroke-width="1.5"/>
+      <rect x="0" y="58" width="120" height="40" rx="8" fill="#F1EFE8"/>
+      <text x="60" y="75" text-anchor="middle" fill="#2C2C2A" font-size="9" font-weight="700">📅 Calendar</text>
+      <text x="60" y="90" text-anchor="middle" fill="#2C2C2A" font-size="8.5">advanced astronomy</text>
+      <line x1="185" y1="148" x2="185" y2="94" stroke="#888780" stroke-width="1.5"/>
+      <rect x="120" y="58" width="120" height="40" rx="8" fill="#F1EFE8"/>
+      <text x="180" y="75" text-anchor="middle" fill="#2C2C2A" font-size="9" font-weight="700">🏛️ Chichén Itzá</text>
+      <text x="180" y="90" text-anchor="middle" fill="#2C2C2A" font-size="8.5">famous pyramid</text>
+      <line x1="255" y1="150" x2="295" y2="94" stroke="#888780" stroke-width="1.5"/>
+      <rect x="258" y="58" width="105" height="40" rx="8" fill="#F1EFE8"/>
+      <text x="310" y="75" text-anchor="middle" fill="#2C2C2A" font-size="9" font-weight="700">✍️ Glyphs</text>
+      <text x="310" y="90" text-anchor="middle" fill="#2C2C2A" font-size="8.5">picture writing</text>
+
+      <!-- AZTECS top-right -->
+      <line x1="510" y1="308" x2="690" y2="185" stroke="#2C2C2A" stroke-width="2"/>
+      <rect x="640" y="148" width="210" height="50" rx="12" fill="#D3D1C7"/>
+      <text x="745" y="170" text-anchor="middle" fill="#2C2C2A" font-size="12" font-weight="800">⚔️ Aztecs</text>
+      <text x="745" y="187" text-anchor="middle" fill="#444441" font-size="9.5">Tenochtitlan — on an island!</text>
+      <line x1="668" y1="150" x2="614" y2="94" stroke="#888780" stroke-width="1.5"/>
+      <rect x="540" y="58" width="145" height="40" rx="8" fill="#F1EFE8"/>
+      <text x="612" y="75" text-anchor="middle" fill="#2C2C2A" font-size="9" font-weight="700">🏝️ Lake city</text>
+      <text x="612" y="90" text-anchor="middle" fill="#2C2C2A" font-size="8.5">smart defense!</text>
+      <line x1="745" y1="148" x2="745" y2="94" stroke="#888780" stroke-width="1.5"/>
+      <rect x="676" y="58" width="138" height="40" rx="8" fill="#F1EFE8"/>
+      <text x="745" y="75" text-anchor="middle" fill="#2C2C2A" font-size="9" font-weight="700">🗡️ Cortés 1521</text>
+      <text x="745" y="90" text-anchor="middle" fill="#2C2C2A" font-size="8.5">Spanish conquered</text>
+      <line x1="822" y1="150" x2="864" y2="94" stroke="#888780" stroke-width="1.5"/>
+      <rect x="828" y="58" width="104" height="40" rx="8" fill="#F1EFE8"/>
+      <text x="880" y="75" text-anchor="middle" fill="#2C2C2A" font-size="9" font-weight="700">☀️ Sun god</text>
+      <text x="880" y="90" text-anchor="middle" fill="#2C2C2A" font-size="8.5">Huitzilopochtli</text>
+
+      <!-- INCAS bottom -->
+      <line x1="450" y1="364" x2="450" y2="468" stroke="#2C2C2A" stroke-width="2"/>
+      <rect x="310" y="448" width="280" height="52" rx="14" fill="#D3D1C7"/>
+      <text x="450" y="471" text-anchor="middle" fill="#2C2C2A" font-size="12" font-weight="800">🦙 Incas</text>
+      <text x="450" y="488" text-anchor="middle" fill="#444441" font-size="9.5">Andes Mts · Peru · Machu Picchu 🏔️</text>
+      <line x1="360" y1="500" x2="296" y2="554" stroke="#888780" stroke-width="1.5"/>
+      <rect x="186" y="546" width="170" height="42" rx="8" fill="#F1EFE8"/>
+      <text x="271" y="563" text-anchor="middle" fill="#2C2C2A" font-size="9" font-weight="700">🪢 Quipu</text>
+      <text x="271" y="578" text-anchor="middle" fill="#2C2C2A" font-size="8.5">knotted strings = data!</text>
+      <line x1="450" y1="500" x2="450" y2="552" stroke="#888780" stroke-width="1.5"/>
+      <rect x="368" y="544" width="166" height="42" rx="8" fill="#F1EFE8"/>
+      <text x="451" y="561" text-anchor="middle" fill="#2C2C2A" font-size="9" font-weight="700">Largest pre-Columbus</text>
+      <text x="451" y="576" text-anchor="middle" fill="#2C2C2A" font-size="8.5">empire in the Americas</text>
+      <line x1="540" y1="500" x2="600" y2="552" stroke="#888780" stroke-width="1.5"/>
+      <rect x="564" y="544" width="130" height="42" rx="8" fill="#F1EFE8"/>
+      <text x="629" y="561" text-anchor="middle" fill="#2C2C2A" font-size="9" font-weight="700">No writing system</text>
+      <text x="629" y="576" text-anchor="middle" fill="#2C2C2A" font-size="8.5">only quipu!</text>
+
+      <!-- COMPARE box -->
+      <line x1="380" y1="355" x2="200" y2="430" stroke="#2C2C2A" stroke-width="2"/>
+      <rect x="44" y="408" width="230" height="58" rx="12" fill="#D3D1C7"/>
+      <text x="159" y="430" text-anchor="middle" fill="#2C2C2A" font-size="11" font-weight="800">🔍 Compare the 3 civs</text>
+      <text x="159" y="447" text-anchor="middle" fill="#444441" font-size="9">Mayas: Mexico/Guatemala · glyphs</text>
+      <text x="159" y="461" text-anchor="middle" fill="#444441" font-size="9">Aztecs: Mexico · island city · 1521</text>
+
+      <line x1="520" y1="355" x2="700" y2="428" stroke="#2C2C2A" stroke-width="2"/>
+      <rect x="666" y="406" width="220" height="58" rx="12" fill="#D3D1C7"/>
+      <text x="776" y="428" text-anchor="middle" fill="#2C2C2A" font-size="11" font-weight="800">📍 Where they lived</text>
+      <text x="776" y="445" text-anchor="middle" fill="#444441" font-size="9">Mayas: Mesoamerica (forest)</text>
+      <text x="776" y="459" text-anchor="middle" fill="#444441" font-size="9">Aztecs: lake island · Incas: mountains</text>
+    </svg>
+  </div>
+
+</div>
+
+<!-- ===== QUIZ ===== -->
+<div class="screen" id="quiz">
+  <div class="qf-wrap" id="qf"></div>
+  <div class="prog-bar"><div class="prog-fill" id="prog" style="width:0%"></div></div>
+  <div class="quiz-box" id="qbox"></div>
+</div>
+
+<!-- ===== SIMULADOS ===== -->
+<div class="screen" id="sim">
+  <div class="sim-nav" id="sim-nav"></div>
+
+  <!-- Science -->
+  <div class="sim-panel active" id="sp-science">
+    <div class="exam-header" style="background:linear-gradient(135deg,#1D9E75,#0F6E56)"><h2>🌿 Science — Exam Practice</h2><p>Photosynthesis · Food chains · Food webs · Producers &amp; Consumers</p><span class="exam-score" id="sc-science">— / 6</span></div>
+    <div class="q-block"><div class="q-num">Question 1 · Multiple choice</div><div class="q-stem">Which of the following correctly describes photosynthesis?</div><div class="mc-opts"><button class="mc-opt" onclick="pickMC(this,'s1q1',1)"><span class="mc-letter">A</span>Animals break down dead plants to release energy.</button><button class="mc-opt" onclick="pickMC(this,'s1q1',1)"><span class="mc-letter">B</span>Plants use sunlight, water, and CO₂ to produce glucose and oxygen.</button><button class="mc-opt" onclick="pickMC(this,'s1q1',1)"><span class="mc-letter">C</span>Plants absorb energy from soil to grow their roots.</button><button class="mc-opt" onclick="pickMC(this,'s1q1',1)"><span class="mc-letter">D</span>Consumers convert sunlight into sugar for other organisms.</button></div><div class="q-fb" id="fb-s1q1"></div></div>
+    <div class="q-block"><div class="q-num">Question 2 · Fill in the blanks — word bank: grass · grasshopper · frog · hawk</div><div class="q-stem">Complete the food chain:</div><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;font-weight:700"><input class="fill-input" id="s1f1" placeholder="______"> → <input class="fill-input" id="s1f2" placeholder="______"> → <input class="fill-input" id="s1f3" placeholder="______"> → <input class="fill-input" id="s1f4" placeholder="______"></div><div class="q-fb" id="fb-s1q2"></div></div>
+    <div class="q-block"><div class="q-num">Question 3 · Classify each animal</div><div class="q-stem">Choose the correct classification for each.</div>
+      <div class="match-row"><span class="match-label">🐄 Cow</span><select class="match-sel" id="s1m1"><option value="">Choose…</option><option>Herbivore</option><option>Carnivore</option><option>Omnivore</option><option>Decomposer</option></select></div>
+      <div class="match-row"><span class="match-label">🐺 Wolf</span><select class="match-sel" id="s1m2"><option value="">Choose…</option><option>Herbivore</option><option>Carnivore</option><option>Omnivore</option><option>Decomposer</option></select></div>
+      <div class="match-row"><span class="match-label">🐻 Bear</span><select class="match-sel" id="s1m3"><option value="">Choose…</option><option>Herbivore</option><option>Carnivore</option><option>Omnivore</option><option>Decomposer</option></select></div>
+      <div class="match-row"><span class="match-label">🍄 Mushroom</span><select class="match-sel" id="s1m4"><option value="">Choose…</option><option>Herbivore</option><option>Carnivore</option><option>Omnivore</option><option>Decomposer</option></select></div>
+    <div class="q-fb" id="fb-s1q3"></div></div>
+    <div class="q-block"><div class="q-num">Question 4 · Multiple choice</div><div class="q-stem">In a food web, what happens if all the frogs disappear?</div><div class="mc-opts"><button class="mc-opt" onclick="pickMC(this,'s1q4',2)"><span class="mc-letter">A</span>Nothing changes.</button><button class="mc-opt" onclick="pickMC(this,'s1q4',2)"><span class="mc-letter">B</span>Only the hawks are affected.</button><button class="mc-opt" onclick="pickMC(this,'s1q4',2)"><span class="mc-letter">C</span>Insects increase and hawks have less food.</button><button class="mc-opt" onclick="pickMC(this,'s1q4',2)"><span class="mc-letter">D</span>Plants stop doing photosynthesis.</button></div><div class="q-fb" id="fb-s1q4"></div></div>
+    <div class="q-block"><div class="q-num">Question 5 · True or False</div><div class="q-stem">Read each statement.</div>
+      <div class="match-row"><span style="flex:1;font-size:12.5px">Plants are called consumers because they consume sunlight.</span><select class="match-sel" id="s1tf1"><option value="">T/F</option><option>True</option><option>False</option></select></div>
+      <div class="match-row"><span style="flex:1;font-size:12.5px">Decomposers help recycle nutrients back into the soil.</span><select class="match-sel" id="s1tf2"><option value="">T/F</option><option>True</option><option>False</option></select></div>
+      <div class="match-row"><span style="flex:1;font-size:12.5px">A food web is more complex than a food chain.</span><select class="match-sel" id="s1tf3"><option value="">T/F</option><option>True</option><option>False</option></select></div>
+    <div class="q-fb" id="fb-s1q5"></div></div>
+    <div class="q-block"><div class="q-num">Question 6 · Short answer</div><div class="q-stem">What is the difference between a producer and a consumer? Give one example of each.</div><textarea class="short-ta" id="s1sa" placeholder="Write your answer here…"></textarea><div class="q-fb" id="fb-s1q6"></div></div>
+    <button class="check-btn" style="background:#1D9E75" onclick="checkSim('science')">Check my answers ✓</button>
+    <div class="result-box" id="rb-science"><h3 id="rb-science-h"></h3><p id="rb-science-p"></p><button class="retry-s" onclick="resetSim('science')">Try again 🔄</button></div>
+  </div>
+
+  <!-- Ciências -->
+  <div class="sim-panel" id="sp-ciencias">
+    <div class="exam-header" style="background:linear-gradient(135deg,#378ADD,#185FA5)"><h2>🗺️ Ciências — Simulado</h2><p>Biomas brasileiros · Biodiversidade · Impacto humano</p><span class="exam-score" id="sc-ciencias">— / 6</span></div>
+    <div class="q-block"><div class="q-num">Questão 1 · Múltipla escolha</div><div class="q-stem">Qual bioma possui a maior diversidade de espécies e fica principalmente na região Norte?</div><div class="mc-opts"><button class="mc-opt" onclick="pickMC(this,'s2q1',0)"><span class="mc-letter">A</span>Amazônia</button><button class="mc-opt" onclick="pickMC(this,'s2q1',0)"><span class="mc-letter">B</span>Cerrado</button><button class="mc-opt" onclick="pickMC(this,'s2q1',0)"><span class="mc-letter">C</span>Caatinga</button><button class="mc-opt" onclick="pickMC(this,'s2q1',0)"><span class="mc-letter">D</span>Pampa</button></div><div class="q-fb" id="fb-s2q1"></div></div>
+    <div class="q-block"><div class="q-num">Questão 2 · Ligue cada bioma ao seu animal símbolo</div>
+      <div class="match-row"><span class="match-label">🌳 Amazônia</span><select class="match-sel" id="s2m1"><option value="">Animal…</option><option>Onça-pintada</option><option>Lobo-guará</option><option>Mico-leão-dourado</option><option>Asa-branca</option></select></div>
+      <div class="match-row"><span class="match-label">🌾 Cerrado</span><select class="match-sel" id="s2m2"><option value="">Animal…</option><option>Onça-pintada</option><option>Lobo-guará</option><option>Mico-leão-dourado</option><option>Asa-branca</option></select></div>
+      <div class="match-row"><span class="match-label">🌊 Mata Atlântica</span><select class="match-sel" id="s2m3"><option value="">Animal…</option><option>Onça-pintada</option><option>Lobo-guará</option><option>Mico-leão-dourado</option><option>Asa-branca</option></select></div>
+      <div class="match-row"><span class="match-label">🏜️ Caatinga</span><select class="match-sel" id="s2m4"><option value="">Animal…</option><option>Onça-pintada</option><option>Lobo-guará</option><option>Mico-leão-dourado</option><option>Asa-branca</option></select></div>
+    <div class="q-fb" id="fb-s2q2"></div></div>
+    <div class="q-block"><div class="q-num">Questão 3 · Verdadeiro ou Falso</div>
+      <div class="match-row"><span style="flex:1;font-size:12.5px">A Caatinga é o único bioma exclusivamente brasileiro.</span><select class="match-sel" id="s2tf1"><option value="">V/F</option><option>Verdadeiro</option><option>Falso</option></select></div>
+      <div class="match-row"><span style="flex:1;font-size:12.5px">A Mata Atlântica cobre hoje mais de 50% de sua área original.</span><select class="match-sel" id="s2tf2"><option value="">V/F</option><option>Verdadeiro</option><option>Falso</option></select></div>
+      <div class="match-row"><span style="flex:1;font-size:12.5px">O Cerrado é a savana tropical com maior biodiversidade do mundo.</span><select class="match-sel" id="s2tf3"><option value="">V/F</option><option>Verdadeiro</option><option>Falso</option></select></div>
+    <div class="q-fb" id="fb-s2q3"></div></div>
+    <div class="q-block"><div class="q-num">Questão 4 · Múltipla escolha</div><div class="q-stem">Qual descreve corretamente a Caatinga?</div><div class="mc-opts"><button class="mc-opt" onclick="pickMC(this,'s2q4',1)"><span class="mc-letter">A</span>Bioma úmido no litoral, com alta pluviosidade.</button><button class="mc-opt" onclick="pickMC(this,'s2q4',1)"><span class="mc-letter">B</span>Bioma semiárido, com seca intensa e plantas como o cacto.</button><button class="mc-opt" onclick="pickMC(this,'s2q4',1)"><span class="mc-letter">C</span>Grande savana com chuvas bem distribuídas o ano todo.</button><button class="mc-opt" onclick="pickMC(this,'s2q4',1)"><span class="mc-letter">D</span>Floresta densa no Sul do Brasil.</button></div><div class="q-fb" id="fb-s2q4"></div></div>
+    <div class="q-block"><div class="q-num">Questão 5 · Complete — biomas: Amazônia · Cerrado · Mata Atlântica · Caatinga</div><div class="q-stem">Preencha com o bioma correto.</div>
+      <div style="font-size:13px;line-height:2.8">
+        a) O bioma <input class="fill-input" id="s2f1" placeholder="_______"> sofre com a expansão da agropecuária.<br>
+        b) A <input class="fill-input" id="s2f2" placeholder="_______"> já foi desmatada em quase 90% de sua área.<br>
+        c) O único bioma 100% brasileiro é a <input class="fill-input" id="s2f3" placeholder="_______">.<br>
+        d) A <input class="fill-input" id="s2f4" placeholder="_______"> é a maior floresta tropical do mundo.
+      </div>
+    <div class="q-fb" id="fb-s2q5"></div></div>
+    <div class="q-block"><div class="q-num">Questão 6 · Resposta curta</div><div class="q-stem">Cite duas ações humanas que degradam os biomas e explique como cada uma causa danos.</div><textarea class="short-ta" id="s2sa" placeholder="Escreva aqui…"></textarea><div class="q-fb" id="fb-s2q6"></div></div>
+    <button class="check-btn" style="background:#378ADD" onclick="checkSim('ciencias')">Corrigir ✓</button>
+    <div class="result-box" id="rb-ciencias"><h3 id="rb-ciencias-h"></h3><p id="rb-ciencias-p"></p><button class="retry-s" onclick="resetSim('ciencias')">Tentar novamente 🔄</button></div>
+  </div>
+
+  <!-- Português -->
+  <div class="sim-panel" id="sp-portugues">
+    <div class="exam-header" style="background:linear-gradient(135deg,#D4537E,#993556)"><h2>✏️ Língua Portuguesa — Simulado</h2><p>Relato pessoal · Sílabas · Pronomes pessoais, possessivos e demonstrativos</p><span class="exam-score" id="sc-portugues">— / 6</span></div>
+    <div class="q-block"><div class="q-num">Questão 1 · Leitura e interpretação</div><div class="q-ctx">"No sábado passado, eu fui com minha família ao parque. Primeiro, nós brincamos na área de esportes. Depois, sentamos na grama e comemos juntos. Foi um dia muito especial para mim."</div><div class="q-stem">Esse texto é um relato pessoal porque:</div><div class="mc-opts"><button class="mc-opt" onclick="pickMC(this,'s3q1',1)"><span class="mc-letter">A</span>Conta uma história inventada com personagens fictícios.</button><button class="mc-opt" onclick="pickMC(this,'s3q1',1)"><span class="mc-letter">B</span>Narra uma experiência vivida pelo autor, em 1ª pessoa e em ordem cronológica.</button><button class="mc-opt" onclick="pickMC(this,'s3q1',1)"><span class="mc-letter">C</span>Descreve um personagem famoso e seus feitos.</button><button class="mc-opt" onclick="pickMC(this,'s3q1',1)"><span class="mc-letter">D</span>Apresenta argumentos para defender uma opinião.</button></div><div class="q-fb" id="fb-s3q1"></div></div>
+    <div class="q-block"><div class="q-num">Questão 2 · Separação silábica e classificação</div>
+      <div style="font-size:13px;line-height:3;display:flex;flex-direction:column;gap:4px">
+        <div class="match-row"><b style="min-width:110px">ESCOLA</b> Sep: <input class="fill-input" id="s3f1" placeholder="es-co-la" style="width:100px"> Class: <select class="match-sel" id="s3s1"><option value="">...</option><option>Monossílaba</option><option>Dissílaba</option><option>Trissílaba</option><option>Polissílaba</option></select></div>
+        <div class="match-row"><b style="min-width:110px">SOL</b> Sep: <input class="fill-input" id="s3f2" placeholder="sol" style="width:70px"> Class: <select class="match-sel" id="s3s2"><option value="">...</option><option>Monossílaba</option><option>Dissílaba</option><option>Trissílaba</option><option>Polissílaba</option></select></div>
+        <div class="match-row"><b style="min-width:110px">BORBOLETA</b> Sep: <input class="fill-input" id="s3f3" placeholder="bor-bo-le-ta" style="width:130px"> Class: <select class="match-sel" id="s3s3"><option value="">...</option><option>Monossílaba</option><option>Dissílaba</option><option>Trissílaba</option><option>Polissílaba</option></select></div>
+      </div>
+    <div class="q-fb" id="fb-s3q2"></div></div>
+    <div class="q-block"><div class="q-num">Questão 3 · Sílaba tônica — classifique</div>
+      <div class="match-row"><span class="match-label">CAFÉ</span><select class="match-sel" id="s3t1"><option value="">...</option><option>Oxítona</option><option>Paroxítona</option><option>Proparoxítona</option></select></div>
+      <div class="match-row"><span class="match-label">CADERNO</span><select class="match-sel" id="s3t2"><option value="">...</option><option>Oxítona</option><option>Paroxítona</option><option>Proparoxítona</option></select></div>
+      <div class="match-row"><span class="match-label">MÉDICO</span><select class="match-sel" id="s3t3"><option value="">...</option><option>Oxítona</option><option>Paroxítona</option><option>Proparoxítona</option></select></div>
+    <div class="q-fb" id="fb-s3q3"></div></div>
+    <div class="q-block"><div class="q-num">Questão 4 · Complete com pronome — banco: este · ela · aquele · sua</div>
+      <div style="font-size:13px;line-height:3">
+        a) <input class="fill-input" id="s3p1" placeholder="_____"> livro que está na minha mão é novo.<br>
+        b) A Ana disse que <input class="fill-input" id="s3p2" placeholder="_____"> gosta de Matemática.<br>
+        c) <input class="fill-input" id="s3p3" placeholder="_____"> prédio lá no fundo é muito antigo.<br>
+        d) O cachorro levantou <input class="fill-input" id="s3p4" placeholder="_____"> pata e olhou para mim.
+      </div>
+    <div class="q-fb" id="fb-s3q4"></div></div>
+    <div class="q-block"><div class="q-num">Questão 5 · Múltipla escolha</div><div class="q-stem">Em "Esse caderno que você tem é lindo!", a palavra ESSE é um pronome:</div><div class="mc-opts"><button class="mc-opt" onclick="pickMC(this,'s3q5',2)"><span class="mc-letter">A</span>Pessoal do caso reto</button><button class="mc-opt" onclick="pickMC(this,'s3q5',2)"><span class="mc-letter">B</span>Possessivo</button><button class="mc-opt" onclick="pickMC(this,'s3q5',2)"><span class="mc-letter">C</span>Demonstrativo — indica algo próximo de quem ouve</button><button class="mc-opt" onclick="pickMC(this,'s3q5',2)"><span class="mc-letter">D</span>Pessoal oblíquo</button></div><div class="q-fb" id="fb-s3q5"></div></div>
+    <div class="q-block"><div class="q-num">Questão 6 · Produção de texto</div><div class="q-stem">Escreva um relato pessoal (5 a 7 linhas) sobre algo que você fez recentemente. Use 1ª pessoa e pelo menos 2 marcadores temporais.</div><textarea class="short-ta" id="s3sa" placeholder="Escreva seu relato aqui…" style="min-height:100px"></textarea><div class="q-fb" id="fb-s3q6"></div></div>
+    <button class="check-btn" style="background:#D4537E" onclick="checkSim('portugues')">Corrigir ✓</button>
+    <div class="result-box" id="rb-portugues"><h3 id="rb-portugues-h"></h3><p id="rb-portugues-p"></p><button class="retry-s" onclick="resetSim('portugues')">Tentar novamente 🔄</button></div>
+  </div>
+
+  <!-- Matemática PT -->
+  <div class="sim-panel" id="sp-matpt">
+    <div class="exam-header" style="background:linear-gradient(135deg,#BA7517,#854F0B)"><h2>🔢 Matemática — Simulado</h2><p>Números até o milhar · Operações · Gráficos e tabelas · Situações-problema</p><span class="exam-score" id="sc-matpt">— / 6</span></div>
+    <div class="q-block"><div class="q-num">Questão 1 · Valor posicional — número: 3.746</div>
+      <div style="font-size:13px;line-height:3">
+        a) O algarismo 3 representa: <input class="fill-input" id="mp1f1" placeholder="3 milhares" style="width:130px"><br>
+        b) O algarismo 7 está na posição das <input class="fill-input" id="mp1f2" placeholder="centenas">.<br>
+        c) Forma decomposta: <input class="fill-input" id="mp1f3" placeholder="3000+700+40+6" style="width:200px">
+      </div>
+    <div class="q-fb" id="fb-mp1q1"></div></div>
+    <div class="q-block"><div class="q-num">Questão 2 · Múltipla escolha</div><div class="q-stem">Qual é o valor posicional do algarismo 8 no número 2.849?</div><div class="mc-opts"><button class="mc-opt" onclick="pickMC(this,'mp1q2',1)"><span class="mc-letter">A</span>8 unidades</button><button class="mc-opt" onclick="pickMC(this,'mp1q2',1)"><span class="mc-letter">B</span>8 centenas</button><button class="mc-opt" onclick="pickMC(this,'mp1q2',1)"><span class="mc-letter">C</span>8 dezenas</button><button class="mc-opt" onclick="pickMC(this,'mp1q2',1)"><span class="mc-letter">D</span>8 milhares</button></div><div class="q-fb" id="fb-mp1q2"></div></div>
+    <div class="q-block"><div class="q-num">Questão 3 · Operações</div>
+      <div style="font-size:13px;line-height:3">
+        a) 7 × 8 = <input class="fill-input" id="mp1op1" placeholder="56" style="width:60px"><br>
+        b) 63 ÷ 9 = <input class="fill-input" id="mp1op2" placeholder="7" style="width:60px"><br>
+        c) 456 + 237 = <input class="fill-input" id="mp1op3" placeholder="693" style="width:70px"><br>
+        d) 802 − 348 = <input class="fill-input" id="mp1op4" placeholder="454" style="width:70px">
+      </div>
+    <div class="q-fb" id="fb-mp1q3"></div></div>
+    <div class="q-block"><div class="q-num">Questão 4 · Situação-problema</div><div class="q-ctx">Uma escola tem 1.240 livros na biblioteca. Os alunos devolveram 85 livros e foram doados 120 novos. Depois, 38 livros foram emprestados. Quantos livros a biblioteca tem agora?</div>
+      <div style="font-size:13px;line-height:3">
+        Passo 1 — após devoluções: <input class="fill-input" id="mp1wp1" placeholder="1325"><br>
+        Passo 2 — após doações: <input class="fill-input" id="mp1wp2" placeholder="1445"><br>
+        Passo 3 — após empréstimos: <input class="fill-input" id="mp1wp3" placeholder="1407"><br>
+        Resposta: <input class="fill-input" id="mp1wp4" placeholder="1407"> livros.
+      </div>
+    <div class="q-fb" id="fb-mp1q4"></div></div>
+    <div class="q-block"><div class="q-num">Questão 5 · Leitura de tabela — Livros lidos por mês: Jan:5 · Fev:8 · Mar:4 · Abr:9 · Mai:7</div>
+      <div style="font-size:13px;line-height:3">
+        a) Qual mês teve mais livros lidos? <input class="fill-input" id="mp1g1" placeholder="Abril"><br>
+        b) Quantos livros a mais em Abril do que em Março? <input class="fill-input" id="mp1g2" placeholder="5" style="width:60px"><br>
+        c) Total de livros nos 5 meses: <input class="fill-input" id="mp1g3" placeholder="33" style="width:60px">
+      </div>
+    <div class="q-fb" id="fb-mp1q5"></div></div>
+    <div class="q-block"><div class="q-num">Questão 6 · Números ordinais e classificação</div><div class="q-stem">Responda as perguntas abaixo.</div>
+      <div style="font-size:13px;line-height:3">
+        a) Escreva por extenso o número ordinal: 5º = <input class="fill-input" id="mp1ord1" placeholder="quinto" style="width:100px"><br>
+        b) Escreva por extenso: 3.456 = <input class="fill-input" id="mp1ext1" placeholder="três mil..." style="width:220px"><br>
+        c) Qual é o maior número: 3.908 · 3.980 · 3.089? <input class="fill-input" id="mp1max1" placeholder="3.980" style="width:80px">
+      </div>
+    <div class="q-fb" id="fb-mp1q6"></div></div>
+    <button class="check-btn" style="background:#BA7517" onclick="checkSim('matpt')">Corrigir ✓</button>
+    <div class="result-box" id="rb-matpt"><h3 id="rb-matpt-h"></h3><p id="rb-matpt-p"></p><button class="retry-s" onclick="resetSim('matpt')">Tentar novamente 🔄</button></div>
+  </div>
+
+  <!-- Math EN -->
+  <div class="sim-panel" id="sp-mat">
+    <div class="exam-header" style="background:linear-gradient(135deg,#BA7517,#854F0B)"><h2>🔢 Math — Exam Practice</h2><p>Place value · Word problems · Telling time · Quadrilaterals · Graphs</p><span class="exam-score" id="sc-mat">— / 6</span></div>
+    <div class="q-block"><div class="q-num">Question 1 · Place Value — number: 4,758</div>
+      <div style="font-size:13px;line-height:3">
+        a) The digit 4 represents: <input class="fill-input" id="s4f1" placeholder="4 thousands" style="width:130px"><br>
+        b) The digit 5 is in the <input class="fill-input" id="s4f2" placeholder="tens"> place.<br>
+        c) Expanded form: <input class="fill-input" id="s4f3" placeholder="4000+700+50+8" style="width:200px">
+      </div>
+    <div class="q-fb" id="fb-s4q1"></div></div>
+    <div class="q-block"><div class="q-num">Question 2 · Word Problem</div><div class="q-ctx">A school library has 1,250 books. Students borrowed 348 books and 120 new books were donated. How many books does the library have now?</div>
+      <div style="font-size:13px;line-height:3">
+        Step 1 — Books after lending: <input class="fill-input" id="s4wp1" placeholder="902"><br>
+        Step 2 — Books after donation: <input class="fill-input" id="s4wp2" placeholder="1022"><br>
+        Answer: <input class="fill-input" id="s4wp3" placeholder="1022"> books.
+      </div>
+    <div class="q-fb" id="fb-s4q2"></div></div>
+    <div class="q-block"><div class="q-num">Question 3 · Telling Time &amp; Elapsed Time</div>
+      <div style="font-size:13px;line-height:3">
+        a) "Quarter past seven" in digital format: <input class="fill-input" id="s4t1" placeholder="7:15" style="width:70px"><br>
+        b) Movie starts 3:20 PM, lasts 1h45min. End time: <input class="fill-input" id="s4t2" placeholder="5:05 PM" style="width:90px"><br>
+        c) Now: 9:50 AM, school ends in 3h25min. End time: <input class="fill-input" id="s4t3" placeholder="1:15 PM" style="width:90px">
+      </div>
+    <div class="q-fb" id="fb-s4q3"></div></div>
+    <div class="q-block"><div class="q-num">Question 4 · Quadrilaterals — match each shape to its description</div>
+      <div class="match-row"><span class="match-label">Square</span><select class="match-sel" id="s4sh1"><option value="">Description…</option><option>4 equal sides, 4 right angles</option><option>Opposite sides equal, 4 right angles</option><option>4 equal sides, no right angles</option><option>Only one pair of parallel sides</option></select></div>
+      <div class="match-row"><span class="match-label">Rectangle</span><select class="match-sel" id="s4sh2"><option value="">Description…</option><option>4 equal sides, 4 right angles</option><option>Opposite sides equal, 4 right angles</option><option>4 equal sides, no right angles</option><option>Only one pair of parallel sides</option></select></div>
+      <div class="match-row"><span class="match-label">Rhombus</span><select class="match-sel" id="s4sh3"><option value="">Description…</option><option>4 equal sides, 4 right angles</option><option>Opposite sides equal, 4 right angles</option><option>4 equal sides, no right angles</option><option>Only one pair of parallel sides</option></select></div>
+      <div class="match-row"><span class="match-label">Trapezoid</span><select class="match-sel" id="s4sh4"><option value="">Description…</option><option>4 equal sides, 4 right angles</option><option>Opposite sides equal, 4 right angles</option><option>4 equal sides, no right angles</option><option>Only one pair of parallel sides</option></select></div>
+    <div class="q-fb" id="fb-s4q4"></div></div>
+    <div class="q-block"><div class="q-num">Question 5 · Reading a table — Books read per month: Jan:4 · Feb:7 · Mar:5 · Apr:9 · May:6</div>
+      <div style="font-size:13px;line-height:3">
+        a) Month with most books: <input class="fill-input" id="s4g1" placeholder="April"><br>
+        b) How many more in April than January? <input class="fill-input" id="s4g2" placeholder="5" style="width:60px"><br>
+        c) Total for all 5 months: <input class="fill-input" id="s4g3" placeholder="31" style="width:60px">
+      </div>
+    <div class="q-fb" id="fb-s4q5"></div></div>
+    <div class="q-block"><div class="q-num">Question 6 · Multiplication &amp; Division</div>
+      <div style="font-size:13px;line-height:3">
+        a) 6 × 8 = <input class="fill-input" id="s4op1" placeholder="48" style="width:60px"><br>
+        b) 54 ÷ 9 = <input class="fill-input" id="s4op2" placeholder="6" style="width:60px"><br>
+        c) 7 trays with 9 muffins each = <input class="fill-input" id="s4op3" placeholder="63" style="width:60px"> muffins total.
+      </div>
+    <div class="q-fb" id="fb-s4q6"></div></div>
+    <button class="check-btn" style="background:#BA7517" onclick="checkSim('mat')">Check my answers ✓</button>
+    <div class="result-box" id="rb-mat"><h3 id="rb-mat-h"></h3><p id="rb-mat-p"></p><button class="retry-s" onclick="resetSim('mat')">Try again 🔄</button></div>
+  </div>
+
+  <!-- Language Arts -->
+  <div class="sim-panel" id="sp-la">
+    <div class="exam-header" style="background:linear-gradient(135deg,#E24B4A,#A32D2D)"><h2>📖 Language Arts — Exam Practice</h2><p>Adjectives that compare · Verb tenses · Types of sentences</p><span class="exam-score" id="sc-la">— / 5</span></div>
+    <div class="q-block"><div class="q-num">Question 1 · Comparative &amp; Superlative — fill in the blanks</div>
+      <div style="font-size:13px;line-height:3">
+        a) My dog is <input class="fill-input" id="s5f1" placeholder="smaller"> than your cat. (small)<br>
+        b) This is the <input class="fill-input" id="s5f2" placeholder="hottest"> day of the year! (hot)<br>
+        c) She is a <input class="fill-input" id="s5f3" placeholder="faster"> runner than her brother. (fast)<br>
+        d) That was the <input class="fill-input" id="s5f4" placeholder="best"> movie I've ever seen. (good)
+      </div>
+    <div class="q-fb" id="fb-s5q1"></div></div>
+    <div class="q-block"><div class="q-num">Question 2 · Verb Tenses — choose the correct form</div>
+      <div class="match-row"><span style="flex:1;font-size:12.5px">Every morning, she ___ her teeth. (brush)</span><select class="match-sel" id="s5v1"><option value="">Choose…</option><option>brushed</option><option>brushes</option><option>brushing</option></select></div>
+      <div class="match-row"><span style="flex:1;font-size:12.5px">Yesterday, we ___ to the museum. (go)</span><select class="match-sel" id="s5v2"><option value="">Choose…</option><option>go</option><option>goes</option><option>went</option></select></div>
+      <div class="match-row"><span style="flex:1;font-size:12.5px">Last week, they ___ a great movie. (watch)</span><select class="match-sel" id="s5v3"><option value="">Choose…</option><option>watch</option><option>watches</option><option>watched</option></select></div>
+      <div class="match-row"><span style="flex:1;font-size:12.5px">He always ___ his homework after school. (do)</span><select class="match-sel" id="s5v4"><option value="">Choose…</option><option>did</option><option>does</option><option>do</option></select></div>
+    <div class="q-fb" id="fb-s5q2"></div></div>
+    <div class="q-block"><div class="q-num">Question 3 · Types of Sentences — identify each</div>
+      <div class="match-row"><span style="flex:1;font-size:12.5px">"Please close the door."</span><select class="match-sel" id="s5st1"><option value="">Type…</option><option>Statement</option><option>Question</option><option>Exclamation</option><option>Command</option></select></div>
+      <div class="match-row"><span style="flex:1;font-size:12.5px">"What an amazing goal!"</span><select class="match-sel" id="s5st2"><option value="">Type…</option><option>Statement</option><option>Question</option><option>Exclamation</option><option>Command</option></select></div>
+      <div class="match-row"><span style="flex:1;font-size:12.5px">"Do you like reading?"</span><select class="match-sel" id="s5st3"><option value="">Type…</option><option>Statement</option><option>Question</option><option>Exclamation</option><option>Command</option></select></div>
+      <div class="match-row"><span style="flex:1;font-size:12.5px">"My favorite subject is Science."</span><select class="match-sel" id="s5st4"><option value="">Type…</option><option>Statement</option><option>Question</option><option>Exclamation</option><option>Command</option></select></div>
+    <div class="q-fb" id="fb-s5q3"></div></div>
+    <div class="q-block"><div class="q-num">Question 4 · Multiple choice</div><div class="q-stem">"The baby elephant is ___ than its mother."</div><div class="mc-opts"><button class="mc-opt" onclick="pickMC(this,'s5q4',1)"><span class="mc-letter">A</span>more small</button><button class="mc-opt" onclick="pickMC(this,'s5q4',1)"><span class="mc-letter">B</span>smaller</button><button class="mc-opt" onclick="pickMC(this,'s5q4',1)"><span class="mc-letter">C</span>smallest</button><button class="mc-opt" onclick="pickMC(this,'s5q4',1)"><span class="mc-letter">D</span>small</button></div><div class="q-fb" id="fb-s5q4"></div></div>
+    <div class="q-block"><div class="q-num">Question 5 · Write your own</div><div class="q-stem">Write one sentence of EACH type about your school day. (statement · question · exclamation · command)</div><textarea class="short-ta" id="s5sa" placeholder="1. Statement: &#10;2. Question: &#10;3. Exclamation: &#10;4. Command: " style="min-height:110px"></textarea><div class="q-fb" id="fb-s5q5"></div></div>
+    <button class="check-btn" style="background:#E24B4A" onclick="checkSim('la')">Check my answers ✓</button>
+    <div class="result-box" id="rb-la"><h3 id="rb-la-h"></h3><p id="rb-la-p"></p><button class="retry-s" onclick="resetSim('la')">Try again 🔄</button></div>
+  </div>
+
+  <!-- Social Studies -->
+  <div class="sim-panel" id="sp-social">
+    <div class="exam-header" style="background:linear-gradient(135deg,#5F5E5A,#2C2C2A)"><h2>🌎 Social Studies — Exam Practice</h2><p>Nomadic people · Mayas · Aztecs · Incas</p><span class="exam-score" id="sc-social">— / 5</span></div>
+    <div class="q-block"><div class="q-num">Question 1 · Multiple choice</div><div class="q-stem">Which best describes nomadic people?</div><div class="mc-opts"><button class="mc-opt" onclick="pickMC(this,'s6q1',2)"><span class="mc-letter">A</span>They built large cities and never moved.</button><button class="mc-opt" onclick="pickMC(this,'s6q1',2)"><span class="mc-letter">B</span>They were farmers who stayed in one place.</button><button class="mc-opt" onclick="pickMC(this,'s6q1',2)"><span class="mc-letter">C</span>They moved following food sources and seasons.</button><button class="mc-opt" onclick="pickMC(this,'s6q1',2)"><span class="mc-letter">D</span>They traded goods across ocean routes.</button></div><div class="q-fb" id="fb-s6q1"></div></div>
+    <div class="q-block"><div class="q-num">Question 2 · Match each fact to the correct civilization</div>
+      <div class="match-row"><span style="flex:1;font-size:12px">Built Machu Picchu in the Andes mountains.</span><select class="match-sel" id="s6m1"><option value="">Civ…</option><option>Mayas</option><option>Aztecs</option><option>Incas</option></select></div>
+      <div class="match-row"><span style="flex:1;font-size:12px">Built capital Tenochtitlan on an island in a lake.</span><select class="match-sel" id="s6m2"><option value="">Civ…</option><option>Mayas</option><option>Aztecs</option><option>Incas</option></select></div>
+      <div class="match-row"><span style="flex:1;font-size:12px">Developed an advanced calendar and wrote using glyphs.</span><select class="match-sel" id="s6m3"><option value="">Civ…</option><option>Mayas</option><option>Aztecs</option><option>Incas</option></select></div>
+      <div class="match-row"><span style="flex:1;font-size:12px">Used quipu (knotted strings) to record information.</span><select class="match-sel" id="s6m4"><option value="">Civ…</option><option>Mayas</option><option>Aztecs</option><option>Incas</option></select></div>
+    <div class="q-fb" id="fb-s6q2"></div></div>
+    <div class="q-block"><div class="q-num">Question 3 · True or False</div>
+      <div class="match-row"><span style="flex:1;font-size:12.5px">The Incas had a writing system using an alphabet.</span><select class="match-sel" id="s6tf1"><option value="">T/F</option><option>True</option><option>False</option></select></div>
+      <div class="match-row"><span style="flex:1;font-size:12.5px">The Aztec empire was conquered by the Spanish in 1521.</span><select class="match-sel" id="s6tf2"><option value="">T/F</option><option>True</option><option>False</option></select></div>
+      <div class="match-row"><span style="flex:1;font-size:12.5px">The Mayas developed an advanced understanding of astronomy.</span><select class="match-sel" id="s6tf3"><option value="">T/F</option><option>True</option><option>False</option></select></div>
+    <div class="q-fb" id="fb-s6q3"></div></div>
+    <div class="q-block"><div class="q-num">Question 4 · Fill in — word bank: Mayas · Aztecs · Incas · nomads · quipu</div>
+      <div style="font-size:13px;line-height:3">
+        a) The <input class="fill-input" id="s6f1" placeholder="Mayas"> built pyramids and used glyphs to write.<br>
+        b) People who move following food are called <input class="fill-input" id="s6f2" placeholder="nomads">.<br>
+        c) The <input class="fill-input" id="s6f3" placeholder="Incas"> used knotted strings called <input class="fill-input" id="s6f4" placeholder="quipu">.
+      </div>
+    <div class="q-fb" id="fb-s6q4"></div></div>
+    <div class="q-block"><div class="q-num">Question 5 · Short answer</div><div class="q-stem">Choose ONE civilization (Mayas, Aztecs or Incas). Write 3–4 sentences: where they lived, what they built or created, and what happened to their empire.</div><textarea class="short-ta" id="s6sa" placeholder="Write your answer here…" style="min-height:100px"></textarea><div class="q-fb" id="fb-s6q5"></div></div>
+    <button class="check-btn" style="background:#5F5E5A" onclick="checkSim('social')">Check my answers ✓</button>
+    <div class="result-box" id="rb-social"><h3 id="rb-social-h"></h3><p id="rb-social-p"></p><button class="retry-s" onclick="resetSim('social')">Try again 🔄</button></div>
+  </div>
+</div><!-- end sim screen -->
+
+<script>
+// ===== DATA =====
+var DETAIL={
+  science:{title:"🌿 Science",color:"#1D9E75",light:"#E1F5EE",dark:"#085041",lang:"en",topics:[{h:"☀️ Photosynthesis",items:["Plants make their own food","They use: sunlight + water + CO₂","They produce: glucose + oxygen","Plants = PRODUCERS"],act:"Draw: Sun → leaf → glucose → animal eating the plant"},{h:"🔗 Food Chain",items:["Producer → Primary consumer","Primary → Secondary consumer","Decomposers break down dead things","Energy flows ONE way"],act:"Chain: grass → grasshopper → frog → snake → hawk"},{h:"🕸️ Food Web",items:["Multiple chains connected","More realistic than one chain","Removing one species affects the whole web","Shows real nature dependencies"],act:"Build your own food web with 6 animals you choose!"},{h:"🏷️ Classify!",items:["Herbivores: plants only","Carnivores: meat only","Omnivores: both","Decomposers: dead matter"],act:"You are an omnivore! Name 3 examples of each type."}]},
+  ciencias:{title:"🗺️ Ciências",color:"#378ADD",light:"#E6F1FB",dark:"#0C447C",lang:"pt",topics:[{h:"🌳 Amazônia",items:["Maior floresta tropical do mundo","Altíssima biodiversidade","Muita chuva (>2000mm/ano)","Ameaça: desmatamento"],act:"Animal símbolo: onça-pintada 🐆"},{h:"🌾 Cerrado",items:["Savana tropical brasileira","Seca no inverno","2ª maior biodiversidade do mundo","Ameaça: agropecuária"],act:"Animal símbolo: lobo-guará 🐺"},{h:"🌊 Mata Atlântica",items:["Cobre o litoral","Só 12% ainda existe","Clima úmido e quente","Ameaça: urbanização"],act:"Animal símbolo: mico-leão-dourado 🦁"},{h:"🏜️ Caatinga",items:["Único bioma 100% brasileiro","Semiárido: seca intensa","Plantas adaptadas (cactos)","Ameaça: desertificação"],act:"Planta símbolo: mandacaru 🌵"}]},
+  portugues:{title:"✏️ Português",color:"#D4537E",light:"#FBEAF0",dark:"#72243E",lang:"pt",topics:[{h:"📖 Relato Pessoal",items:["Narrador conta o que viveu","1ª pessoa (eu, nós)","Sequência cronológica","Marcadores: ontem, depois, então…"],act:"Escreva 4 linhas sobre seu último fim de semana."},{h:"🔤 Sílabas",items:["Separação: ca-der-no","Tônica: sílaba mais forte","Oxítona: última sílaba","Paroxítona: penúltima","Proparoxítona: antepenúltima"],act:"Jogo de palmas: bata para cada sílaba!"},{h:"🙋 Pronomes",items:["Pessoais: eu, tu, ele, ela, nós","Possessivos: meu, teu, seu, nosso","Demonstrativos: este, esse, aquele","Este=perto · Esse=médio · Aquele=longe"],act:"Complete: '__ livro é __ e __ lá é seu.'"}]},
+  mat:{title:"🔢 Math",color:"#BA7517",light:"#FAEEDA",dark:"#633806",lang:"en",topics:[{h:"🔢 Place Value",items:["Ones · Tens · Hundreds · Thousands","3,456 = 3T+4H+5tens+6ones","Each position = 10x the right","Ordinals: 1st, 2nd, 3rd…"],act:"Decompose: 2,748 = ___ + ___ + ___ + ___"},{h:"🕐 Telling Time",items:["Hour hand=short · Minute hand=long","Quarter past=:15 · Half past=:30","Quarter to=:45","Elapsed time = start + duration"],act:"Draw 4:35. If class adds 25 min, when does it end?"},{h:"🔷 Quadrilaterals",items:["Square: 4 equal, 4 right angles","Rectangle: opposite equal, right angles","Rhombus: 4 equal, NO right angles","Trapezoid: 1 pair parallel sides"],act:"Find 3 quadrilaterals in your room!"},{h:"🧩 Word Problems",items:["Read carefully — twice!","What do you know? What do you need?","Choose the right operation","Does your answer make sense?"],act:"Tom: 325 stickers, gives 48 away. How many left?"}]},
+  la:{title:"📖 Language Arts",color:"#E24B4A",light:"#FCEBEB",dark:"#791F1F",lang:"en",topics:[{h:"🏆 Adjectives",items:["Comparative (-er): bigger, taller","Superlative (-est): biggest, tallest","Long words: more/most beautiful","Irregular: good→better→best"],act:"Compare 3 animals: big/bigger/biggest!"},{h:"⏱️ Verb Tenses",items:["Present: I walk, she walks","Past regular: add -ed → walked","Past irregular: go→went · run→ran","'Yesterday' → past tense!"],act:"Tell 3 things you did yesterday."},{h:"❓ Sentence Types",items:["Statement: ends with . ","Question: ends with ?","Exclamation: ends with !","Command: gives an order"],act:"Write one of each type about your day!"}]},
+  geohist:{title:"🏛️ Geo & Hist",color:"#7F77DD",light:"#EEEDFE",dark:"#3C3489",lang:"pt",topics:[{h:"🗺️ Tipos de Mapas",items:["Político: países, estados, fronteiras","Físico: relevo, rios, montanhas","Temático: clima, população, vegetação","Elementos: título, legenda, escala"],act:"Google Maps: troca entre mapa e satélite!"},{h:"🪶 Influências Indígenas",items:["Língua: +1000 palavras do tupi","Alimentos: mandioca, milho, caju","Técnicas: pesca, plantio","Topônimos: Paraná, Ipiranga, Tijuca…"],act:"Ache 5 palavras de origem tupi no dia a dia!"}]},
+  social:{title:"🌎 Social Studies",color:"#5F5E5A",light:"#F1EFE8",dark:"#444441",lang:"en",topics:[{h:"🧭 Nomadic People",items:["Moved following food & seasons","No permanent settlements","Hunters and gatherers","Some groups still exist today"],act:"If you had to move monthly, what 5 things would you bring?"},{h:"🌽 Mayas",items:["Mesoamerica: Mexico, Guatemala","Advanced calendar & astronomy","Pyramids — Chichén Itzá","Wrote using glyphs"],act:"How did they predict eclipses without telescopes?"},{h:"⚔️ Aztecs",items:["Capital Tenochtitlan — on an island!","Powerful military empire","Sun god: Huitzilopochtli","Conquered by Cortés in 1521"],act:"Why was an island city smart for defense?"},{h:"🦙 Incas",items:["Largest pre-Columbus empire","Andes: Peru, Bolivia","Famous: Machu Picchu 🏔️","No writing — used quipu"],act:"Create your own mini-quipu code!"}]}
+};
+
+var QUIZ=[
+  {cat:"science",lang:"en",q:"What do plants use to make food through photosynthesis?",opts:["Water, sugar and oxygen","Sunlight, water and CO₂","Soil, rain and sunlight","CO₂, sugar and minerals"],a:1,exp:"Plants use sunlight + water + CO₂ → glucose + oxygen!"},
+  {cat:"science",lang:"en",q:"In a food chain, which organism has the MOST energy?",opts:["The top predator","The secondary consumer","The producer (plant)","The decomposer"],a:2,exp:"Producers have the most energy — it decreases at each level!"},
+  {cat:"science",lang:"en",q:"What is a food web?",opts:["A single food chain","Several food chains connected","Only producers and consumers","A web made by spiders"],a:1,exp:"A food web = multiple food chains linked together!"},
+  {cat:"science",lang:"en",q:"An animal that eats ONLY plants is called a…",opts:["Carnivore","Omnivore","Herbivore","Decomposer"],a:2,exp:"Herbivores eat only plants: rabbit, cow, elephant!"},
+  {cat:"ciencias",lang:"pt",q:"Qual bioma é 100% exclusivo do Brasil?",opts:["Amazônia","Cerrado","Caatinga","Mata Atlântica"],a:2,exp:"A Caatinga existe somente no território brasileiro!"},
+  {cat:"ciencias",lang:"pt",q:"Qual bioma sofre principalmente com a agropecuária?",opts:["Caatinga","Cerrado","Pampa","Mata Atlântica"],a:1,exp:"O Cerrado perde área principalmente para a agropecuária!"},
+  {cat:"ciencias",lang:"pt",q:"Qual porcentagem da Mata Atlântica ainda existe?",opts:["Cerca de 50%","Cerca de 30%","Cerca de 12%","Cerca de 70%"],a:2,exp:"Restam apenas cerca de 12% da Mata Atlântica original!"},
+  {cat:"ciencias",lang:"pt",q:"O lobo-guará é símbolo de qual bioma?",opts:["Amazônia","Caatinga","Pantanal","Cerrado"],a:3,exp:"O lobo-guará é o símbolo do Cerrado!"},
+  {cat:"portugues",lang:"pt",q:"Qual pronome é demonstrativo?",opts:["Eu","Meu","Este","Nós"],a:2,exp:"'Este' indica posição (perto de quem fala) — é demonstrativo!"},
+  {cat:"portugues",lang:"pt",q:"'SÁBADO' é uma palavra:",opts:["Oxítona","Paroxítona","Proparoxítona","Monossílaba"],a:2,exp:"SÁ-ba-do — tônica na antepenúltima = PROPAROXÍTONA!"},
+  {cat:"portugues",lang:"pt",q:"Um relato pessoal é sempre narrado em:",opts:["3ª pessoa","1ª pessoa (eu/nós)","2ª pessoa (tu/você)","Qualquer pessoa"],a:1,exp:"Relato pessoal = o autor conta o que viveu, em 1ª pessoa!"},
+  {cat:"mat",lang:"en",q:"What is the value of the digit 5 in 3,572?",opts:["5 ones","5 tens","5 hundreds","5 thousands"],a:2,exp:"3,572 → 3 thousands, 5 hundreds, 7 tens, 2 ones. The 5 = 500!"},
+  {cat:"mat",lang:"en",q:"'Quarter past seven' in digital format is:",opts:["7:05","7:15","7:25","7:45"],a:1,exp:"Quarter past = 15 minutes after → 7:15!"},
+  {cat:"mat",lang:"en",q:"Which shape has 4 equal sides but NO right angles?",opts:["Square","Rectangle","Rhombus","Trapezoid"],a:2,exp:"A rhombus has 4 equal sides but its angles are NOT 90°!"},
+  {cat:"mat",lang:"en",q:"248 + 35 = ?",opts:["273","283","293","263"],a:1,exp:"248+35=283. Check: 248+30=278, +5=283 ✓"},
+  {cat:"la",lang:"en",q:"'The giraffe is ___ than the horse.' Which is correct?",opts:["more tall","tallest","taller","tall"],a:2,exp:"Comparing 2 things → add -er → taller!"},
+  {cat:"la",lang:"en",q:"'Yesterday, I ___ to the park.' Correct verb?",opts:["go","goes","went","going"],a:2,exp:"'Go' is irregular → past = 'went'."},
+  {cat:"la",lang:"en",q:"Which sentence is a COMMAND?",opts:["I like pizza.","Do you like pizza?","What delicious pizza!","Eat your pizza."],a:3,exp:"A command gives an order. Often starts with a verb!"},
+  {cat:"la",lang:"en",q:"Superlative of 'good' is:",opts:["Gooder","Goodest","Better","Best"],a:3,exp:"Irregular: good → better → best!"},
+  {cat:"geohist",lang:"pt",q:"Qual mapa mostra países, estados e fronteiras?",opts:["Mapa físico","Mapa político","Mapa climático","Mapa de vegetação"],a:1,exp:"Mapa político = divisões humanas!"},
+  {cat:"geohist",lang:"pt",q:"Qual influência indígena está no português?",opts:["Escola","Mandioca","Televisão","Computador"],a:1,exp:"'Mandioca' vem do tupi 'mandi'ó'!"},
+  {cat:"social",lang:"en",q:"How did the Incas record information without writing?",opts:["Painted on walls","Used clay tablets","Used quipu (knotted strings)","Carved on stone"],a:2,exp:"Quipu = knotted strings to record data!"},
+  {cat:"social",lang:"en",q:"Where was the Aztec capital Tenochtitlan built?",opts:["On a desert","On an island in a lake","On a mountain top","On the Pacific coast"],a:1,exp:"On an island in Lake Texcoco — now Mexico City!"},
+  {cat:"social",lang:"en",q:"Nomadic people are best described as:",opts:["City builders","Farmers in one place","Moving to follow food & seasons","Ocean traders"],a:2,exp:"Nomadic = moving constantly following food sources!"},
+  {cat:"social",lang:"en",q:"Which civilization built Machu Picchu?",opts:["Mayas","Aztecs","Incas","Olmecs"],a:2,exp:"Machu Picchu is an Inca city in the Andes of Peru!"}
+];
+
+var NC={science:"#1D9E75",ciencias:"#378ADD",portugues:"#D4537E",mat:"#BA7517",la:"#E24B4A",geohist:"#7F77DD",social:"#5F5E5A"};
+
+// ===== TABS =====
+// ===== DETAIL =====
+function showDetail(key){
+  var d=DETAIL[key];
+  document.getElementById('dash-main').style.display='none';
+  var p=document.getElementById('dash-detail');p.style.display='block';
+  var lb=d.lang==='en'?'background:#E6F1FB;color:#0C447C':'background:#FBEAF0;color:#72243E';
+  var h='<button class="detail-back" onclick="hideDetail()">← Back / Voltar</button>';
+  h+='<div class="detail-title">'+d.title+'<span class="lang-pill" style="'+lb+'">'+d.lang.toUpperCase()+'</span></div>';
+  h+='<div class="topic-grid">';
+  d.topics.forEach(t=>{
+    h+='<div class="topic-card" style="background:'+d.light+';color:'+d.dark+'"><h4>'+t.h+'</h4><ul>';
+    t.items.forEach(i=>{h+='<li>'+i+'</li>';});
+    h+='</ul><div class="activity"><strong>'+(d.lang==='en'?'⚡ Try this':'⚡ Atividade')+'</strong>'+t.act+'</div></div>';
+  });
+  h+='</div>';p.innerHTML=h;
+}
+function hideDetail(){document.getElementById('dash-main').style.display='';document.getElementById('dash-detail').style.display='none';document.getElementById('dash-detail').innerHTML='';}
+
+// ===== QUIZ =====
+var cQ=[],qi=0,sc=0,ans=false,af='all';
+var CATS=[['all','Todas / All','#2C2C2A'],['science','🌿 Science','#1D9E75'],['ciencias','🗺️ Ciências','#378ADD'],['portugues','✏️ Português','#D4537E'],['mat','🔢 Math','#BA7517'],['la','📖 Lang Arts','#E24B4A'],['social','🌎 Social','#5F5E5A'],['geohist','🏛️ Geo & Hist','#7F77DD']];
+function buildQF(){
+  var w=document.getElementById('qf');if(w.childElementCount)return;
+  CATS.forEach((c,i)=>{
+    var b=document.createElement('button');b.className='qf-btn'+(i===0?' active':'');
+    b.textContent=c[1];if(i===0){b.style.background=c[2];b.style.color='#fff';b.style.borderColor=c[2];}
+    b.onclick=()=>startQuiz(c[0],b);w.appendChild(b);
+  });
+}
+function startQuiz(filter,btn){
+  af=filter;
+  document.querySelectorAll('.qf-btn').forEach(b=>{b.classList.remove('active');b.style.background='';b.style.color='var(--muted)';b.style.borderColor='var(--border)';});
+  if(btn){btn.classList.add('active');var cc=CATS.find(c=>c[0]===filter);btn.style.background=cc[2];btn.style.color='#fff';btn.style.borderColor=cc[2];}
+  cQ=filter==='all'?shuf(QUIZ.slice()):shuf(QUIZ.filter(q=>q.cat===filter));
+  qi=0;sc=0;ans=false;renderQ();
+}
+function shuf(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function renderQ(){
+  document.getElementById('prog').style.width=Math.round(qi/cQ.length*100)+'%';
+  var box=document.getElementById('qbox');
+  if(qi>=cQ.length){
+    var pct=Math.round(sc/cQ.length*100);
+    var bg=pct>=80?'var(--green-l)':'var(--amber-l)';var col=pct>=80?'var(--green-d)':'var(--amber-d)';
+    var emoji=pct>=80?'🌟':pct>=60?'👍':'💪';
+    box.innerHTML='<div class="score-card show" style="background:'+bg+';color:'+col+'"><h2>'+emoji+' '+sc+'/'+cQ.length+'</h2><p>'+pct+'%'+(pct>=80?' — Excellent! Ready for the exam!':pct>=60?' — Good! Review the red answers.':' — Keep practicing!')+'</p><button class="retry-btn" onclick="startQuiz(af,null)">🔄 Play again</button></div>';
+    document.getElementById('prog').style.width='100%';return;
+  }
+  var q=cQ[qi];
+  var ce={science:'🌿',ciencias:'🗺️',portugues:'✏️',mat:'🔢',la:'📖',geohist:'🏛️',social:'🌎'};
+  var lb=q.lang==='en'?'background:#E6F1FB;color:#0C447C':'background:#FBEAF0;color:#72243E';
+  var L=['A','B','C','D'];
+  var h='<div class="q-meta">'+ce[q.cat]+' Q'+(qi+1)+'/'+cQ.length+'<span class="lang-pill" style="'+lb+'">'+q.lang.toUpperCase()+'</span></div>';
+  h+='<div class="q-text">'+q.q+'</div><div class="opts">';
+  q.opts.forEach((o,i)=>{h+='<button class="opt" onclick="doAns('+i+')"><span class="opt-letter">'+L[i]+'</span>'+o+'</button>';});
+  h+='</div><div class="feedback" id="fb"></div><button class="next-btn" id="nxt" style="background:'+NC[q.cat]+'" onclick="nextQ()">Next →</button>';
+  box.innerHTML=h;ans=false;
+}
+function doAns(i){
+  if(ans)return;ans=true;
+  var q=cQ[qi];var opts=document.querySelectorAll('.opt');
+  opts[q.a].classList.add('correct');
+  var fb=document.getElementById('fb');
+  if(i===q.a){sc++;fb.textContent='✅ Correct! '+q.exp;fb.className='feedback ok';}
+  else{opts[i].classList.add('wrong');fb.textContent='❌ Answer: '+['A','B','C','D'][q.a]+'. '+q.exp;fb.className='feedback bad';}
+  document.getElementById('nxt').style.display='inline-block';
+}
+function nextQ(){qi++;renderQ();}
+
+// ===== SIMULADOS NAV =====
+var SIMS=[['science','🌿 Science','#1D9E75'],['ciencias','🗺️ Ciências','#378ADD'],['portugues','✏️ Português','#D4537E'],['matpt','🔢 Matemática PT','#BA7517'],['mat','🔢 Math EN','#633806'],['la','📖 Lang Arts','#E24B4A'],['social','🌎 Social','#5F5E5A']];
+function buildSimNav(){
+  var nav=document.getElementById('sim-nav');if(nav.childElementCount)return;
+
+  SIMS.forEach((s,i)=>{
+    var b=document.createElement('button');b.className='sim-btn'+(i===0?' active':'');
+    b.textContent=s[1];if(i===0){b.style.background=s[2];b.style.color='#fff';b.style.borderColor=s[2];}
+    b.onclick=()=>{
+      document.querySelectorAll('.sim-panel').forEach(p=>p.classList.remove('active'));
+      document.querySelectorAll('.sim-btn').forEach(x=>{x.classList.remove('active');x.style.background='';x.style.color='var(--muted)';x.style.borderColor='var(--border)'});
+      document.getElementById('sp-'+s[0]).classList.add('active');
+      b.classList.add('active');b.style.background=s[2];b.style.color='#fff';b.style.borderColor=s[2];
+    };nav.appendChild(b);
+  });
+}
+
+// ===== MC pick =====
+var MC={};
+function pickMC(el,qid,correct){
+  var opts=el.parentElement.querySelectorAll('.mc-opt');
+  opts.forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  MC[qid]={el,correct,opts};
+}
+
+// ===== HELPERS =====
+function gv(id){var e=document.getElementById(id);return e?e.value.trim():'';}
+function norm(s){return s.toLowerCase().replace(/[^a-záéíóúàâãêîôõüç0-9:]/g,'').trim();}
+function si(id,ok){var e=document.getElementById(id);if(e){e.classList.remove('correct','wrong');e.classList.add(ok?'correct':'wrong');}}
+function ss(id,ok){var e=document.getElementById(id);if(e){e.classList.remove('correct','wrong');e.classList.add(ok?'correct':'wrong');}}
+function fb(id,ok,msg){var e=document.getElementById('fb-'+id);if(!e)return;e.className='q-fb show '+(ok?'ok':'bad');e.textContent=(ok?'✅ ':'❌ ')+msg;}
+function showResult(key,s,t){
+  var pct=Math.round(s/t*100);
+  var rb=document.getElementById('rb-'+key);
+  var rh=document.getElementById('rb-'+key+'-h');
+  var rp=document.getElementById('rb-'+key+'-p');
+  var emoji=pct>=80?'🌟':pct>=60?'👍':'💪';
+  var msg=pct>=80?'Excellent! Ready for the exam!':pct>=60?'Good job! Review the corrections and try again.':'Keep practicing! Look at the red answers and try again.';
+  rh.textContent=emoji+' '+s+'/'+t+' ('+pct+'%)';
+  rp.textContent=msg;
+  rb.style.background=pct>=80?'var(--green-l)':'var(--amber-l)';
+  rb.style.color=pct>=80?'var(--green-d)':'var(--amber-d)';
+  rb.className='result-box show';
+  document.getElementById('sc-'+key).textContent=s+'/'+t;
+}
+function resetSim(key){location.reload();}
+
+// ===== CHECK SIMS =====
+function checkSim(key){
+  var s=0,t=0;
+  if(key==='science'){t=6;
+    var q1=MC['s1q1'];if(q1){var ok=Array.from(q1.opts).indexOf(q1.el)===1;if(ok){s++;q1.el.classList.add('correct');}else{q1.el.classList.add('wrong');q1.opts[1].classList.add('correct');}fb('s1q1',ok,ok?'Correct! Plants use sunlight+water+CO₂.':'Plants use sunlight+water+CO₂ to make glucose+oxygen.');}
+    var fa=['grass','grasshopper','frog','hawk'];var f=[norm(gv('s1f1')),norm(gv('s1f2')),norm(gv('s1f3')),norm(gv('s1f4'))];var q2ok=f.every((x,i)=>x===fa[i]);f.forEach((x,i)=>si('s1f'+(i+1),x===fa[i]));if(q2ok)s++;fb('s1q2',q2ok,q2ok?'Perfect food chain!':'grass → grasshopper → frog → hawk');
+    var ma=[gv('s1m1'),gv('s1m2'),gv('s1m3'),gv('s1m4')];var mca=['Herbivore','Carnivore','Omnivore','Decomposer'];var q3ok=ma.every((x,i)=>x===mca[i]);ma.forEach((x,i)=>ss('s1m'+(i+1),x===mca[i]));if(q3ok)s++;fb('s1q3',q3ok,q3ok?'All correct!':'Cow=Herbivore · Wolf=Carnivore · Bear=Omnivore · Mushroom=Decomposer');
+    var q4=MC['s1q4'];if(q4){var ok4=Array.from(q4.opts).indexOf(q4.el)===2;if(ok4){s++;q4.el.classList.add('correct');}else{q4.el.classList.add('wrong');q4.opts[2].classList.add('correct');}fb('s1q4',ok4,ok4?'Exactly right!':'Insects increase (no predator) and hawks have less food.');}
+    var tf=[gv('s1tf1'),gv('s1tf2'),gv('s1tf3')];var tfa=['False','True','True'];var q5ok=tf.every((x,i)=>x===tfa[i]);tf.forEach((x,i)=>ss('s1tf'+(i+1),x===tfa[i]));if(q5ok)s++;fb('s1q5',q5ok,q5ok?'All correct!':'F(plants=PRODUCERS,not consumers) · T · T');
+    var sa=gv('s1sa');if(sa.length>20)s++;fb('s1q6',sa.length>20,sa.length>20?'Great! Key: producers make food (plants), consumers eat organisms.':'Write at least one sentence for each!');
+    showResult('science',s,t);
+  }
+  else if(key==='ciencias'){t=6;
+    var q1=MC['s2q1'];if(q1){var ok=Array.from(q1.opts).indexOf(q1.el)===0;if(ok){s++;q1.el.classList.add('correct');}else{q1.el.classList.add('wrong');q1.opts[0].classList.add('correct');}fb('s2q1',ok,ok?'Correto!':'A Amazônia tem a maior biodiversidade — fica no Norte.');}
+    var ma2=[gv('s2m1'),gv('s2m2'),gv('s2m3'),gv('s2m4')];var mca2=['Onça-pintada','Lobo-guará','Mico-leão-dourado','Asa-branca'];var q2ok=ma2.every((x,i)=>x===mca2[i]);ma2.forEach((x,i)=>ss('s2m'+(i+1),x===mca2[i]));if(q2ok)s++;fb('s2q2',q2ok,q2ok?'Perfeito!':'Amazônia=Onça · Cerrado=Lobo-guará · M.Atlântica=Mico-leão · Caatinga=Asa-branca');
+    var tf2=[gv('s2tf1'),gv('s2tf2'),gv('s2tf3')];var tfa2=['Verdadeiro','Falso','Verdadeiro'];var q3ok=tf2.every((x,i)=>x===tfa2[i]);tf2.forEach((x,i)=>ss('s2tf'+(i+1),x===tfa2[i]));if(q3ok)s++;fb('s2q3',q3ok,q3ok?'Tudo certo!':'V · F(restam só ~12%) · V');
+    var q4=MC['s2q4'];if(q4){var ok4=Array.from(q4.opts).indexOf(q4.el)===1;if(ok4){s++;q4.el.classList.add('correct');}else{q4.el.classList.add('wrong');q4.opts[1].classList.add('correct');}fb('s2q4',ok4,ok4?'Correto!':'Caatinga = semiárida, seca intensa, plantas como cacto.');}
+    var ff=[norm(gv('s2f1')),norm(gv('s2f2')),norm(gv('s2f3')),norm(gv('s2f4'))];var ffa=['cerrado','mataatlântica','caatinga','amazônia'];var q5ok=ff.every((x,i)=>x===ffa[i]||x.includes(ffa[i])||ffa[i].includes(x));ff.forEach((x,i)=>si('s2f'+(i+1),(x===ffa[i]||x.includes(ffa[i])||ffa[i].includes(x))));if(q5ok)s++;fb('s2q5',q5ok,q5ok?'Perfeito!':'a)Cerrado b)Mata Atlântica c)Caatinga d)Amazônia');
+    var sa2=gv('s2sa');if(sa2.length>20)s++;fb('s2q6',sa2.length>20,sa2.length>20?'Ótimo! Ex: desmatamento e agropecuária destroem habitat.':'Escreva pelo menos 2 exemplos!');
+    showResult('ciencias',s,t);
+  }
+  else if(key==='portugues'){t=6;
+    var q1=MC['s3q1'];if(q1){var ok=Array.from(q1.opts).indexOf(q1.el)===1;if(ok){s++;q1.el.classList.add('correct');}else{q1.el.classList.add('wrong');q1.opts[1].classList.add('correct');}fb('s3q1',ok,ok?'Correto!':'Relato pessoal = 1ª pessoa, experiência real, ordem cronológica.');}
+    var pf1=norm(gv('s3f1')),ps1=gv('s3s1'),pf2=norm(gv('s3f2')),ps2=gv('s3s2'),pf3=norm(gv('s3f3')),ps3=gv('s3s3');
+    var q2ok=(pf1==='escola'||pf1==='es-co-la')&&ps1==='Trissílaba'&&(pf2==='sol')&&ps2==='Monossílaba'&&(pf3==='bor-bo-le-ta'||pf3==='borboleta')&&ps3==='Polissílaba';
+    si('s3f1',pf1==='escola'||pf1==='es-co-la');ss('s3s1',ps1==='Trissílaba');si('s3f2',pf2==='sol');ss('s3s2',ps2==='Monossílaba');si('s3f3',pf3==='bor-bo-le-ta'||pf3==='borboleta');ss('s3s3',ps3==='Polissílaba');
+    if(q2ok)s++;fb('s3q2',q2ok,q2ok?'Perfeito!':'es-co-la(trissílaba) · sol(monossílaba) · bor-bo-le-ta(polissílaba)');
+    var ton1=gv('s3t1'),ton2=gv('s3t2'),ton3=gv('s3t3');var q3ok=ton1==='Oxítona'&&ton2==='Paroxítona'&&ton3==='Proparoxítona';
+    ss('s3t1',ton1==='Oxítona');ss('s3t2',ton2==='Paroxítona');ss('s3t3',ton3==='Proparoxítona');
+    if(q3ok)s++;fb('s3q3',q3ok,q3ok?'Tudo certo!':'CAFÉ=oxítona · CADERNO=paroxítona · MÉDICO=proparoxítona');
+    var pp=[norm(gv('s3p1')),norm(gv('s3p2')),norm(gv('s3p3')),norm(gv('s3p4'))];var ppa=['este','ela','aquele','sua'];var q4ok=pp.every((x,i)=>x===ppa[i]);pp.forEach((x,i)=>si('s3p'+(i+1),x===ppa[i]));if(q4ok)s++;fb('s3q4',q4ok,q4ok?'Perfeito!':'a)Este b)ela c)Aquele d)sua');
+    var q5=MC['s3q5'];if(q5){var ok5=Array.from(q5.opts).indexOf(q5.el)===2;if(ok5){s++;q5.el.classList.add('correct');}else{q5.el.classList.add('wrong');q5.opts[2].classList.add('correct');}fb('s3q5',ok5,ok5?'Correto!':'ESSE = demonstrativo, indica algo perto de quem ouve.');}
+    var sap=gv('s3sa');if(sap.length>30)s++;fb('s3q6',sap.length>30,sap.length>30?'Ótimo relato! Verifique: 1ª pessoa ✓, marcadores temporais ✓':'Escreva pelo menos 3 frases com marcadores de tempo!');
+    showResult('portugues',s,t);
+  }
+  else if(key==='matpt'){t=6;
+    var f1=norm(gv('mp1f1')),f2=norm(gv('mp1f2')),f3=norm(gv('mp1f3'));
+    var q1ok=(f1.includes('3000')||f1.includes('3mil')||f1.includes('3milhares'))&&(f2==='centenas'||f2==='centena')&&(f3.includes('3000')||f3.includes('3.000'));
+    si('mp1f1',f1.includes('3000')||f1.includes('3mil')||f1.includes('3milhares'));si('mp1f2',f2==='centenas'||f2==='centena');si('mp1f3',f3.includes('3000')||f3.includes('3.000'));
+    if(q1ok)s++;fb('mp1q1',q1ok,q1ok?'Correto!':'3=3.000(milhares) · 7=centenas · forma: 3.000+700+40+6');
+    var q2=MC['mp1q2'];if(q2){var ok2=Array.from(q2.opts).indexOf(q2.el)===1;if(ok2){s++;q2.el.classList.add('correct');}else{q2.el.classList.add('wrong');q2.opts[1].classList.add('correct');}fb('mp1q2',ok2,ok2?'Correto!':'2.849 → o 8 está na posição das CENTENAS = 800.');}
+    var op1=norm(gv('mp1op1')),op2=norm(gv('mp1op2')),op3=norm(gv('mp1op3')),op4=norm(gv('mp1op4'));
+    var q3ok=op1==='56'&&op2==='7'&&op3==='693'&&op4==='454';
+    si('mp1op1',op1==='56');si('mp1op2',op2==='7');si('mp1op3',op3==='693');si('mp1op4',op4==='454');
+    if(q3ok)s++;fb('mp1q3',q3ok,q3ok?'Tudo certo!':'7×8=56 · 63÷9=7 · 456+237=693 · 802-348=454');
+    var w1=norm(gv('mp1wp1')),w2=norm(gv('mp1wp2')),w3=norm(gv('mp1wp3')),w4=norm(gv('mp1wp4'));
+    var q4ok=w1==='1325'&&w2==='1445'&&(w3==='1407'||w4==='1407');
+    si('mp1wp1',w1==='1325');si('mp1wp2',w2==='1445');si('mp1wp3',w3==='1407');si('mp1wp4',w4==='1407');
+    if(q4ok)s++;fb('mp1q4',q4ok,q4ok?'Perfeito!':'1240+85=1325 → +120=1445 → -38=1407');
+    var g1=norm(gv('mp1g1')),g2=norm(gv('mp1g2')),g3=norm(gv('mp1g3'));
+    var q5ok=(g1==='abril'||g1==='abr')&&g2==='5'&&g3==='33';
+    si('mp1g1',g1==='abril'||g1==='abr');si('mp1g2',g2==='5');si('mp1g3',g3==='33');
+    if(q5ok)s++;fb('mp1q5',q5ok,q5ok?'Correto!':'Mais=Abril(9) · Dif=9-4=5 · Total=5+8+4+9+7=33');
+    var ord=norm(gv('mp1ord1')),ext=norm(gv('mp1ext1')),mx=norm(gv('mp1max1'));
+    var q6ok=(ord==='quinto'||ord==='5º'||ord==='5o')&&ext.includes('trêsmil')&&(mx==='3980'||mx==='3.980');
+    si('mp1ord1',ord==='quinto'||ord==='5o');si('mp1ext1',ext.includes('trêsmil')||ext.includes('tresmil'));si('mp1max1',mx==='3980'||mx==='3.980');
+    if(q6ok)s++;fb('mp1q6',q6ok,q6ok?'Tudo certo!':'5º=quinto · 3.456=três mil quatrocentos e cinquenta e seis · maior=3.980');
+    showResult('matpt',s,t);
+  }
+  else if(key==='mat'){t=6;
+    var f1=norm(gv('s4f1')),f2=norm(gv('s4f2')),f3=norm(gv('s4f3'));
+    var q1ok=(f1.includes('4000')||f1.includes('4thousand')||f1.includes('4,000'))&&(f2==='tens'||f2==='ten')&&(f3.includes('4000')||f3.includes('4,000'));
+    si('s4f1',f1.includes('4000')||f1.includes('4thousand'));si('s4f2',f2==='tens'||f2==='ten');si('s4f3',f3.includes('4000')||f3.includes('4,000'));
+    if(q1ok)s++;fb('s4q1',q1ok,q1ok?'Correct!':'4=4,000(thousands) · 5=tens place · expanded: 4,000+700+50+8');
+    var w1=norm(gv('s4wp1')),w2=norm(gv('s4wp2')),w3=norm(gv('s4wp3'));var q2ok=w1==='902'&&w2==='1022'&&w3==='1022';si('s4wp1',w1==='902');si('s4wp2',w2==='1022');si('s4wp3',w3==='1022');if(q2ok)s++;fb('s4q2',q2ok,q2ok?'Perfect!':'1250-348=902 → 902+120=1,022');
+    var t1=norm(gv('s4t1')),t2=norm(gv('s4t2')),t3=norm(gv('s4t3'));var q3ok=(t1==='715'||t1==='7:15')&&(t2==='505'||t2==='5:05')&&(t3==='115'||t3==='1:15');si('s4t1',t1==='715'||t1==='7:15');si('s4t2',t2==='505'||t2==='5:05');si('s4t3',t3==='115'||t3==='1:15');if(q3ok)s++;fb('s4q3',q3ok,q3ok?'All correct!':'a)7:15 · b)5:05 PM · c)1:15 PM');
+    var sh1=gv('s4sh1'),sh2=gv('s4sh2'),sh3=gv('s4sh3'),sh4=gv('s4sh4');var sha=['4 equal sides, 4 right angles','Opposite sides equal, 4 right angles','4 equal sides, no right angles','Only one pair of parallel sides'];var q4ok=sh1===sha[0]&&sh2===sha[1]&&sh3===sha[2]&&sh4===sha[3];[sh1,sh2,sh3,sh4].forEach((x,i)=>ss('s4sh'+(i+1),x===sha[i]));if(q4ok)s++;fb('s4q4',q4ok,q4ok?'Perfect!':'Square=4equal+right · Rectangle=opp+right · Rhombus=4equal,no right · Trapezoid=1pair');
+    var g1=norm(gv('s4g1')),g2=norm(gv('s4g2')),g3=norm(gv('s4g3'));var q5ok=(g1==='april'||g1==='abril')&&g2==='5'&&g3==='31';si('s4g1',g1==='april'||g1==='abril');si('s4g2',g2==='5');si('s4g3',g3==='31');if(q5ok)s++;fb('s4q5',q5ok,q5ok?'Correct!':'Most=April(9) · Diff=9-4=5 · Total=4+7+5+9+6=31');
+    var op1=norm(gv('s4op1')),op2=norm(gv('s4op2')),op3=norm(gv('s4op3'));var q6ok=op1==='48'&&op2==='6'&&op3==='63';si('s4op1',op1==='48');si('s4op2',op2==='6');si('s4op3',op3==='63');if(q6ok)s++;fb('s4q6',q6ok,q6ok?'All correct!':'6×8=48 · 54÷9=6 · 7×9=63');
+    showResult('mat',s,t);
+  }
+  else if(key==='la'){t=5;
+    var lf=[norm(gv('s5f1')),norm(gv('s5f2')),norm(gv('s5f3')),norm(gv('s5f4'))];var lfa=['smaller','hottest','faster','best'];var q1ok=lf.every((x,i)=>x===lfa[i]);lf.forEach((x,i)=>si('s5f'+(i+1),x===lfa[i]));if(q1ok)s++;fb('s5q1',q1ok,q1ok?'All correct!':'smaller · hottest · faster · best(irregular)');
+    var lv=[gv('s5v1'),gv('s5v2'),gv('s5v3'),gv('s5v4')];var lva=['brushes','went','watched','does'];var q2ok=lv.every((x,i)=>x===lva[i]);lv.forEach((x,i)=>ss('s5v'+(i+1),x===lva[i]));if(q2ok)s++;fb('s5q2',q2ok,q2ok?'Perfect!':'brushes · went · watched · does');
+    var lst=[gv('s5st1'),gv('s5st2'),gv('s5st3'),gv('s5st4')];var lsta=['Command','Exclamation','Question','Statement'];var q3ok=lst.every((x,i)=>x===lsta[i]);lst.forEach((x,i)=>ss('s5st'+(i+1),x===lsta[i]));if(q3ok)s++;fb('s5q3',q3ok,q3ok?'Correct!':'Command · Exclamation · Question · Statement');
+    var q4=MC['s5q4'];if(q4){var ok4=Array.from(q4.opts).indexOf(q4.el)===1;if(ok4){s++;q4.el.classList.add('correct');}else{q4.el.classList.add('wrong');q4.opts[1].classList.add('correct');}fb('s5q4',ok4,ok4?'Correct! Comparing 2 = -er (smaller).':'Comparing 2 things = comparative: smaller. Superlative(-est) = 3 or more.');}
+    var lsa=gv('s5sa');if(lsa.length>40)s++;fb('s5q5',lsa.length>40,lsa.length>40?'Well done! Check: statement(.) · question(?) · exclamation(!) · command':'Write all 4 sentence types!');
+    showResult('la',s,t);
+  }
+  else if(key==='social'){t=5;
+    var q1=MC['s6q1'];if(q1){var ok=Array.from(q1.opts).indexOf(q1.el)===2;if(ok){s++;q1.el.classList.add('correct');}else{q1.el.classList.add('wrong');q1.opts[2].classList.add('correct');}fb('s6q1',ok,ok?'Correct!':'Nomadic = moving constantly following food and seasons.');}
+    var sm=[gv('s6m1'),gv('s6m2'),gv('s6m3'),gv('s6m4')];var sma=['Incas','Aztecs','Mayas','Incas'];var q2ok=sm.every((x,i)=>x===sma[i]);sm.forEach((x,i)=>ss('s6m'+(i+1),x===sma[i]));if(q2ok)s++;fb('s6q2',q2ok,q2ok?'All correct!':'Machu Picchu=Incas · Tenochtitlan=Aztecs · Glyphs=Mayas · Quipu=Incas');
+    var stf=[gv('s6tf1'),gv('s6tf2'),gv('s6tf3')];var stfa=['False','True','True'];var q3ok=stf.every((x,i)=>x===stfa[i]);stf.forEach((x,i)=>ss('s6tf'+(i+1),x===stfa[i]));if(q3ok)s++;fb('s6q3',q3ok,q3ok?'Correct!':'F(Incas had no alphabet, used quipu) · T · T');
+    var sf=[norm(gv('s6f1')),norm(gv('s6f2')),norm(gv('s6f3')),norm(gv('s6f4'))];var sfa=['mayas','nomads','incas','quipu'];var q4ok=sf.every((x,i)=>x===sfa[i]);sf.forEach((x,i)=>si('s6f'+(i+1),x===sfa[i]));if(q4ok)s++;fb('s6q4',q4ok,q4ok?'Perfect!':'Mayas · nomads · Incas · quipu');
+    var ssa=gv('s6sa');if(ssa.length>40)s++;fb('s6q5',ssa.length>40,ssa.length>40?'Great answer! Check: location ✓, achievements ✓, fate ✓':'Write 3-4 full sentences!');
+    showResult('social',s,t);
+  }
+}
+
+// ===== MIND NAV =====
+var MINDS=[
+  ['science','🌿 Science','#1D9E75'],
+  ['ciencias','🗺️ Ciências','#378ADD'],
+  ['portugues','✏️ Português','#D4537E'],
+  ['matpt','🔢 Matemática PT','#BA7517'],
+  ['mat','🔢 Math EN','#633806'],
+  ['la','📖 Language Arts','#E24B4A'],
+  ['geohist','🏛️ Geo & Hist','#7F77DD'],
+  ['social','🌎 Social Studies','#2C2C2A']
+];
+function buildMindNav(){
+  var nav=document.getElementById('mind-nav');
+  if(!nav||nav.childElementCount)return;
+  MINDS.forEach((m,i)=>{
+    var b=document.createElement('button');
+    b.className='mind-btn'+(i===0?' active':'');
+    b.textContent=m[1];
+    if(i===0){b.style.background=m[2];b.style.color='#fff';b.style.borderColor=m[2];}
+    b.onclick=()=>{
+      document.querySelectorAll('.mind-map').forEach(p=>p.classList.remove('active'));
+      document.querySelectorAll('.mind-btn').forEach(x=>{x.classList.remove('active');x.style.background='';x.style.color='var(--muted)';x.style.borderColor='var(--border)';});
+      var el=document.getElementById('mm-'+m[0]);
+      if(el) el.classList.add('active');
+      b.classList.add('active');b.style.background=m[2];b.style.color='#fff';b.style.borderColor=m[2];
+    };
+    nav.appendChild(b);
+  });
+}
+
+// init
+function showTab(id,col){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>{t.classList.remove('active');t.style.background='';t.style.color='';t.style.borderColor='var(--border)'});
+  document.getElementById(id).classList.add('active');
+  var btn=document.getElementById('t-'+id);
+  btn.classList.add('active');btn.style.background=col;btn.style.color='#fff';btn.style.borderColor=col;
+  if(id==='quiz'){buildQF();startQuiz('all',document.querySelector('.qf-btn'));}
+  if(id==='sim') buildSimNav();
+  if(id==='mind') buildMindNav();
+}
+showTab('dash','#2C2C2A');
+</script>
+
+<!-- ===== CHAT FLUTUANTE ===== -->
+<style>
+.chat-fab{position:fixed;bottom:20px;right:20px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#7F77DD,#534AB7);border:none;cursor:pointer;font-size:24px;color:#fff;box-shadow:0 4px 16px rgba(127,119,221,.45);z-index:1000;transition:transform .2s;display:flex;align-items:center;justify-content:center}
+.chat-fab:hover{transform:scale(1.08)}
+.chat-fab .badge{position:absolute;top:-2px;right:-2px;background:#E24B4A;color:#fff;font-size:9px;font-weight:800;padding:2px 5px;border-radius:10px;font-family:'Nunito',sans-serif;display:none}
+
+.chat-window{position:fixed;bottom:86px;right:20px;width:340px;max-height:520px;background:#fff;border-radius:20px;box-shadow:0 8px 40px rgba(0,0,0,.18);z-index:1000;display:none;flex-direction:column;overflow:hidden;border:1.5px solid #e0ddd8}
+.chat-window.open{display:flex}
+.chat-head{background:linear-gradient(135deg,#7F77DD,#534AB7);padding:.75rem 1rem;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.chat-head .avatar{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:18px}
+.chat-head-info h3{font-size:13px;font-weight:800;color:#fff;margin:0}
+.chat-head-info p{font-size:10.5px;color:rgba(255,255,255,.8);margin:0}
+.chat-close{margin-left:auto;background:none;border:none;color:#fff;font-size:18px;cursor:pointer;padding:2px 6px;border-radius:6px;font-family:'Nunito',sans-serif;opacity:.8}
+.chat-close:hover{opacity:1}
+
+.chat-msgs{flex:1;overflow-y:auto;padding:.75rem;display:flex;flex-direction:column;gap:10px;min-height:0}
+.msg{max-width:85%;border-radius:14px;padding:8px 11px;font-size:13px;line-height:1.55;font-family:'Nunito',sans-serif}
+.msg.bot{background:#EEEDFE;color:#3C3489;align-self:flex-start;border-bottom-left-radius:4px}
+.msg.user{background:linear-gradient(135deg,#7F77DD,#534AB7);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.msg.typing{background:#EEEDFE;color:#7F77DD;align-self:flex-start;border-bottom-left-radius:4px;font-style:italic;opacity:.7}
+
+.chat-suggestions{padding:0 .75rem .5rem;display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0}
+.sug-btn{padding:5px 10px;border-radius:12px;font-size:11px;font-weight:700;cursor:pointer;border:1.5px solid #CECBF6;background:#EEEDFE;color:#534AB7;font-family:'Nunito',sans-serif;transition:all .15s;white-space:nowrap}
+.sug-btn:hover{background:#7F77DD;color:#fff;border-color:#7F77DD}
+
+.chat-input-row{padding:.6rem .75rem;border-top:1.5px solid #f0efea;display:flex;gap:8px;align-items:center;flex-shrink:0}
+.chat-input{flex:1;border:1.5px solid #e0ddd8;border-radius:12px;padding:7px 11px;font-family:'Nunito',sans-serif;font-size:13px;color:#1a1a1a;outline:none;transition:border-color .15s;background:#fff}
+.chat-input:focus{border-color:#7F77DD}
+.chat-send{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#7F77DD,#534AB7);border:none;cursor:pointer;color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center;transition:opacity .15s;flex-shrink:0}
+.chat-send:hover{opacity:.88}
+.chat-send:disabled{opacity:.4;cursor:not-allowed}
+</style>
+
+<button class="chat-fab" onclick="toggleChat()" title="Perguntar para a Lala-AI">
+  🤖
+  <span class="badge" id="chat-badge"></span>
+</button>
+
+<div class="chat-window" id="chat-window">
+  <div class="chat-head">
+    <div class="avatar">🤖</div>
+    <div class="chat-head-info">
+      <h3>Lala-AI</h3>
+      <p>Tira dúvidas das provas! 💜</p>
+    </div>
+    <button class="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+
+  <div class="chat-msgs" id="chat-msgs">
+    <div class="msg bot">Oi Lala! 👋 Sou sua assistente de estudos. Pode me perguntar qualquer coisa sobre as matérias — em português ou em inglês! 💜</div>
+  </div>
+
+  <div class="chat-suggestions" id="chat-sugs">
+    <button class="sug-btn" onclick="sendSug(this)">O que é fotossíntese?</button>
+    <button class="sug-btn" onclick="sendSug(this)">What is a food web?</button>
+    <button class="sug-btn" onclick="sendSug(this)">O que é paroxítona?</button>
+    <button class="sug-btn" onclick="sendSug(this)">What are the Incas?</button>
+    <button class="sug-btn" onclick="sendSug(this)">Explica biomas</button>
+    <button class="sug-btn" onclick="sendSug(this)">What is elapsed time?</button>
+  </div>
+
+  <div class="chat-input-row">
+    <input class="chat-input" id="chat-input" placeholder="Escreva sua dúvida…" onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="chat-send" id="chat-send" onclick="sendChat()">➤</button>
+  </div>
+</div>
+
+<script>
+var chatOpen=false;
+var chatHistory=[];
+var chatTyping=false;
+
+
+function toggleChat(){
+  chatOpen=!chatOpen;
+  var w=document.getElementById('chat-window');
+  w.classList.toggle('open',chatOpen);
+  document.getElementById('chat-badge').style.display='none';
+  if(chatOpen) document.getElementById('chat-input').focus();
+}
+
+function addMsg(text,type){
+  var msgs=document.getElementById('chat-msgs');
+  var div=document.createElement('div');
+  div.className='msg '+type;
+  div.textContent=text;
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+  return div;
+}
+
+function sendSug(btn){
+  var text=btn.textContent;
+  document.getElementById('chat-sugs').style.display='none';
+  sendMessage(text);
+}
+
+function sendChat(){
+  var inp=document.getElementById('chat-input');
+  var text=inp.value.trim();
+  if(!text||chatTyping)return;
+  inp.value='';
+  document.getElementById('chat-sugs').style.display='none';
+  sendMessage(text);
+}
+
+async function sendMessage(text){
+  if(chatTyping)return;
+  chatTyping=true;
+  document.getElementById('chat-send').disabled=true;
+
+  addMsg(text,'user');
+  chatHistory.push({role:'user',content:text});
+
+  var typingDiv=addMsg('Pensando… ✨','typing');
+
+  try{
+    var res=await fetch('/api/chat',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({messages:chatHistory})
+    });
+    var data=await res.json();
+    var reply=data.reply||'Hmm, não consegui responder. Tenta de novo! 💜';
+    typingDiv.remove();
+    addMsg(reply,'bot');
+    chatHistory.push({role:'assistant',content:reply});
+    if(chatHistory.length>20) chatHistory=chatHistory.slice(-16);
+    if(!chatOpen){
+      document.getElementById('chat-badge').style.display='block';
+      document.getElementById('chat-badge').textContent='1';
+    }
+  }catch(e){
+    typingDiv.remove();
+    addMsg('Ops, algo deu errado. Tenta de novo! 🙈','bot');
+  }
+  chatTyping=false;
+  document.getElementById('chat-send').disabled=false;
+}
+</script>
+
