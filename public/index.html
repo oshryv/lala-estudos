@@ -940,8 +940,9 @@ var SIMS=[
      {label:'🗺️ Todos os biomas', topics:'Amazônia (maior floresta tropical, onça-pintada, desmatamento), Cerrado (savana brasileira, lobo-guará, agropecuária), Mata Atlântica (litoral, mico-leão-dourado, só 12% restante, urbanização), Caatinga (único bioma 100% brasileiro, semiárido, cacto, asa-branca, desertificação)'}
    ]},
   {key:'portugues', label:'✏️ Português', color:'#D4537E', lang:'pt',
-   allTopics:'Relato pessoal, Sílabas, Pronomes',
+   allTopics:'Relato pessoal, Sílabas, Pronomes, Interpretação de texto',
    subtopics:[
+     {label:'📚 Interpretação de texto', topics:'INTERPRETACAO', type:'reading'},
      {label:'📖 Relato pessoal', topics:'Relato pessoal apenas: narração em 1ª pessoa (eu, nós), sequência cronológica dos fatos, experiência real vivida pelo autor, marcadores de tempo (ontem, depois, então, primeiro, finalmente), características do gênero'},
      {label:'🔤 Sílabas', topics:'Sílabas apenas: separação silábica (ca-der-no, bor-bo-le-ta), sílaba tônica (sílaba mais forte da palavra), classificação: oxítona=tônica na última (café, parabéns), paroxítona=tônica na penúltima (caderno, livro), proparoxítona=tônica na antepenúltima (médico, sábado), classificação por número de sílabas: monossílaba/dissílaba/trissílaba/polissílaba'},
      {label:'🙋 Pronomes', topics:'Pronomes apenas: pronomes pessoais do caso reto (eu, tu, ele, ela, nós, vós, eles, elas), pronomes possessivos (meu, teu, seu, nosso, vosso, seus), pronomes demonstrativos (este/esta/isto=perto de quem fala, esse/essa/isso=perto de quem ouve, aquele/aquela/aquilo=longe de ambos), como identificar e usar cada tipo'},
@@ -1050,16 +1051,124 @@ function renderTopicPicker(sub){
     grid.appendChild(btn);
   });
 }
-function startSimTopic(key, labelEnc, topicsEnc){
+function startSimTopic(key, label, topics){
   currentSimKey = key;
-  currentTopicLabel = decodeURIComponent(labelEnc);
-  var topics = decodeURIComponent(topicsEnc);
+  currentTopicLabel = label;
   var sub = SIMS.find(s=>s.key===key);
+  // Detectar se é interpretação de texto
+  var subtopic = sub.subtopics.find(function(t){ return t.label===label; });
+  var isReading = subtopic && subtopic.type==='reading';
   simAnswers={};
   simQuestions=[];
   document.getElementById('sim-questions').innerHTML='';
   document.getElementById('sim-loading').style.display='block';
-  generateSimQuestions(sub, topics, currentTopicLabel);
+  if(isReading){
+    generateReadingQuestions(sub);
+  } else {
+    generateSimQuestions(sub, topics, label);
+  }
+}
+
+async function generateReadingQuestions(sub){
+  var topicLabel = '📚 Interpretação de texto';
+  currentTopicLabel = topicLabel;
+  var prompt = 'Você é um professor de 4º ano do Ensino Fundamental. Crie um exercício de interpretação de texto para uma criança de 9 anos. Siga EXATAMENTE este formato JSON, sem texto antes ou depois:\n{"texto":"[escreva aqui um texto curto de 5 a 8 linhas, adequado para 9 anos, sobre um tema do cotidiano como natureza, animais, escola, amizade, aventura ou uma fábula simples]","titulo":"[título do texto]","questoes":[{"q":"[pergunta de interpretação]","opts":["A","B","C","D"],"a":0,"exp":"[explicação]"},{"q":"[pergunta sobre vocabulário ou ideia principal]","opts":["A","B","C","D"],"a":1,"exp":"[explicação]"},{"q":"[pergunta sobre o que o personagem ou narrador fez/sentiu/pensou]","opts":["A","B","C","D"],"a":2,"exp":"[explicação]"},{"q":"[pergunta sobre sequência de fatos ou causa e consequência]","opts":["A","B","C","D"],"a":0,"exp":"[explicação]"},{"q":"[pergunta sobre o gênero textual ou características do texto]","opts":["A","B","C","D"],"a":1,"exp":"[explicação]"}]}\nCada "a" deve ser o índice 0-3 da opção correta. Varie os índices corretos. O texto deve ser original, envolvente e adequado para 9 anos.';
+
+  try {
+    var res = await fetch('/api/chat', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({messages:[{role:'user',content:prompt}], mode:'exam'})
+    });
+    var data = await res.json();
+    var text = data.reply || '';
+    var clean = text.replace(/```json|```/g,'').trim();
+    var parsed = JSON.parse(clean);
+    simQuestions = parsed.questoes;
+    simQuestions._topics = 'INTERPRETACAO';
+    simQuestions._texto = parsed.texto;
+    simQuestions._titulo = parsed.titulo;
+    renderReadingQuestions(sub, parsed);
+  } catch(e) {
+    document.getElementById('sim-loading').style.display='none';
+    document.getElementById('sim-questions').innerHTML = '<div style="padding:1rem;color:#666;font-size:13px">❌ Erro ao gerar o texto. Verifique sua conexão e tente novamente.<br><br><button onclick="loadSim(currentSimKey)" style="padding:8px 16px;border-radius:20px;border:1.5px solid #e0ddd8;background:#fff;cursor:pointer;font-family:inherit;font-size:13px">🔄 Tentar novamente</button></div>';
+    console.error(e);
+  }
+}
+
+function renderReadingQuestions(sub, parsed){
+  document.getElementById('sim-loading').style.display='none';
+  var wrap = document.getElementById('sim-questions');
+  wrap.innerHTML = '';
+
+  // Botão voltar
+  var backDiv = document.createElement('div');
+  backDiv.style.marginBottom = '10px';
+  var bb = document.createElement('button');
+  bb.style.cssText = 'border:1.5px solid #e0ddd8;background:#fff;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:Nunito,sans-serif;color:#1a1a1a';
+  bb.textContent = '← Escolher outro tópico';
+  bb.onclick = function(){ loadSim(currentSimKey); };
+  backDiv.appendChild(bb);
+  wrap.appendChild(backDiv);
+
+  // Header
+  var header = document.createElement('div');
+  header.className = 'exam-header';
+  header.style.background = 'linear-gradient(135deg,#D4537E,#993556)';
+  header.innerHTML = '<h2>✏️ Interpretação de Texto</h2><p style="font-size:12px;opacity:.85">Leia o texto e responda às questões ✨</p><span class="exam-score" id="sc-dynamic">— / 5</span>';
+  wrap.appendChild(header);
+
+  // Texto
+  var textBox = document.createElement('div');
+  textBox.style.cssText = 'background:#FBEAF0;border-left:4px solid #D4537E;border-radius:0 12px 12px 0;padding:1rem 1.25rem;margin-bottom:1rem';
+  textBox.innerHTML = '<div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#993556;margin-bottom:8px">📄 Texto — '+escHtml(parsed.titulo)+'</div><div style="font-size:13.5px;line-height:1.9;color:#72243E;white-space:pre-wrap">'+escHtml(parsed.texto)+'</div>';
+  wrap.appendChild(textBox);
+
+  // Questões
+  var letters = ['A','B','C','D'];
+  parsed.questoes.forEach(function(q, i){
+    var block = document.createElement('div');
+    block.className = 'q-block';
+    block.id = 'qblock-'+i;
+    var num = document.createElement('div');
+    num.className = 'q-num';
+    num.textContent = 'Questão '+(i+1)+' · Múltipla escolha';
+    var stem = document.createElement('div');
+    stem.className = 'q-stem';
+    stem.textContent = q.q;
+    var opts = document.createElement('div');
+    opts.className = 'mc-opts';
+    q.opts.forEach(function(opt, j){
+      var btn = document.createElement('button');
+      btn.className = 'mc-opt';
+      btn.innerHTML = '<span class="mc-letter" style="pointer-events:none">'+letters[j]+'</span>'+escHtml(opt);
+      btn.addEventListener('click', function(){ pickSimMC(btn, i, j); });
+      opts.appendChild(btn);
+    });
+    var fb = document.createElement('div');
+    fb.className = 'q-fb';
+    fb.id = 'qfb-'+i;
+    block.appendChild(num);
+    block.appendChild(stem);
+    block.appendChild(opts);
+    block.appendChild(fb);
+    wrap.appendChild(block);
+  });
+
+  // Botão corrigir
+  var checkBtn = document.createElement('button');
+  checkBtn.className = 'check-btn';
+  checkBtn.style.background = '#D4537E';
+  checkBtn.textContent = 'Corrigir ✓';
+  checkBtn.onclick = checkDynamicSim;
+  wrap.appendChild(checkBtn);
+
+  // Result box
+  var rb = document.createElement('div');
+  rb.className = 'result-box';
+  rb.id = 'rb-dynamic';
+  rb.innerHTML = '<h3 id="rb-dynamic-h"></h3><p id="rb-dynamic-p"></p><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><button class="retry-s" onclick="retrySimTopic()" style="background:#D4537E">Nova tentativa 🔄</button><button class="retry-s" onclick="loadSim(currentSimKey)" style="background:rgba(0,0,0,.15)">Escolher outro tópico ←</button></div>';
+  wrap.appendChild(rb);
 }
 
 async function generateSimQuestions(sub, topics, topicLabel){
@@ -1197,7 +1306,11 @@ function retrySimTopic(){
   simQuestions=[];
   document.getElementById('sim-questions').innerHTML='';
   document.getElementById('sim-loading').style.display='block';
-  generateSimQuestions(sub, topics, currentTopicLabel);
+  if(topics==='INTERPRETACAO'){
+    generateReadingQuestions(sub);
+  } else {
+    generateSimQuestions(sub, topics, currentTopicLabel);
+  }
 }
 
 function darken(hex){
@@ -1247,12 +1360,48 @@ function showTab(id,col){
   if(id==='quiz'){buildQF();startQuiz('all',document.querySelector('.qf-btn'));}
   if(id==='sim') buildSimNav();
   if(id==='mind') buildMindNav();
+  updatePrintBtn(id);
 }
 showTab('dash','#2C2C2A');
 </script>
 
 <!-- ===== CHAT FLUTUANTE ===== -->
 <style>
+@media print{
+  body{background:#fff!important}
+  .topbar,.chat-fab,.chat-window,.print-fab,.sim-nav,.detail-back,.check-btn,.retry-s,.result-box,.qf-wrap,.prog-bar{display:none!important}
+  .screen{display:block!important;padding:0!important}
+  #dash,#mind,#quiz{display:none!important}
+  #sim{display:block!important}
+  .sim-panel{display:none!important}
+  .sim-panel.print-active{display:block!important}
+  .q-block{border:1px solid #ccc!important;page-break-inside:avoid;margin-bottom:12px}
+  .mc-opt{border:1px solid #ddd!important}
+  .mc-opt.selected,.mc-opt.correct,.mc-opt.wrong{background:#fff!important;border-color:#999!important}
+  .q-fb{display:none!important}
+  .exam-header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .print-answer-line{display:block!important}
+  h1.print-title{display:block!important;font-size:16px;margin-bottom:4px}
+  .print-info{display:block!important;font-size:12px;color:#666;margin-bottom:16px;border-bottom:1px solid #ddd;padding-bottom:8px}
+}
+.print-answer-line{display:none;height:28px;border-bottom:1px solid #bbb;margin:8px 0 4px}
+h1.print-title{display:none}
+.print-info{display:none}
+
+.print-fab{position:fixed;bottom:84px;right:20px;width:46px;height:46px;border-radius:50%;background:#fff;border:1.5px solid #e0ddd8;cursor:pointer;font-size:18px;color:#5F5E5A;box-shadow:0 2px 10px rgba(0,0,0,.1);z-index:999;display:none;align-items:center;justify-content:center;transition:transform .2s}
+.print-fab:hover{transform:scale(1.08)}
+.print-fab.visible{display:flex}
+
+.print-modal-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.45);z-index:1001;display:none;align-items:center;justify-content:center}
+.print-modal-bg.open{display:flex}
+.print-modal{background:#fff;border-radius:16px;padding:1.5rem;max-width:340px;width:90%;font-family:Nunito,sans-serif}
+.print-modal h3{font-size:16px;font-weight:800;margin-bottom:8px;color:#1a1a1a}
+.print-modal p{font-size:13px;color:#666;margin-bottom:16px;line-height:1.6}
+.print-modal-btns{display:flex;gap:8px;flex-wrap:wrap}
+.pm-btn{flex:1;padding:10px 14px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;border:none;font-family:Nunito,sans-serif;min-width:100px}
+.pm-btn.primary{background:#D4537E;color:#fff}
+.pm-btn.secondary{background:#f0efea;color:#1a1a1a}
+
 .chat-fab{position:fixed;bottom:20px;right:20px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#7F77DD,#534AB7);border:none;cursor:pointer;font-size:24px;color:#fff;box-shadow:0 4px 16px rgba(127,119,221,.45);z-index:1000;transition:transform .2s;display:flex;align-items:center;justify-content:center}
 .chat-fab:hover{transform:scale(1.08)}
 .chat-fab .badge{position:absolute;top:-2px;right:-2px;background:#E24B4A;color:#fff;font-size:9px;font-weight:800;padding:2px 5px;border-radius:10px;font-family:'Nunito',sans-serif;display:none}
@@ -1318,11 +1467,90 @@ showTab('dash','#2C2C2A');
   </div>
 </div>
 
+<button class="print-fab" id="print-fab" onclick="openPrintModal()" title="Imprimir simulado">🖨️</button>
+
+<div class="print-modal-bg" id="print-modal-bg">
+  <div class="print-modal">
+    <h3>🖨️ Imprimir simulado</h3>
+    <p>Vai imprimir o simulado atual com espaços para escrever as respostas à mão — ótimo para praticar como numa prova de verdade!</p>
+    <div id="print-student-row" style="margin-bottom:14px">
+      <label style="font-size:12px;font-weight:700;color:#666;display:block;margin-bottom:4px">Nome da aluna:</label>
+      <input id="print-student-name" type="text" placeholder="Lala" style="width:100%;border:1.5px solid #e0ddd8;border-radius:8px;padding:7px 10px;font-family:Nunito,sans-serif;font-size:13px;outline:none">
+    </div>
+    <div class="print-modal-btns">
+      <button class="pm-btn primary" onclick="doPrint()">Imprimir 🖨️</button>
+      <button class="pm-btn secondary" onclick="closePrintModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
 <script>
 var chatOpen=false;
 var chatHistory=[];
 var chatTyping=false;
 
+
+function openPrintModal(){
+  var panel = document.querySelector('.sim-panel.active');
+  if(!panel){
+    alert('Gere um simulado primeiro antes de imprimir!');
+    return;
+  }
+  document.getElementById('print-modal-bg').classList.add('open');
+}
+
+function closePrintModal(){
+  document.getElementById('print-modal-bg').classList.remove('open');
+}
+
+function doPrint(){
+  var name = document.getElementById('print-student-name').value || 'Lala';
+  closePrintModal();
+
+  // Adicionar cabeçalho de impressão
+  var panel = document.querySelector('.sim-panel.active');
+  if(!panel) return;
+  panel.classList.add('print-active');
+
+  // Injetar nome e data no cabeçalho
+  var existing = document.getElementById('print-header-inject');
+  if(existing) existing.remove();
+  var hdr = document.createElement('div');
+  hdr.id = 'print-header-inject';
+  hdr.className = 'print-info';
+  var today = new Date().toLocaleDateString('pt-BR');
+  hdr.innerHTML = 'Nome: <strong>'+name+'</strong> &nbsp;&nbsp; Data: <strong>'+today+'</strong> &nbsp;&nbsp; Ano: <strong>4º ano</strong>';
+  panel.insertBefore(hdr, panel.firstChild);
+
+  // Adicionar linhas de resposta em cada questão aberta (textarea)
+  var textareas = panel.querySelectorAll('.short-ta');
+  textareas.forEach(function(ta){
+    var existing = ta.parentElement.querySelector('.print-answer-line');
+    if(!existing){
+      for(var i=0;i<4;i++){
+        var line = document.createElement('div');
+        line.className = 'print-answer-line';
+        ta.parentElement.appendChild(line);
+      }
+    }
+  });
+
+  setTimeout(function(){
+    window.print();
+    // Limpar depois de imprimir
+    setTimeout(function(){
+      panel.classList.remove('print-active');
+      var inj = document.getElementById('print-header-inject');
+      if(inj) inj.remove();
+    }, 1000);
+  }, 200);
+}
+
+// Mostrar botão de imprimir quando estiver na aba de simulados
+function updatePrintBtn(tabId){
+  var fab = document.getElementById('print-fab');
+  if(fab) fab.classList.toggle('visible', tabId==='sim');
+}
 
 function toggleChat(){
   chatOpen=!chatOpen;
