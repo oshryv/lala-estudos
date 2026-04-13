@@ -1071,7 +1071,7 @@ function startSimTopic(key, label, topics){
 
 async function generateReadingQuestions(sub){
   currentTopicLabel = '📚 Interpretação de texto';
-  var prompt = 'Você é um professor de 4º ano do Ensino Fundamental. Crie um exercício de interpretação de texto dissertativo para uma criança de 9 anos. Siga EXATAMENTE este formato JSON, sem texto antes ou depois: {"texto":"[texto original de 6 a 10 linhas, adequado para 9 anos, sobre natureza, animais, escola, amizade, aventura ou fábula. Escreva em parágrafos separados por \\n]","titulo":"[título do texto]","questoes":[{"q":"De acordo com o texto, o que aconteceu com [personagem/elemento]?","gabarito":"[resposta esperada em 1-2 frases simples, com base no texto]","dica":"[palavras-chave que devem aparecer na resposta]"},{"q":"Qual é a ideia principal do texto?","gabarito":"[resposta esperada]","dica":"[palavras-chave]"},{"q":"O que o(a) [personagem] sentiu ou pensou quando [situação do texto]?","gabarito":"[resposta esperada]","dica":"[palavras-chave]"},{"q":"Por que [causa do texto] aconteceu? Explique com suas palavras.","gabarito":"[resposta esperada]","dica":"[palavras-chave]"},{"q":"Escreva com suas palavras o final do texto (ou o que você acha que acontece depois).","gabarito":"[resposta esperada]","dica":"[palavras-chave]"}]} O texto deve ser original, envolvente, com personagens e história. As perguntas devem exigir que a criança leia e pense, não apenas copie frases.';
+  var prompt = 'Você é um professor de 4º ano do Ensino Fundamental. Crie um exercício de interpretação de texto para uma criança de 9 anos com 5 questões de múltipla escolha e 1 questão dissertativa. Siga EXATAMENTE este formato JSON, sem texto antes ou depois: {"texto":"[texto original de 6 a 10 linhas, adequado para 9 anos, sobre natureza, animais, escola, amizade, aventura ou fábula. Escreva em parágrafos separados por \\n]","titulo":"[título do texto]","mc":[{"q":"[pergunta sobre fato explícito do texto]","opts":["A","B","C","D"],"a":0,"exp":"[explicação curta]"},{"q":"[pergunta sobre vocabulário ou significado de palavra do texto]","opts":["A","B","C","D"],"a":1,"exp":"[explicação curta]"},{"q":"[pergunta sobre o que personagem fez ou sentiu]","opts":["A","B","C","D"],"a":2,"exp":"[explicação curta]"},{"q":"[pergunta sobre causa e consequência dentro do texto]","opts":["A","B","C","D"],"a":0,"exp":"[explicação curta]"},{"q":"[pergunta sobre ideia principal ou tipo do texto]","opts":["A","B","C","D"],"a":1,"exp":"[explicação curta]"}],"dissertativa":{"q":"Com suas próprias palavras, explique [aspecto importante do texto]. Use pelo menos 2 frases.","gabarito":"[resposta esperada em 2-3 frases simples, baseada no texto]"}} As opções de MC devem ter apenas UMA correta. Varie os índices corretos. O texto deve ser original, envolvente e adequado para 9 anos.';
 
   try {
     var res = await fetch('/api/chat', {
@@ -1083,10 +1083,11 @@ async function generateReadingQuestions(sub){
     var text = data.reply || '';
     var clean = text.replace(/```json|```/g,'').trim();
     var parsed = JSON.parse(clean);
-    simQuestions = parsed.questoes;
+    simQuestions = parsed.mc || [];
     simQuestions._topics = 'INTERPRETACAO';
     simQuestions._texto = parsed.texto;
     simQuestions._titulo = parsed.titulo;
+    simQuestions._dissertativa = parsed.dissertativa;
     renderReadingQuestions(sub, parsed);
   } catch(e) {
     document.getElementById('sim-loading').style.display='none';
@@ -1114,7 +1115,7 @@ function renderReadingQuestions(sub, parsed){
   var header = document.createElement('div');
   header.className = 'exam-header';
   header.style.background = 'linear-gradient(135deg,#D4537E,#993556)';
-  header.innerHTML = '<h2>✏️ Interpretação de Texto</h2><p style="font-size:12px;opacity:.85">Leia o texto com atenção e responda com suas palavras 📝</p>';
+  header.innerHTML = '<h2>✏️ Interpretação de Texto</h2><p style="font-size:12px;opacity:.85">Leia o texto com atenção e responda às questões 📝</p><span class="exam-score" id="sc-dynamic">— / '+(parsed.mc.length+1)+'</span>';
   wrap.appendChild(header);
 
   // Texto
@@ -1123,42 +1124,79 @@ function renderReadingQuestions(sub, parsed){
   textBox.innerHTML = '<div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#993556;margin-bottom:10px">📄 '+escHtml(parsed.titulo)+'</div><div style="font-size:14px;line-height:2;color:#72243E;white-space:pre-wrap">'+escHtml(parsed.texto)+'</div>';
   wrap.appendChild(textBox);
 
-  // Questões com textarea
-  parsed.questoes.forEach(function(q, i){
+  // Label múltipla escolha
+  var mcLabel = document.createElement('div');
+  mcLabel.style.cssText = 'font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#993556;margin-bottom:10px';
+  mcLabel.textContent = 'PARTE 1 — Múltipla escolha';
+  wrap.appendChild(mcLabel);
+
+  // Questões MC
+  var letters = ['A','B','C','D'];
+  parsed.mc.forEach(function(q, i){
     var block = document.createElement('div');
     block.className = 'q-block';
-    block.id = 'rblock-'+i;
-
+    block.id = 'qblock-'+i;
     var num = document.createElement('div');
     num.className = 'q-num';
-    num.textContent = 'Questão '+(i+1)+' · Resposta escrita';
-
+    num.textContent = 'Questão '+(i+1)+' · Múltipla escolha';
     var stem = document.createElement('div');
     stem.className = 'q-stem';
     stem.textContent = q.q;
-
-    var ta = document.createElement('textarea');
-    ta.className = 'short-ta';
-    ta.id = 'rta-'+i;
-    ta.placeholder = 'Escreva sua resposta aqui...';
-    ta.style.minHeight = '72px';
-
+    var opts = document.createElement('div');
+    opts.className = 'mc-opts';
+    q.opts.forEach(function(opt, j){
+      var btn = document.createElement('button');
+      btn.className = 'mc-opt';
+      btn.innerHTML = '<span class="mc-letter" style="pointer-events:none">'+letters[j]+'</span>'+escHtml(opt);
+      btn.addEventListener('click', function(){ pickSimMC(btn, i, j); });
+      opts.appendChild(btn);
+    });
     var fb = document.createElement('div');
     fb.className = 'q-fb';
-    fb.id = 'rfb-'+i;
-
+    fb.id = 'qfb-'+i;
     block.appendChild(num);
     block.appendChild(stem);
-    block.appendChild(ta);
+    block.appendChild(opts);
     block.appendChild(fb);
     wrap.appendChild(block);
   });
+
+  // Label dissertativa
+  var disLabel = document.createElement('div');
+  disLabel.style.cssText = 'font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#993556;margin:16px 0 10px';
+  disLabel.textContent = 'PARTE 2 — Resposta escrita';
+  wrap.appendChild(disLabel);
+
+  // Questão dissertativa
+  var dis = parsed.dissertativa;
+  var disBlock = document.createElement('div');
+  disBlock.className = 'q-block';
+  disBlock.id = 'rblock-dis';
+  var disNum = document.createElement('div');
+  disNum.className = 'q-num';
+  disNum.textContent = 'Questão '+(parsed.mc.length+1)+' · Escreva com suas palavras';
+  var disStem = document.createElement('div');
+  disStem.className = 'q-stem';
+  disStem.textContent = dis.q;
+  var disTa = document.createElement('textarea');
+  disTa.className = 'short-ta';
+  disTa.id = 'rta-dis';
+  disTa.placeholder = 'Escreva sua resposta aqui... use pelo menos 2 frases!';
+  disTa.style.minHeight = '90px';
+  var disFb = document.createElement('div');
+  disFb.className = 'q-fb';
+  disFb.id = 'rfb-dis';
+  disBlock.appendChild(disNum);
+  disBlock.appendChild(disStem);
+  disBlock.appendChild(disTa);
+  disBlock.appendChild(disFb);
+  wrap.appendChild(disBlock);
 
   // Botão corrigir
   var checkBtn = document.createElement('button');
   checkBtn.className = 'check-btn';
   checkBtn.style.background = '#D4537E';
-  checkBtn.textContent = 'Corrigir com a professora IA ✓';
+  checkBtn.textContent = 'Corrigir ✓';
   checkBtn.id = 'reading-check-btn';
   checkBtn.onclick = function(){ checkReadingAnswers(parsed); };
   wrap.appendChild(checkBtn);
@@ -1171,70 +1209,92 @@ function renderReadingQuestions(sub, parsed){
   wrap.appendChild(rb);
 }
 
+
 async function checkReadingAnswers(parsed){
   var btn = document.getElementById('reading-check-btn');
   if(btn){ btn.disabled=true; btn.textContent='Corrigindo... ✨'; }
 
-  var respostas = parsed.questoes.map(function(q,i){
-    var ta = document.getElementById('rta-'+i);
-    return {pergunta: q.q, gabarito: q.gabarito, dica: q.dica, resposta: ta ? ta.value.trim() : ''};
+  // 1. Corrigir MC automaticamente
+  var mcScore = 0;
+  parsed.mc.forEach(function(q, i){
+    var chosen = simAnswers[i];
+    var correct = q.a;
+    var fb = document.getElementById('qfb-'+i);
+    var opts = document.querySelectorAll('#qblock-'+i+' .mc-opt');
+    if(chosen === undefined){
+      if(opts[correct]) opts[correct].classList.add('correct');
+      if(fb){ fb.className='q-fb show bad'; fb.textContent='❌ Selecione uma opção!'; }
+      return;
+    }
+    opts.forEach(function(o){ o.classList.remove('selected'); o.style.outline=''; });
+    if(chosen === correct){
+      mcScore++;
+      opts[correct].classList.add('correct');
+      if(fb){ fb.className='q-fb show ok'; fb.textContent='✅ '+q.exp; }
+    } else {
+      opts[chosen].classList.add('wrong');
+      opts[correct].classList.add('correct');
+      if(fb){ fb.className='q-fb show bad'; fb.textContent='❌ '+q.exp; }
+    }
   });
 
-  // Verificar respostas em branco
-  var emBranco = respostas.filter(function(r){ return r.resposta.length < 5; });
-  if(emBranco.length > 2){
-    if(btn){ btn.disabled=false; btn.textContent='Corrigir com a professora IA ✓'; }
-    alert('Responda pelo menos 3 questões antes de corrigir! ✏️');
+  // 2. Corrigir dissertativa via IA
+  var disTa = document.getElementById('rta-dis');
+  var disResposta = disTa ? disTa.value.trim() : '';
+  var disFb = document.getElementById('rfb-dis');
+  var total = parsed.mc.length + 1;
+
+  if(disResposta.length < 10){
+    if(disFb){ disFb.className='q-fb show bad'; disFb.textContent='💡 Escreva pelo menos 2 frases para essa questão!'; }
+    if(disTa) disTa.style.borderColor = '#D4537E';
+    showReadingResult(mcScore, 0, total, btn);
     return;
   }
 
-  var promptParts = ['Você é uma professora carinhosa de 4º ano. Corrija as respostas de interpretação de texto de uma aluna de 9 anos. Para cada questão, dê um feedback encorajador e diga se a resposta capturou a ideia principal.'];
-  promptParts.push('Texto lido: "'+parsed.titulo+'"');
-  respostas.forEach(function(r,i){
-    promptParts.push((i+1)+'. Pergunta: '+r.pergunta+' | Gabarito esperado: '+r.gabarito+' | Resposta da aluna: '+(r.resposta||'(não respondeu)'));
-  });
-  promptParts.push('Responda SOMENTE em JSON válido: [{"ok":true,"fb":"feedback curto e carinhoso (max 1 frase)"},{"ok":false,"fb":"..."},...] — um objeto por questão na mesma ordem. ok=true se a resposta capturou a ideia principal, ok=false se estiver errada ou vazia. Seja sempre gentil!');
-  var prompt = promptParts.join('\n');
+  var promptParts = [
+    'Você é uma professora carinhosa de 4º ano. Corrija a resposta dissertativa de uma aluna de 9 anos sobre o texto "'+parsed.titulo+'".',
+    'Pergunta: '+parsed.dissertativa.q,
+    'Gabarito esperado: '+parsed.dissertativa.gabarito,
+    'Resposta da aluna: '+disResposta,
+    'Responda SOMENTE em JSON: {"ok":true,"fb":"feedback carinhoso de 1 frase"}. ok=true se capturou a ideia principal, mesmo com palavras simples. Seja gentil e encorajadora!'
+  ];
 
   try {
     var res = await fetch('/api/chat', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({messages:[{role:'user',content:prompt}], mode:'exam'})
+      body:JSON.stringify({messages:[{role:'user',content:promptParts.join(' | ')}], mode:'exam'})
     });
     var data = await res.json();
     var clean = (data.reply||'').replace(/```json|```/g,'').trim();
-    var feedbacks = JSON.parse(clean);
-    var score = 0;
-    feedbacks.forEach(function(f,i){
-      if(f.ok) score++;
-      var fb = document.getElementById('rfb-'+i);
-      var ta = document.getElementById('rta-'+i);
-      if(fb){
-        fb.className = 'q-fb show '+(f.ok?'ok':'bad');
-        fb.textContent = (f.ok?'✅ ':'💡 ')+f.fb;
-      }
-      if(ta){
-        ta.style.borderColor = f.ok ? '#1D9E75' : '#D4537E';
-      }
-    });
-    var pct = Math.round(score/feedbacks.length*100);
-    var rb = document.getElementById('rb-reading');
-    var rh = document.getElementById('rb-reading-h');
-    var rp = document.getElementById('rb-reading-p');
-    var emoji = pct>=80?'🌟':pct>=60?'👏':'💪';
-    rh.textContent = emoji+' '+score+'/'+feedbacks.length+' questões muito bem!';
-    rp.textContent = pct>=80?'Excelente! Você entendeu muito bem o texto!':pct>=60?'Ótimo trabalho! Releia o texto e tente as que ficaram.':'Continue praticando! Releia o texto com calma e tente de novo.';
-    rb.style.background = pct>=80?'#E1F5EE':'#FAEEDA';
-    rb.style.color = pct>=80?'#085041':'#633806';
-    rb.className = 'result-box show';
-    if(btn){ btn.disabled=false; btn.textContent='Corrigir com a professora IA ✓'; }
+    var f = JSON.parse(clean);
+    var disScore = f.ok ? 1 : 0;
+    if(disFb){ disFb.className='q-fb show '+(f.ok?'ok':'bad'); disFb.textContent=(f.ok?'✅ ':'💡 ')+f.fb; }
+    if(disTa) disTa.style.borderColor = f.ok ? '#1D9E75' : '#D4537E';
+    showReadingResult(mcScore, disScore, total, btn);
   } catch(e){
-    if(btn){ btn.disabled=false; btn.textContent='Corrigir com a professora IA ✓'; }
+    if(disFb){ disFb.className='q-fb show bad'; disFb.textContent='❌ Erro ao corrigir. Tente novamente!'; }
+    showReadingResult(mcScore, 0, total, btn);
     console.error(e);
-    alert('Erro ao corrigir. Tente novamente!');
   }
 }
+
+function showReadingResult(mcScore, disScore, total, btn){
+  var score = mcScore + disScore;
+  var pct = Math.round(score/total*100);
+  var rb = document.getElementById('rb-reading');
+  var rh = document.getElementById('rb-reading-h');
+  var rp = document.getElementById('rb-reading-p');
+  var emoji = pct>=80?'🌟':pct>=60?'👏':'💪';
+  rh.textContent = emoji+' '+score+'/'+total+' ('+pct+'%)';
+  rp.textContent = pct>=80?'Excelente! Você entendeu muito bem o texto!':pct>=60?'Ótimo trabalho! Releia o texto e tente as que ficaram.':'Continue praticando! Releia o texto com calma.';
+  rb.style.background = pct>=80?'#E1F5EE':'#FAEEDA';
+  rb.style.color = pct>=80?'#085041':'#633806';
+  rb.className = 'result-box show';
+  document.getElementById('sc-dynamic').textContent = score+'/'+total;
+  if(btn){ btn.disabled=false; btn.textContent='Corrigir ✓'; }
+}
+
 
 async function generateSimQuestions(sub, topics, topicLabel){
   var prompt = sub.lang==='pt'
