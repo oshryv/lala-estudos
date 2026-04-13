@@ -1070,9 +1070,8 @@ function startSimTopic(key, label, topics){
 }
 
 async function generateReadingQuestions(sub){
-  var topicLabel = '📚 Interpretação de texto';
-  currentTopicLabel = topicLabel;
-  var prompt = 'Você é um professor de 4º ano do Ensino Fundamental. Crie um exercício de interpretação de texto para uma criança de 9 anos. Siga EXATAMENTE este formato JSON, sem texto antes ou depois:\n{"texto":"[escreva aqui um texto curto de 5 a 8 linhas, adequado para 9 anos, sobre um tema do cotidiano como natureza, animais, escola, amizade, aventura ou uma fábula simples]","titulo":"[título do texto]","questoes":[{"q":"[pergunta de interpretação]","opts":["A","B","C","D"],"a":0,"exp":"[explicação]"},{"q":"[pergunta sobre vocabulário ou ideia principal]","opts":["A","B","C","D"],"a":1,"exp":"[explicação]"},{"q":"[pergunta sobre o que o personagem ou narrador fez/sentiu/pensou]","opts":["A","B","C","D"],"a":2,"exp":"[explicação]"},{"q":"[pergunta sobre sequência de fatos ou causa e consequência]","opts":["A","B","C","D"],"a":0,"exp":"[explicação]"},{"q":"[pergunta sobre o gênero textual ou características do texto]","opts":["A","B","C","D"],"a":1,"exp":"[explicação]"}]}\nCada "a" deve ser o índice 0-3 da opção correta. Varie os índices corretos. O texto deve ser original, envolvente e adequado para 9 anos.';
+  currentTopicLabel = '📚 Interpretação de texto';
+  var prompt = 'Você é um professor de 4º ano do Ensino Fundamental. Crie um exercício de interpretação de texto dissertativo para uma criança de 9 anos. Siga EXATAMENTE este formato JSON, sem texto antes ou depois: {"texto":"[texto original de 6 a 10 linhas, adequado para 9 anos, sobre natureza, animais, escola, amizade, aventura ou fábula. Escreva em parágrafos separados por \\n]","titulo":"[título do texto]","questoes":[{"q":"De acordo com o texto, o que aconteceu com [personagem/elemento]?","gabarito":"[resposta esperada em 1-2 frases simples, com base no texto]","dica":"[palavras-chave que devem aparecer na resposta]"},{"q":"Qual é a ideia principal do texto?","gabarito":"[resposta esperada]","dica":"[palavras-chave]"},{"q":"O que o(a) [personagem] sentiu ou pensou quando [situação do texto]?","gabarito":"[resposta esperada]","dica":"[palavras-chave]"},{"q":"Por que [causa do texto] aconteceu? Explique com suas palavras.","gabarito":"[resposta esperada]","dica":"[palavras-chave]"},{"q":"Escreva com suas palavras o final do texto (ou o que você acha que acontece depois).","gabarito":"[resposta esperada]","dica":"[palavras-chave]"}]} O texto deve ser original, envolvente, com personagens e história. As perguntas devem exigir que a criança leia e pense, não apenas copie frases.';
 
   try {
     var res = await fetch('/api/chat', {
@@ -1091,7 +1090,7 @@ async function generateReadingQuestions(sub){
     renderReadingQuestions(sub, parsed);
   } catch(e) {
     document.getElementById('sim-loading').style.display='none';
-    document.getElementById('sim-questions').innerHTML = '<div style="padding:1rem;color:#666;font-size:13px">❌ Erro ao gerar o texto. Verifique sua conexão e tente novamente.<br><br><button onclick="loadSim(currentSimKey)" style="padding:8px 16px;border-radius:20px;border:1.5px solid #e0ddd8;background:#fff;cursor:pointer;font-family:inherit;font-size:13px">🔄 Tentar novamente</button></div>';
+    document.getElementById('sim-questions').innerHTML = '<div style="padding:1rem;color:#666;font-size:13px">❌ Erro ao gerar o texto. Tente novamente.<br><br><button onclick="generateReadingQuestions(SIMS.find(function(s){return s.key===currentSimKey;}))" style="padding:8px 16px;border-radius:20px;border:1.5px solid #e0ddd8;background:#fff;cursor:pointer;font-family:inherit;font-size:13px">🔄 Tentar novamente</button></div>';
     console.error(e);
   }
 }
@@ -1115,42 +1114,42 @@ function renderReadingQuestions(sub, parsed){
   var header = document.createElement('div');
   header.className = 'exam-header';
   header.style.background = 'linear-gradient(135deg,#D4537E,#993556)';
-  header.innerHTML = '<h2>✏️ Interpretação de Texto</h2><p style="font-size:12px;opacity:.85">Leia o texto e responda às questões ✨</p><span class="exam-score" id="sc-dynamic">— / 5</span>';
+  header.innerHTML = '<h2>✏️ Interpretação de Texto</h2><p style="font-size:12px;opacity:.85">Leia o texto com atenção e responda com suas palavras 📝</p>';
   wrap.appendChild(header);
 
   // Texto
   var textBox = document.createElement('div');
-  textBox.style.cssText = 'background:#FBEAF0;border-left:4px solid #D4537E;border-radius:0 12px 12px 0;padding:1rem 1.25rem;margin-bottom:1rem';
-  textBox.innerHTML = '<div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#993556;margin-bottom:8px">📄 Texto — '+escHtml(parsed.titulo)+'</div><div style="font-size:13.5px;line-height:1.9;color:#72243E;white-space:pre-wrap">'+escHtml(parsed.texto)+'</div>';
+  textBox.style.cssText = 'background:#FBEAF0;border-left:4px solid #D4537E;border-radius:0 14px 14px 0;padding:1rem 1.25rem;margin-bottom:1.25rem';
+  textBox.innerHTML = '<div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#993556;margin-bottom:10px">📄 '+escHtml(parsed.titulo)+'</div><div style="font-size:14px;line-height:2;color:#72243E;white-space:pre-wrap">'+escHtml(parsed.texto)+'</div>';
   wrap.appendChild(textBox);
 
-  // Questões
-  var letters = ['A','B','C','D'];
+  // Questões com textarea
   parsed.questoes.forEach(function(q, i){
     var block = document.createElement('div');
     block.className = 'q-block';
-    block.id = 'qblock-'+i;
+    block.id = 'rblock-'+i;
+
     var num = document.createElement('div');
     num.className = 'q-num';
-    num.textContent = 'Questão '+(i+1)+' · Múltipla escolha';
+    num.textContent = 'Questão '+(i+1)+' · Resposta escrita';
+
     var stem = document.createElement('div');
     stem.className = 'q-stem';
     stem.textContent = q.q;
-    var opts = document.createElement('div');
-    opts.className = 'mc-opts';
-    q.opts.forEach(function(opt, j){
-      var btn = document.createElement('button');
-      btn.className = 'mc-opt';
-      btn.innerHTML = '<span class="mc-letter" style="pointer-events:none">'+letters[j]+'</span>'+escHtml(opt);
-      btn.addEventListener('click', function(){ pickSimMC(btn, i, j); });
-      opts.appendChild(btn);
-    });
+
+    var ta = document.createElement('textarea');
+    ta.className = 'short-ta';
+    ta.id = 'rta-'+i;
+    ta.placeholder = 'Escreva sua resposta aqui...';
+    ta.style.minHeight = '72px';
+
     var fb = document.createElement('div');
     fb.className = 'q-fb';
-    fb.id = 'qfb-'+i;
+    fb.id = 'rfb-'+i;
+
     block.appendChild(num);
     block.appendChild(stem);
-    block.appendChild(opts);
+    block.appendChild(ta);
     block.appendChild(fb);
     wrap.appendChild(block);
   });
@@ -1159,16 +1158,82 @@ function renderReadingQuestions(sub, parsed){
   var checkBtn = document.createElement('button');
   checkBtn.className = 'check-btn';
   checkBtn.style.background = '#D4537E';
-  checkBtn.textContent = 'Corrigir ✓';
-  checkBtn.onclick = checkDynamicSim;
+  checkBtn.textContent = 'Corrigir com a professora IA ✓';
+  checkBtn.id = 'reading-check-btn';
+  checkBtn.onclick = function(){ checkReadingAnswers(parsed); };
   wrap.appendChild(checkBtn);
 
   // Result box
   var rb = document.createElement('div');
   rb.className = 'result-box';
-  rb.id = 'rb-dynamic';
-  rb.innerHTML = '<h3 id="rb-dynamic-h"></h3><p id="rb-dynamic-p"></p><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><button class="retry-s" onclick="retrySimTopic()" style="background:#D4537E">Nova tentativa 🔄</button><button class="retry-s" onclick="loadSim(currentSimKey)" style="background:rgba(0,0,0,.15)">Escolher outro tópico ←</button></div>';
+  rb.id = 'rb-reading';
+  rb.innerHTML = '<h3 id="rb-reading-h"></h3><p id="rb-reading-p"></p><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:8px"><button class="retry-s" onclick="retrySimTopic()" style="background:#D4537E">Novo texto 🔄</button><button class="retry-s" onclick="loadSim(currentSimKey)" style="background:rgba(0,0,0,.15)">Escolher outro tópico ←</button></div>';
   wrap.appendChild(rb);
+}
+
+async function checkReadingAnswers(parsed){
+  var btn = document.getElementById('reading-check-btn');
+  if(btn){ btn.disabled=true; btn.textContent='Corrigindo... ✨'; }
+
+  var respostas = parsed.questoes.map(function(q,i){
+    var ta = document.getElementById('rta-'+i);
+    return {pergunta: q.q, gabarito: q.gabarito, dica: q.dica, resposta: ta ? ta.value.trim() : ''};
+  });
+
+  // Verificar respostas em branco
+  var emBranco = respostas.filter(function(r){ return r.resposta.length < 5; });
+  if(emBranco.length > 2){
+    if(btn){ btn.disabled=false; btn.textContent='Corrigir com a professora IA ✓'; }
+    alert('Responda pelo menos 3 questões antes de corrigir! ✏️');
+    return;
+  }
+
+  var promptParts = ['Você é uma professora carinhosa de 4º ano. Corrija as respostas de interpretação de texto de uma aluna de 9 anos. Para cada questão, dê um feedback encorajador e diga se a resposta capturou a ideia principal.'];
+  promptParts.push('Texto lido: "'+parsed.titulo+'"');
+  respostas.forEach(function(r,i){
+    promptParts.push((i+1)+'. Pergunta: '+r.pergunta+' | Gabarito esperado: '+r.gabarito+' | Resposta da aluna: '+(r.resposta||'(não respondeu)'));
+  });
+  promptParts.push('Responda SOMENTE em JSON válido: [{"ok":true,"fb":"feedback curto e carinhoso (max 1 frase)"},{"ok":false,"fb":"..."},...] — um objeto por questão na mesma ordem. ok=true se a resposta capturou a ideia principal, ok=false se estiver errada ou vazia. Seja sempre gentil!');
+  var prompt = promptParts.join('\n');
+
+  try {
+    var res = await fetch('/api/chat', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({messages:[{role:'user',content:prompt}], mode:'exam'})
+    });
+    var data = await res.json();
+    var clean = (data.reply||'').replace(/```json|```/g,'').trim();
+    var feedbacks = JSON.parse(clean);
+    var score = 0;
+    feedbacks.forEach(function(f,i){
+      if(f.ok) score++;
+      var fb = document.getElementById('rfb-'+i);
+      var ta = document.getElementById('rta-'+i);
+      if(fb){
+        fb.className = 'q-fb show '+(f.ok?'ok':'bad');
+        fb.textContent = (f.ok?'✅ ':'💡 ')+f.fb;
+      }
+      if(ta){
+        ta.style.borderColor = f.ok ? '#1D9E75' : '#D4537E';
+      }
+    });
+    var pct = Math.round(score/feedbacks.length*100);
+    var rb = document.getElementById('rb-reading');
+    var rh = document.getElementById('rb-reading-h');
+    var rp = document.getElementById('rb-reading-p');
+    var emoji = pct>=80?'🌟':pct>=60?'👏':'💪';
+    rh.textContent = emoji+' '+score+'/'+feedbacks.length+' questões muito bem!';
+    rp.textContent = pct>=80?'Excelente! Você entendeu muito bem o texto!':pct>=60?'Ótimo trabalho! Releia o texto e tente as que ficaram.':'Continue praticando! Releia o texto com calma e tente de novo.';
+    rb.style.background = pct>=80?'#E1F5EE':'#FAEEDA';
+    rb.style.color = pct>=80?'#085041':'#633806';
+    rb.className = 'result-box show';
+    if(btn){ btn.disabled=false; btn.textContent='Corrigir com a professora IA ✓'; }
+  } catch(e){
+    if(btn){ btn.disabled=false; btn.textContent='Corrigir com a professora IA ✓'; }
+    console.error(e);
+    alert('Erro ao corrigir. Tente novamente!');
+  }
 }
 
 async function generateSimQuestions(sub, topics, topicLabel){
