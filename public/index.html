@@ -1154,10 +1154,15 @@ function renderReadingQuestions(sub, parsed){
     var fb = document.createElement('div');
     fb.className = 'q-fb';
     fb.id = 'qfb-'+i;
+    var helpBtn = document.createElement('button');
+    helpBtn.className = 'help-btn';
+    helpBtn.innerHTML = '🤔 Não entendi';
+    (function(question, options){ helpBtn.onclick = function(){ askAboutQuestion(question, options); }; })(q.q, q.opts);
     block.appendChild(num);
     block.appendChild(stem);
     block.appendChild(opts);
     block.appendChild(fb);
+    block.appendChild(helpBtn);
     wrap.appendChild(block);
   });
 
@@ -1186,10 +1191,15 @@ function renderReadingQuestions(sub, parsed){
   var disFb = document.createElement('div');
   disFb.className = 'q-fb';
   disFb.id = 'rfb-dis';
+  var disHelp = document.createElement('button');
+  disHelp.className = 'help-btn';
+  disHelp.innerHTML = '🤔 Não entendi';
+  (function(q){ disHelp.onclick = function(){ askAboutQuestion(q, []); }; })(dis.q);
   disBlock.appendChild(disNum);
   disBlock.appendChild(disStem);
   disBlock.appendChild(disTa);
   disBlock.appendChild(disFb);
+  disBlock.appendChild(disHelp);
   wrap.appendChild(disBlock);
 
   // Botão corrigir
@@ -1350,7 +1360,10 @@ function renderSimQuestions(sub, questions, topicLabel){
     q.opts.forEach(function(opt,j){
       html += '<button class="mc-opt" onclick="pickSimMC(this,'+i+','+j+')"><span class="mc-letter" style="pointer-events:none">'+letters[j]+'</span>'+escHtml(opt)+'</button>';
     });
-    html += '</div><div class="q-fb" id="qfb-'+i+'"></div></div>';
+    html += '</div><div class="q-fb" id="qfb-'+i+'"></div>';
+    html += '<button class="help-btn" onclick="askAboutQuestion('+JSON.stringify(q.q).replace(/</g,'&lt;')+','+JSON.stringify(q.opts||[]).replace(/</g,'&lt;')+')">';
+    html += '🤔 '+(lang==='pt'?'Não entendi':'I need help')+'</button>';
+    html += '</div>';
   });
 
   var btnLabel = lang==='pt'?'Corrigir ✓':'Check my answers ✓';
@@ -1510,6 +1523,8 @@ showTab('dash','#2C2C2A');
   .print-info{display:block!important;font-size:12px;color:#666;margin-bottom:16px;border-bottom:1px solid #ddd;padding-bottom:8px}
 }
 .print-answer-line{display:none;height:28px;border-bottom:1px solid #bbb;margin:8px 0 4px}
+.help-btn{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 12px;border-radius:20px;font-size:11.5px;font-weight:700;cursor:pointer;border:1.5px solid #e0ddd8;background:#fff;color:#5F5E5A;font-family:Nunito,sans-serif;transition:all .15s}
+.help-btn:hover{background:#EEEDFE;border-color:#7F77DD;color:#534AB7}
 h1.print-title{display:none}
 .print-info{display:none}
 
@@ -1675,6 +1690,30 @@ function doPrint(){
 function updatePrintBtn(tabId){
   var fab = document.getElementById('print-fab');
   if(fab) fab.classList.toggle('visible', tabId==='sim');
+}
+
+function askAboutQuestion(question, options){
+  // Abre o chat
+  if(!chatOpen) toggleChat();
+  // Monta mensagem contextualizada
+  var lang = currentSimKey && ['science','mat','la','social'].includes(currentSimKey) ? 'en' : 'pt';
+  var msg;
+  if(lang === 'en'){
+    msg = 'I need help with this question: "' + question + '"';
+    if(options && options.length) msg += ' The options are: ' + options.map(function(o,i){ return ['A','B','C','D'][i]+') '+o; }).join(', ');
+    msg += '. Can you explain it to me in a simple way?';
+  } else {
+    msg = 'Preciso de ajuda com essa questão: "' + question + '"';
+    if(options && options.length) msg += ' As opções são: ' + options.map(function(o,i){ return ['A','B','C','D'][i]+') '+o; }).join(', ');
+    msg += '. Pode me explicar de um jeito fácil?';
+  }
+  // Preenche e envia
+  var input = document.getElementById('chat-input');
+  if(input){
+    input.value = msg;
+    // Pequeno delay para garantir que o chat abriu
+    setTimeout(function(){ sendChat(); }, 150);
+  }
 }
 
 function toggleChat(){
