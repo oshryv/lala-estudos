@@ -930,14 +930,50 @@ var SIMS=[
      {label:'🌿 All topics', topics:'Photosynthesis (sunlight+water+CO₂→glucose+oxygen, plants=producers), Food Chain (producer→primary consumer→secondary consumer, energy flows one direction), Food Web (multiple chains connected, removing species affects whole web), Classification (herbivore=plants only, carnivore=meat only, omnivore=both, decomposers=break down dead matter)'}
    ]},
   {key:'ciencias', label:'🗺️ Ciências', color:'#378ADD', lang:'pt',
-   allTopics:'Amazônia, Cerrado, Mata Atlântica, Caatinga, Impacto humano',
+   allTopics:'Biomas brasileiros da apostila',
    subtopics:[
-     {label:'🌳 Amazônia', topics:'Amazônia apenas: maior floresta tropical do mundo, localização no Norte, alta biodiversidade, muita chuva, animal símbolo onça-pintada, principal ameaça desmatamento'},
-     {label:'🌾 Cerrado', topics:'Cerrado apenas: savana tropical brasileira, estações seca e chuvosa, segunda maior biodiversidade, animal símbolo lobo-guará, principal ameaça agropecuária'},
-     {label:'🌊 Mata Atlântica', topics:'Mata Atlântica apenas: cobre o litoral brasileiro, restam apenas 12% da área original, clima úmido e quente, animal símbolo mico-leão-dourado, principal ameaça urbanização'},
-     {label:'🏜️ Caatinga', topics:'Caatinga apenas: único bioma 100% exclusivamente brasileiro, semiárido com seca intensa, plantas adaptadas como cacto e mandacaru, animal símbolo asa-branca, principal ameaça desertificação'},
-     {label:'⚠️ Impacto humano', topics:'Impacto humano nos biomas: desmatamento, agropecuária, urbanização, desertificação, perda de biodiversidade, extinção de espécies, como cada ação humana afeta os diferentes biomas brasileiros'},
-     {label:'🗺️ Todos os biomas', topics:'Amazônia (maior floresta tropical, onça-pintada, desmatamento), Cerrado (savana brasileira, lobo-guará, agropecuária), Mata Atlântica (litoral, mico-leão-dourado, só 12% restante, urbanização), Caatinga (único bioma 100% brasileiro, semiárido, cacto, asa-branca, desertificação)'}
+     {label:'🌍 Bioma x Ecossistema', fixed:true, questions:[
+       {q:'O que é um bioma?',opts:['Uma área muito pequena, como um vaso de flores','Uma grande área com mesmo clima, relevo e vegetação','Um único animal que vive sozinho na floresta','O nome científico das plantas do Brasil'],a:1,exp:'Bioma = grande comunidade de plantas e animais com mesmo clima e localização!'},
+       {q:'O que é um ecossistema?',opts:['Apenas os animais de uma floresta','Apenas as plantas de uma região','A relação entre seres vivos (bióticos) e elementos não vivos (abióticos) num espaço','O mapa de todos os biomas do Brasil'],a:2,exp:'Ecossistema = seres vivos + elementos não vivos (luz, solo, água) se relacionando num espaço!'},
+       {q:'Qual afirmação sobre bioma e ecossistema é VERDADEIRA?',opts:['Um bioma só pode ter um ecossistema dentro dele','Um único bioma pode ter vários ecossistemas diferentes dentro dele','Bioma e ecossistema são a mesma coisa','Ecossistema é sempre maior que um bioma'],a:1,exp:'Um bioma pode ter VÁRIOS ecossistemas! Ex: dentro da Amazônia há o ecossistema do rio, da floresta, do igarapé...'},
+       {q:'Se o clima de um bioma mudar para sempre, o que acontece com os ecossistemas dentro dele?',opts:['Nada muda, os ecossistemas são independentes','Os ecossistemas também vão mudar','Só os animais mudam, as plantas ficam iguais','Somente os rios são afetados'],a:1,exp:'Verdadeiro! Se o clima mudar, tudo dentro do bioma também vai mudar — plantas, animais e ecossistemas!'},
+       {q:'Um galho caído na floresta onde crescem musgos e vivem pequenos insetos é um exemplo de:',opts:['Um bioma em miniatura','Um ecossistema em pequena escala','Um tipo de solo especial','Uma ameaça à biodiversidade'],a:1,exp:'Sim! Mesmo um galho caído pode ser um ecossistema — com seres vivos e elementos não vivos se relacionando!'}
+     ]},
+     {label:'🌳 Amazônia', fixed:true, questions:[
+       {q:'Onde a Amazônia está localizada no Brasil?',opts:['No litoral, de Norte a Sul do Brasil','Principalmente na região Norte (estados como AM, PA, AC, RO, RR, AP)','Somente no estado do Amazonas','No centro do Brasil, próximo a Brasília'],a:1,exp:'A Amazônia ocupa ~40% do Brasil, principalmente na região Norte!'},
+       {q:'Por que a Amazônia é chamada de "regulador de temperatura da Terra"?',opts:['Porque fica perto do Polo Norte','Porque suas árvores absorvem gases que esquentam a Terra e devolvem frescor','Porque tem muitos rios frios','Porque fica na região mais fria do Brasil'],a:1,exp:'As árvores da Amazônia "respiram" os gases que esquentam o planeta e devolvem frescor — são o ar-condicionado da Terra!'},
+       {q:'O que são os "Rios Voadores" da Amazônia?',opts:['Rios que sobem pelas montanhas','Umidade lançada pelas árvores no ar que vira nuvens e leva chuva para outras regiões','Rios que mudam de direção todo ano','O nome dos rios que nascem em árvores'],a:1,exp:'A Amazônia lança umidade no ar que vira nuvens e leva chuva para cidades a milhares de km — os "Rios Voadores"!'},
+       {q:'Qual é o animal símbolo da Amazônia?',opts:['Lobo-guará','Mico-leão-dourado','Asa-branca','Onça-pintada'],a:3,exp:'A onça-pintada é a rainha da floresta amazônica!'},
+       {q:'Qual afirmação sobre o garimpo ilegal na Amazônia é VERDADEIRA?',opts:['O garimpo ilegal é perigoso apenas para as árvores','O garimpo ilegal envenena os peixes e a água que comunidades indígenas bebem','O garimpo ilegal ajuda a criar empregos sem causar danos','O garimpo ilegal afeta apenas o solo'],a:1,exp:'VERDADEIRO! O garimpo ilegal joga produtos químicos nos rios, envenenando peixes e a água das comunidades!'}
+     ]},
+     {label:'🌊 Mata Atlântica', fixed:true, questions:[
+       {q:'Onde a Mata Atlântica está localizada?',opts:['No interior do Brasil, longe do mar','Acompanha o litoral brasileiro do RN ao RS','Somente no estado de São Paulo','Na região Norte, próxima à Amazônia'],a:1,exp:'A Mata Atlântica abraça o litoral brasileiro — vai do Rio Grande do Norte ao Rio Grande do Sul!'},
+       {q:'Qual porcentagem da Mata Atlântica original ainda existe hoje?',opts:['Cerca de 50%','Cerca de 70%','Cerca de 12-13%','Cerca de 30%'],a:2,exp:'Restam apenas 12-13% da Mata Atlântica original. É o bioma mais devastado do Brasil!'},
+       {q:'Por que a Mata Atlântica é o bioma mais devastado do Brasil?',opts:['Porque as árvores caem sozinhas com as chuvas','Devido ao crescimento das grandes cidades e da população no litoral (expansão urbana)','Porque os animais comem todas as plantas','Porque chove demais e as árvores apodrecem'],a:1,exp:'O crescimento das cidades no litoral foi o principal motivo da devastação da Mata Atlântica!'},
+       {q:'Qual é o animal símbolo da Mata Atlântica?',opts:['Ararinha-azul','Lobo-guará','Mico-leão-dourado','Asa-branca'],a:2,exp:'O mico-leão-dourado é o símbolo da Mata Atlântica e está em risco de extinção!'},
+       {q:'Qual das ações ABAIXO causa devastação da Mata Atlântica?',opts:['Criação de parques nacionais e reservas de proteção','Plantio de mudas de árvores nativas','Tráfico de animais e plantas silvestres','Consumo de produtos com selo de madeira certificada'],a:2,exp:'O tráfico de animais e plantas silvestres é uma das principais causas de devastação da Mata Atlântica!'}
+     ]},
+     {label:'🏜️ Caatinga', fixed:true, questions:[
+       {q:'Por que a Caatinga recebeu o nome "Mata Branca"?',opts:['Porque as flores de todas as árvores são brancas o ano todo','Porque neva na região durante o inverno','Devido aos troncos claros e esbranquiçados das árvores sem folhas na seca','Devido à cor da areia das praias que existem lá'],a:2,exp:'Na seca, as árvores perdem as folhas e os troncos ficam claros e esbranquiçados — por isso "Mata Branca"!'},
+       {q:'O que acontece com a paisagem da Caatinga quando caem as primeiras chuvas?',opts:['Tudo continua branco e seco para sempre','Os animais fogem para a cidade','A paisagem muda rapidamente para variados tons de verde','O solo se transforma em lama azul'],a:2,exp:'É mágico! Basta a primeira chuva para a Caatinga se cobrir de verde em poucos dias!'},
+       {q:'A maioria dos rios da Caatinga é "temporária". O que isso significa?',opts:['Eles mudam de cor de acordo com o dia da semana','A água deles é sempre quente como o sol','Eles correm apenas para trás','Eles secam em certas épocas e voltam a encher na chuva'],a:3,exp:'Os rios temporários (intermitentes) secam na estiagem e voltam a correr nas chuvas!'},
+       {q:'Qual é o animal símbolo da Caatinga?',opts:['Onça-pintada','Lobo-guará','Asa-branca','Boto-cor-de-rosa'],a:2,exp:'A asa-branca é o pombão símbolo da Caatinga, com faixa branca nas asas que brilha quando voa!'},
+       {q:'Qual é a principal característica do solo da Caatinga?',opts:['É muito fundo e guarda muita água','É raso e pedregoso, fazendo a água evaporar rápido','É muito escuro e rico em matéria orgânica','É sempre úmido por causa das chuvas'],a:1,exp:'O solo da Caatinga é raso e pedregoso — a água da chuva não entra na terra e evapora rápido pelo calor!'}
+     ]},
+     {label:'🌾 Cerrado', fixed:true, questions:[
+       {q:'O Cerrado é conhecido como:',opts:['A floresta tropical brasileira','A savana brasileira, a mais biodiversa do mundo','O bioma exclusivamente brasileiro','A floresta que abraça o litoral'],a:1,exp:'O Cerrado é a "savana brasileira" — e de todas as savanas do mundo, é a que tem maior biodiversidade!'},
+       {q:'Por que dizemos que o Cerrado é uma "floresta invertida"?',opts:['Porque suas árvores crescem de cabeça para baixo','Porque suas raízes são maiores que os troncos, podendo ter 15 a 20m de profundidade','Porque fica no lado sul do Brasil','Porque suas flores brotam para baixo'],a:1,exp:'As raízes do Cerrado chegam a 15-20m de profundidade para buscar água — por isso é chamado de floresta invertida!'},
+       {q:'Qual animal é chamado de "jardineira do Cerrado" por espalhar sementes?',opts:['Onça-pintada','Lobo-guará','Anta','Tatu-canastra'],a:2,exp:'A anta come frutos e, ao caminhar, espalha sementes por onde passa, ajudando o Cerrado a crescer!'},
+       {q:'Qual é o fruto amarelo, de cheiro forte e muito famoso na culinária do Cerrado?',opts:['Buriti','Pequi','Aroeira','Maçã'],a:1,exp:'O pequi é o fruto símbolo do Cerrado — amarelo, cheiroso e muito usado na culinária local!'},
+       {q:'O que ameaça o Cerrado hoje?',opts:['Excesso de chuvas que afogam as plantas','Desmatamento para criação de pastagens, agricultura e incêndios criminosos','Frio intenso que mata as árvores','A presença de muitos animais silvestres'],a:1,exp:'O Cerrado perde espaço para pastagens, agricultura e queimadas criminosas — já restam apenas 20% da área original!'}
+     ]},
+     {label:'🗺️ Todos os biomas', fixed:true, questions:[
+       {q:'Qual é o único bioma 100% exclusivamente brasileiro?',opts:['Amazônia','Cerrado','Caatinga','Mata Atlântica'],a:2,exp:'A Caatinga existe somente no território brasileiro — não existe em nenhum outro lugar do mundo!'},
+       {q:'Qual bioma conecta todos os outros biomas brasileiros por estar no centro do país?',opts:['Amazônia','Pantanal','Cerrado','Mata Atlântica'],a:2,exp:'O Cerrado é o "ponto de encontro" — por ficar no centro, conecta Amazônia, Mata Atlântica, Pantanal e Caatinga!'},
+       {q:'Relacione: qual bioma tem a fauna com a ararinha-azul, hoje extinta na natureza?',opts:['Amazônia','Mata Atlântica','Cerrado','Caatinga'],a:3,exp:'A ararinha-azul é símbolo da Caatinga — não é vista voando livre desde 2000 e vive apenas em cativeiro!'},
+       {q:'Qual bioma brasileiro possui as maiores raízes, chegando a 15-20m de profundidade?',opts:['Caatinga','Amazônia','Cerrado','Mata Atlântica'],a:2,exp:'O Cerrado tem raízes gigantes para buscar água fundo no solo — por isso é chamado de floresta invertida!'},
+       {q:'Qual ação humana é comum como ameaça a TODOS os biomas brasileiros?',opts:['Excesso de chuvas','Desmatamento e tráfico de animais','Temperaturas muito baixas','Presença de turistas nas florestas'],a:1,exp:'Desmatamento e tráfico de animais ameaçam TODOS os biomas brasileiros!'}
+     ]}
    ]},
   {key:'portugues', label:'✏️ Português', color:'#D4537E', lang:'pt',
    allTopics:'Relato pessoal, Sílabas, Pronomes, Interpretação de texto',
@@ -1055,16 +1091,22 @@ function startSimTopic(key, label, topics){
   currentSimKey = key;
   currentTopicLabel = label;
   var sub = SIMS.find(s=>s.key===key);
-  // Detectar se é interpretação de texto
   var subtopic = sub.subtopics.find(function(t){ return t.label===label; });
   var isReading = subtopic && subtopic.type==='reading';
+  var isFixed = subtopic && subtopic.fixed && subtopic.questions;
   simAnswers={};
   simQuestions=[];
   document.getElementById('sim-questions').innerHTML='';
-  document.getElementById('sim-loading').style.display='block';
-  if(isReading){
+  if(isFixed){
+    // Questões fixas da apostila — sem API, sem loading
+    simQuestions = subtopic.questions;
+    simQuestions._topics = 'FIXED';
+    renderSimQuestions(sub, subtopic.questions, label);
+  } else if(isReading){
+    document.getElementById('sim-loading').style.display='block';
     generateReadingQuestions(sub);
   } else {
+    document.getElementById('sim-loading').style.display='block';
     generateSimQuestions(sub, topics, label);
   }
 }
@@ -1440,13 +1482,19 @@ function checkDynamicSim(){
 function retrySimTopic(){
   var sub = SIMS.find(s=>s.key===currentSimKey);
   var topics = simQuestions._topics || sub.allTopics;
+  var subtopic = sub.subtopics.find(function(t){ return t.label===currentTopicLabel; });
   simAnswers={};
   simQuestions=[];
   document.getElementById('sim-questions').innerHTML='';
-  document.getElementById('sim-loading').style.display='block';
-  if(topics==='INTERPRETACAO'){
+  if(subtopic && subtopic.fixed){
+    simQuestions = subtopic.questions;
+    simQuestions._topics = 'FIXED';
+    renderSimQuestions(sub, subtopic.questions, currentTopicLabel);
+  } else if(topics==='INTERPRETACAO'){
+    document.getElementById('sim-loading').style.display='block';
     generateReadingQuestions(sub);
   } else {
+    document.getElementById('sim-loading').style.display='block';
     generateSimQuestions(sub, topics, currentTopicLabel);
   }
 }
