@@ -102,17 +102,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .mc-opt.wrong{border-color:var(--red);background:var(--red-l);color:var(--red-d)}
 .mc-opt.selected{border-color:#7F77DD;background:#EEEDFE;color:#3C3489}
 .mc-letter{font-weight:800;font-size:12px;min-width:18px;margin-top:1px;pointer-events:none}
-.fill-input{border:none;border-bottom:2.5px solid var(--border);background:transparent;font-family:'Nunito',sans-serif;font-size:13px;font-weight:600;color:var(--text);padding:2px 4px;width:130px;text-align:center;outline:none;transition:border-color .15s}
-.fill-input:focus{border-color:var(--blue)}
-.fill-input.correct{border-color:var(--green);color:var(--green-d)}
-.fill-input.wrong{border-color:var(--red);color:var(--red-d)}
-.match-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;flex-wrap:wrap}
-.match-label{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;border:2px solid var(--border);background:#f5f4f0;color:var(--text);white-space:nowrap}
-.match-sel{padding:5px 8px;border-radius:8px;font-size:12px;font-weight:600;border:2px solid var(--border);background:var(--card);color:var(--text);font-family:'Nunito',sans-serif;cursor:pointer;flex:1;min-width:0}
-.match-sel.correct{border-color:var(--green);background:var(--green-l);color:var(--green-d)}
-.match-sel.wrong{border-color:var(--red);background:var(--red-l);color:var(--red-d)}
-.short-ta{width:100%;border:2px solid var(--border);border-radius:10px;padding:9px 11px;font-family:'Nunito',sans-serif;font-size:13px;color:var(--text);background:var(--card);resize:vertical;min-height:70px;outline:none;line-height:1.6;transition:border-color .15s}
-.short-ta:focus{border-color:var(--blue)}
 .q-fb{margin-top:8px;font-size:12px;font-weight:700;padding:7px 10px;border-radius:8px;display:none;line-height:1.5}
 .q-fb.show{display:block}
 .q-fb.ok{background:var(--green-l);color:var(--green-d)}
@@ -124,6 +113,23 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .result-box h3{font-size:26px;font-weight:900;margin-bottom:6px}
 .result-box p{font-size:13px;margin-bottom:12px}
 .retry-s{padding:9px 22px;border-radius:20px;font-size:13px;font-weight:800;cursor:pointer;border:none;font-family:'Nunito',sans-serif;color:#fff;background:rgba(0,0,0,.2)}
+
+/* ===== RESUMOS ===== */
+.res-nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}
+.res-btn{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;border:2px solid var(--border);background:var(--card);font-family:'Nunito',sans-serif;color:var(--muted);transition:all .15s}
+.res-btn.active{color:#fff;border-color:transparent}
+.res-panel{display:none}
+.res-panel.active{display:block}
+.res-header{border-radius:14px;padding:1rem 1.25rem;margin-bottom:1rem;color:#fff;position:relative}
+.res-header h2{font-size:17px;font-weight:800;margin-bottom:2px}
+.res-header p{font-size:12px;opacity:.85}
+.res-summary{background:var(--card);border-radius:14px;border:1.5px solid var(--border);padding:1rem 1.25rem;margin-bottom:12px}
+.res-summary h4{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;opacity:.6}
+.res-summary p{font-size:13.5px;line-height:1.75;color:var(--text)}
+.res-tips{background:var(--card);border-radius:14px;border:1.5px solid var(--border);padding:1rem 1.25rem}
+.res-tips h4{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;opacity:.6}
+.res-tip{padding:10px 12px;border-radius:10px;margin-bottom:7px;font-size:13px;line-height:1.55;font-weight:600}
+.res-tip:last-child{margin-bottom:0}
 </style>
 </head>
 <body>
@@ -132,8 +138,9 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   <span class="topbar-title">📚 Lala — Year 4</span>
   <button class="tab active" id="t-dash" onclick="showTab('dash','#2C2C2A')">🏠 Painel</button>
   <button class="tab" id="t-mind" onclick="showTab('mind','#7F77DD')">🌿 Mapa Mental</button>
+  <button class="tab" id="t-res" onclick="showTab('res','#1D9E75')">📝 Resumos</button>
   <button class="tab" id="t-quiz" onclick="showTab('quiz','#D4537E')">🎯 Quiz</button>
-  <button class="tab" id="t-sim" onclick="showTab('sim','#1D9E75')">📝 Simulados</button>
+  <button class="tab" id="t-sim" onclick="showTab('sim','#BA7517')">📋 Simulados</button>
 </div>
 
 <!-- ===== PAINEL ===== -->
@@ -171,76 +178,57 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   <!-- SCIENCE -->
   <div class="mind-map active" id="mm-science">
     <svg viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg" style="font-family:'Nunito',sans-serif;min-width:700px;width:100%">
-      <!-- CENTER -->
       <rect x="350" y="310" width="200" height="60" rx="30" fill="#1D9E75"/>
       <text x="450" y="335" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">🌿 SCIENCE</text>
       <text x="450" y="354" text-anchor="middle" fill="#E1F5EE" font-size="10">Food web · Photosynthesis</text>
-
-      <!-- BRANCH 1: PHOTOSYNTHESIS (top) -->
       <line x1="430" y1="312" x2="280" y2="190" stroke="#1D9E75" stroke-width="2"/>
       <rect x="140" y="148" width="190" height="50" rx="12" fill="#9FE1CB"/>
       <text x="235" y="170" text-anchor="middle" fill="#085041" font-size="12" font-weight="800">☀️ Photosynthesis</text>
       <text x="235" y="186" text-anchor="middle" fill="#085041" font-size="9.5">Plants make their own food</text>
-      <!-- sub: inputs -->
       <line x1="190" y1="152" x2="130" y2="100" stroke="#5DCAA5" stroke-width="1.5"/>
       <rect x="40" y="68" width="130" height="40" rx="10" fill="#E1F5EE"/>
       <text x="105" y="84" text-anchor="middle" fill="#085041" font-size="10" font-weight="700">☀️ Sunlight</text>
       <text x="105" y="98" text-anchor="middle" fill="#085041" font-size="9">+ 💧 Water + CO₂</text>
-      <!-- sub: outputs -->
       <line x1="283" y1="152" x2="310" y2="100" stroke="#5DCAA5" stroke-width="1.5"/>
       <rect x="260" y="68" width="130" height="40" rx="10" fill="#E1F5EE"/>
       <text x="325" y="84" text-anchor="middle" fill="#085041" font-size="10" font-weight="700">🍬 Glucose</text>
       <text x="325" y="98" text-anchor="middle" fill="#085041" font-size="9">+ 💨 Oxygen</text>
-
-      <!-- BRANCH 2: FOOD CHAIN (right) -->
       <line x1="548" y1="335" x2="660" y2="260" stroke="#1D9E75" stroke-width="2"/>
       <rect x="630" y="220" width="200" height="50" rx="12" fill="#9FE1CB"/>
       <text x="730" y="242" text-anchor="middle" fill="#085041" font-size="12" font-weight="800">🔗 Food Chain</text>
       <text x="730" y="258" text-anchor="middle" fill="#085041" font-size="9.5">Energy flows ONE direction →</text>
-      <!-- sub: example -->
       <line x1="730" y1="220" x2="730" y2="160" stroke="#5DCAA5" stroke-width="1.5"/>
       <rect x="640" y="118" width="185" height="50" rx="10" fill="#E1F5EE"/>
       <text x="732" y="136" text-anchor="middle" fill="#085041" font-size="9.5" font-weight="700">🌱 grass</text>
       <text x="732" y="151" text-anchor="middle" fill="#085041" font-size="9">→ 🦗 insect → 🐸 frog → 🦅 hawk</text>
-      <!-- sub: levels -->
       <line x1="830" y1="248" x2="870" y2="220" stroke="#5DCAA5" stroke-width="1.5"/>
       <rect x="840" y="186" width="50" height="38" rx="8" fill="#E1F5EE"/>
       <text x="865" y="202" text-anchor="middle" fill="#085041" font-size="8.5" font-weight="700">Producer</text>
       <text x="865" y="215" text-anchor="middle" fill="#085041" font-size="8">= plant 🌱</text>
-
-      <!-- BRANCH 3: FOOD WEB (bottom right) -->
       <line x1="540" y1="365" x2="660" y2="450" stroke="#1D9E75" stroke-width="2"/>
       <rect x="630" y="430" width="200" height="50" rx="12" fill="#9FE1CB"/>
       <text x="730" y="452" text-anchor="middle" fill="#085041" font-size="12" font-weight="800">🕸️ Food Web</text>
       <text x="730" y="468" text-anchor="middle" fill="#085041" font-size="9.5">Many chains connected</text>
-      <!-- sub -->
       <line x1="730" y1="480" x2="730" y2="540" stroke="#5DCAA5" stroke-width="1.5"/>
       <rect x="640" y="540" width="185" height="40" rx="10" fill="#E1F5EE"/>
       <text x="732" y="557" text-anchor="middle" fill="#085041" font-size="9" font-weight="700">Remove one species →</text>
       <text x="732" y="572" text-anchor="middle" fill="#085041" font-size="9">whole web changes! ⚠️</text>
-
-      <!-- BRANCH 4: CLASSIFY (bottom left) -->
       <line x1="390" y1="368" x2="280" y2="460" stroke="#1D9E75" stroke-width="2"/>
       <rect x="130" y="440" width="200" height="50" rx="12" fill="#9FE1CB"/>
       <text x="230" y="462" text-anchor="middle" fill="#085041" font-size="12" font-weight="800">🏷️ Classify Animals</text>
       <text x="230" y="478" text-anchor="middle" fill="#085041" font-size="9.5">What do they eat?</text>
-      <!-- sub: herbivore -->
       <line x1="160" y1="490" x2="100" y2="540" stroke="#5DCAA5" stroke-width="1.5"/>
       <rect x="30" y="530" width="115" height="38" rx="8" fill="#E1F5EE"/>
       <text x="87" y="546" text-anchor="middle" fill="#085041" font-size="9" font-weight="700">🥦 Herbivore</text>
       <text x="87" y="560" text-anchor="middle" fill="#085041" font-size="8.5">plants only</text>
-      <!-- sub: carnivore -->
       <line x1="230" y1="490" x2="230" y2="540" stroke="#5DCAA5" stroke-width="1.5"/>
       <rect x="165" y="530" width="115" height="38" rx="8" fill="#E1F5EE"/>
       <text x="222" y="546" text-anchor="middle" fill="#085041" font-size="9" font-weight="700">🥩 Carnivore</text>
       <text x="222" y="560" text-anchor="middle" fill="#085041" font-size="8.5">meat only</text>
-      <!-- sub: omnivore -->
       <line x1="300" y1="490" x2="355" y2="540" stroke="#5DCAA5" stroke-width="1.5"/>
       <rect x="305" y="530" width="115" height="38" rx="8" fill="#E1F5EE"/>
       <text x="362" y="546" text-anchor="middle" fill="#085041" font-size="9" font-weight="700">🍕 Omnivore</text>
       <text x="362" y="560" text-anchor="middle" fill="#085041" font-size="8.5">both! (like us 😄)</text>
-
-      <!-- BRANCH 5: DECOMPOSERS (top right) -->
       <line x1="548" y1="320" x2="650" y2="180" stroke="#1D9E75" stroke-width="2"/>
       <rect x="630" y="140" width="175" height="50" rx="12" fill="#9FE1CB"/>
       <text x="717" y="161" text-anchor="middle" fill="#085041" font-size="11" font-weight="800">🍄 Decomposers</text>
@@ -258,8 +246,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="360" y="300" width="220" height="60" rx="30" fill="#378ADD"/>
       <text x="470" y="325" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">🗺️ BIOMAS BRASILEIROS</text>
       <text x="470" y="345" text-anchor="middle" fill="#E6F1FB" font-size="10">Impacto humano · Biodiversidade</text>
-
-      <!-- AMAZÔNIA top-left -->
       <line x1="400" y1="302" x2="230" y2="170" stroke="#378ADD" stroke-width="2"/>
       <rect x="100" y="128" width="200" height="52" rx="12" fill="#B5D4F4"/>
       <text x="200" y="150" text-anchor="middle" fill="#0C447C" font-size="12" font-weight="800">🌳 Amazônia</text>
@@ -276,8 +262,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="270" y="42" width="130" height="40" rx="8" fill="#E6F1FB"/>
       <text x="335" y="59" text-anchor="middle" fill="#0C447C" font-size="9" font-weight="700">🦜 Maior</text>
       <text x="335" y="74" text-anchor="middle" fill="#0C447C" font-size="8.5">biodiversidade</text>
-
-      <!-- CERRADO top-right -->
       <line x1="540" y1="302" x2="700" y2="170" stroke="#378ADD" stroke-width="2"/>
       <rect x="640" y="128" width="200" height="52" rx="12" fill="#B5D4F4"/>
       <text x="740" y="150" text-anchor="middle" fill="#0C447C" font-size="12" font-weight="800">🌾 Cerrado</text>
@@ -294,8 +278,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="800" y="42" width="120" height="40" rx="8" fill="#E6F1FB"/>
       <text x="860" y="59" text-anchor="middle" fill="#0C447C" font-size="9" font-weight="700">☀️🌧️ Estações</text>
       <text x="860" y="74" text-anchor="middle" fill="#0C447C" font-size="8.5">seca e chuvosa</text>
-
-      <!-- MATA ATLÂNTICA bottom-left -->
       <line x1="400" y1="358" x2="230" y2="490" stroke="#378ADD" stroke-width="2"/>
       <rect x="100" y="468" width="200" height="52" rx="12" fill="#B5D4F4"/>
       <text x="200" y="490" text-anchor="middle" fill="#0C447C" font-size="12" font-weight="800">🌊 Mata Atlântica</text>
@@ -312,8 +294,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="272" y="562" width="120" height="38" rx="8" fill="#E6F1FB"/>
       <text x="332" y="578" text-anchor="middle" fill="#0C447C" font-size="9" font-weight="700">🏙️ Urbanização</text>
       <text x="332" y="592" text-anchor="middle" fill="#0C447C" font-size="8.5">ameaça principal</text>
-
-      <!-- CAATINGA bottom-right -->
       <line x1="540" y1="358" x2="700" y2="490" stroke="#378ADD" stroke-width="2"/>
       <rect x="640" y="468" width="200" height="52" rx="12" fill="#B5D4F4"/>
       <text x="740" y="490" text-anchor="middle" fill="#0C447C" font-size="12" font-weight="800">🏜️ Caatinga</text>
@@ -339,8 +319,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="330" y="300" width="240" height="60" rx="30" fill="#D4537E"/>
       <text x="450" y="325" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">✏️ LÍNGUA PORTUGUESA</text>
       <text x="450" y="345" text-anchor="middle" fill="#FBEAF0" font-size="10">Relato · Sílabas · Pronomes</text>
-
-      <!-- RELATO top -->
       <line x1="440" y1="302" x2="300" y2="175" stroke="#D4537E" stroke-width="2"/>
       <rect x="150" y="135" width="200" height="50" rx="12" fill="#F4C0D1"/>
       <text x="250" y="157" text-anchor="middle" fill="#72243E" font-size="12" font-weight="800">📖 Relato Pessoal</text>
@@ -357,8 +335,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="318" y="46" width="130" height="40" rx="8" fill="#FBEAF0"/>
       <text x="383" y="63" text-anchor="middle" fill="#72243E" font-size="9" font-weight="700">✍️ Experiência real</text>
       <text x="383" y="78" text-anchor="middle" fill="#72243E" font-size="8.5">algo que aconteceu</text>
-
-      <!-- SÍLABAS right -->
       <line x1="568" y1="325" x2="690" y2="250" stroke="#D4537E" stroke-width="2"/>
       <rect x="660" y="215" width="200" height="50" rx="12" fill="#F4C0D1"/>
       <text x="760" y="237" text-anchor="middle" fill="#72243E" font-size="12" font-weight="800">🔤 Sílabas</text>
@@ -376,8 +352,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="820" y="124" width="70" height="42" rx="8" fill="#FBEAF0"/>
       <text x="855" y="140" text-anchor="middle" fill="#72243E" font-size="9" font-weight="700">ca-FÉ</text>
       <text x="855" y="154" text-anchor="middle" fill="#72243E" font-size="8.5">oxítona</text>
-
-      <!-- PRONOMES bottom-right -->
       <line x1="568" y1="350" x2="680" y2="450" stroke="#D4537E" stroke-width="2"/>
       <rect x="650" y="425" width="200" height="50" rx="12" fill="#F4C0D1"/>
       <text x="750" y="447" text-anchor="middle" fill="#72243E" font-size="12" font-weight="800">🙋 Pronomes</text>
@@ -395,8 +369,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <text x="848" y="534" text-anchor="middle" fill="#72243E" font-size="8.5" font-weight="700">📍 Demo</text>
       <text x="848" y="547" text-anchor="middle" fill="#72243E" font-size="8">este/esse</text>
       <text x="848" y="560" text-anchor="middle" fill="#72243E" font-size="8">aquele</text>
-
-      <!-- DICA PRONOMES DEMONSTRATIVOS -->
       <line x1="450" y1="358" x2="450" y2="460" stroke="#D4537E" stroke-width="2"/>
       <rect x="330" y="455" width="240" height="58" rx="12" fill="#F4C0D1"/>
       <text x="450" y="476" text-anchor="middle" fill="#72243E" font-size="11" font-weight="800">📍 Dica dos Demonstrativos</text>
@@ -411,8 +383,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="330" y="300" width="240" height="60" rx="30" fill="#BA7517"/>
       <text x="450" y="325" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">🔢 MATEMÁTICA</text>
       <text x="450" y="345" text-anchor="middle" fill="#FAEEDA" font-size="10">Números · Operações · Gráficos</text>
-
-      <!-- VALOR POSICIONAL top-left -->
       <line x1="380" y1="302" x2="240" y2="175" stroke="#BA7517" stroke-width="2"/>
       <rect x="110" y="135" width="210" height="50" rx="12" fill="#FAC775"/>
       <text x="215" y="157" text-anchor="middle" fill="#633806" font-size="12" font-weight="800">🔢 Valor Posicional</text>
@@ -429,8 +399,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="288" y="44" width="120" height="40" rx="8" fill="#FAEEDA"/>
       <text x="348" y="61" text-anchor="middle" fill="#633806" font-size="9" font-weight="700">Ordinais 📋</text>
       <text x="348" y="76" text-anchor="middle" fill="#633806" font-size="8.5">1º 2º 3º 4º 5º…</text>
-
-      <!-- OPERAÇÕES top-right -->
       <line x1="520" y1="302" x2="650" y2="175" stroke="#BA7517" stroke-width="2"/>
       <rect x="630" y="135" width="210" height="50" rx="12" fill="#FAC775"/>
       <text x="735" y="157" text-anchor="middle" fill="#633806" font-size="12" font-weight="800">✖️ ÷ Operações</text>
@@ -447,8 +415,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="810" y="44" width="80" height="40" rx="8" fill="#FAEEDA"/>
       <text x="850" y="61" text-anchor="middle" fill="#633806" font-size="9" font-weight="700">+ −</text>
       <text x="850" y="76" text-anchor="middle" fill="#633806" font-size="8.5">algoritmos</text>
-
-      <!-- SITUAÇÃO-PROBLEMA right -->
       <line x1="568" y1="340" x2="690" y2="380" stroke="#BA7517" stroke-width="2"/>
       <rect x="668" y="355" width="210" height="52" rx="12" fill="#FAC775"/>
       <text x="773" y="377" text-anchor="middle" fill="#633806" font-size="11" font-weight="800">🧩 Situação-Problema</text>
@@ -457,8 +423,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="688" y="454" width="180" height="42" rx="8" fill="#FAEEDA"/>
       <text x="778" y="471" text-anchor="middle" fill="#633806" font-size="9" font-weight="700">❓ O quê? Quantos?</text>
       <text x="778" y="486" text-anchor="middle" fill="#633806" font-size="8.5">Qual operação usar?</text>
-
-      <!-- GRÁFICOS bottom -->
       <line x1="440" y1="358" x2="310" y2="455" stroke="#BA7517" stroke-width="2"/>
       <rect x="140" y="430" width="240" height="52" rx="12" fill="#FAC775"/>
       <text x="260" y="452" text-anchor="middle" fill="#633806" font-size="12" font-weight="800">📊 Gráficos e Tabelas</text>
@@ -484,8 +448,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="340" y="295" width="220" height="60" rx="30" fill="#633806"/>
       <text x="450" y="320" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">🔢 MATH (EN)</text>
       <text x="450" y="340" text-anchor="middle" fill="#FAEEDA" font-size="10">Place value · Time · Geometry</text>
-
-      <!-- PLACE VALUE top-left -->
       <line x1="390" y1="297" x2="240" y2="170" stroke="#633806" stroke-width="2"/>
       <rect x="110" y="130" width="210" height="50" rx="12" fill="#FAC775"/>
       <text x="215" y="152" text-anchor="middle" fill="#633806" font-size="12" font-weight="800">🔢 Place Value</text>
@@ -498,8 +460,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="290" y="44" width="120" height="36" rx="8" fill="#FAEEDA"/>
       <text x="350" y="60" text-anchor="middle" fill="#633806" font-size="9" font-weight="700">Ordinals:</text>
       <text x="350" y="74" text-anchor="middle" fill="#633806" font-size="8.5">1st 2nd 3rd…</text>
-
-      <!-- TELLING TIME top-right -->
       <line x1="510" y1="297" x2="655" y2="170" stroke="#633806" stroke-width="2"/>
       <rect x="626" y="130" width="210" height="50" rx="12" fill="#FAC775"/>
       <text x="731" y="152" text-anchor="middle" fill="#633806" font-size="12" font-weight="800">🕐 Telling Time</text>
@@ -516,8 +476,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="812" y="42" width="74" height="38" rx="8" fill="#FAEEDA"/>
       <text x="849" y="58" text-anchor="middle" fill="#633806" font-size="9" font-weight="700">Short hand</text>
       <text x="849" y="72" text-anchor="middle" fill="#633806" font-size="8.5">= hours</text>
-
-      <!-- QUADRILATERALS right -->
       <line x1="558" y1="340" x2="690" y2="380" stroke="#633806" stroke-width="2"/>
       <rect x="668" y="355" width="210" height="50" rx="12" fill="#FAC775"/>
       <text x="773" y="377" text-anchor="middle" fill="#633806" font-size="11" font-weight="800">🔷 Quadrilaterals</text>
@@ -534,8 +492,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="840" y="444" width="50" height="42" rx="8" fill="#FAEEDA"/>
       <text x="865" y="461" text-anchor="middle" fill="#633806" font-size="8" font-weight="700">◇ Rhom</text>
       <text x="865" y="476" text-anchor="middle" fill="#633806" font-size="7.5">no right ∠</text>
-
-      <!-- WORD PROBLEMS bottom-left -->
       <line x1="400" y1="354" x2="270" y2="450" stroke="#633806" stroke-width="2"/>
       <rect x="130" y="428" width="210" height="50" rx="12" fill="#FAC775"/>
       <text x="235" y="450" text-anchor="middle" fill="#633806" font-size="11" font-weight="800">🧩 Word Problems</text>
@@ -557,8 +513,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="330" y="295" width="240" height="60" rx="30" fill="#E24B4A"/>
       <text x="450" y="320" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">📖 LANGUAGE ARTS</text>
       <text x="450" y="340" text-anchor="middle" fill="#FCEBEB" font-size="10">Adjectives · Tenses · Sentences</text>
-
-      <!-- ADJECTIVES top -->
       <line x1="430" y1="297" x2="270" y2="168" stroke="#E24B4A" stroke-width="2"/>
       <rect x="130" y="128" width="220" height="50" rx="12" fill="#F7C1C1"/>
       <text x="240" y="150" text-anchor="middle" fill="#791F1F" font-size="12" font-weight="800">🏆 Adjectives that Compare</text>
@@ -575,8 +529,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="316" y="38" width="155" height="42" rx="8" fill="#FCEBEB"/>
       <text x="393" y="55" text-anchor="middle" fill="#791F1F" font-size="9" font-weight="700">⚡ Irregular!</text>
       <text x="393" y="70" text-anchor="middle" fill="#791F1F" font-size="8.5">good→better→best</text>
-
-      <!-- VERB TENSES right -->
       <line x1="568" y1="320" x2="700" y2="240" stroke="#E24B4A" stroke-width="2"/>
       <rect x="672" y="202" width="210" height="50" rx="12" fill="#F7C1C1"/>
       <text x="777" y="224" text-anchor="middle" fill="#791F1F" font-size="12" font-weight="800">⏱️ Verb Tenses</text>
@@ -593,13 +545,10 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="828" y="110" width="62" height="42" rx="8" fill="#FCEBEB"/>
       <text x="859" y="127" text-anchor="middle" fill="#791F1F" font-size="8.5" font-weight="700">Irregular</text>
       <text x="859" y="141" text-anchor="middle" fill="#791F1F" font-size="8">go→went</text>
-
-      <!-- SENTENCE TYPES bottom -->
       <line x1="450" y1="354" x2="450" y2="440" stroke="#E24B4A" stroke-width="2"/>
       <rect x="310" y="436" width="280" height="52" rx="14" fill="#F7C1C1"/>
       <text x="450" y="459" text-anchor="middle" fill="#791F1F" font-size="12" font-weight="800">❓ Types of Sentences</text>
       <text x="450" y="476" text-anchor="middle" fill="#791F1F" font-size="9.5">Statement · Question · Exclamation · Command</text>
-      <!-- 4 sub boxes -->
       <line x1="350" y1="488" x2="300" y2="540" stroke="#F09595" stroke-width="1.5"/>
       <rect x="220" y="532" width="155" height="42" rx="8" fill="#FCEBEB"/>
       <text x="297" y="549" text-anchor="middle" fill="#791F1F" font-size="9" font-weight="700">📄 Statement .</text>
@@ -616,8 +565,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="604" y="532" width="120" height="42" rx="8" fill="#FCEBEB"/>
       <text x="664" y="549" text-anchor="middle" fill="#791F1F" font-size="9" font-weight="700">👆 Command</text>
       <text x="664" y="564" text-anchor="middle" fill="#791F1F" font-size="8.5">Eat your pizza.</text>
-
-      <!-- CLUE left -->
       <line x1="332" y1="340" x2="200" y2="400" stroke="#E24B4A" stroke-width="2"/>
       <rect x="60" y="376" width="200" height="58" rx="12" fill="#F7C1C1"/>
       <text x="160" y="398" text-anchor="middle" fill="#791F1F" font-size="11" font-weight="800">⚡ Key words for past</text>
@@ -632,8 +579,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="320" y="280" width="260" height="60" rx="30" fill="#7F77DD"/>
       <text x="450" y="305" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">🏛️ GEO &amp; HISTÓRIA</text>
       <text x="450" y="325" text-anchor="middle" fill="#EEEDFE" font-size="10">Mapas · Influências indígenas</text>
-
-      <!-- TIPOS DE MAPAS left -->
       <line x1="360" y1="285" x2="210" y2="175" stroke="#7F77DD" stroke-width="2"/>
       <rect x="90" y="135" width="220" height="50" rx="12" fill="#CECBF6"/>
       <text x="200" y="157" text-anchor="middle" fill="#3C3489" font-size="12" font-weight="800">🗺️ Tipos de Mapas</text>
@@ -650,8 +595,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="276" y="44" width="130" height="42" rx="8" fill="#EEEDFE"/>
       <text x="341" y="61" text-anchor="middle" fill="#3C3489" font-size="9" font-weight="700">🌡️ Temático</text>
       <text x="341" y="76" text-anchor="middle" fill="#3C3489" font-size="8.5">clima · população</text>
-
-      <!-- INFLUÊNCIAS INDÍGENAS right -->
       <line x1="540" y1="285" x2="680" y2="175" stroke="#7F77DD" stroke-width="2"/>
       <rect x="590" y="135" width="240" height="50" rx="12" fill="#CECBF6"/>
       <text x="710" y="157" text-anchor="middle" fill="#3C3489" font-size="12" font-weight="800">🪶 Influências Indígenas</text>
@@ -668,8 +611,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="796" y="44" width="95" height="42" rx="8" fill="#EEEDFE"/>
       <text x="843" y="61" text-anchor="middle" fill="#3C3489" font-size="9" font-weight="700">📍 Topônimos</text>
       <text x="843" y="76" text-anchor="middle" fill="#3C3489" font-size="8.5">Paraná · Ipiranga</text>
-
-      <!-- TÉCNICAS indígenas bottom-right -->
       <line x1="580" y1="340" x2="700" y2="430" stroke="#7F77DD" stroke-width="2"/>
       <rect x="640" y="408" width="210" height="50" rx="12" fill="#CECBF6"/>
       <text x="745" y="430" text-anchor="middle" fill="#3C3489" font-size="11" font-weight="800">🌱 Técnicas Agrícolas</text>
@@ -678,8 +619,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="660" y="503" width="175" height="40" rx="8" fill="#EEEDFE"/>
       <text x="747" y="520" text-anchor="middle" fill="#3C3489" font-size="9" font-weight="700">🌿 Plantas medicinais</text>
       <text x="747" y="535" text-anchor="middle" fill="#3C3489" font-size="8.5">ainda usamos hoje!</text>
-
-      <!-- ELEMENTOS MAPA bottom-left -->
       <line x1="380" y1="340" x2="260" y2="430" stroke="#7F77DD" stroke-width="2"/>
       <rect x="100" y="408" width="260" height="50" rx="12" fill="#CECBF6"/>
       <text x="230" y="430" text-anchor="middle" fill="#3C3489" font-size="11" font-weight="800">📌 Elementos obrigatórios</text>
@@ -701,8 +640,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="350" y="305" width="240" height="60" rx="30" fill="#2C2C2A"/>
       <text x="470" y="330" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">🌎 SOCIAL STUDIES</text>
       <text x="470" y="350" text-anchor="middle" fill="#D3D1C7" font-size="10">Ancient Civilizations · Nomads</text>
-
-      <!-- NOMADS top -->
       <line x1="450" y1="307" x2="450" y2="178" stroke="#2C2C2A" stroke-width="2"/>
       <rect x="320" y="138" width="260" height="50" rx="12" fill="#D3D1C7"/>
       <text x="450" y="160" text-anchor="middle" fill="#2C2C2A" font-size="12" font-weight="800">🧭 Nomadic People</text>
@@ -715,8 +652,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="546" y="48" width="135" height="40" rx="8" fill="#F1EFE8"/>
       <text x="613" y="65" text-anchor="middle" fill="#2C2C2A" font-size="9" font-weight="700">Still exist today!</text>
       <text x="613" y="80" text-anchor="middle" fill="#2C2C2A" font-size="8.5">some groups worldwide</text>
-
-      <!-- MAYAS top-left -->
       <line x1="390" y1="308" x2="210" y2="185" stroke="#2C2C2A" stroke-width="2"/>
       <rect x="80" y="148" width="210" height="50" rx="12" fill="#D3D1C7"/>
       <text x="185" y="170" text-anchor="middle" fill="#2C2C2A" font-size="12" font-weight="800">🌽 Mayas</text>
@@ -733,8 +668,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="258" y="58" width="105" height="40" rx="8" fill="#F1EFE8"/>
       <text x="310" y="75" text-anchor="middle" fill="#2C2C2A" font-size="9" font-weight="700">✍️ Glyphs</text>
       <text x="310" y="90" text-anchor="middle" fill="#2C2C2A" font-size="8.5">picture writing</text>
-
-      <!-- AZTECS top-right -->
       <line x1="510" y1="308" x2="690" y2="185" stroke="#2C2C2A" stroke-width="2"/>
       <rect x="640" y="148" width="210" height="50" rx="12" fill="#D3D1C7"/>
       <text x="745" y="170" text-anchor="middle" fill="#2C2C2A" font-size="12" font-weight="800">⚔️ Aztecs</text>
@@ -751,8 +684,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="828" y="58" width="104" height="40" rx="8" fill="#F1EFE8"/>
       <text x="880" y="75" text-anchor="middle" fill="#2C2C2A" font-size="9" font-weight="700">☀️ Sun god</text>
       <text x="880" y="90" text-anchor="middle" fill="#2C2C2A" font-size="8.5">Huitzilopochtli</text>
-
-      <!-- INCAS bottom -->
       <line x1="450" y1="364" x2="450" y2="468" stroke="#2C2C2A" stroke-width="2"/>
       <rect x="310" y="448" width="280" height="52" rx="14" fill="#D3D1C7"/>
       <text x="450" y="471" text-anchor="middle" fill="#2C2C2A" font-size="12" font-weight="800">🦙 Incas</text>
@@ -769,14 +700,11 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <rect x="564" y="544" width="130" height="42" rx="8" fill="#F1EFE8"/>
       <text x="629" y="561" text-anchor="middle" fill="#2C2C2A" font-size="9" font-weight="700">No writing system</text>
       <text x="629" y="576" text-anchor="middle" fill="#2C2C2A" font-size="8.5">only quipu!</text>
-
-      <!-- COMPARE box -->
       <line x1="380" y1="355" x2="200" y2="430" stroke="#2C2C2A" stroke-width="2"/>
       <rect x="44" y="408" width="230" height="58" rx="12" fill="#D3D1C7"/>
       <text x="159" y="430" text-anchor="middle" fill="#2C2C2A" font-size="11" font-weight="800">🔍 Compare the 3 civs</text>
       <text x="159" y="447" text-anchor="middle" fill="#444441" font-size="9">Mayas: Mexico/Guatemala · glyphs</text>
       <text x="159" y="461" text-anchor="middle" fill="#444441" font-size="9">Aztecs: Mexico · island city · 1521</text>
-
       <line x1="520" y1="355" x2="700" y2="428" stroke="#2C2C2A" stroke-width="2"/>
       <rect x="666" y="406" width="220" height="58" rx="12" fill="#D3D1C7"/>
       <text x="776" y="428" text-anchor="middle" fill="#2C2C2A" font-size="11" font-weight="800">📍 Where they lived</text>
@@ -785,6 +713,12 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
     </svg>
   </div>
 
+</div>
+
+<!-- ===== RESUMOS ===== -->
+<div class="screen" id="res">
+  <div class="res-nav" id="res-nav"></div>
+  <div id="res-content"></div>
 </div>
 
 <!-- ===== QUIZ ===== -->
@@ -798,13 +732,9 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 <div class="screen" id="sim">
   <div class="sim-nav" id="sim-nav"></div>
   <div id="sim-content">
-    <div id="sim-loading" style="display:none;padding:2rem;text-align:center">
-      <div style="font-size:14px;color:var(--muted);margin-bottom:8px">Gerando questões novas... ✨</div>
-      <div style="font-size:12px;color:var(--muted)">Cada tentativa tem perguntas diferentes!</div>
-    </div>
     <div id="sim-questions"></div>
   </div>
-</div><!-- end sim screen -->
+</div>
 
 <script>
 // ===== DATA =====
@@ -849,88 +779,136 @@ var QUIZ=[
 
 var NC={science:"#1D9E75",ciencias:"#378ADD",portugues:"#D4537E",mat:"#BA7517",la:"#E24B4A",geohist:"#7F77DD",social:"#5F5E5A"};
 
-// ===== TABS =====
-// ===== DETAIL =====
-function showDetail(key){
-  var d=DETAIL[key];
-  document.getElementById('dash-main').style.display='none';
-  var p=document.getElementById('dash-detail');p.style.display='block';
-  var lb=d.lang==='en'?'background:#E6F1FB;color:#0C447C':'background:#FBEAF0;color:#72243E';
-  var h='<button class="detail-back" onclick="hideDetail()">← Back / Voltar</button>';
-  h+='<div class="detail-title">'+d.title+'<span class="lang-pill" style="'+lb+'">'+d.lang.toUpperCase()+'</span></div>';
-  h+='<div class="topic-grid">';
-  d.topics.forEach(t=>{
-    h+='<div class="topic-card" style="background:'+d.light+';color:'+d.dark+'"><h4>'+t.h+'</h4><ul>';
-    t.items.forEach(i=>{h+='<li>'+i+'</li>';});
-    h+='</ul><div class="activity"><strong>'+(d.lang==='en'?'⚡ Try this':'⚡ Atividade')+'</strong>'+t.act+'</div></div>';
-  });
-  h+='</div>';p.innerHTML=h;
-}
-function hideDetail(){document.getElementById('dash-main').style.display='';document.getElementById('dash-detail').style.display='none';document.getElementById('dash-detail').innerHTML='';}
-
-// ===== QUIZ =====
-var cQ=[],qi=0,sc=0,ans=false,af='all';
-var CATS=[['all','Todas / All','#2C2C2A'],['science','🌿 Science','#1D9E75'],['ciencias','🗺️ Ciências','#378ADD'],['portugues','✏️ Português','#D4537E'],['mat','🔢 Math','#BA7517'],['la','📖 Lang Arts','#E24B4A'],['social','🌎 Social','#5F5E5A'],['geohist','🏛️ Geo & Hist','#7F77DD']];
-function buildQF(){
-  var w=document.getElementById('qf');if(w.childElementCount)return;
-  CATS.forEach((c,i)=>{
-    var b=document.createElement('button');b.className='qf-btn'+(i===0?' active':'');
-    b.textContent=c[1];if(i===0){b.style.background=c[2];b.style.color='#fff';b.style.borderColor=c[2];}
-    b.onclick=()=>startQuiz(c[0],b);w.appendChild(b);
-  });
-}
-function startQuiz(filter,btn){
-  af=filter;
-  document.querySelectorAll('.qf-btn').forEach(b=>{b.classList.remove('active');b.style.background='';b.style.color='var(--muted)';b.style.borderColor='var(--border)';});
-  if(btn){btn.classList.add('active');var cc=CATS.find(c=>c[0]===filter);btn.style.background=cc[2];btn.style.color='#fff';btn.style.borderColor=cc[2];}
-  cQ=filter==='all'?shuf(QUIZ.slice()):shuf(QUIZ.filter(q=>q.cat===filter));
-  qi=0;sc=0;ans=false;renderQ();
-}
-function shuf(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function renderQ(){
-  document.getElementById('prog').style.width=Math.round(qi/cQ.length*100)+'%';
-  var box=document.getElementById('qbox');
-  if(qi>=cQ.length){
-    var pct=Math.round(sc/cQ.length*100);
-    var bg=pct>=80?'var(--green-l)':'var(--amber-l)';var col=pct>=80?'var(--green-d)':'var(--amber-d)';
-    var emoji=pct>=80?'🌟':pct>=60?'👍':'💪';
-    box.innerHTML='<div class="score-card show" style="background:'+bg+';color:'+col+'"><h2>'+emoji+' '+sc+'/'+cQ.length+'</h2><p>'+pct+'%'+(pct>=80?' — Excellent! Ready for the exam!':pct>=60?' — Good! Review the red answers.':' — Keep practicing!')+'</p><button class="retry-btn" onclick="startQuiz(af,null)">🔄 Play again</button></div>';
-    document.getElementById('prog').style.width='100%';return;
-  }
-  var q=cQ[qi];
-  var ce={science:'🌿',ciencias:'🗺️',portugues:'✏️',mat:'🔢',la:'📖',geohist:'🏛️',social:'🌎'};
-  var lb=q.lang==='en'?'background:#E6F1FB;color:#0C447C':'background:#FBEAF0;color:#72243E';
-  var L=['A','B','C','D'];
-  var h='<div class="q-meta">'+ce[q.cat]+' Q'+(qi+1)+'/'+cQ.length+'<span class="lang-pill" style="'+lb+'">'+q.lang.toUpperCase()+'</span></div>';
-  h+='<div class="q-text">'+q.q+'</div><div class="opts">';
-  q.opts.forEach((o,i)=>{h+='<button class="opt" onclick="doAns('+i+')"><span class="opt-letter">'+L[i]+'</span>'+o+'</button>';});
-  h+='</div><div class="feedback" id="fb"></div><button class="next-btn" id="nxt" style="background:'+NC[q.cat]+'" onclick="nextQ()">Next →</button>';
-  box.innerHTML=h;ans=false;
-}
-function doAns(i){
-  if(ans)return;ans=true;
-  var q=cQ[qi];var opts=document.querySelectorAll('.opt');
-  opts[q.a].classList.add('correct');
-  var fb=document.getElementById('fb');
-  if(i===q.a){sc++;fb.textContent='✅ Correct! '+q.exp;fb.className='feedback ok';}
-  else{opts[i].classList.add('wrong');fb.textContent='❌ Answer: '+['A','B','C','D'][q.a]+'. '+q.exp;fb.className='feedback bad';}
-  document.getElementById('nxt').style.display='inline-block';
-}
-function nextQ(){qi++;renderQ();}
-
-// ===== SIMULADOS DINÂMICOS =====
-var SIMS=[
-  {key:'science', label:'🌿 Science', color:'#1D9E75', lang:'en',
-   allTopics:'Photosynthesis, Food Chain, Food Web, Animal Classification (herbivore/carnivore/omnivore/decomposer)',
-   subtopics:[
-     {label:'☀️ Photosynthesis', topics:'Photosynthesis only: sunlight+water+CO₂→glucose+oxygen, plants=producers, chlorophyll, why plants are called producers'},
-     {label:'🔗 Food Chain', topics:'Food Chain only: producer→primary consumer→secondary consumer, energy flows one direction, examples like grass→grasshopper→frog→hawk, levels of a food chain'},
-     {label:'🕸️ Food Web', topics:'Food Web only: multiple food chains connected, removing one species affects the whole web, difference between food chain and food web, complexity of ecosystems'},
-     {label:'🏷️ Classification', topics:'Animal Classification only: herbivore=plants only (examples: cow, rabbit), carnivore=meat only (examples: lion, wolf), omnivore=both (examples: bear, human), decomposers=break down dead matter (examples: mushroom, bacteria)'},
-     {label:'🌿 All topics', topics:'Photosynthesis (sunlight+water+CO₂→glucose+oxygen, plants=producers), Food Chain (producer→primary consumer→secondary consumer, energy flows one direction), Food Web (multiple chains connected, removing species affects whole web), Classification (herbivore=plants only, carnivore=meat only, omnivore=both, decomposers=break down dead matter)'}
+// ===== RESUMOS (novo módulo) =====
+var RESUMOS = [
+  {key:'science', label:'🌿 Science', color:'#1D9E75', light:'#E1F5EE', dark:'#085041', lang:'en',
+   summary:'Photosynthesis is how plants make food using sunlight + water + CO₂, producing glucose + oxygen. Plants are PRODUCERS. A food chain shows energy flowing one way (grass → bug → frog → hawk). A food web is many chains connected. Animals are classified by what they eat: herbivores (plants only), carnivores (meat only), omnivores (both). Decomposers (like mushrooms and bacteria) recycle dead matter back to the soil.',
+   tips:[
+     '🌱 <b>SWC → GO</b>: Sunlight + Water + CO₂ → Glucose + Oxygen',
+     '🥦 <b>Herb</b>ivore = "herb" = plants. <b>Carn</b>ivore = "carne" (meat in Portuguese)',
+     '🕸️ Food WEB = web of chains. Remove one animal = the whole web shakes!',
+     '🍄 Decomposer = "de-compose" = breaks things apart',
+     '☀️ Energy flows ONE WAY up the chain — plants have the most energy'
    ]},
+  {key:'portugues', label:'✏️ Português', color:'#D4537E', light:'#FBEAF0', dark:'#72243E', lang:'pt',
+   summary:'Relato pessoal é narrado em 1ª pessoa (eu, nós) e conta experiências reais em ordem cronológica. Sílabas podem ser separadas e toda palavra tem uma tônica (mais forte). Classificação: oxítona (tônica na última), paroxítona (penúltima), proparoxítona (antepenúltima — sempre tem acento!). Pronomes substituem o nome: pessoais (eu, tu, ele), possessivos (meu, teu, nosso), demonstrativos (este=perto, esse=médio, aquele=longe).',
+   tips:[
+     '📖 <b>Relato = EU + ONTEM</b>. Sempre em 1ª pessoa e no passado',
+     '🥁 Bata palma pra achar a sílaba tônica — a que você bate mais forte',
+     '📍 Demonstrativos: "ESTE aqui comigo, ESSE aí com você, AQUELE lá longe"',
+     '💡 <b>Proparoxítona SEMPRE tem acento!</b> (sábado, médico, lâmpada, câmera)',
+     '🔤 Ordem das palavras: MoNossílaba → DIssílaba → TRIssílaba → POLIssílaba'
+   ]},
+  {key:'ciencias', label:'🗺️ Biomas', color:'#378ADD', light:'#E6F1FB', dark:'#0C447C', lang:'pt',
+   summary:'O Brasil tem vários biomas. Amazônia: maior floresta tropical, onça-pintada, ameaça=desmatamento. Cerrado: savana brasileira, lobo-guará, ameaça=agropecuária. Mata Atlântica: litoral, só 12% restam, mico-leão-dourado, ameaça=urbanização. Caatinga: 100% brasileira, asa-branca, ameaça=desertificação. Cada bioma tem plantas e animais únicos adaptados ao seu clima.',
+   tips:[
+     '🏜️ <b>Caatinga = 100% BR</b>. Nenhum outro país tem!',
+     '😱 <b>Mata Atlântica: só 12% restam</b> = o mais devastado',
+     '🐺 Lobo-guará tem perna comprida para ver por cima do mato (Cerrado)',
+     '🐆 Amazônia = a MAIOR: maior floresta, maior biodiversidade, mais chuva',
+     '🌵 Caatinga = seca, cactos, mandacaru. "Mata branca" porque as árvores perdem folhas'
+   ]},
+  {key:'matpt', label:'🔢 Matemática', color:'#BA7517', light:'#FAEEDA', dark:'#633806', lang:'pt',
+   summary:'Valor posicional: cada casa vale 10x mais que a da direita (unidade, dezena, centena, milhar). Tabuadas do 6, 7, 8 e 9 são as mais cobradas. Em situações-problema: leia 2x, identifique o que se pede, escolha a operação, confira se faz sentido. Gráficos: leia título e legenda primeiro, depois os eixos. Ordinais: 1º, 2º, 3º…',
+   tips:[
+     '🔢 Da direita pra esquerda: <b>U-D-C-M</b> (Unidade, Dezena, Centena, Milhar)',
+     '✖️ <b>Truque do 9 com os dedos</b>: 9×3 → dobre o 3º dedo → sobram 2 à esquerda e 7 à direita → 27',
+     '🧩 Problemas: <b>SUBLINHE</b> a pergunta e <b>CIRCULE</b> os números',
+     '📊 Todo gráfico tem: título, legenda, eixos → leia PRIMEIRO',
+     '🎯 Respondeu? Confira: "faz sentido?" Resposta muito alta ou baixa = errada'
+   ]},
+  {key:'mat', label:'🔢 Math EN', color:'#633806', light:'#FAEEDA', dark:'#633806', lang:'en',
+   summary:'Place value: each place = 10× the right (ones, tens, hundreds, thousands). Time: short hand=hours, long hand=minutes. Quarter past=:15, half past=:30, quarter to=:45. Quadrilaterals: square (4 equal sides + right angles), rectangle (opposite sides equal + right angles), rhombus (4 equal sides, NO right angles), trapezoid (1 pair of parallel sides).',
+   tips:[
+     '🔢 Right to left: <b>OTHT</b> → Ones, Tens, Hundreds, Thousands',
+     '🕐 Quarter = <b>15 minutes</b>. Half = <b>30 min</b>. Quarter to = <b>45 min</b>',
+     '🔷 Square = rectangle + rhombus (it has BOTH properties)',
+     '🧩 Word problems: 1) What do you <b>Know</b>? 2) What do you <b>Need</b>? 3) Choose <b>Operation</b>. 4) Does it make sense?',
+     '⏱️ Elapsed time: Start + Duration = End (like 2:30 + 45 min = 3:15)'
+   ]},
+  {key:'la', label:'📖 Language Arts', color:'#E24B4A', light:'#FCEBEB', dark:'#791F1F', lang:'en', priority:true,
+   summary:'Nouns = person, place, or thing. Adjectives describe nouns. 4 types of sentences: Declarative (.), Imperative (command), Interrogative (?), Exclamatory (!). Comparative: add -er (bigger, taller) or use "more" for long words. Irregular: good→better→best. Verbs: Present (walks, runs) vs Past (walked, ran). Past regular = add -ed. Past irregular = memorize (go→went, eat→ate, run→ran).',
+   tips:[
+     '📝 <b>D / Im / In / E</b>: Declarative (.), Imperative (command), Interrogative (?), Exclamatory (!)',
+     '🏆 Short word (1-2 syllables) = add <b>-er / -est</b> (big→bigger). Long word = use <b>more / most</b> (more beautiful)',
+     '⚡ 5 irregular verbs MUST know: <b>go→went, have→had, eat→ate, run→ran, fly→flew</b>',
+     '🔑 Past tense signals: <b>yesterday, last week, ago, last night</b>',
+     '❓ Question word? → starts with Wh (What, Where, When, Why, Who) or "Do/Does/Did"',
+     '👆 Command = gives an order, often starts with a verb: "Close the door." "Eat your food."'
+   ]},
+  {key:'geohist', label:'🏛️ Geo & História', color:'#7F77DD', light:'#EEEDFE', dark:'#3C3489', lang:'pt', priority:true,
+   summary:'O povo brasileiro é miscigenado — mistura de indígenas, africanos, europeus e asiáticos. Antes dos portugueses, havia 5-7 milhões de indígenas; hoje, 817 mil (0,4% da população). Heranças indígenas: rede, canoa, vassoura, chocalho, vasilhas de barro, palavras tupi (mandioca, caju, abacaxi). Lendas: Iara (rios), Vitória-régia (plantas), Caipora (mato). Mapas: político (fronteiras), físico (relevo), econômico, demográfico, histórico, anamorfose (distorcido). Grandes Navegações: Portugal foi pioneiro no séc XV porque tinha geografia, dinheiro e tecnologia.',
+   tips:[
+     '🪶 Heranças no dia a dia: <b>REDE · CANOA · VASSOURA · CHOCALHO · BARRO</b>',
+     '🗺️ Tipos de mapas: <b>FÍSICO</b>=relevo/rios · <b>POLÍTICO</b>=fronteiras · <b>ECONÔMICO</b>=$ · <b>DEMOGRÁFICO</b>=gente · <b>ANAMORFOSE</b>=distorcido',
+     '📉 <b>5-7 milhões → 817 mil</b> indígenas. Causas: DOENÇAS + GUERRAS/ESCRAVIDÃO + MUDANÇA DE HÁBITOS',
+     '⚓ <b>Grandes Navegações = séc XV-XVI</b>. Portugal foi o 1º por causa de geografia, dinheiro e tecnologia!',
+     '🧜‍♀️ 3 lendas indígenas: <b>Iara</b> (rios) · <b>Vitória-régia</b> (estrela das águas) · <b>Caipora</b> (habitante do mato)',
+     '📌 Elementos de todo mapa: <b>título · legenda · escala · rosa dos ventos</b>'
+   ]},
+  {key:'social', label:'🌎 Social Studies', color:'#5F5E5A', light:'#F1EFE8', dark:'#2C2C2A', lang:'en', priority:true,
+   summary:'Nomadic people move from place to place following food and seasons. They have no permanent homes and are hunters and gatherers. Mayas: lived in Mesoamerica (Mexico/Guatemala), built pyramids, used glyphs (picture writing), had an advanced calendar. Aztecs: built Tenochtitlán on an island in a lake, were fierce warriors, worshipped the sun god Huitzilopochtli, were conquered by Cortés in 1521. Incas: lived in the Andes Mountains/Peru, famous for Machu Picchu, had NO writing system (used quipu — knotted strings), were the largest pre-Columbus empire, farmed on terraces.',
+   tips:[
+     '🌽 3 civilizations = <b>M-A-I</b>: Mayas → Aztecs → Incas',
+     '✍️ Writing systems: <b>Mayas = GLYPHS</b> (pictures) · <b>Incas = QUIPU</b> (knotted strings) · Aztecs had glyphs too',
+     '🏔️ <b>Incas = "I" for "In the mountains"</b> (Andes, Peru, Machu Picchu)',
+     '🏝️ Aztecs built on an <b>ISLAND</b> = smart natural DEFENSE (enemies can\'t reach easily)',
+     '📅 <b>1521 = Cortés conquered the Aztecs</b>',
+     '🧭 Nomads: NO permanent home, hunter-gatherers, follow food & seasons',
+     '🌾 Incas farmed on <b>TERRACES</b> = flat "steps" cut into the steep mountains'
+   ]}
+];
+</script>
+
+<script>
+var SIMS=[
+  // ===== SCIENCE (mantida como no original - questões dinâmicas por tópico) =====
+  {key:'science', label:'🌿 Science', color:'#1D9E75', lang:'en',
+   subtopics:[
+     {label:'☀️ Photosynthesis', fixed:true, questions:[
+       {q:'What do plants need to make their own food through photosynthesis?',opts:['Meat, water and air','Sunlight, water and CO₂','Soil, rain and sugar','Oxygen, salt and rocks'],a:1,exp:'Plants use sunlight + water + CO₂ to make food!'},
+       {q:'What do plants PRODUCE during photosynthesis?',opts:['Meat and fat','Salt and sugar','Glucose (sugar) and oxygen','CO₂ and water'],a:2,exp:'Plants produce glucose (food) and oxygen (what we breathe)!'},
+       {q:'Because they make their own food, plants are called:',opts:['Consumers','Producers','Decomposers','Hunters'],a:1,exp:'Plants are PRODUCERS — they produce their own food!'},
+       {q:'Where does photosynthesis mainly happen in a plant?',opts:['Roots','Flowers','Leaves','Stem'],a:2,exp:'Leaves have chlorophyll, which captures sunlight for photosynthesis!'},
+       {q:'Why are plants so important for animals?',opts:['They are pretty','They give us food AND oxygen to breathe','They make rain','They clean the ground'],a:1,exp:'Plants give us both food (fruits, veggies) and oxygen!'}
+     ]},
+     {label:'🔗 Food Chain', fixed:true, questions:[
+       {q:'In a food chain, energy flows:',opts:['In both directions','One way only: from producer to consumers','From predator to plant','In circles'],a:1,exp:'Energy flows ONE way: plant → herbivore → carnivore'},
+       {q:'In the chain "grass → grasshopper → frog → hawk", the GRASS is:',opts:['A consumer','A producer','A predator','A decomposer'],a:1,exp:'Grass makes its own food = producer!'},
+       {q:'In the chain "grass → grasshopper → frog → hawk", the HAWK is:',opts:['Primary consumer','Producer','Top predator','Decomposer'],a:2,exp:'The hawk is at the top — nothing eats it = top predator!'},
+       {q:'Which organism has the MOST energy in a food chain?',opts:['The top predator','The producer (plant)','The decomposer','They all have the same'],a:1,exp:'Energy decreases at each level — producers have the most!'},
+       {q:'What would happen if all plants disappeared from a food chain?',opts:['Nothing would change','All herbivores would starve, then carnivores too','Only humans would suffer','Decomposers would die'],a:1,exp:'Without producers, the whole chain collapses!'}
+     ]},
+     {label:'🕸️ Food Web', fixed:true, questions:[
+       {q:'What is a food web?',opts:['A spider web','A single food chain','Many food chains connected','A list of foods'],a:2,exp:'A food web is multiple food chains linked together!'},
+       {q:'Why is a food web MORE REALISTIC than a single food chain?',opts:['Food webs are colorful','Animals usually eat many different things, not just one','Food webs have more animals','Food chains are fake'],a:1,exp:'In nature, most animals eat several different things!'},
+       {q:'If one species is removed from a food web, what happens?',opts:['Nothing changes','Only that species disappears','The whole web is affected','Plants grow faster'],a:2,exp:'Everything in the web is connected — removing one affects all!'},
+       {q:'An omnivore in a food web can be:',opts:['Only a primary consumer','Only a secondary consumer','Either primary or secondary consumer','Always a producer'],a:2,exp:'Omnivores eat both plants AND animals!'},
+       {q:'Which best describes a food web?',opts:['Plants only','Simple straight line','Complex network of interactions','A chain of just 3 animals'],a:2,exp:'A food web = complex network of who eats whom!'}
+     ]},
+     {label:'🏷️ Classification', fixed:true, questions:[
+       {q:'An animal that eats ONLY plants is a:',opts:['Carnivore','Omnivore','Herbivore','Decomposer'],a:2,exp:'Herbivore = plants only! (cow, rabbit, elephant)'},
+       {q:'An animal that eats ONLY meat is a:',opts:['Herbivore','Carnivore','Omnivore','Producer'],a:1,exp:'Carnivore = meat only! (lion, wolf, shark)'},
+       {q:'An animal that eats BOTH plants and meat is a:',opts:['Herbivore','Carnivore','Omnivore','Decomposer'],a:2,exp:'Omnivore = both! (bear, human, pig)'},
+       {q:'What do decomposers do?',opts:['Eat only plants','Hunt other animals','Break down dead matter and recycle nutrients','Make oxygen'],a:2,exp:'Decomposers (mushrooms, bacteria) recycle dead things back to the soil!'},
+       {q:'Which of these is NOT a decomposer?',opts:['Mushroom','Bacteria','Earthworm','Lion'],a:3,exp:'Lion is a carnivore, not a decomposer. Mushrooms, bacteria and earthworms all decompose!'}
+     ]},
+     {label:'🌿 All topics (mix)', fixed:true, questions:[
+       {q:'Plants use sunlight + water + CO₂ to make:',opts:['Meat','Glucose and oxygen','Salt and rocks','Only oxygen'],a:1,exp:'Photosynthesis produces glucose (food) and oxygen!'},
+       {q:'In "grass → insect → frog → hawk", which one is the producer?',opts:['Hawk','Frog','Insect','Grass'],a:3,exp:'The producer makes its own food — grass!'},
+       {q:'A food web is:',opts:['One chain','Many chains connected','Just plants','An animal'],a:1,exp:'Food web = multiple chains linked together!'},
+       {q:'A rabbit eats only grass. It is a:',opts:['Carnivore','Omnivore','Herbivore','Decomposer'],a:2,exp:'Grass only = herbivore!'},
+       {q:'A bear eats berries AND fish. It is a:',opts:['Herbivore','Omnivore','Carnivore','Producer'],a:1,exp:'Both plants and meat = omnivore!'},
+       {q:'Mushrooms and bacteria are:',opts:['Producers','Decomposers','Carnivores','Herbivores'],a:1,exp:'They break down dead matter = decomposers!'},
+       {q:'Plants are called producers because:',opts:['They are big','They make their own food','They grow slowly','They are green'],a:1,exp:'Producers produce their own food via photosynthesis!'},
+       {q:'Energy in a food chain:',opts:['Stays the same','Flows one way, decreasing at each level','Flows in circles','Increases at the top'],a:1,exp:'Energy flows ONE way and decreases up the chain!'},
+       {q:'If you remove grass from a field, what happens first?',opts:['Hawks fly away','Insects and rabbits have no food','Rain stops','Nothing'],a:1,exp:'Without producers, the first consumers starve!'},
+       {q:'Photosynthesis happens mainly in:',opts:['The flowers','The leaves','The roots','The bark'],a:1,exp:'Leaves have chlorophyll for photosynthesis!'}
+     ]}
+   ]},
+
+  // ===== CIÊNCIAS (mantida igual ao original - já era fixa) =====
   {key:'ciencias', label:'🗺️ Ciências', color:'#378ADD', lang:'pt',
-   allTopics:'Biomas brasileiros da apostila',
    subtopics:[
      {label:'🌍 Bioma x Ecossistema', fixed:true, questions:[
        {q:'O que é um bioma?',opts:['Uma área muito pequena, como um vaso de flores','Uma grande área com mesmo clima, relevo e vegetação','Um único animal que vive sozinho na floresta','O nome científico das plantas do Brasil'],a:1,exp:'Bioma = grande comunidade de plantas e animais com mesmo clima e localização!'},
@@ -975,538 +953,350 @@ var SIMS=[
        {q:'Qual ação humana é comum como ameaça a TODOS os biomas brasileiros?',opts:['Excesso de chuvas','Desmatamento e tráfico de animais','Temperaturas muito baixas','Presença de turistas nas florestas'],a:1,exp:'Desmatamento e tráfico de animais ameaçam TODOS os biomas brasileiros!'}
      ]}
    ]},
+
+  // ===== PORTUGUÊS (mantido do original - dinâmico, mas sem chat) =====
   {key:'portugues', label:'✏️ Português', color:'#D4537E', lang:'pt',
-   allTopics:'Relato pessoal, Sílabas, Pronomes, Interpretação de texto',
    subtopics:[
-     {label:'📚 Interpretação de texto', topics:'INTERPRETACAO', type:'reading'},
-     {label:'📖 Relato pessoal', topics:'Relato pessoal apenas: narração em 1ª pessoa (eu, nós), sequência cronológica dos fatos, experiência real vivida pelo autor, marcadores de tempo (ontem, depois, então, primeiro, finalmente), características do gênero'},
-     {label:'🔤 Sílabas', topics:'Sílabas apenas: separação silábica (ca-der-no, bor-bo-le-ta), sílaba tônica (sílaba mais forte da palavra), classificação: oxítona=tônica na última (café, parabéns), paroxítona=tônica na penúltima (caderno, livro), proparoxítona=tônica na antepenúltima (médico, sábado), classificação por número de sílabas: monossílaba/dissílaba/trissílaba/polissílaba'},
-     {label:'🙋 Pronomes', topics:'Pronomes apenas: pronomes pessoais do caso reto (eu, tu, ele, ela, nós, vós, eles, elas), pronomes possessivos (meu, teu, seu, nosso, vosso, seus), pronomes demonstrativos (este/esta/isto=perto de quem fala, esse/essa/isso=perto de quem ouve, aquele/aquela/aquilo=longe de ambos), como identificar e usar cada tipo'},
-     {label:'✏️ Todos os tópicos', topics:'Relato pessoal (1ª pessoa, sequência cronológica, experiência real, marcadores: ontem/depois/então), Sílabas (separação silábica, sílaba tônica, oxítona=última, paroxítona=penúltima, proparoxítona=antepenúltima), Pronomes (pessoais: eu/tu/ele/ela/nós, possessivos: meu/teu/seu/nosso, demonstrativos: este=perto/esse=médio/aquele=longe)'}
+     {label:'📖 Relato pessoal', fixed:true, questions:[
+       {q:'Um relato pessoal é sempre narrado em:',opts:['3ª pessoa (ele, ela)','1ª pessoa (eu, nós)','2ª pessoa (tu, você)','Qualquer pessoa'],a:1,exp:'Relato pessoal = o autor conta o que VIVEU, então usa EU/NÓS!'},
+       {q:'Qual destas frases é típica de um relato pessoal?',opts:['Era uma vez uma princesa...','Ontem fui ao parque com minha mãe.','Os cientistas descobriram que...','Leia o texto e responda.'],a:1,exp:'Relato = 1ª pessoa + fato vivido no passado!'},
+       {q:'Qual palavra NÃO é um marcador de tempo típico de relato?',opts:['Primeiro','Depois','Cachorro','Finalmente'],a:2,exp:'"Cachorro" é um substantivo, não marca tempo!'},
+       {q:'O relato pessoal conta:',opts:['Uma história inventada','Algo que o autor realmente viveu','Um fato científico','Uma receita'],a:1,exp:'Relato = experiência REAL vivida pelo autor!'},
+       {q:'Em "Ontem eu fui à praia e nadei muito", quais palavras marcam o tempo?',opts:['praia e eu','fui e nadei','ontem e muito','ontem e fui'],a:3,exp:'"Ontem" = quando aconteceu · "fui" = verbo no passado!'}
+     ]},
+     {label:'🔤 Sílabas', fixed:true, questions:[
+       {q:'Separe em sílabas: CADERNO',opts:['ca-der-no','cad-er-no','ca-dern-o','cader-no'],a:0,exp:'CA-DER-NO = 3 sílabas!'},
+       {q:'Qual é a sílaba tônica de "CAFÉ"?',opts:['ca','fé','as duas','nenhuma'],a:1,exp:'ca-FÉ! A tônica é a que você bate mais forte — é FÉ.'},
+       {q:'"SÁBADO" é uma palavra:',opts:['Oxítona','Paroxítona','Proparoxítona','Monossílaba'],a:2,exp:'SÁ-ba-do — tônica na antepenúltima = PROPAROXÍTONA!'},
+       {q:'"CAVALO" é uma palavra:',opts:['Oxítona','Paroxítona','Proparoxítona','Não tem classificação'],a:1,exp:'ca-VA-lo — tônica na penúltima = PAROXÍTONA!'},
+       {q:'Qual destas palavras é OXÍTONA?',opts:['Livro','Janela','Café','Médico'],a:2,exp:'ca-FÉ tem tônica na ÚLTIMA sílaba = oxítona!'}
+     ]},
+     {label:'🙋 Pronomes', fixed:true, questions:[
+       {q:'Qual é um pronome PESSOAL?',opts:['Meu','Este','Eu','Aquela'],a:2,exp:'EU é pessoal (nomeia a pessoa que fala)!'},
+       {q:'Qual é um pronome POSSESSIVO?',opts:['Ele','Aquele','Meu','Tu'],a:2,exp:'MEU indica posse — é possessivo!'},
+       {q:'Qual é um pronome DEMONSTRATIVO?',opts:['Nós','Seu','Este','Ela'],a:2,exp:'ESTE indica posição (perto de quem fala) — é demonstrativo!'},
+       {q:'Complete: "____ livro aqui na minha mão é meu."',opts:['Aquele','Esse','Este','Ele'],a:2,exp:'ESTE = perto de quem fala (na minha mão)!'},
+       {q:'Complete: "____ livro lá longe no fim da sala é do João."',opts:['Este','Esse','Aquele','Meu'],a:2,exp:'AQUELE = longe de todos!'}
+     ]},
+     {label:'✏️ Tudo (mix)', fixed:true, questions:[
+       {q:'Relato pessoal é narrado em:',opts:['3ª pessoa','1ª pessoa','Não tem regra','Sem pessoa'],a:1,exp:'Relato = EU/NÓS, 1ª pessoa!'},
+       {q:'"LÁPIS" é uma palavra:',opts:['Oxítona','Paroxítona','Proparoxítona','Sem tônica'],a:1,exp:'LÁ-pis — tônica na penúltima!'},
+       {q:'Qual é um pronome demonstrativo?',opts:['Meu','Tu','Esse','Eu'],a:2,exp:'ESSE indica posição — é demonstrativo!'},
+       {q:'Separe: ESCOLA',opts:['es-co-la','esc-ola','e-sco-la','escol-a'],a:0,exp:'ES-CO-LA = 3 sílabas!'},
+       {q:'"Eu fui ao parque ontem" é um exemplo de:',opts:['Receita','Poema','Relato pessoal','Notícia'],a:2,exp:'1ª pessoa + passado + experiência pessoal = relato!'},
+       {q:'Qual NÃO é pronome pessoal?',opts:['Eu','Tu','Meu','Ele'],a:2,exp:'MEU é possessivo, não pessoal!'},
+       {q:'Palavra MONOSSÍLABA é:',opts:['Livro','Pé','Casa','Amor'],a:1,exp:'PÉ tem só 1 sílaba = monossílaba!'},
+       {q:'Proparoxítona SEMPRE:',opts:['Tem acento','Não tem acento','Tem til','Tem hífen'],a:0,exp:'TODA proparoxítona tem acento: sábado, médico, lâmpada!'},
+       {q:'Em "minha casa é grande", "minha" é:',opts:['Pronome pessoal','Pronome possessivo','Pronome demonstrativo','Verbo'],a:1,exp:'MINHA indica posse = possessivo!'},
+       {q:'"TELEFONE" é:',opts:['Oxítona','Paroxítona','Proparoxítona','Monossílaba'],a:1,exp:'te-le-FO-ne — tônica na penúltima!'}
+     ]}
    ]},
+
+  // ===== MATEMÁTICA PT (mantido como fixo) =====
   {key:'matpt', label:'🔢 Matemática', color:'#BA7517', lang:'pt',
-   allTopics:'Valor posicional, Multiplicação e divisão, Situações-problema, Gráficos e tabelas',
    subtopics:[
-     {label:'🔢 Valor posicional', topics:'Valor posicional apenas: milhar/centena/dezena/unidade, forma decomposta de números (3.456 = 3.000+400+50+6), identificar o valor de cada algarismo numa posição, números ordinais (1º, 2º, 3º, 4º, 5º)'},
-     {label:'✖️ Multiplicação e divisão', topics:'Multiplicação e divisão apenas: tabuadas do 6, 7, 8 e 9, algoritmo da multiplicação por unidade, algoritmo da divisão por unidade, relação entre multiplicação e divisão, verificação de resultados'},
-     {label:'🧩 Situações-problema', topics:'Situações-problema apenas: problemas com as 4 operações (adição, subtração, multiplicação, divisão), identificar a operação correta, resolver com 1 ou 2 etapas, verificar se a resposta faz sentido'},
-     {label:'📊 Gráficos e tabelas', topics:'Gráficos e tabelas apenas: leitura e interpretação de gráfico de barras, gráfico de pizza, tabela simples e de dupla entrada, identificar maior/menor valor, calcular totais, comparar dados, ler título e legenda'},
-     {label:'🔢 Todos os tópicos', topics:'Valor posicional (milhar/centena/dezena/unidade, forma decomposta), Multiplicação e divisão por unidade (tabuadas do 6 ao 9), Situações-problema com 4 operações, Gráficos e tabelas (leitura, interpretação, comparação de dados), Números ordinais (1º/2º/3º)'}
+     {label:'🔢 Valor posicional', fixed:true, questions:[
+       {q:'No número 3.456, o 4 vale:',opts:['4 unidades','4 dezenas','4 centenas','4 milhares'],a:2,exp:'3.456 = 3 milhares + 4 CENTENAS + 5 dezenas + 6 unidades!'},
+       {q:'Qual número tem 2 na casa das DEZENAS?',opts:['2.000','200','23','2'],a:2,exp:'Em 23, o 2 está nas dezenas (vale 20)!'},
+       {q:'Decomponha 1.234:',opts:['1+2+3+4','1000+200+30+4','100+20+3+4','10000+2000+300+40'],a:1,exp:'1.234 = 1000 + 200 + 30 + 4!'},
+       {q:'Qual é o 5º mês do ano?',opts:['Abril','Maio','Junho','Julho'],a:1,exp:'1º=Jan, 2º=Fev, 3º=Mar, 4º=Abr, 5º=MAIO!'},
+       {q:'Em 7.892, o 8 vale:',opts:['8 unidades','8 dezenas','8 centenas','8 milhares'],a:2,exp:'7.892 — 8 está nas centenas = vale 800!'}
+     ]},
+     {label:'✖️ Multiplicação e divisão', fixed:true, questions:[
+       {q:'6 × 8 = ?',opts:['42','48','54','56'],a:1,exp:'6 × 8 = 48!'},
+       {q:'7 × 9 = ?',opts:['56','63','72','49'],a:1,exp:'7 × 9 = 63!'},
+       {q:'54 ÷ 6 = ?',opts:['7','8','9','6'],a:2,exp:'54 ÷ 6 = 9 (porque 6 × 9 = 54)!'},
+       {q:'Se 8 × ? = 72, qual o valor de ?',opts:['7','8','9','10'],a:2,exp:'8 × 9 = 72!'},
+       {q:'Qual é o dobro de 45?',opts:['80','85','90','95'],a:2,exp:'Dobro = × 2. 45 × 2 = 90!'}
+     ]},
+     {label:'🧩 Situações-problema', fixed:true, questions:[
+       {q:'Ana tem R$100 e compra 3 livros de R$28 cada. Quanto sobra?',opts:['R$ 16','R$ 72','R$ 28','R$ 84'],a:0,exp:'3 × 28 = 84. 100 − 84 = R$ 16!'},
+       {q:'Uma caixa tem 6 lápis. Quantos lápis há em 8 caixas?',opts:['14','42','48','56'],a:2,exp:'8 × 6 = 48 lápis!'},
+       {q:'Em uma sala há 32 alunos divididos em 4 grupos iguais. Quantos em cada grupo?',opts:['6','7','8','9'],a:2,exp:'32 ÷ 4 = 8 alunos por grupo!'},
+       {q:'João tinha 150 figurinhas e deu 48 ao irmão. Com quantas ficou?',opts:['98','102','108','198'],a:1,exp:'150 − 48 = 102 figurinhas!'},
+       {q:'Uma padaria fez 245 pães de manhã e 178 à tarde. Total?',opts:['323','413','423','523'],a:2,exp:'245 + 178 = 423 pães!'}
+     ]},
+     {label:'📊 Gráficos e tabelas', fixed:true, questions:[
+       {q:'Antes de ler um gráfico, a PRIMEIRA coisa a fazer é:',opts:['Olhar a maior barra','Ler o título e a legenda','Chutar a resposta','Contar as cores'],a:1,exp:'Título + legenda = dão o contexto pra entender tudo!'},
+       {q:'Num gráfico de barras, barras MAIORES indicam:',opts:['Quantidades menores','Quantidades maiores','Nada','Erro no gráfico'],a:1,exp:'Barras maiores = valores maiores!'},
+       {q:'Uma tabela de dupla entrada tem:',opts:['Só uma coluna','Linhas E colunas cruzadas','Só linhas','Só números'],a:1,exp:'Dupla entrada = cruza informação de linhas com colunas!'},
+       {q:'Se um gráfico mostra 30, 45, 20 e 60, qual o MAIOR valor?',opts:['30','45','20','60'],a:3,exp:'60 é o maior!'},
+       {q:'No eixo horizontal (X) de um gráfico de barras, geralmente vemos:',opts:['Os valores numéricos','As categorias (meses, nomes, etc.)','As cores','A legenda'],a:1,exp:'Eixo X = categorias. Eixo Y = valores/quantidades!'}
+     ]},
+     {label:'🔢 Tudo (mix)', fixed:true, questions:[
+       {q:'Em 2.345, o 3 vale:',opts:['3','30','300','3000'],a:2,exp:'O 3 está nas CENTENAS = 300!'},
+       {q:'9 × 7 = ?',opts:['56','63','72','81'],a:1,exp:'9 × 7 = 63!'},
+       {q:'64 ÷ 8 = ?',opts:['6','7','8','9'],a:2,exp:'64 ÷ 8 = 8!'},
+       {q:'Pedro tem R$ 50 e gasta R$ 18. Quanto sobra?',opts:['R$ 22','R$ 28','R$ 32','R$ 38'],a:2,exp:'50 − 18 = R$ 32!'},
+       {q:'Decomposição de 5.678:',opts:['5+6+7+8','500+60+7+8','5000+600+70+8','50+60+70+80'],a:2,exp:'5.678 = 5000 + 600 + 70 + 8!'},
+       {q:'Qual é o triplo de 15?',opts:['30','40','45','60'],a:2,exp:'Triplo = ×3. 15 × 3 = 45!'},
+       {q:'9 × 9 = ?',opts:['72','81','90','99'],a:1,exp:'9 × 9 = 81!'},
+       {q:'8 × 6 = ?',opts:['42','48','52','56'],a:1,exp:'8 × 6 = 48!'},
+       {q:'Qual o 3º dia da semana começando no domingo?',opts:['Segunda','Terça','Quarta','Quinta'],a:1,exp:'Dom=1º, Seg=2º, TER=3º!'},
+       {q:'Num gráfico, o que você lê PRIMEIRO?',opts:['As barras','O título e legenda','As cores','O último número'],a:1,exp:'Sempre comece pelo título e legenda!'}
+     ]}
    ]},
+
+  // ===== MATH EN (mantido como fixo) =====
   {key:'mat', label:'🔢 Math EN', color:'#633806', lang:'en',
-   allTopics:'Place value, Telling time, Quadrilaterals, Word problems',
    subtopics:[
-     {label:'🔢 Place value', topics:'Place value only: thousands/hundreds/tens/ones positions, expanded form (3,456=3000+400+50+6), identifying the value of each digit, ordinal numbers (1st, 2nd, 3rd)'},
-     {label:'🕐 Telling time', topics:'Telling time only: reading analog clocks (hour hand=short, minute hand=long), digital time format, quarter past=:15, half past=:30, quarter to=:45, elapsed time (start time + duration = end time)'},
-     {label:'🔷 Quadrilaterals', topics:'Quadrilaterals only: square (4 equal sides, 4 right angles), rectangle (opposite sides equal, 4 right angles), rhombus (4 equal sides, no right angles), trapezoid (only one pair of parallel sides), identifying each shape by its properties'},
-     {label:'🧩 Word problems', topics:'Word problems only: multi-step addition and subtraction problems, identifying what you know and what you need to find, choosing the right operation, checking if the answer makes sense'},
-     {label:'🔢 All topics', topics:'Place value (thousands/hundreds/tens/ones, expanded form), Telling time (analog clock, quarter past=:15, half past=:30, quarter to=:45), Elapsed time (start+duration=end), Quadrilaterals (square=4equal+right angles, rectangle=opposite equal+right, rhombus=4equal no right, trapezoid=1 pair parallel), Word problems (read twice, identify what you know/need, choose operation)'}
+     {label:'🔢 Place value', fixed:true, questions:[
+       {q:'What is the value of the digit 5 in 3,572?',opts:['5 ones','5 tens','5 hundreds','5 thousands'],a:2,exp:'3,572 → the 5 is in hundreds = 500!'},
+       {q:'Which number has 4 in the THOUSANDS place?',opts:['4,567','567','45','4'],a:0,exp:'In 4,567 the 4 is in thousands (worth 4,000)!'},
+       {q:'Expanded form of 2,345?',opts:['2+3+4+5','200+30+4+5','2000+300+40+5','20+30+40+50'],a:2,exp:'2,345 = 2000 + 300 + 40 + 5!'},
+       {q:'What is the 3rd month of the year?',opts:['January','February','March','April'],a:2,exp:'1st=Jan, 2nd=Feb, 3rd=MARCH!'},
+       {q:'In 8,904, what is the value of the 9?',opts:['9 ones','9 tens','9 hundreds','9 thousands'],a:2,exp:'In 8,904 the 9 is in hundreds = 900!'}
+     ]},
+     {label:'🕐 Telling time', fixed:true, questions:[
+       {q:'What does "quarter past 7" mean?',opts:['7:05','7:15','7:25','7:45'],a:1,exp:'Quarter past = :15, so 7:15!'},
+       {q:'What does "half past 3" mean?',opts:['3:15','3:25','3:30','3:45'],a:2,exp:'Half past = :30, so 3:30!'},
+       {q:'What does "quarter to 9" mean?',opts:['9:45','8:15','9:15','8:45'],a:3,exp:'Quarter TO 9 = 15 min BEFORE 9 = 8:45!'},
+       {q:'If school starts at 8:00 and ends at 3:30, how long is that?',opts:['6h 30min','7h','7h 30min','8h'],a:2,exp:'8 to 3 = 7 hours, plus 30 min = 7h 30min!'},
+       {q:'The SHORT hand of a clock shows:',opts:['Minutes','Seconds','Hours','Days'],a:2,exp:'Short hand = hours. Long hand = minutes!'}
+     ]},
+     {label:'🔷 Quadrilaterals', fixed:true, questions:[
+       {q:'Which shape has 4 equal sides AND 4 right angles?',opts:['Square','Rectangle','Rhombus','Trapezoid'],a:0,exp:'Square = 4 equal sides + 4 right angles!'},
+       {q:'Which shape has 4 equal sides but NO right angles?',opts:['Square','Rectangle','Rhombus','Trapezoid'],a:2,exp:'Rhombus = 4 equal sides, NO right angles!'},
+       {q:'A rectangle has:',opts:['All 4 sides equal','Opposite sides equal + right angles','No parallel sides','Only 3 sides'],a:1,exp:'Rectangle: opposite sides equal + 4 right angles!'},
+       {q:'How many sides does a quadrilateral have?',opts:['3','4','5','6'],a:1,exp:'Quad = 4! Lateral = sides. So 4 sides!'},
+       {q:'A trapezoid has:',opts:['No parallel sides','One pair of parallel sides','All sides equal','Only curved sides'],a:1,exp:'Trapezoid = 1 pair of parallel sides!'}
+     ]},
+     {label:'🧩 Word problems', fixed:true, questions:[
+       {q:'Tom had 325 stickers and gave 48 away. How many left?',opts:['267','277','287','373'],a:1,exp:'325 − 48 = 277 stickers!'},
+       {q:'A box has 9 pencils. How many pencils in 7 boxes?',opts:['56','63','72','81'],a:1,exp:'7 × 9 = 63 pencils!'},
+       {q:'Anna has $80 and buys 4 books at $15 each. How much left?',opts:['$20','$25','$30','$60'],a:0,exp:'4 × 15 = 60. 80 − 60 = $20!'},
+       {q:'In a class of 28 students divided into 4 equal groups, how many per group?',opts:['5','6','7','8'],a:2,exp:'28 ÷ 4 = 7 per group!'},
+       {q:'A school has 156 girls and 189 boys. Total students?',opts:['245','335','345','355'],a:2,exp:'156 + 189 = 345 students!'}
+     ]},
+     {label:'🔢 All topics (mix)', fixed:true, questions:[
+       {q:'In 4,236, what is the value of the 2?',opts:['2','20','200','2000'],a:2,exp:'The 2 is in hundreds = 200!'},
+       {q:'What time is "half past 6"?',opts:['6:15','6:30','6:45','7:00'],a:1,exp:'Half past = :30, so 6:30!'},
+       {q:'A square has:',opts:['3 sides','4 equal sides','4 different sides','5 sides'],a:1,exp:'Square = 4 equal sides + right angles!'},
+       {q:'Sara has 45 candies and gets 27 more. Total?',opts:['62','72','82','18'],a:1,exp:'45 + 27 = 72 candies!'},
+       {q:'7 × 8 = ?',opts:['49','54','56','63'],a:2,exp:'7 × 8 = 56!'},
+       {q:'72 ÷ 9 = ?',opts:['6','7','8','9'],a:2,exp:'72 ÷ 9 = 8!'},
+       {q:'What is 1,000 more than 2,345?',opts:['2,445','3,345','2,355','12,345'],a:1,exp:'Add 1,000 to the thousands: 2,345 + 1,000 = 3,345!'},
+       {q:'A rhombus is like a square but:',opts:['Has 3 sides','Has no right angles','Is a circle','Has curved sides'],a:1,exp:'Rhombus has 4 equal sides but NO right angles!'},
+       {q:'If a movie starts at 2:15 and is 1h 30min long, when does it end?',opts:['3:30','3:45','4:15','4:45'],a:1,exp:'2:15 + 1h = 3:15. +30min = 3:45!'},
+       {q:'Mia has 6 boxes with 7 markers each. Total markers?',opts:['13','42','48','54'],a:1,exp:'6 × 7 = 42 markers!'}
+     ]}
    ]},
+
+  // ===== LANGUAGE ARTS (NOVO — 3 níveis + completo) =====
   {key:'la', label:'📖 Language Arts', color:'#E24B4A', lang:'en',
-   allTopics:'Adjectives, Verb tenses, Types of sentences',
    subtopics:[
-     {label:'🏆 Adjectives', topics:'Adjectives that compare only: comparative form (add -er: bigger, taller, faster, older), superlative form (add -est: biggest, tallest, fastest, oldest), irregular adjectives (good→better→best, bad→worse→worst, many→more→most), when to use -er vs more'},
-     {label:'⏱️ Verb tenses', topics:'Verb tenses only: present simple (I walk, she walks, he runs), past simple regular verbs (add -ed: walked, jumped, played, watched), past simple irregular verbs (go→went, run→ran, eat→ate, see→saw, have→had), identifying time signal words (yesterday, last week, every day)'},
-     {label:'❓ Sentence types', topics:'Types of sentences only: statement (ends with period, gives information: I like cats.), question (ends with ?, asks something: Do you like cats?), exclamation (ends with !, expresses strong feeling: What a cute cat!), command (gives an order, often starts with verb: Feed the cat.), identifying each type'},
-     {label:'📖 All topics', topics:'Adjectives that compare (comparative: add -er like bigger/taller, superlative: add -est like biggest/tallest, irregular: good→better→best, bad→worse→worst), Verb tenses (present simple: I walk/she walks, past regular: add -ed like walked, past irregular: go→went/run→ran/eat→ate), Types of sentences (statement ends with period, question ends with ?, exclamation ends with !, command gives an order)'}
+     {label:'🟢 Easy', fixed:true, questions:[
+       {q:'Which word in this sentence is a NOUN? "My dog has a plaid collar."',opts:['dog','has','plaid','my'],a:0,exp:'A noun = person, place, or thing. "Dog" is a thing/animal!'},
+       {q:'Which word in this sentence is an ADJECTIVE? "The large fan blew a cool breeze."',opts:['fan','breeze','large','blew'],a:2,exp:'Adjective describes a noun. "Large" describes "fan"!'},
+       {q:'What type of sentence is this? "Put the presents beside the tree."',opts:['Declarative (D)','Imperative (Im)','Interrogative (In)','Exclamatory (E)'],a:1,exp:'It gives a command → Imperative!'},
+       {q:'What type of sentence is this? "Are the presents beside the tree?"',opts:['Declarative (D)','Imperative (Im)','Interrogative (In)','Exclamatory (E)'],a:2,exp:'It ends with "?" and asks a question → Interrogative!'},
+       {q:'"Today, we _____ history." Which verb is correct? (study)',opts:['studied','study','studying','studies'],a:1,exp:'"We" + present simple = "study" (no -s for we/you/they)!'}
+     ]},
+     {label:'🟡 Medium', fixed:true, questions:[
+       {q:'My sister rarely talks. She is _____ than my brother. (quiet)',opts:['quieter','more quiet','quietest','quiet'],a:0,exp:'Short adjective → add -er for comparative: quieter!'},
+       {q:'What tense is this sentence in? "The Incas farmed on the side of steep mountains."',opts:['Present simple','Past simple','Future','Present continuous'],a:1,exp:'"Farmed" with -ed = past simple!'},
+       {q:'In "The scary witch flew over the moon", which are the NOUNS?',opts:['scary, flew','witch, moon','over, moon','scary, over'],a:1,exp:'Nouns = things. Witch and moon are nouns!'},
+       {q:'"Yesterday, the witch ___ across the dark sky." (fly)',opts:['flies','flew','flyed','is flying'],a:1,exp:'"Fly" is irregular: past = FLEW!'},
+       {q:'What type of sentence is this? "What a beautiful day!"',opts:['Declarative (D)','Imperative (Im)','Interrogative (In)','Exclamatory (E)'],a:3,exp:'Starts with "What" + ends with "!" = Exclamatory!'}
+     ]},
+     {label:'🔴 Hard (Reading)', fixed:true, context:'📖 Reading: "The Three Empires"\n\nLong ago, three amazing civilizations lived in Central and South America: the Mayas, the Aztecs, and the Incas. The Mayas were famous for building tall stone pyramids and studying the stars. They lived in the rainforest and created their own clever writing system using pictures. The Aztecs built a magnificent city called Tenochtitlán in the middle of a lake. They were fierce warriors and grew their food on "floating gardens" made of mud and plants. High up in the Andes Mountains lived the Incas. They were master builders who made long roads and bridges to connect their empire. Because they lived on steep mountains, they cut flat "steps" called terraces into the hills to grow their crops.',
+      questions:[
+       {q:'Which civilization lived HIGH UP in the Andes Mountains?',opts:['Mayas','Aztecs','Incas','All three'],a:2,exp:'The text says "High up in the Andes Mountains lived the Incas."'},
+       {q:'What did the Mayas use to write instead of letters?',opts:['Numbers','Pictures (glyphs)','Animal symbols only','Musical notes'],a:1,exp:'The text says they created "their own clever writing system using pictures."'},
+       {q:'Where did the Aztecs build Tenochtitlán?',opts:['On top of a mountain','In a dense rainforest','In the middle of a lake','In a desert'],a:2,exp:'"The Aztecs built a magnificent city called Tenochtitlán in the middle of a lake."'},
+       {q:'What did the Inca "terraces" look like?',opts:['Round fields','Flat steps cut into hills','Underground tunnels','Floating gardens'],a:1,exp:'"They cut flat steps called terraces into the hills."'},
+       {q:'Which of the three civilizations built tall STONE pyramids?',opts:['Incas','Aztecs','Mayas','None of them'],a:2,exp:'"The Mayas were famous for building tall stone pyramids"!'}
+     ]},
+     {label:'📝 Full exam (15 Qs)', fixed:true, questions:[
+       {q:'Which word is a NOUN? "My dog has a plaid collar."',opts:['dog','has','plaid','my'],a:0,exp:'Dog is a thing/animal = noun!'},
+       {q:'Which word is an ADJECTIVE? "The large fan blew a cool breeze."',opts:['fan','breeze','large','blew'],a:2,exp:'"Large" describes the fan = adjective!'},
+       {q:'"Put the presents beside the tree." = What type?',opts:['Declarative','Imperative','Interrogative','Exclamatory'],a:1,exp:'It gives a command → Imperative!'},
+       {q:'"Are the presents beside the tree?" = What type?',opts:['Declarative','Imperative','Interrogative','Exclamatory'],a:2,exp:'It asks a question → Interrogative!'},
+       {q:'"Today, we _____ history." (study)',opts:['studied','study','studying','studies'],a:1,exp:'We + present = study!'},
+       {q:'"She is _____ than my brother." (quiet)',opts:['quieter','more quiet','quietest','quiet'],a:0,exp:'Short adjective → add -er = quieter!'},
+       {q:'"The Incas farmed on steep mountains." What tense?',opts:['Present','Past','Future','None'],a:1,exp:'"Farmed" with -ed = past simple!'},
+       {q:'In "The scary witch flew over the moon", NOUNS are:',opts:['scary, flew','witch, moon','over, moon','scary, over'],a:1,exp:'Witch and moon are things = nouns!'},
+       {q:'"Yesterday, the witch ___ across the sky." (fly)',opts:['flies','flew','flyed','is flying'],a:1,exp:'Fly is irregular → past = FLEW!'},
+       {q:'"What a beautiful day!" = What type?',opts:['Declarative','Imperative','Interrogative','Exclamatory'],a:3,exp:'What...! = Exclamatory!'},
+       {q:'Mayas wrote using:',opts:['Letters','Pictures (glyphs)','Numbers','Nothing'],a:1,exp:'The Mayas used glyphs = pictures!'},
+       {q:'The Aztec city of Tenochtitlán was built:',opts:['On a mountain','In a lake','In a desert','In the sea'],a:1,exp:'On an island in the middle of a lake!'},
+       {q:'The Incas lived in the:',opts:['Amazon','Andes Mountains','Pacific Ocean','Atlantic coast'],a:1,exp:'High up in the Andes Mountains!'},
+       {q:'"I ___ to school yesterday." (go)',opts:['go','goes','went','going'],a:2,exp:'Yesterday → past. Go is irregular → WENT!'},
+       {q:'"Close the door." = What type?',opts:['Declarative','Imperative','Interrogative','Exclamatory'],a:1,exp:'Gives a command → Imperative!'}
+     ]}
    ]},
+
+  // ===== GEO & HISTÓRIA (NOVO — 3 níveis + completo) =====
   {key:'geohist', label:'🏛️ Geo & Hist', color:'#7F77DD', lang:'pt',
-   allTopics:'Tipos de mapas, Influências indígenas',
    subtopics:[
-     {label:'🗺️ Tipos de mapas', topics:'Tipos de mapas apenas: mapa político (mostra países, estados, municípios e fronteiras), mapa físico (mostra relevo, rios, montanhas, planícies), mapa temático (mostra um tema específico: clima, população, vegetação), elementos obrigatórios de qualquer mapa (título, legenda, escala, rosa dos ventos)'},
-     {label:'🪶 Influências indígenas', topics:'Influências indígenas apenas: influências na língua portuguesa (mais de 1000 palavras de origem tupi como abacaxi, tatu, capivara, pipoca), influências na alimentação (mandioca, milho, caju, guaraná, amendoim), técnicas agrícolas e de pesca, topônimos de origem indígena (Paraná, Ipiranga, Tijuca, Itaquera, Pinheiros)'},
-     {label:'🏛️ Todos os tópicos', topics:'Tipos de mapas (político=países/fronteiras, físico=relevo/rios, temático=clima/população, elementos obrigatórios: título/legenda/escala/rosa dos ventos), Influências indígenas (língua: +1000 palavras do tupi, alimentos: mandioca/milho/caju/guaraná, técnicas agrícolas, topônimos: Paraná/Ipiranga/Tijuca)'}
+     {label:'🟢 Fácil', fixed:true, questions:[
+       {q:'O que significa MISCIGENAÇÃO?',opts:['Mistura de pessoas de diferentes etnias (origens e raças)','Apenas a cultura indígena','Apenas os europeus','Somente os africanos'],a:0,exp:'Miscigenação = mistura de etnias (indígenas, africanos, europeus, asiáticos)!'},
+       {q:'A rede de dormir é uma herança de qual povo?',opts:['Europeus','Africanos','Indígenas','Asiáticos'],a:2,exp:'A rede é uma das principais heranças indígenas no Brasil!'},
+       {q:'Qual tipo de mapa mostra países e fronteiras?',opts:['Físico','Político','Econômico','Histórico'],a:1,exp:'Mapa POLÍTICO = países, estados, fronteiras!'},
+       {q:'Qual instrumento musical é herança indígena?',opts:['Piano','Chocalho','Violino','Guitarra'],a:1,exp:'Chocalho, flauta e reco-reco são heranças indígenas na música!'},
+       {q:'Na lenda, a Iara é protetora de quê?',opts:['Matas','Rios','Campos','Montanhas'],a:1,exp:'Iara = protetora dos rios!'}
+     ]},
+     {label:'🟡 Médio', fixed:true, questions:[
+       {q:'Qual foi UMA das causas da diminuição drástica da população indígena após a chegada dos portugueses?',opts:['Excesso de alimentos','Doenças trazidas pelos europeus','Mudanças climáticas','Excesso de chuvas'],a:1,exp:'Os europeus trouxeram gripe e doenças que os indígenas não conheciam — muitos morreram!'},
+       {q:'Qual tipo de mapa mostra relevo, rios e montanhas?',opts:['Político','Demográfico','Físico','Estilizado'],a:2,exp:'Mapa FÍSICO mostra o "corpo" da Terra: montanhas, rios, relevo!'},
+       {q:'Antes da chegada dos portugueses, quantos indígenas viviam no Brasil?',opts:['817 mil','Cerca de 100 mil','Entre 5 e 7 milhões','Cerca de 50 milhões'],a:2,exp:'Em 1500 havia entre 5 e 7 milhões de indígenas. Hoje, apenas 817 mil!'},
+       {q:'O que é a "rotação de culturas" usada pelos indígenas?',opts:['Girar a terra com máquina','Trocar o tipo de alimento plantado em cada época do ano','Plantar apenas milho','Colher apenas à noite'],a:1,exp:'Rotação = trocar o alimento plantado para manter o solo rico em nutrientes!'},
+       {q:'Qual lenda indígena fala de uma moça que virou uma planta aquática?',opts:['Caipora','Iara','Vitória-régia','Saci'],a:2,exp:'Vitória-régia = "estrela das águas". Jaci (a Lua) transformou a moça afogada na flor!'}
+     ]},
+     {label:'🔴 Difícil', fixed:true, questions:[
+       {q:'Por que Portugal foi PIONEIRO nas Grandes Navegações no século XV?',opts:['Tinha mais soldados','Tinha geografia favorável, dinheiro e tecnologia da época','Ficava perto da América','Só queria pescar'],a:1,exp:'Portugal tinha as 3 coisas: geografia (litoral estratégico), economia (dinheiro) e tecnologia (cartógrafos e navegadores)!'},
+       {q:'Ao COMPARAR um mapa físico e um político do mesmo lugar, a principal diferença é:',opts:['São idênticos','O físico mostra relevo/natureza e o político mostra fronteiras/divisões','O físico é sempre mais antigo','O político só mostra cidades'],a:1,exp:'Físico = a "natureza" da Terra. Político = as "divisões" que os humanos criaram!'},
+       {q:'O "Mar Tenebroso" era como os antigos navegadores chamavam:',opts:['O oceano Pacífico','O oceano Atlântico','Os rios brasileiros','O mar Mediterrâneo'],a:1,exp:'O Atlântico era o "Mar Tenebroso" — achavam que tinha monstros e o mundo acabava ali!'},
+       {q:'Se hoje restam apenas 817 mil indígenas (0,4% da população) contra 5-7 milhões antes de 1500, isso mostra que:',opts:['A população indígena cresceu','Houve uma drástica redução da população indígena','Os indígenas migraram para outros países','Nada mudou'],a:1,exp:'Drástica redução! As causas foram doenças, guerras/escravidão e mudança de hábitos.'},
+       {q:'O mapa estilizado (ANAMORFOSE) distorce o tamanho dos países de propósito. Por quê?',opts:['É um erro de impressão','Para mostrar outra informação (como população), não o tamanho real','Só para enfeitar','Porque o cartógrafo se confundiu'],a:1,exp:'Anamorfose = distorce o tamanho para destacar outra informação, como população!'}
+     ]},
+     {label:'📝 Simulado completo (15 Qs)', fixed:true, questions:[
+       {q:'O que significa miscigenação?',opts:['Mistura de etnias','Só indígenas','Só europeus','Nada'],a:0,exp:'Mistura de pessoas de diferentes origens!'},
+       {q:'A rede de dormir vem de qual povo?',opts:['Europeus','Africanos','Indígenas','Asiáticos'],a:2,exp:'É uma herança indígena!'},
+       {q:'Mapa que mostra países e fronteiras:',opts:['Físico','Político','Econômico','Histórico'],a:1,exp:'Mapa político!'},
+       {q:'Iara é protetora de:',opts:['Matas','Rios','Montanhas','Céu'],a:1,exp:'Iara = protetora dos rios!'},
+       {q:'Qual é uma causa da diminuição da população indígena?',opts:['Alimento demais','Doenças dos europeus','Muita chuva','Novos animais'],a:1,exp:'Doenças + guerras/escravidão + mudança de hábitos!'},
+       {q:'Mapa físico mostra:',opts:['Fronteiras','Relevo, rios e montanhas','Pessoas','Dinheiro'],a:1,exp:'Físico = a natureza da Terra!'},
+       {q:'Quantos indígenas havia em 1500?',opts:['817 mil','5 a 7 milhões','100 mil','50 milhões'],a:1,exp:'5 a 7 milhões antes dos portugueses!'},
+       {q:'A Vitória-régia, na lenda, é uma:',opts:['Rede','Planta aquática','Onça','Caverna'],a:1,exp:'Planta aquática — "estrela das águas"!'},
+       {q:'Portugal foi o pioneiro nas navegações porque:',opts:['Tinha muita comida','Geografia + dinheiro + tecnologia','Tinha mais soldados','Era o maior país'],a:1,exp:'As 3 coisas juntas permitiram o pioneirismo!'},
+       {q:'Mar Tenebroso era:',opts:['Pacífico','Atlântico','Mediterrâneo','Índico'],a:1,exp:'Os antigos tinham medo do Atlântico!'},
+       {q:'Hoje há quantos indígenas no Brasil?',opts:['5 milhões','817 mil','100 milhões','10 milhões'],a:1,exp:'817 mil = apenas 0,4% da população!'},
+       {q:'Caipora é:',opts:['Habitante do mato','Protetor das águas','Estrela','Cobra'],a:0,exp:'Caipora = habitante do mato!'},
+       {q:'A anamorfose serve para:',opts:['Enfeitar o mapa','Mostrar outra informação (como população)','Confundir','Medir distância'],a:1,exp:'Distorce tamanho para destacar uma informação!'},
+       {q:'"Mandioca" é uma palavra de origem:',opts:['Europeia','Africana','Tupi (indígena)','Asiática'],a:2,exp:'Mandioca vem do tupi — herança indígena na língua!'},
+       {q:'Todo mapa precisa ter:',opts:['Só desenhos','Título, legenda, escala','Apenas nomes','Nada específico'],a:1,exp:'Título, legenda, escala e rosa dos ventos são obrigatórios!'}
+     ]}
    ]},
+
+  // ===== SOCIAL STUDIES (NOVO — 3 níveis + completo) =====
   {key:'social', label:'🌎 Social Studies', color:'#5F5E5A', lang:'en',
-   allTopics:'Nomadic people, Mayas, Aztecs, Incas',
    subtopics:[
-     {label:'🧭 Nomadic people', topics:'Nomadic people only: definition (move from place to place following food and seasons), no permanent homes or cities, hunters and gatherers, contrast with settled/sedentary peoples, examples of nomadic groups past and present'},
-     {label:'🌽 Mayas', topics:'Mayas only: location in Mesoamerica (Mexico, Guatemala, Belize), advanced calendar system and astronomy knowledge, pyramids (most famous: Chichén Itzá), writing system using glyphs (picture-based), achievements in math and science'},
-     {label:'⚔️ Aztecs', topics:'Aztecs only: built capital Tenochtitlan on an island in Lake Texcoco (now Mexico City), powerful military empire that conquered neighbors, worshipped sun god Huitzilopochtli, Spanish conquest by Hernán Cortés in 1521, why building on an island was a smart defense strategy'},
-     {label:'🦙 Incas', topics:'Incas only: largest pre-Columbus empire in the Americas, lived in Andes mountains of Peru and Bolivia, famous site Machu Picchu, no writing system but used quipu (knotted strings of different colors) to record information, road system connecting the empire'},
-     {label:'🌎 All topics', topics:'Nomadic people (move following food and seasons, no permanent homes, hunters and gatherers), Mayas (Mesoamerica, advanced calendar and astronomy, pyramids like Chichén Itzá, wrote using glyphs), Aztecs (capital Tenochtitlan on an island in a lake, conquered by Cortés in 1521, sun god Huitzilopochtli), Incas (largest pre-Columbus empire in Americas, Andes mountains/Machu Picchu, no writing system/used quipu knotted strings)'}
+     {label:'🟢 Easy', fixed:true, questions:[
+       {q:'A nomad is a person who...',opts:['stays in one place forever','moves from place to place','only lives in cities','never eats food'],a:1,exp:'Nomads move from place to place following food and seasons!'},
+       {q:'Where did the Mayan civilization live?',opts:['Europe','Mesoamerica (Mexico, Guatemala)','Africa','Asia'],a:1,exp:'Mayas lived in Mesoamerica — Mexico, Guatemala, Belize!'},
+       {q:'The Aztec capital was called:',opts:['Machu Picchu','Chichén Itzá','Tenochtitlán','Cuzco'],a:2,exp:'Tenochtitlán — built on an island in a lake!'},
+       {q:'The Incas lived in which mountain range?',opts:['Himalayas','Alps','Andes','Rocky Mountains'],a:2,exp:'The Andes Mountains in Peru and Bolivia!'},
+       {q:'What did the Incas use instead of a writing system?',opts:['Glyphs','Quipu (knotted strings)','Painted walls','Clay tablets'],a:1,exp:'Quipu = knotted strings of different colors!'}
+     ]},
+     {label:'🟡 Medium', fixed:true, questions:[
+       {q:'What is the MAIN IDEA of the text about Mayans? They...',opts:['lived exactly like Europeans did at the time','were an advanced civilization for their time','were unaware of modern science and technology','disappeared and left no history behind'],a:1,exp:'The Mayas were very advanced for their time — pyramids, calendar, astronomy, glyphs!'},
+       {q:'How was transportation made possible in Tenochtitlán?',opts:['People swam between the islands','Sidewalks were built AND boats passed through canals','Most Aztecs traveled on horseback','They used wheeled vehicles'],a:1,exp:'Tenochtitlán had both sidewalks/bridges and canals for boats!'},
+       {q:'Why was the Inca Empire called "The Land of the Four Quarters"?',opts:['They had four main rulers','There were four parts to their official sport','Their government divided the land into four sections','Their farmers grew four different crops'],a:2,exp:'The Inca government divided their empire into 4 regions/sections!'},
+       {q:'Based on the text, what best describes Mayan peasant farmers?',opts:['They were mostly peasant farmers who had to give more than half their crops to nobles','They owned all the land','They farmed only chocolate','They refused to farm'],a:0,exp:'Peasant farmers had to give most of what they grew to the nobles!'},
+       {q:'What kinds of animals did the Kazakh nomads herd?',opts:['Only horses','Horses, sheep, cattle, goats, and camels','Only cows','Dogs and chickens'],a:1,exp:'Kazakhs herded horses, sheep, cattle, goats, and camels!'}
+     ]},
+     {label:'🔴 Hard', fixed:true, questions:[
+       {q:'One SIMILARITY among Mayas, Aztecs and Incas is that they were all:',opts:['located in Europe','polytheists (believed in many gods)','industrial civilizations','nomadic people'],a:1,exp:'All three were polytheists — worshipped many gods!'},
+       {q:'Why did a CIVIL WAR help lead to the decline of the Inca empire?',opts:['The Inca people were not united against Pizarro, so he used divisions to conquer them','The civil war destroyed all the bridges','Runners couldn\'t send messages anymore','Pachacuti died during the war'],a:0,exp:'A divided empire is easier to conquer — Pizarro used the civil war to his advantage!'},
+       {q:'The Aztecs built Tenochtitlán on an island in a lake. What was the MAIN advantage?',opts:['Easier farming','Smart natural defense — enemies couldn\'t reach easily','Closer to mountains','More rainfall'],a:1,exp:'Island = natural defense. Enemies had to cross water to attack!'},
+       {q:'Francisco Pizarro conquered the Incas partly because he had:',opts:['More people than the Incas','Guns, horses, and diseases the Incas had never seen','Better food','Maps of the mountains'],a:1,exp:'Guns, horses, and European diseases gave Pizarro a huge advantage!'},
+       {q:'Which statement comparing the three civilizations is CORRECT?',opts:['Only the Aztecs had a calendar','Mayas used glyphs while Incas used quipu','All three had wheeled vehicles','None of them farmed'],a:1,exp:'Mayas wrote with glyphs (pictures). Incas recorded info with quipu (knotted strings)!'}
+     ]},
+     {label:'📝 Full exam (15 Qs)', fixed:true, questions:[
+       {q:'A nomad is a person who:',opts:['stays in one place','moves following food and seasons','only lives in cities','never eats food'],a:1,exp:'Nomads move to follow food and seasons!'},
+       {q:'The Mayas lived in:',opts:['Europe','Mesoamerica','Africa','Asia'],a:1,exp:'Mexico, Guatemala, Belize!'},
+       {q:'The Aztec capital was:',opts:['Cuzco','Machu Picchu','Tenochtitlán','Chichén Itzá'],a:2,exp:'Tenochtitlán on a lake island!'},
+       {q:'The Incas lived in the:',opts:['Himalayas','Alps','Andes','Rockies'],a:2,exp:'Andes Mountains — Peru!'},
+       {q:'The Incas used ___ to record information:',opts:['glyphs','quipu','paint','clay'],a:1,exp:'Quipu = knotted strings!'},
+       {q:'The main idea about Mayas is that they:',opts:['were primitive','were advanced for their time','had no writing','were nomads'],a:1,exp:'Advanced: pyramids, calendar, astronomy, glyphs!'},
+       {q:'Tenochtitlán had transportation via:',opts:['Only swimming','Sidewalks and canals with boats','Horses only','Wheeled vehicles'],a:1,exp:'Sidewalks + boats in canals!'},
+       {q:'"Land of the Four Quarters" refers to:',opts:['4 rulers','4 sports','Government divided into 4 regions','4 crops'],a:2,exp:'The Incas divided their empire into 4 sections!'},
+       {q:'Mayan peasant farmers had to:',opts:['Keep all their crops','Give more than half to nobles','Pay no taxes','Farm only chocolate'],a:1,exp:'They gave most crops to the nobles!'},
+       {q:'Kazakh nomads herded:',opts:['Only horses','Horses, sheep, cattle, goats, camels','Only cows','Dogs and chickens'],a:1,exp:'Multiple animals including camels!'},
+       {q:'A similarity of Mayas, Aztecs, Incas is:',opts:['All in Europe','All polytheists (many gods)','All industrial','All nomadic'],a:1,exp:'All worshipped many gods!'},
+       {q:'The Inca civil war helped Pizarro because:',opts:['Bridges were destroyed','Incas were not united against him','Messengers died','Pachacuti died'],a:1,exp:'Divisions made the empire easier to conquer!'},
+       {q:'An island city gave the Aztecs:',opts:['Better farming','Natural defense','More rain','Mountain views'],a:1,exp:'Hard for enemies to reach = defense advantage!'},
+       {q:'Pizarro defeated the Incas partly because of:',opts:['More soldiers','Guns, horses, and diseases','Better food','Better maps'],a:1,exp:'Technology + diseases = huge advantage!'},
+       {q:'Mayas wrote with ___ while Incas used ___:',opts:['letters / numbers','glyphs / quipu','quipu / glyphs','paint / clay'],a:1,exp:'Mayas = glyphs (pictures). Incas = quipu (knotted strings)!'}
+     ]}
    ]}
 ];
+</script>
 
-var currentSimKey = 'science';
-var currentTopicLabel = '';
-var simQuestions = [];
-var simAnswers = {};
+<script>
+// ===== TABS =====
+function showTab(id,col){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>{t.classList.remove('active');t.style.background='';t.style.color='';t.style.borderColor='var(--border)'});
+  document.getElementById(id).classList.add('active');
+  var btn=document.getElementById('t-'+id);
+  btn.classList.add('active');btn.style.background=col;btn.style.color='#fff';btn.style.borderColor=col;
+  if(id==='quiz'){buildQF();startQuiz('all',document.querySelector('.qf-btn'));}
+  if(id==='sim') buildSimNav();
+  if(id==='mind') buildMindNav();
+  if(id==='res') buildResNav();
+}
 
-function buildSimNav(){
-  var nav=document.getElementById('sim-nav');
-  if(!nav||nav.childElementCount)return;
-  SIMS.forEach((s,i)=>{
-    var b=document.createElement('button');
-    b.className='sim-btn'+(i===0?' active':'');
-    b.textContent=s.label;
-    if(i===0){b.style.background=s.color;b.style.color='#fff';b.style.borderColor=s.color;}
-    b.onclick=()=>{
-      document.querySelectorAll('.sim-btn').forEach(x=>{x.classList.remove('active');x.style.background='';x.style.color='var(--muted)';x.style.borderColor='var(--border)';});
-      b.classList.add('active');b.style.background=s.color;b.style.color='#fff';b.style.borderColor=s.color;
-      loadSim(s.key);
-    };
-    nav.appendChild(b);
+// ===== DETAIL =====
+function showDetail(key){
+  var d=DETAIL[key];
+  document.getElementById('dash-main').style.display='none';
+  var p=document.getElementById('dash-detail');p.style.display='block';
+  var lb=d.lang==='en'?'background:#E6F1FB;color:#0C447C':'background:#FBEAF0;color:#72243E';
+  var h='<button class="detail-back" onclick="hideDetail()">← Back / Voltar</button>';
+  h+='<div class="detail-title">'+d.title+'<span class="lang-pill" style="'+lb+'">'+d.lang.toUpperCase()+'</span></div>';
+  h+='<div class="topic-grid">';
+  d.topics.forEach(t=>{
+    h+='<div class="topic-card" style="background:'+d.light+';color:'+d.dark+'"><h4>'+t.h+'</h4><ul>';
+    t.items.forEach(i=>{h+='<li>'+i+'</li>';});
+    h+='</ul><div class="activity"><strong>'+(d.lang==='en'?'⚡ Try this':'⚡ Atividade')+'</strong>'+t.act+'</div></div>';
   });
-  loadSim('science');
+  h+='</div>';p.innerHTML=h;
 }
+function hideDetail(){document.getElementById('dash-main').style.display='';document.getElementById('dash-detail').style.display='none';document.getElementById('dash-detail').innerHTML='';}
 
-function loadSim(key){
-  currentSimKey=key;
-  simAnswers={};
-  simQuestions=[];
-  var sub=SIMS.find(s=>s.key===key);
-  document.getElementById('sim-loading').style.display='none';
-  document.getElementById('sim-questions').innerHTML='';
-  renderTopicPicker(sub);
-}
-
-function renderTopicPicker(sub){
-  var pt = sub.lang==='pt';
-  var wrap = document.getElementById('sim-questions');
-  wrap.innerHTML = '';
-  var header = document.createElement('div');
-  header.className = 'exam-header';
-  header.style.background = 'linear-gradient(135deg,'+sub.color+','+darken(sub.color)+')';
-  header.innerHTML = '<h2>'+sub.label+'</h2><p>'+(pt?'Escolha o tópico que quer praticar:':'Choose the topic you want to practice:')+'</p>';
-  wrap.appendChild(header);
-  var grid = document.createElement('div');
-  grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:4px';
-  wrap.appendChild(grid);
-  sub.subtopics.forEach(function(t){
-    var isAll = t.label.toLowerCase().includes('todo') || t.label.toLowerCase().includes('all');
-    var btn = document.createElement('button');
-    btn.style.cssText = 'border-radius:14px;padding:14px 16px;cursor:pointer;font-size:13px;font-weight:700;text-align:left;transition:transform .15s;width:100%;font-family:Nunito,sans-serif';
-    btn.style.background = isAll ? 'linear-gradient(135deg,'+sub.color+','+darken(sub.color)+')' : 'var(--card)';
-    btn.style.color = isAll ? '#fff' : '#1a1a1a';
-    btn.style.border = isAll ? '2px solid '+sub.color : '1.5px solid #e0ddd8';
-    btn.innerHTML = t.label+'<div style="font-size:11px;font-weight:400;margin-top:4px;opacity:.75">'+(pt?'5 questões na hora':'5 questions now')+'</div>';
-    btn.addEventListener('mouseover',function(){this.style.transform='translateY(-2px)';});
-    btn.addEventListener('mouseout',function(){this.style.transform='';});
-    (function(key,label,topics){btn.addEventListener('click',function(){startSimTopic(key,label,topics);});})(sub.key,t.label,t.topics);
-    grid.appendChild(btn);
+// ===== QUIZ =====
+var cQ=[],qi=0,sc=0,ans=false,af='all';
+var CATS=[['all','Todas / All','#2C2C2A'],['science','🌿 Science','#1D9E75'],['ciencias','🗺️ Ciências','#378ADD'],['portugues','✏️ Português','#D4537E'],['mat','🔢 Math','#BA7517'],['la','📖 Lang Arts','#E24B4A'],['social','🌎 Social','#5F5E5A'],['geohist','🏛️ Geo & Hist','#7F77DD']];
+function buildQF(){
+  var w=document.getElementById('qf');if(w.childElementCount)return;
+  CATS.forEach((c,i)=>{
+    var b=document.createElement('button');b.className='qf-btn'+(i===0?' active':'');
+    b.textContent=c[1];if(i===0){b.style.background=c[2];b.style.color='#fff';b.style.borderColor=c[2];}
+    b.onclick=()=>startQuiz(c[0],b);w.appendChild(b);
   });
 }
-function startSimTopic(key, label, topics){
-  currentSimKey = key;
-  currentTopicLabel = label;
-  var sub = SIMS.find(s=>s.key===key);
-  var subtopic = sub.subtopics.find(function(t){ return t.label===label; });
-  var isReading = subtopic && subtopic.type==='reading';
-  var isFixed = subtopic && subtopic.fixed && subtopic.questions;
-  simAnswers={};
-  simQuestions=[];
-  document.getElementById('sim-questions').innerHTML='';
-  if(isFixed){
-    // Questões fixas da apostila — sem API, sem loading
-    simQuestions = subtopic.questions;
-    simQuestions._topics = 'FIXED';
-    renderSimQuestions(sub, subtopic.questions, label);
-  } else if(isReading){
-    document.getElementById('sim-loading').style.display='block';
-    generateReadingQuestions(sub);
-  } else {
-    document.getElementById('sim-loading').style.display='block';
-    generateSimQuestions(sub, topics, label);
+function startQuiz(filter,btn){
+  af=filter;
+  document.querySelectorAll('.qf-btn').forEach(b=>{b.classList.remove('active');b.style.background='';b.style.color='var(--muted)';b.style.borderColor='var(--border)';});
+  if(btn){btn.classList.add('active');var cc=CATS.find(c=>c[0]===filter);btn.style.background=cc[2];btn.style.color='#fff';btn.style.borderColor=cc[2];}
+  cQ=filter==='all'?shuf(QUIZ.slice()):shuf(QUIZ.filter(q=>q.cat===filter));
+  qi=0;sc=0;ans=false;renderQ();
+}
+function shuf(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function renderQ(){
+  document.getElementById('prog').style.width=Math.round(qi/cQ.length*100)+'%';
+  var box=document.getElementById('qbox');
+  if(qi>=cQ.length){
+    var pct=Math.round(sc/cQ.length*100);
+    var bg=pct>=80?'var(--green-l)':'var(--amber-l)';var col=pct>=80?'var(--green-d)':'var(--amber-d)';
+    var emoji=pct>=80?'🌟':pct>=60?'👍':'💪';
+    box.innerHTML='<div class="score-card show" style="background:'+bg+';color:'+col+'"><h2>'+emoji+' '+sc+'/'+cQ.length+'</h2><p>'+pct+'%'+(pct>=80?' — Excellent! Ready for the exam!':pct>=60?' — Good! Review the red answers.':' — Keep practicing!')+'</p><button class="retry-btn" onclick="startQuiz(af,null)">🔄 Play again</button></div>';
+    document.getElementById('prog').style.width='100%';return;
   }
+  var q=cQ[qi];
+  var ce={science:'🌿',ciencias:'🗺️',portugues:'✏️',mat:'🔢',la:'📖',geohist:'🏛️',social:'🌎'};
+  var lb=q.lang==='en'?'background:#E6F1FB;color:#0C447C':'background:#FBEAF0;color:#72243E';
+  var L=['A','B','C','D'];
+  var h='<div class="q-meta">'+ce[q.cat]+' Q'+(qi+1)+'/'+cQ.length+'<span class="lang-pill" style="'+lb+'">'+q.lang.toUpperCase()+'</span></div>';
+  h+='<div class="q-text">'+q.q+'</div><div class="opts">';
+  q.opts.forEach((o,i)=>{h+='<button class="opt" onclick="doAns('+i+')"><span class="opt-letter">'+L[i]+'</span>'+o+'</button>';});
+  h+='</div><div class="feedback" id="fb"></div><button class="next-btn" id="nxt" style="background:'+NC[q.cat]+'" onclick="nextQ()">Next →</button>';
+  box.innerHTML=h;ans=false;
 }
-
-async function generateReadingQuestions(sub){
-  currentTopicLabel = '📚 Interpretação de texto';
-  var prompt = 'Você é um professor de 4º ano do Ensino Fundamental. Crie um exercício de interpretação de texto para uma criança de 9 anos com 5 questões de múltipla escolha e 1 questão dissertativa. Siga EXATAMENTE este formato JSON, sem texto antes ou depois: {"texto":"[texto original de 6 a 10 linhas, adequado para 9 anos, sobre natureza, animais, escola, amizade, aventura ou fábula. Escreva em parágrafos separados por \\n]","titulo":"[título do texto]","mc":[{"q":"[pergunta sobre fato explícito do texto]","opts":["A","B","C","D"],"a":0,"exp":"[explicação curta]"},{"q":"[pergunta sobre vocabulário ou significado de palavra do texto]","opts":["A","B","C","D"],"a":1,"exp":"[explicação curta]"},{"q":"[pergunta sobre o que personagem fez ou sentiu]","opts":["A","B","C","D"],"a":2,"exp":"[explicação curta]"},{"q":"[pergunta sobre causa e consequência dentro do texto]","opts":["A","B","C","D"],"a":0,"exp":"[explicação curta]"},{"q":"[pergunta sobre ideia principal ou tipo do texto]","opts":["A","B","C","D"],"a":1,"exp":"[explicação curta]"}],"dissertativa":{"q":"Com suas próprias palavras, explique [aspecto importante do texto]. Use pelo menos 2 frases.","gabarito":"[resposta esperada em 2-3 frases simples, baseada no texto]"}} As opções de MC devem ter apenas UMA correta. Varie os índices corretos. O texto deve ser original, envolvente e adequado para 9 anos.';
-
-  try {
-    var res = await fetch('/api/chat', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({messages:[{role:'user',content:prompt}], mode:'exam'})
-    });
-    var data = await res.json();
-    var text = data.reply || '';
-    var clean = text.replace(/```json|```/g,'').trim();
-    var parsed = JSON.parse(clean);
-    simQuestions = parsed.mc || [];
-    simQuestions._topics = 'INTERPRETACAO';
-    simQuestions._texto = parsed.texto;
-    simQuestions._titulo = parsed.titulo;
-    simQuestions._dissertativa = parsed.dissertativa;
-    renderReadingQuestions(sub, parsed);
-  } catch(e) {
-    document.getElementById('sim-loading').style.display='none';
-    document.getElementById('sim-questions').innerHTML = '<div style="padding:1rem;color:#666;font-size:13px">❌ Erro ao gerar o texto. Tente novamente.<br><br><button onclick="generateReadingQuestions(SIMS.find(function(s){return s.key===currentSimKey;}))" style="padding:8px 16px;border-radius:20px;border:1.5px solid #e0ddd8;background:#fff;cursor:pointer;font-family:inherit;font-size:13px">🔄 Tentar novamente</button></div>';
-    console.error(e);
-  }
+function doAns(i){
+  if(ans)return;ans=true;
+  var q=cQ[qi];var opts=document.querySelectorAll('.opt');
+  opts[q.a].classList.add('correct');
+  var fb=document.getElementById('fb');
+  if(i===q.a){sc++;fb.textContent='✅ Correct! '+q.exp;fb.className='feedback ok';}
+  else{opts[i].classList.add('wrong');fb.textContent='❌ Answer: '+['A','B','C','D'][q.a]+'. '+q.exp;fb.className='feedback bad';}
+  document.getElementById('nxt').style.display='inline-block';
 }
+function nextQ(){qi++;renderQ();}
 
-function renderReadingQuestions(sub, parsed){
-  document.getElementById('sim-loading').style.display='none';
-  var wrap = document.getElementById('sim-questions');
-  wrap.innerHTML = '';
-
-  // Botão voltar
-  var backDiv = document.createElement('div');
-  backDiv.style.marginBottom = '10px';
-  var bb = document.createElement('button');
-  bb.style.cssText = 'border:1.5px solid #e0ddd8;background:#fff;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:Nunito,sans-serif;color:#1a1a1a';
-  bb.textContent = '← Escolher outro tópico';
-  bb.onclick = function(){ loadSim(currentSimKey); };
-  backDiv.appendChild(bb);
-  wrap.appendChild(backDiv);
-
-  // Header
-  var header = document.createElement('div');
-  header.className = 'exam-header';
-  header.style.background = 'linear-gradient(135deg,#D4537E,#993556)';
-  header.innerHTML = '<h2>✏️ Interpretação de Texto</h2><p style="font-size:12px;opacity:.85">Leia o texto com atenção e responda às questões 📝</p><span class="exam-score" id="sc-dynamic">— / '+(parsed.mc.length+1)+'</span>';
-  wrap.appendChild(header);
-
-  // Texto
-  var textBox = document.createElement('div');
-  textBox.style.cssText = 'background:#FBEAF0;border-left:4px solid #D4537E;border-radius:0 14px 14px 0;padding:1rem 1.25rem;margin-bottom:1.25rem';
-  textBox.innerHTML = '<div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#993556;margin-bottom:10px">📄 '+escHtml(parsed.titulo)+'</div><div style="font-size:14px;line-height:2;color:#72243E;white-space:pre-wrap">'+escHtml(parsed.texto)+'</div>';
-  wrap.appendChild(textBox);
-
-  // Label múltipla escolha
-  var mcLabel = document.createElement('div');
-  mcLabel.style.cssText = 'font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#993556;margin-bottom:10px';
-  mcLabel.textContent = 'PARTE 1 — Múltipla escolha';
-  wrap.appendChild(mcLabel);
-
-  // Questões MC
-  var letters = ['A','B','C','D'];
-  parsed.mc.forEach(function(q, i){
-    var block = document.createElement('div');
-    block.className = 'q-block';
-    block.id = 'qblock-'+i;
-    var num = document.createElement('div');
-    num.className = 'q-num';
-    num.textContent = 'Questão '+(i+1)+' · Múltipla escolha';
-    var stem = document.createElement('div');
-    stem.className = 'q-stem';
-    stem.textContent = q.q;
-    var opts = document.createElement('div');
-    opts.className = 'mc-opts';
-    q.opts.forEach(function(opt, j){
-      var btn = document.createElement('button');
-      btn.className = 'mc-opt';
-      btn.innerHTML = '<span class="mc-letter" style="pointer-events:none">'+letters[j]+'</span>'+escHtml(opt);
-      btn.addEventListener('click', function(){ pickSimMC(btn, i, j); });
-      opts.appendChild(btn);
-    });
-    var fb = document.createElement('div');
-    fb.className = 'q-fb';
-    fb.id = 'qfb-'+i;
-    var helpBtn = document.createElement('button');
-    helpBtn.className = 'help-btn';
-    helpBtn.innerHTML = '🤔 Não entendi';
-    (function(question, options){ helpBtn.onclick = function(){ askAboutQuestion(question, options); }; })(q.q, q.opts);
-    block.appendChild(num);
-    block.appendChild(stem);
-    block.appendChild(opts);
-    block.appendChild(fb);
-    block.appendChild(helpBtn);
-    wrap.appendChild(block);
-  });
-
-  // Label dissertativa
-  var disLabel = document.createElement('div');
-  disLabel.style.cssText = 'font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#993556;margin:16px 0 10px';
-  disLabel.textContent = 'PARTE 2 — Resposta escrita';
-  wrap.appendChild(disLabel);
-
-  // Questão dissertativa
-  var dis = parsed.dissertativa;
-  var disBlock = document.createElement('div');
-  disBlock.className = 'q-block';
-  disBlock.id = 'rblock-dis';
-  var disNum = document.createElement('div');
-  disNum.className = 'q-num';
-  disNum.textContent = 'Questão '+(parsed.mc.length+1)+' · Escreva com suas palavras';
-  var disStem = document.createElement('div');
-  disStem.className = 'q-stem';
-  disStem.textContent = dis.q;
-  var disTa = document.createElement('textarea');
-  disTa.className = 'short-ta';
-  disTa.id = 'rta-dis';
-  disTa.placeholder = 'Escreva sua resposta aqui... use pelo menos 2 frases!';
-  disTa.style.minHeight = '90px';
-  var disFb = document.createElement('div');
-  disFb.className = 'q-fb';
-  disFb.id = 'rfb-dis';
-  var disHelp = document.createElement('button');
-  disHelp.className = 'help-btn';
-  disHelp.innerHTML = '🤔 Não entendi';
-  (function(q){ disHelp.onclick = function(){ askAboutQuestion(q, []); }; })(dis.q);
-  disBlock.appendChild(disNum);
-  disBlock.appendChild(disStem);
-  disBlock.appendChild(disTa);
-  disBlock.appendChild(disFb);
-  disBlock.appendChild(disHelp);
-  wrap.appendChild(disBlock);
-
-  // Botão corrigir
-  var checkBtn = document.createElement('button');
-  checkBtn.className = 'check-btn';
-  checkBtn.style.background = '#D4537E';
-  checkBtn.textContent = 'Corrigir ✓';
-  checkBtn.id = 'reading-check-btn';
-  checkBtn.onclick = function(){ checkReadingAnswers(parsed); };
-  wrap.appendChild(checkBtn);
-
-  // Result box
-  var rb = document.createElement('div');
-  rb.className = 'result-box';
-  rb.id = 'rb-reading';
-  rb.innerHTML = '<h3 id="rb-reading-h"></h3><p id="rb-reading-p"></p><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:8px"><button class="retry-s" onclick="retrySimTopic()" style="background:#D4537E">Novo texto 🔄</button><button class="retry-s" onclick="loadSim(currentSimKey)" style="background:rgba(0,0,0,.15)">Escolher outro tópico ←</button></div>';
-  wrap.appendChild(rb);
-}
-
-
-async function checkReadingAnswers(parsed){
-  var btn = document.getElementById('reading-check-btn');
-  if(btn){ btn.disabled=true; btn.textContent='Corrigindo... ✨'; }
-
-  // 1. Corrigir MC automaticamente
-  var mcScore = 0;
-  parsed.mc.forEach(function(q, i){
-    var chosen = simAnswers[i];
-    var correct = q.a;
-    var fb = document.getElementById('qfb-'+i);
-    var opts = document.querySelectorAll('#qblock-'+i+' .mc-opt');
-    if(chosen === undefined){
-      if(opts[correct]) opts[correct].classList.add('correct');
-      if(fb){ fb.className='q-fb show bad'; fb.textContent='❌ Selecione uma opção!'; }
-      return;
-    }
-    opts.forEach(function(o){ o.classList.remove('selected'); o.style.outline=''; });
-    if(chosen === correct){
-      mcScore++;
-      opts[correct].classList.add('correct');
-      if(fb){ fb.className='q-fb show ok'; fb.textContent='✅ '+q.exp; }
-    } else {
-      opts[chosen].classList.add('wrong');
-      opts[correct].classList.add('correct');
-      if(fb){ fb.className='q-fb show bad'; fb.textContent='❌ '+q.exp; }
-    }
-  });
-
-  // 2. Corrigir dissertativa via IA
-  var disTa = document.getElementById('rta-dis');
-  var disResposta = disTa ? disTa.value.trim() : '';
-  var disFb = document.getElementById('rfb-dis');
-  var total = parsed.mc.length + 1;
-
-  if(disResposta.length < 10){
-    if(disFb){ disFb.className='q-fb show bad'; disFb.textContent='💡 Escreva pelo menos 2 frases para essa questão!'; }
-    if(disTa) disTa.style.borderColor = '#D4537E';
-    showReadingResult(mcScore, 0, total, btn);
-    return;
-  }
-
-  var promptParts = [
-    'Você é uma professora carinhosa de 4º ano. Corrija a resposta dissertativa de uma aluna de 9 anos sobre o texto "'+parsed.titulo+'".',
-    'Pergunta: '+parsed.dissertativa.q,
-    'Gabarito esperado: '+parsed.dissertativa.gabarito,
-    'Resposta da aluna: '+disResposta,
-    'Responda SOMENTE em JSON: {"ok":true,"fb":"feedback carinhoso de 1 frase"}. ok=true se capturou a ideia principal, mesmo com palavras simples. Seja gentil e encorajadora!'
-  ];
-
-  try {
-    var res = await fetch('/api/chat', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({messages:[{role:'user',content:promptParts.join(' | ')}], mode:'exam'})
-    });
-    var data = await res.json();
-    var clean = (data.reply||'').replace(/```json|```/g,'').trim();
-    var f = JSON.parse(clean);
-    var disScore = f.ok ? 1 : 0;
-    if(disFb){ disFb.className='q-fb show '+(f.ok?'ok':'bad'); disFb.textContent=(f.ok?'✅ ':'💡 ')+f.fb; }
-    if(disTa) disTa.style.borderColor = f.ok ? '#1D9E75' : '#D4537E';
-    showReadingResult(mcScore, disScore, total, btn);
-  } catch(e){
-    if(disFb){ disFb.className='q-fb show bad'; disFb.textContent='❌ Erro ao corrigir. Tente novamente!'; }
-    showReadingResult(mcScore, 0, total, btn);
-    console.error(e);
-  }
-}
-
-function showReadingResult(mcScore, disScore, total, btn){
-  var score = mcScore + disScore;
-  var pct = Math.round(score/total*100);
-  var rb = document.getElementById('rb-reading');
-  var rh = document.getElementById('rb-reading-h');
-  var rp = document.getElementById('rb-reading-p');
-  var emoji = pct>=80?'🌟':pct>=60?'👏':'💪';
-  rh.textContent = emoji+' '+score+'/'+total+' ('+pct+'%)';
-  rp.textContent = pct>=80?'Excelente! Você entendeu muito bem o texto!':pct>=60?'Ótimo trabalho! Releia o texto e tente as que ficaram.':'Continue praticando! Releia o texto com calma.';
-  rb.style.background = pct>=80?'#E1F5EE':'#FAEEDA';
-  rb.style.color = pct>=80?'#085041':'#633806';
-  rb.className = 'result-box show';
-  document.getElementById('sc-dynamic').textContent = score+'/'+total;
-  if(btn){ btn.disabled=false; btn.textContent='Corrigir ✓'; }
-}
-
-
-async function generateSimQuestions(sub, topics, topicLabel){
-  var prompt = sub.lang==='pt'
-    ? 'Você é um professor de 4º ano do Ensino Fundamental. Gere EXATAMENTE 5 questões de múltipla escolha sobre: ' + topics + '. As questões devem ser no nível de uma criança de 9 anos, com 4 opções (A, B, C, D) cada. Responda SOMENTE em JSON válido, sem texto antes ou depois, no formato: [{"q":"pergunta","opts":["A","B","C","D"],"a":0,"exp":"explicação curta da resposta correta"}] onde "a" é o índice 0-3 da opção correta.'
-    : 'You are a Year 4 teacher (9-year-old students). Generate EXACTLY 5 multiple choice questions about: ' + topics + '. Questions must be at a 9-year-old level, with 4 options (A, B, C, D) each. Respond ONLY with valid JSON, no text before or after, format: [{"q":"question","opts":["A","B","C","D"],"a":0,"exp":"short explanation of correct answer"}] where "a" is the 0-3 index of the correct option.';
-
-  try {
-    var res = await fetch('/api/chat', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({messages:[{role:'user',content:prompt}], mode:'exam'})
-    });
-    var data = await res.json();
-    var text = data.reply || '';
-    var clean = text.replace(/```json|```/g,'').trim();
-    var questions = JSON.parse(clean);
-    simQuestions = questions;
-    simQuestions._topics = topics;
-    renderSimQuestions(sub, questions, topicLabel);
-  } catch(e) {
-    document.getElementById('sim-loading').style.display='none';
-    document.getElementById('sim-questions').innerHTML = '<div style="padding:1rem;color:var(--muted);font-size:13px">❌ Erro ao gerar questões. Verifique sua conexão e tente novamente.<br><br><button onclick="loadSim(currentSimKey)" style="padding:8px 16px;border-radius:20px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;font-family:inherit;font-size:13px">🔄 Tentar novamente</button></div>';
-    console.error(e);
-  }
-}
-
-function renderSimQuestions(sub, questions, topicLabel){
-  document.getElementById('sim-loading').style.display='none';
-  var color = sub.color;
-  var lang = sub.lang;
-  var tLabel = topicLabel || sub.label;
-
-  var backBtn = document.createElement('div');
-  backBtn.style.marginBottom = '10px';
-  var bb = document.createElement('button');
-  bb.style.cssText = 'border:1.5px solid #e0ddd8;background:#fff;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:Nunito,sans-serif;color:#1a1a1a';
-  bb.textContent = lang==='pt' ? '← Escolher outro tópico' : '← Choose another topic';
-  bb.onclick = function(){ loadSim(currentSimKey); };
-  backBtn.appendChild(bb);
-  var html = '';
-  html += '<div class="exam-header" style="background:linear-gradient(135deg,'+color+','+darken(color)+')">';
-  html += '<h2>'+sub.label+' — '+tLabel+'</h2>';
-  html += '<p style="font-size:12px;opacity:.85">'+(lang==='pt'?'Questões geradas dinamicamente ✨':'Dynamically generated questions ✨')+'</p>';
-  html += '<span class="exam-score" id="sc-dynamic">— / '+questions.length+'</span></div>';
-
-  questions.forEach(function(q,i){
-    var qid = 'dq'+i;
-    html += '<div class="q-block" id="qblock-'+i+'">';
-    html += '<div class="q-num">'+(lang==='pt'?'Questão':'Question')+' '+(i+1)+' · '+(lang==='pt'?'Múltipla escolha':'Multiple choice')+'</div>';
-    html += '<div class="q-stem">'+escHtml(q.q)+'</div>';
-    html += '<div class="mc-opts">';
-    var letters = ['A','B','C','D'];
-    q.opts.forEach(function(opt,j){
-      html += '<button class="mc-opt" onclick="pickSimMC(this,'+i+','+j+')"><span class="mc-letter" style="pointer-events:none">'+letters[j]+'</span>'+escHtml(opt)+'</button>';
-    });
-    html += '</div><div class="q-fb" id="qfb-'+i+'"></div>';
-    html += '<button class="help-btn" onclick="askAboutQuestion('+JSON.stringify(q.q).replace(/</g,'&lt;')+','+JSON.stringify(q.opts||[]).replace(/</g,'&lt;')+')">';
-    html += '🤔 '+(lang==='pt'?'Não entendi':'I need help')+'</button>';
-    html += '</div>';
-  });
-
-  var btnLabel = lang==='pt'?'Corrigir ✓':'Check my answers ✓';
-  html += '<button class="check-btn" style="background:'+color+'" onclick="checkDynamicSim()">'+btnLabel+'</button>';
-  html += '<div class="result-box" id="rb-dynamic"><h3 id="rb-dynamic-h"></h3><p id="rb-dynamic-p"></p>';
-  html += '<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">';
-  html += '<button class="retry-s" onclick="retrySimTopic()" style="background:'+color+'">'+(lang==='pt'?'Nova tentativa mesmo tópico 🔄':'Try again same topic 🔄')+'</button>';
-  html += '<button class="retry-s" onclick="loadSim(currentSimKey)" style="background:rgba(0,0,0,.15)">'+(lang==='pt'?'Escolher outro tópico ←':'Choose another topic ←')+'</button>';
-  html += '</div></div>';
-
-  var qwrap = document.getElementById('sim-questions');
-  qwrap.innerHTML = '';
-  qwrap.appendChild(backBtn);
-  var tmp = document.createElement('div');
-  tmp.innerHTML = html;
-  while(tmp.firstChild) qwrap.appendChild(tmp.firstChild);
-}
-
-function pickSimMC(el,qIdx,optIdx){
-  var btn = el.closest('.mc-opt')||el;
-  var opts = btn.parentElement.querySelectorAll('.mc-opt');
-  opts.forEach(o=>{o.classList.remove('selected');o.style.outline='';});
-  btn.classList.add('selected');
-  btn.style.outline='2px solid #7F77DD';
-  simAnswers[qIdx]=optIdx;
-}
-
-function checkDynamicSim(){
-  var score=0;
-  var total=simQuestions.length;
-  var sub=SIMS.find(s=>s.key===currentSimKey);
-  var lang=sub?sub.lang:'en';
-
-  simQuestions.forEach(function(q,i){
-    var fb=document.getElementById('qfb-'+i);
-    var opts=document.querySelectorAll('#qblock-'+i+' .mc-opt');
-    var chosen=simAnswers[i];
-    var correct=q.a;
-
-    if(chosen===undefined){
-      if(fb) fb.className='q-fb show bad', fb.textContent='❌ '+(lang==='pt'?'Selecione uma opção!':'Select an option!');
-      if(opts[correct]) opts[correct].classList.add('correct');
-      return;
-    }
-
-    opts.forEach(o=>o.classList.remove('selected'));
-    if(chosen===correct){
-      score++;
-      opts[correct].classList.add('correct');
-      if(fb) fb.className='q-fb show ok', fb.textContent='✅ '+q.exp;
-    } else {
-      opts[chosen].classList.add('wrong');
-      opts[correct].classList.add('correct');
-      if(fb) fb.className='q-fb show bad', fb.textContent='❌ '+q.exp;
-    }
-  });
-
-  var pct=Math.round(score/total*100);
-  var rb=document.getElementById('rb-dynamic');
-  var rh=document.getElementById('rb-dynamic-h');
-  var rp=document.getElementById('rb-dynamic-p');
-  var emoji=pct>=80?'🌟':pct>=60?'👍':'💪';
-  var msg=pct>=80?(lang==='pt'?'Excelente! Pronta para a prova!':'Excellent! Ready for the exam!')
-                 :pct>=60?(lang==='pt'?'Bom trabalho! Revise as vermelhas.':'Good job! Review the red answers.')
-                 :(lang==='pt'?'Continue praticando! Cada tentativa tem novas perguntas 🔄':'Keep practicing! Each attempt has new questions 🔄');
-  rh.textContent=emoji+' '+score+'/'+total+' ('+pct+'%)';
-  rp.textContent=msg;
-  rb.style.background=pct>=80?'var(--green-l)':'var(--amber-l)';
-  rb.style.color=pct>=80?'var(--green-d)':'var(--amber-d)';
-  rb.className='result-box show';
-  document.getElementById('sc-dynamic').textContent=score+'/'+total;
-}
-
-function retrySimTopic(){
-  var sub = SIMS.find(s=>s.key===currentSimKey);
-  var topics = simQuestions._topics || sub.allTopics;
-  var subtopic = sub.subtopics.find(function(t){ return t.label===currentTopicLabel; });
-  simAnswers={};
-  simQuestions=[];
-  document.getElementById('sim-questions').innerHTML='';
-  if(subtopic && subtopic.fixed){
-    simQuestions = subtopic.questions;
-    simQuestions._topics = 'FIXED';
-    renderSimQuestions(sub, subtopic.questions, currentTopicLabel);
-  } else if(topics==='INTERPRETACAO'){
-    document.getElementById('sim-loading').style.display='block';
-    generateReadingQuestions(sub);
-  } else {
-    document.getElementById('sim-loading').style.display='block';
-    generateSimQuestions(sub, topics, currentTopicLabel);
-  }
-}
-
-function darken(hex){
-  var r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
-  return '#'+[Math.max(0,r-40),Math.max(0,g-40),Math.max(0,b-40)].map(x=>x.toString(16).padStart(2,'0')).join('');
-}
-function escHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-
-// ===== MIND NAV =====
-// ===== MIND NAV =====
+// ===== MAPA MENTAL NAV =====
 var MINDS=[
   ['science','🌿 Science','#1D9E75'],
   ['ciencias','🗺️ Ciências','#378ADD'],
@@ -1536,299 +1326,249 @@ function buildMindNav(){
   });
 }
 
-// init
-function showTab(id,col){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>{t.classList.remove('active');t.style.background='';t.style.color='';t.style.borderColor='var(--border)'});
-  document.getElementById(id).classList.add('active');
-  var btn=document.getElementById('t-'+id);
-  btn.classList.add('active');btn.style.background=col;btn.style.color='#fff';btn.style.borderColor=col;
-  if(id==='quiz'){buildQF();startQuiz('all',document.querySelector('.qf-btn'));}
-  if(id==='sim') buildSimNav();
-  if(id==='mind') buildMindNav();
-  updatePrintBtn(id);
+// ===== RESUMOS (NOVO MÓDULO) =====
+function buildResNav(){
+  var nav=document.getElementById('res-nav');
+  if(!nav||nav.childElementCount)return;
+  // Coloca as prioritárias primeiro (LA, Geohist, Social)
+  var ordered = RESUMOS.slice().sort(function(a,b){
+    return (b.priority?1:0) - (a.priority?1:0);
+  });
+  ordered.forEach(function(r,i){
+    var b=document.createElement('button');
+    b.className='res-btn'+(i===0?' active':'');
+    b.textContent=r.label + (r.priority?' ⭐':'');
+    if(i===0){b.style.background=r.color;b.style.color='#fff';b.style.borderColor=r.color;}
+    b.onclick=(function(key){return function(){
+      document.querySelectorAll('.res-btn').forEach(x=>{x.classList.remove('active');x.style.background='';x.style.color='var(--muted)';x.style.borderColor='var(--border)';});
+      b.classList.add('active');b.style.background=r.color;b.style.color='#fff';b.style.borderColor=r.color;
+      renderRes(key);
+    };})(r.key);
+    nav.appendChild(b);
+  });
+  // Renderiza o primeiro (prioritário)
+  renderRes(ordered[0].key);
 }
-showTab('dash','#2C2C2A');
-</script>
 
-<!-- ===== CHAT FLUTUANTE ===== -->
-<style>
-@media print{
-  body{background:#fff!important}
-  .topbar,.chat-fab,.chat-window,.print-fab,.sim-nav,.detail-back,.check-btn,.retry-s,.result-box,.qf-wrap,.prog-bar{display:none!important}
-  .screen{display:block!important;padding:0!important}
-  #dash,#mind,#quiz{display:none!important}
-  #sim{display:block!important}
-  .sim-panel{display:none!important}
-  .sim-panel.print-active{display:block!important}
-  .q-block{border:1px solid #ccc!important;page-break-inside:avoid;margin-bottom:12px}
-  .mc-opt{border:1px solid #ddd!important}
-  .mc-opt.selected,.mc-opt.correct,.mc-opt.wrong{background:#fff!important;border-color:#999!important}
-  .q-fb{display:none!important}
-  .exam-header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .print-answer-line{display:block!important}
-  h1.print-title{display:block!important;font-size:16px;margin-bottom:4px}
-  .print-info{display:block!important;font-size:12px;color:#666;margin-bottom:16px;border-bottom:1px solid #ddd;padding-bottom:8px}
+function renderRes(key){
+  var r = RESUMOS.find(function(x){return x.key===key;});
+  if(!r) return;
+  var content = document.getElementById('res-content');
+  var pt = r.lang==='pt';
+  var html = '';
+  html += '<div class="res-header" style="background:linear-gradient(135deg,'+r.color+','+darken(r.color)+')">';
+  html += '<h2>'+r.label+(r.priority?' ⭐':'')+'</h2>';
+  html += '<p>'+(pt?'Resumo + dicas de memorização':'Summary + memorization tips')+'</p></div>';
+  html += '<div class="res-summary" style="border-left:4px solid '+r.color+'">';
+  html += '<h4 style="color:'+r.dark+'">📄 '+(pt?'Resumo':'Summary')+'</h4>';
+  html += '<p>'+r.summary+'</p></div>';
+  html += '<div class="res-tips">';
+  html += '<h4 style="color:'+r.dark+'">💡 '+(pt?'Dicas de memorização':'Memorization tips')+'</h4>';
+  r.tips.forEach(function(t){
+    html += '<div class="res-tip" style="background:'+r.light+';color:'+r.dark+'">'+t+'</div>';
+  });
+  html += '</div>';
+  content.innerHTML = html;
 }
-.print-answer-line{display:none;height:28px;border-bottom:1px solid #bbb;margin:8px 0 4px}
-.help-btn{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 12px;border-radius:20px;font-size:11.5px;font-weight:700;cursor:pointer;border:1.5px solid #e0ddd8;background:#fff;color:#5F5E5A;font-family:Nunito,sans-serif;transition:all .15s}
-.help-btn:hover{background:#EEEDFE;border-color:#7F77DD;color:#534AB7}
-h1.print-title{display:none}
-.print-info{display:none}
 
-.print-fab{position:fixed;bottom:84px;right:20px;width:46px;height:46px;border-radius:50%;background:#fff;border:1.5px solid #e0ddd8;cursor:pointer;font-size:18px;color:#5F5E5A;box-shadow:0 2px 10px rgba(0,0,0,.1);z-index:999;display:none;align-items:center;justify-content:center;transition:transform .2s}
-.print-fab:hover{transform:scale(1.08)}
-.print-fab.visible{display:flex}
+// ===== SIMULADOS (FIXOS — sem IA, sem chat) =====
+var currentSimKey = 'science';
+var currentTopicLabel = '';
+var simQuestions = [];
+var simAnswers = {};
 
-.print-modal-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.45);z-index:1001;display:none;align-items:center;justify-content:center}
-.print-modal-bg.open{display:flex}
-.print-modal{background:#fff;border-radius:16px;padding:1.5rem;max-width:340px;width:90%;font-family:Nunito,sans-serif}
-.print-modal h3{font-size:16px;font-weight:800;margin-bottom:8px;color:#1a1a1a}
-.print-modal p{font-size:13px;color:#666;margin-bottom:16px;line-height:1.6}
-.print-modal-btns{display:flex;gap:8px;flex-wrap:wrap}
-.pm-btn{flex:1;padding:10px 14px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;border:none;font-family:Nunito,sans-serif;min-width:100px}
-.pm-btn.primary{background:#D4537E;color:#fff}
-.pm-btn.secondary{background:#f0efea;color:#1a1a1a}
+function buildSimNav(){
+  var nav=document.getElementById('sim-nav');
+  if(!nav||nav.childElementCount)return;
+  SIMS.forEach((s,i)=>{
+    var b=document.createElement('button');
+    b.className='sim-btn'+(i===0?' active':'');
+    b.textContent=s.label;
+    if(i===0){b.style.background=s.color;b.style.color='#fff';b.style.borderColor=s.color;}
+    b.onclick=(function(key){return function(){
+      document.querySelectorAll('.sim-btn').forEach(x=>{x.classList.remove('active');x.style.background='';x.style.color='var(--muted)';x.style.borderColor='var(--border)';});
+      b.classList.add('active');b.style.background=s.color;b.style.color='#fff';b.style.borderColor=s.color;
+      loadSim(key);
+    };})(s.key);
+    nav.appendChild(b);
+  });
+  loadSim('science');
+}
 
-.chat-fab{position:fixed;bottom:20px;right:20px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#7F77DD,#534AB7);border:none;cursor:pointer;font-size:24px;color:#fff;box-shadow:0 4px 16px rgba(127,119,221,.45);z-index:1000;transition:transform .2s;display:flex;align-items:center;justify-content:center}
-.chat-fab:hover{transform:scale(1.08)}
-.chat-fab .badge{position:absolute;top:-2px;right:-2px;background:#E24B4A;color:#fff;font-size:9px;font-weight:800;padding:2px 5px;border-radius:10px;font-family:'Nunito',sans-serif;display:none}
+function loadSim(key){
+  currentSimKey=key;
+  simAnswers={};
+  simQuestions=[];
+  document.getElementById('sim-questions').innerHTML='';
+  renderTopicPicker();
+}
 
-.chat-window{position:fixed;bottom:86px;right:20px;width:340px;max-height:520px;background:#fff;border-radius:20px;box-shadow:0 8px 40px rgba(0,0,0,.18);z-index:1000;display:none;flex-direction:column;overflow:hidden;border:1.5px solid #e0ddd8}
-.chat-window.open{display:flex}
-.chat-head{background:linear-gradient(135deg,#7F77DD,#534AB7);padding:.75rem 1rem;display:flex;align-items:center;gap:10px;flex-shrink:0}
-.chat-head .avatar{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:18px}
-.chat-head-info h3{font-size:13px;font-weight:800;color:#fff;margin:0}
-.chat-head-info p{font-size:10.5px;color:rgba(255,255,255,.8);margin:0}
-.chat-close{margin-left:auto;background:none;border:none;color:#fff;font-size:18px;cursor:pointer;padding:2px 6px;border-radius:6px;font-family:'Nunito',sans-serif;opacity:.8}
-.chat-close:hover{opacity:1}
+function renderTopicPicker(){
+  var sub = SIMS.find(function(s){return s.key===currentSimKey;});
+  if(!sub) return;
+  var pt = sub.lang==='pt';
+  var wrap = document.getElementById('sim-questions');
+  wrap.innerHTML = '';
+  var header = document.createElement('div');
+  header.className = 'exam-header';
+  header.style.background = 'linear-gradient(135deg,'+sub.color+','+darken(sub.color)+')';
+  header.innerHTML = '<h2>'+sub.label+'</h2><p>'+(pt?'Escolha o simulado que quer praticar:':'Choose the exam you want to practice:')+'</p>';
+  wrap.appendChild(header);
+  var grid = document.createElement('div');
+  grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:4px';
+  wrap.appendChild(grid);
+  sub.subtopics.forEach(function(t){
+    var isFull = t.label.toLowerCase().includes('todo') || t.label.toLowerCase().includes('all') || t.label.toLowerCase().includes('tudo') || t.label.toLowerCase().includes('mix') || t.label.toLowerCase().includes('full') || t.label.toLowerCase().includes('completo');
+    var btn = document.createElement('button');
+    btn.style.cssText = 'border-radius:14px;padding:14px 16px;cursor:pointer;font-size:13px;font-weight:700;text-align:left;transition:transform .15s;width:100%;font-family:Nunito,sans-serif';
+    btn.style.background = isFull ? 'linear-gradient(135deg,'+sub.color+','+darken(sub.color)+')' : 'var(--card)';
+    btn.style.color = isFull ? '#fff' : '#1a1a1a';
+    btn.style.border = isFull ? '2px solid '+sub.color : '1.5px solid #e0ddd8';
+    var qcount = t.questions ? t.questions.length : 5;
+    btn.innerHTML = t.label+'<div style="font-size:11px;font-weight:400;margin-top:4px;opacity:.75">'+qcount+(pt?' questões':' questions')+'</div>';
+    btn.addEventListener('mouseover',function(){this.style.transform='translateY(-2px)';});
+    btn.addEventListener('mouseout',function(){this.style.transform='';});
+    (function(label){btn.addEventListener('click',function(){startSimTopic(label);});})(t.label);
+    grid.appendChild(btn);
+  });
+}
 
-.chat-msgs{flex:1;overflow-y:auto;padding:.75rem;display:flex;flex-direction:column;gap:10px;min-height:0}
-.msg{max-width:85%;border-radius:14px;padding:8px 11px;font-size:13px;line-height:1.55;font-family:'Nunito',sans-serif}
-.msg.bot{background:#EEEDFE;color:#3C3489;align-self:flex-start;border-bottom-left-radius:4px}
-.msg.user{background:linear-gradient(135deg,#7F77DD,#534AB7);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
-.msg.typing{background:#EEEDFE;color:#7F77DD;align-self:flex-start;border-bottom-left-radius:4px;font-style:italic;opacity:.7}
+function startSimTopic(label){
+  currentTopicLabel = label;
+  var sub = SIMS.find(function(s){return s.key===currentSimKey;});
+  var subtopic = sub.subtopics.find(function(t){ return t.label===label; });
+  if(!subtopic || !subtopic.questions) return;
+  simAnswers={};
+  simQuestions = subtopic.questions;
+  renderSimQuestions(sub, subtopic);
+}
 
-.chat-suggestions{padding:0 .75rem .5rem;display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0}
-.sug-btn{padding:5px 10px;border-radius:12px;font-size:11px;font-weight:700;cursor:pointer;border:1.5px solid #CECBF6;background:#EEEDFE;color:#534AB7;font-family:'Nunito',sans-serif;transition:all .15s;white-space:nowrap}
-.sug-btn:hover{background:#7F77DD;color:#fff;border-color:#7F77DD}
+function renderSimQuestions(sub, subtopic){
+  var color = sub.color;
+  var lang = sub.lang;
+  var questions = subtopic.questions;
+  var tLabel = currentTopicLabel;
 
-.chat-input-row{padding:.6rem .75rem;border-top:1.5px solid #f0efea;display:flex;gap:8px;align-items:center;flex-shrink:0}
-.chat-input{flex:1;border:1.5px solid #e0ddd8;border-radius:12px;padding:7px 11px;font-family:'Nunito',sans-serif;font-size:13px;color:#1a1a1a;outline:none;transition:border-color .15s;background:#fff}
-.chat-input:focus{border-color:#7F77DD}
-.chat-send{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#7F77DD,#534AB7);border:none;cursor:pointer;color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center;transition:opacity .15s;flex-shrink:0}
-.chat-send:hover{opacity:.88}
-.chat-send:disabled{opacity:.4;cursor:not-allowed}
-</style>
+  var wrap = document.getElementById('sim-questions');
+  wrap.innerHTML = '';
 
-<button class="chat-fab" onclick="toggleChat()" title="Perguntar para a Lala-AI">
-  🤖
-  <span class="badge" id="chat-badge"></span>
-</button>
+  // Botão voltar
+  var backDiv = document.createElement('div');
+  backDiv.style.marginBottom = '10px';
+  var bb = document.createElement('button');
+  bb.style.cssText = 'border:1.5px solid #e0ddd8;background:#fff;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:Nunito,sans-serif;color:#1a1a1a';
+  bb.textContent = lang==='pt' ? '← Escolher outro simulado' : '← Choose another exam';
+  bb.onclick = function(){ loadSim(currentSimKey); };
+  backDiv.appendChild(bb);
+  wrap.appendChild(backDiv);
 
-<div class="chat-window" id="chat-window">
-  <div class="chat-head">
-    <div class="avatar">🤖</div>
-    <div class="chat-head-info">
-      <h3>Lala-AI</h3>
-      <p>Tira dúvidas das provas! 💜</p>
-    </div>
-    <button class="chat-close" onclick="toggleChat()">✕</button>
-  </div>
+  // Header
+  var html = '';
+  html += '<div class="exam-header" style="background:linear-gradient(135deg,'+color+','+darken(color)+')">';
+  html += '<h2>'+sub.label+' — '+tLabel+'</h2>';
+  html += '<p style="font-size:12px;opacity:.85">'+(lang==='pt'?'Selecione suas respostas e corrija no final':'Select your answers and check at the end')+'</p>';
+  html += '<span class="exam-score" id="sc-dynamic">— / '+questions.length+'</span></div>';
 
-  <div class="chat-msgs" id="chat-msgs">
-    <div class="msg bot">Oi Lala! 👋 Sou sua assistente de estudos. Pode me perguntar qualquer coisa sobre as matérias — em português ou em inglês! 💜</div>
-  </div>
-
-  <div class="chat-suggestions" id="chat-sugs">
-    <button class="sug-btn" onclick="sendSug(this)">O que é fotossíntese?</button>
-    <button class="sug-btn" onclick="sendSug(this)">What is a food web?</button>
-    <button class="sug-btn" onclick="sendSug(this)">O que é paroxítona?</button>
-    <button class="sug-btn" onclick="sendSug(this)">What are the Incas?</button>
-    <button class="sug-btn" onclick="sendSug(this)">Explica biomas</button>
-    <button class="sug-btn" onclick="sendSug(this)">What is elapsed time?</button>
-  </div>
-
-  <div class="chat-input-row">
-    <input class="chat-input" id="chat-input" placeholder="Escreva sua dúvida…" onkeydown="if(event.key==='Enter')sendChat()">
-    <button class="chat-send" id="chat-send" onclick="sendChat()">➤</button>
-  </div>
-</div>
-
-<button class="print-fab" id="print-fab" onclick="openPrintModal()" title="Imprimir simulado">🖨️</button>
-
-<div class="print-modal-bg" id="print-modal-bg">
-  <div class="print-modal">
-    <h3>🖨️ Imprimir simulado</h3>
-    <p>Vai imprimir o simulado atual com espaços para escrever as respostas à mão — ótimo para praticar como numa prova de verdade!</p>
-    <div id="print-student-row" style="margin-bottom:14px">
-      <label style="font-size:12px;font-weight:700;color:#666;display:block;margin-bottom:4px">Nome da aluna:</label>
-      <input id="print-student-name" type="text" placeholder="Lala" style="width:100%;border:1.5px solid #e0ddd8;border-radius:8px;padding:7px 10px;font-family:Nunito,sans-serif;font-size:13px;outline:none">
-    </div>
-    <div class="print-modal-btns">
-      <button class="pm-btn primary" onclick="doPrint()">Imprimir 🖨️</button>
-      <button class="pm-btn secondary" onclick="closePrintModal()">Cancelar</button>
-    </div>
-  </div>
-</div>
-
-<script>
-var chatOpen=false;
-var chatHistory=[];
-var chatTyping=false;
-
-
-function openPrintModal(){
-  var panel = document.querySelector('.sim-panel.active');
-  if(!panel){
-    alert('Gere um simulado primeiro antes de imprimir!');
-    return;
+  // Texto de contexto (reading comprehension)
+  if(subtopic.context){
+    html += '<div class="q-ctx" style="border-left:4px solid '+color+';font-style:normal;font-weight:500">'+escHtml(subtopic.context).replace(/\n/g,'<br>')+'</div>';
   }
-  document.getElementById('print-modal-bg').classList.add('open');
+
+  var letters = ['A','B','C','D'];
+  questions.forEach(function(q,i){
+    html += '<div class="q-block" id="qblock-'+i+'">';
+    html += '<div class="q-num">'+(lang==='pt'?'Questão':'Question')+' '+(i+1)+'</div>';
+    html += '<div class="q-stem">'+escHtml(q.q)+'</div>';
+    html += '<div class="mc-opts">';
+    q.opts.forEach(function(opt,j){
+      html += '<button class="mc-opt" onclick="pickSimMC(this,'+i+','+j+')"><span class="mc-letter">'+letters[j]+'</span>'+escHtml(opt)+'</button>';
+    });
+    html += '</div><div class="q-fb" id="qfb-'+i+'"></div>';
+    html += '</div>';
+  });
+
+  var btnLabel = lang==='pt'?'Corrigir ✓':'Check my answers ✓';
+  html += '<button class="check-btn" style="background:'+color+'" onclick="checkDynamicSim()">'+btnLabel+'</button>';
+  html += '<div class="result-box" id="rb-dynamic"><h3 id="rb-dynamic-h"></h3><p id="rb-dynamic-p"></p>';
+  html += '<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">';
+  html += '<button class="retry-s" onclick="retrySimTopic()" style="background:'+color+'">'+(lang==='pt'?'Refazer 🔄':'Retry 🔄')+'</button>';
+  html += '<button class="retry-s" onclick="loadSim(currentSimKey)" style="background:rgba(0,0,0,.15)">'+(lang==='pt'?'Outro simulado ←':'Another exam ←')+'</button>';
+  html += '</div></div>';
+
+  var tmp = document.createElement('div');
+  tmp.innerHTML = html;
+  while(tmp.firstChild) wrap.appendChild(tmp.firstChild);
 }
 
-function closePrintModal(){
-  document.getElementById('print-modal-bg').classList.remove('open');
+function pickSimMC(el,qIdx,optIdx){
+  var btn = el.closest('.mc-opt')||el;
+  var opts = btn.parentElement.querySelectorAll('.mc-opt');
+  opts.forEach(function(o){o.classList.remove('selected');});
+  btn.classList.add('selected');
+  simAnswers[qIdx]=optIdx;
 }
 
-function doPrint(){
-  var name = document.getElementById('print-student-name').value || 'Lala';
-  closePrintModal();
+function checkDynamicSim(){
+  var score=0;
+  var total=simQuestions.length;
+  var sub=SIMS.find(function(s){return s.key===currentSimKey;});
+  var lang=sub?sub.lang:'en';
 
-  // Adicionar cabeçalho de impressão
-  var panel = document.querySelector('.sim-panel.active');
-  if(!panel) return;
-  panel.classList.add('print-active');
+  simQuestions.forEach(function(q,i){
+    var fb=document.getElementById('qfb-'+i);
+    var opts=document.querySelectorAll('#qblock-'+i+' .mc-opt');
+    var chosen=simAnswers[i];
+    var correct=q.a;
 
-  // Injetar nome e data no cabeçalho
-  var existing = document.getElementById('print-header-inject');
-  if(existing) existing.remove();
-  var hdr = document.createElement('div');
-  hdr.id = 'print-header-inject';
-  hdr.className = 'print-info';
-  var today = new Date().toLocaleDateString('pt-BR');
-  hdr.innerHTML = 'Nome: <strong>'+name+'</strong> &nbsp;&nbsp; Data: <strong>'+today+'</strong> &nbsp;&nbsp; Ano: <strong>4º ano</strong>';
-  panel.insertBefore(hdr, panel.firstChild);
+    if(chosen===undefined){
+      if(fb){fb.className='q-fb show bad';fb.textContent='❌ '+(lang==='pt'?'Selecione uma opção!':'Select an option!');}
+      if(opts[correct]) opts[correct].classList.add('correct');
+      return;
+    }
 
-  // Adicionar linhas de resposta em cada questão aberta (textarea)
-  var textareas = panel.querySelectorAll('.short-ta');
-  textareas.forEach(function(ta){
-    var existing = ta.parentElement.querySelector('.print-answer-line');
-    if(!existing){
-      for(var i=0;i<4;i++){
-        var line = document.createElement('div');
-        line.className = 'print-answer-line';
-        ta.parentElement.appendChild(line);
-      }
+    opts.forEach(function(o){o.classList.remove('selected');});
+    if(chosen===correct){
+      score++;
+      opts[correct].classList.add('correct');
+      if(fb){fb.className='q-fb show ok';fb.textContent='✅ '+q.exp;}
+    } else {
+      opts[chosen].classList.add('wrong');
+      opts[correct].classList.add('correct');
+      if(fb){fb.className='q-fb show bad';fb.textContent='❌ '+q.exp;}
     }
   });
 
-  setTimeout(function(){
-    window.print();
-    // Limpar depois de imprimir
-    setTimeout(function(){
-      panel.classList.remove('print-active');
-      var inj = document.getElementById('print-header-inject');
-      if(inj) inj.remove();
-    }, 1000);
-  }, 200);
+  var pct=Math.round(score/total*100);
+  var rb=document.getElementById('rb-dynamic');
+  var rh=document.getElementById('rb-dynamic-h');
+  var rp=document.getElementById('rb-dynamic-p');
+  var emoji=pct>=80?'🌟':pct>=60?'👍':'💪';
+  var msg=pct>=80?(lang==='pt'?'Excelente! Pronta para a prova!':'Excellent! Ready for the exam!')
+                 :pct>=60?(lang==='pt'?'Bom trabalho! Revise as vermelhas.':'Good job! Review the red answers.')
+                 :(lang==='pt'?'Continue praticando!':'Keep practicing!');
+  rh.textContent=emoji+' '+score+'/'+total+' ('+pct+'%)';
+  rp.textContent=msg;
+  rb.style.background=pct>=80?'var(--green-l)':'var(--amber-l)';
+  rb.style.color=pct>=80?'var(--green-d)':'var(--amber-d)';
+  rb.className='result-box show';
+  document.getElementById('sc-dynamic').textContent=score+'/'+total;
+  // scroll pro resultado
+  rb.scrollIntoView({behavior:'smooth',block:'center'});
 }
 
-// Mostrar botão de imprimir quando estiver na aba de simulados
-function updatePrintBtn(tabId){
-  var fab = document.getElementById('print-fab');
-  if(fab) fab.classList.toggle('visible', tabId==='sim');
+function retrySimTopic(){
+  startSimTopic(currentTopicLabel);
 }
 
-function askAboutQuestion(question, options){
-  // Abre o chat
-  if(!chatOpen) toggleChat();
-  // Monta mensagem contextualizada
-  var lang = currentSimKey && ['science','mat','la','social'].includes(currentSimKey) ? 'en' : 'pt';
-  var msg;
-  if(lang === 'en'){
-    msg = 'I need help with this question: "' + question + '"';
-    if(options && options.length) msg += ' The options are: ' + options.map(function(o,i){ return ['A','B','C','D'][i]+') '+o; }).join(', ');
-    msg += '. Can you explain it to me in a simple way?';
-  } else {
-    msg = 'Preciso de ajuda com essa questão: "' + question + '"';
-    if(options && options.length) msg += ' As opções são: ' + options.map(function(o,i){ return ['A','B','C','D'][i]+') '+o; }).join(', ');
-    msg += '. Pode me explicar de um jeito fácil?';
-  }
-  // Preenche e envia
-  var input = document.getElementById('chat-input');
-  if(input){
-    input.value = msg;
-    // Pequeno delay para garantir que o chat abriu
-    setTimeout(function(){ sendChat(); }, 150);
-  }
+function darken(hex){
+  var r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  return '#'+[Math.max(0,r-40),Math.max(0,g-40),Math.max(0,b-40)].map(function(x){return x.toString(16).padStart(2,'0');}).join('');
 }
+function escHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
-function toggleChat(){
-  chatOpen=!chatOpen;
-  var w=document.getElementById('chat-window');
-  w.classList.toggle('open',chatOpen);
-  document.getElementById('chat-badge').style.display='none';
-  if(chatOpen) document.getElementById('chat-input').focus();
-}
-
-function addMsg(text,type){
-  var msgs=document.getElementById('chat-msgs');
-  var div=document.createElement('div');
-  div.className='msg '+type;
-  div.textContent=text;
-  msgs.appendChild(div);
-  msgs.scrollTop=msgs.scrollHeight;
-  return div;
-}
-
-function sendSug(btn){
-  var text=btn.textContent;
-  document.getElementById('chat-sugs').style.display='none';
-  sendMessage(text);
-}
-
-function sendChat(){
-  var inp=document.getElementById('chat-input');
-  var text=inp.value.trim();
-  if(!text||chatTyping)return;
-  inp.value='';
-  document.getElementById('chat-sugs').style.display='none';
-  sendMessage(text);
-}
-
-async function sendMessage(text){
-  if(chatTyping)return;
-  chatTyping=true;
-  document.getElementById('chat-send').disabled=true;
-
-  addMsg(text,'user');
-  chatHistory.push({role:'user',content:text});
-
-  var typingDiv=addMsg('Pensando… ✨','typing');
-
-  try{
-    var res=await fetch('/api/chat',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({messages:chatHistory})
-    });
-    var data=await res.json();
-    var reply=data.reply||'Hmm, não consegui responder. Tenta de novo! 💜';
-    typingDiv.remove();
-    addMsg(reply,'bot');
-    chatHistory.push({role:'assistant',content:reply});
-    if(chatHistory.length>20) chatHistory=chatHistory.slice(-16);
-    if(!chatOpen){
-      document.getElementById('chat-badge').style.display='block';
-      document.getElementById('chat-badge').textContent='1';
-    }
-  }catch(e){
-    typingDiv.remove();
-    addMsg('Ops, algo deu errado. Tenta de novo! 🙈','bot');
-  }
-  chatTyping=false;
-  document.getElementById('chat-send').disabled=false;
-}
+// init
+showTab('dash','#2C2C2A');
 </script>
 
+</body>
+</html>
