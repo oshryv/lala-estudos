@@ -30,3 +30,5 @@ Para editar:
 - HTML + CSS + JavaScript puros (sem frameworks)
 - Hospedado no Vercel como site estático
 - Fonte: Nunito (Google Fonts)
+
+
