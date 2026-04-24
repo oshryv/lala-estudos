@@ -1,51 +1,32 @@
-# 📚 Lala Estudos — Deploy no Vercel
+# 📚 Lala Estudos
 
-## O que é isso?
-App de estudos da Lala com chat AI integrado. Precisa rodar num servidor para o chat funcionar.
+Plataforma de estudos da Lala — Year 4 do Colégio Pueri Domus.
 
-## Como publicar (5 minutos, grátis)
+## O que tem aqui
 
-### Passo 1 — Crie uma conta no GitHub
-- Acesse https://github.com e crie uma conta gratuita (se não tiver)
+- **Painel** com todas as matérias (PT + EN)
+- **Mapas mentais** visuais de cada matéria
+- **Resumos** com dicas de memorização
+- **Quiz** geral com questões misturadas
+- **Simulados** por matéria em 3 níveis (fácil, médio, difícil) + completo
 
-### Passo 2 — Crie um repositório novo
-- Clique em "New repository"
-- Nome: `lala-estudos`
-- Marque "Public"
-- Clique em "Create repository"
+## Como acessar
 
-### Passo 3 — Suba os arquivos
-No repositório criado, clique em "uploading an existing file" e suba:
-- `vercel.json`
-- A pasta `api/` com o arquivo `chat.js` dentro
-- A pasta `public/` com o arquivo `index.html` dentro
+Produção: https://lala-estudos-yogw.vercel.app/
 
-### Passo 4 — Crie conta no Vercel
-- Acesse https://vercel.com
-- Clique em "Sign up" e entre com o GitHub
+Abre em qualquer navegador — computador, celular ou tablet.
 
-### Passo 5 — Importe o projeto
-- No painel do Vercel, clique em "Add New Project"
-- Selecione o repositório `lala-estudos`
-- Clique em "Deploy"
+## Como editar
 
-### Passo 6 — Configure a chave da API (IMPORTANTE!)
-Após o deploy, vá em:
-- Settings → Environment Variables
-- Adicione uma nova variável:
-  - **Name:** `ANTHROPIC_API_KEY`
-  - **Value:** sua chave da API (começa com `sk-ant-...`)
-- Clique em Save
-- Vá em Deployments → clique nos 3 pontinhos → "Redeploy"
+O site é um único arquivo HTML estático (`public/index.html`) com CSS e JavaScript embutidos.
 
-### Passo 7 — Acesse!
-O Vercel vai te dar um link tipo `lala-estudos.vercel.app`
-Esse link funciona em qualquer navegador, celular ou tablet!
+Para editar:
+1. Edita `public/index.html` direto no GitHub ou localmente
+2. Commita as mudanças
+3. Vercel redeploya automaticamente em ~30 segundos
 
-## Como obter a chave da API Anthropic
-- Acesse https://console.anthropic.com
-- Vá em "API Keys" → "Create Key"
-- Copie a chave e cole no Vercel (passo 6)
+## Stack
 
-## Dúvidas?
-Pergunte para a mamãe! 😄
+- HTML + CSS + JavaScript puros (sem frameworks)
+- Hospedado no Vercel como site estático
+- Fonte: Nunito (Google Fonts)
