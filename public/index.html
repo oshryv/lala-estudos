@@ -827,16 +827,16 @@ var RESUMOS = [
      '⏱️ Elapsed time: Start + Duration = End (like 2:30 + 45 min = 3:15)'
    ]},
   {key:'la', label:'📖 Language Arts', color:'#E24B4A', light:'#FCEBEB', dark:'#791F1F', lang:'en', priority:true,
-   summary:'Nouns = person, place, or thing. Adjectives describe nouns. 4 types of sentences: Declarative (.), Imperative (command), Interrogative (?), Exclamatory (!). Comparative: add -er (bigger, taller) or use "more" for long words. Irregular: good→better→best. Verbs: Present (walks, runs) vs Past (walked, ran). Past regular = add -ed. Past irregular = memorize (go→went, eat→ate, run→ran).',
+   summary:'Synonyms = words with the SAME or similar meaning (big = huge, start = begin). Antonyms = words with OPPOSITE meanings (clean \u2194 messy, open \u2194 close). Common nouns = general names (dog, city, month) and are NOT capitalised. Proper nouns = specific names (Fido, Paris, April) and are ALWAYS capitalised. Present tense: he/she/it adds -s (she walks); I/we/they/you do not (they walk). Past tense: regular verbs add -ed (played, washed); irregular verbs change completely (catch\u2192caught, swim\u2192swam, buy\u2192bought, break\u2192broke, sleep\u2192slept). Compound sentence = two complete thoughts joined by a comma + a FANBOYS conjunction (For, And, Nor, But, Or, Yet, So).',
    tips:[
-     '📝 <b>D / Im / In / E</b>: Declarative (.), Imperative (command), Interrogative (?), Exclamatory (!)',
-     '🏆 Short word (1-2 syllables) = add <b>-er / -est</b> (big→bigger). Long word = use <b>more / most</b> (more beautiful)',
-     '⚡ 5 irregular verbs MUST know: <b>go→went, have→had, eat→ate, run→ran, fly→flew</b>',
-     '🔑 Past tense signals: <b>yesterday, last week, ago, last night</b>',
-     '❓ Question word? → starts with Wh (What, Where, When, Why, Who) or "Do/Does/Did"',
-     '👆 Command = gives an order, often starts with a verb: "Close the door." "Eat your food."'
+     '🔁 <b>SYNONYM = Same</b>. <b>ANTONYM = Against</b> (opposite). Trick: aNT \u2192 \u201cNot the same\u201d!',
+     '🏷️ <b>PROPER noun = a specific name, ALWAYS a capital letter</b> (Paris, Fido, April). Common = general (city, dog, month)',
+     '⏪ Regular past = add <b>-ed</b> (play\u2192played). Irregular = memorize: <b>catch\u2192caught, swim\u2192swam, buy\u2192bought, break\u2192broke, sleep\u2192slept</b>',
+     '▶️ Present tense: <b>he/she/it adds -s</b> (she walk<b>s</b>). <b>I / we / they / you</b> = no -s (they walk)',
+     '🔗 <b>FANBOYS</b> = For \u00b7 And \u00b7 Nor \u00b7 But \u00b7 Or \u00b7 Yet \u00b7 So. Join 2 complete thoughts with a <b>comma + FANBOYS</b>',
+     '✅ Compound = <b>2 complete ideas</b> (\u201cI was tired, <b>so</b> I slept.\u201d). Simple = just <b>1 idea</b> (\u201cThe cat napped.\u201d)'
    ]},
-  {key:'geohist', label:'🏛️ Geo & História', color:'#7F77DD', light:'#EEEDFE', dark:'#3C3489', lang:'pt', priority:true,
+    {key:'geohist', label:'🏛️ Geo & História', color:'#7F77DD', light:'#EEEDFE', dark:'#3C3489', lang:'pt', priority:true,
    summary:'O povo brasileiro é miscigenado — mistura de indígenas, africanos, europeus e asiáticos. Antes dos portugueses, havia 5-7 milhões de indígenas; hoje, 817 mil (0,4% da população). Heranças indígenas: rede, canoa, vassoura, chocalho, vasilhas de barro, palavras tupi (mandioca, caju, abacaxi). Lendas: Iara (rios), Vitória-régia (plantas), Caipora (mato). Mapas: político (fronteiras), físico (relevo), econômico, demográfico, histórico, anamorfose (distorcido). Grandes Navegações: Portugal foi pioneiro no séc XV porque tinha geografia, dinheiro e tecnologia.',
    tips:[
      '🪶 Heranças no dia a dia: <b>REDE · CANOA · VASSOURA · CHOCALHO · BARRO</b>',
@@ -1085,44 +1085,104 @@ var SIMS=[
   // ===== LANGUAGE ARTS (NOVO — 3 níveis + completo) =====
   {key:'la', label:'📖 Language Arts', color:'#E24B4A', lang:'en',
    subtopics:[
-     {label:'🟢 Easy', fixed:true, questions:[
-       {q:'Which word in this sentence is a NOUN? "My dog has a plaid collar."',opts:['dog','has','plaid','my'],a:0,exp:'A noun = person, place, or thing. "Dog" is a thing/animal!'},
-       {q:'Which word in this sentence is an ADJECTIVE? "The large fan blew a cool breeze."',opts:['fan','breeze','large','blew'],a:2,exp:'Adjective describes a noun. "Large" describes "fan"!'},
-       {q:'What type of sentence is this? "Put the presents beside the tree."',opts:['Declarative (D)','Imperative (Im)','Interrogative (In)','Exclamatory (E)'],a:1,exp:'It gives a command → Imperative!'},
-       {q:'What type of sentence is this? "Are the presents beside the tree?"',opts:['Declarative (D)','Imperative (Im)','Interrogative (In)','Exclamatory (E)'],a:2,exp:'It ends with "?" and asks a question → Interrogative!'},
-       {q:'"Today, we _____ history." Which verb is correct? (study)',opts:['studied','study','studying','studies'],a:1,exp:'"We" + present simple = "study" (no -s for we/you/they)!'}
+     {label:'🔁 Synonyms', fixed:true, questions:[
+       {q:'What is a SYNONYM?',opts:['A word with the same or similar meaning','A word with the opposite meaning','A naming word','An action word'],a:0,exp:'A synonym is a word that means the SAME (or almost the same) as another word. Big = huge!'},
+       {q:'Tommy liked watching the HUGE elephant at the zoo. Which word is a synonym for "huge"?',opts:['tiny','gigantic','empty','quiet'],a:1,exp:'Huge = gigantic = very, very big!'},
+       {q:'I tossed a STONE in the lake. Synonym for "stone"?',opts:['pebble','river','splash','wave'],a:0,exp:'A stone and a pebble are both small rocks!'},
+       {q:'Carla knows so many FUNNY jokes. Synonym for "funny"?',opts:['boring','silly','serious','sad'],a:1,exp:'Funny = silly = something that makes you laugh!'},
+       {q:'Will you tell me a STORY, Grandpa? Synonym for "story"?',opts:['song','tale','poem','lie'],a:1,exp:'A story and a tale mean the same thing!'},
+       {q:'Sarah\u2019s bedroom is very NEAT. Synonym for "neat"?',opts:['dirty','messy','tidy','large'],a:2,exp:'Neat = tidy = clean and organised!'},
+       {q:'Ed makes everyone LAUGH. Synonym for "laugh"?',opts:['cry','chuckle','frown','shout'],a:1,exp:'Laugh = chuckle = a happy giggle!'},
+       {q:'You should START your science project tonight. Synonym for "start"?',opts:['finish','begin','stop','close'],a:1,exp:'Start = begin = to get going!'},
+       {q:'Which TWO words are synonyms?',opts:['toasty / chilly','chilly / cool','hot / cold','wet / dry'],a:1,exp:'Chilly and cool both mean a little bit cold!'},
+       {q:'Synonym for "tasty"?',opts:['delicious','ugly','boring','plain'],a:0,exp:'Tasty = delicious = yummy food!'}
      ]},
-     {label:'🟡 Medium', fixed:true, questions:[
-       {q:'My sister rarely talks. She is _____ than my brother. (quiet)',opts:['quieter','more quiet','quietest','quiet'],a:0,exp:'Short adjective → add -er for comparative: quieter!'},
-       {q:'What tense is this sentence in? "The Incas farmed on the side of steep mountains."',opts:['Present simple','Past simple','Future','Present continuous'],a:1,exp:'"Farmed" with -ed = past simple!'},
-       {q:'In "The scary witch flew over the moon", which are the NOUNS?',opts:['scary, flew','witch, moon','over, moon','scary, over'],a:1,exp:'Nouns = things. Witch and moon are nouns!'},
-       {q:'"Yesterday, the witch ___ across the dark sky." (fly)',opts:['flies','flew','flyed','is flying'],a:1,exp:'"Fly" is irregular: past = FLEW!'},
-       {q:'What type of sentence is this? "What a beautiful day!"',opts:['Declarative (D)','Imperative (Im)','Interrogative (In)','Exclamatory (E)'],a:3,exp:'Starts with "What" + ends with "!" = Exclamatory!'}
+     {label:'↔️ Antonyms', fixed:true, questions:[
+       {q:'What is an ANTONYM?',opts:['A word with the same meaning','A word with the OPPOSITE meaning','A naming word','A describing word'],a:1,exp:'An antonym means the OPPOSITE. Old \u2194 young, hot \u2194 cold!'},
+       {q:'The BEST movie I\u2019ve ever seen is Lion King. Antonym for "best"?',opts:['greatest','worst','better','good'],a:1,exp:'Best \u2194 worst are opposites!'},
+       {q:'My bedroom is usually very CLEAN. Antonym for "clean"?',opts:['tidy','neat','messy','shiny'],a:2,exp:'Clean \u2194 messy are opposites!'},
+       {q:'The store will OPEN at nine o\u2019clock. Antonym for "open"?',opts:['close','start','lock','begin'],a:0,exp:'Open \u2194 close are opposites!'},
+       {q:'Tim ALWAYS finishes his homework. Antonym for "always"?',opts:['often','sometimes','never','usually'],a:2,exp:'Always \u2194 never are opposites!'},
+       {q:'That is the BIGGEST watermelon I\u2019ve ever seen. Antonym for "biggest"?',opts:['largest','smallest','heaviest','roundest'],a:1,exp:'Biggest \u2194 smallest are opposites!'},
+       {q:'If you drop a potato in water, it will SINK. Antonym for "sink"?',opts:['drop','float','fall','swim'],a:1,exp:'Sink \u2194 float are opposites!'},
+       {q:'Uncle Jim has a FAST boat. Antonym for "fast"?',opts:['quick','rapid','slow','speedy'],a:2,exp:'Fast \u2194 slow are opposites!'},
+       {q:'The milk carton is EMPTY. Antonym for "empty"?',opts:['full','open','small','old'],a:0,exp:'Empty \u2194 full are opposites!'},
+       {q:'Antonym for "happy"?',opts:['joyful','cheerful','sad','glad'],a:2,exp:'Happy \u2194 sad are opposites!'}
      ]},
-     {label:'🔴 Hard (Reading)', fixed:true, context:'📖 Reading: "The Three Empires"\n\nLong ago, three amazing civilizations lived in Central and South America: the Mayas, the Aztecs, and the Incas. The Mayas were famous for building tall stone pyramids and studying the stars. They lived in the rainforest and created their own clever writing system using pictures. The Aztecs built a magnificent city called Tenochtitlán in the middle of a lake. They were fierce warriors and grew their food on "floating gardens" made of mud and plants. High up in the Andes Mountains lived the Incas. They were master builders who made long roads and bridges to connect their empire. Because they lived on steep mountains, they cut flat "steps" called terraces into the hills to grow their crops.',
+     {label:'🏷️ Common & Proper Nouns', fixed:true, questions:[
+       {q:'What is a PROPER noun?',opts:['A general name for any person or thing','The specific name of one person, place or thing','An action word','A describing word'],a:1,exp:'A proper noun names ONE specific thing: Paris, Fido, April. Always a capital letter!'},
+       {q:'Proper nouns ALWAYS begin with a...',opts:['small letter','capital letter','number','question mark'],a:1,exp:'Proper nouns are ALWAYS capitalised, no matter where they are in the sentence!'},
+       {q:'Which word is a PROPER noun?',opts:['dog','country','France','river'],a:2,exp:'France is one specific country = proper noun (capital F)!'},
+       {q:'Which word is a COMMON noun?',opts:['Google','Charles Dickens','mountain','Wikipedia'],a:2,exp:'Mountain is a general word for any mountain = common noun!'},
+       {q:'Next year, we are going to PARIS on holiday. Which is the proper noun?',opts:['year','going','Paris','holiday'],a:2,exp:'Paris is a specific city = proper noun!'},
+       {q:'My friend ALI lives next door. Which is the proper noun?',opts:['friend','Ali','door','next'],a:1,exp:'Ali is a specific person\u2019s name = proper noun!'},
+       {q:'The common noun "city" matches which proper noun?',opts:['Chicago','building','street','town'],a:0,exp:'Chicago is a specific city = proper noun!'},
+       {q:'The proper noun "April" is the name of a specific...',opts:['day','month','holiday','season'],a:1,exp:'April is a specific month = proper noun. "Month" is the common noun!'},
+       {q:'Which is a COMMON noun?',opts:['Nintendo Switch','Fido','games console','Thanksgiving'],a:2,exp:'Games console is general; Nintendo Switch is the proper noun!'},
+       {q:'Which sentence has a PROPER noun?',opts:['The dog ran fast.','We visited Canada.','I love my city.','The river is long.'],a:1,exp:'Canada is a specific country = proper noun (capital C)!'}
+     ]},
+     {label:'⏪ Past Tense (regular + irregular)', fixed:true, questions:[
+       {q:'To make most REGULAR verbs past tense, what do we add?',opts:['-ing','-s','-ed','-er'],a:2,exp:'Regular past tense verbs end in -ed: play\u2192played, wash\u2192washed!'},
+       {q:'Past tense of WASH?',opts:['washing','washed','washes','wash'],a:1,exp:'Wash is regular: wash + ed = washed!'},
+       {q:'Past tense of PLAY?',opts:['plaied','played','playd','plays'],a:1,exp:'Play + ed = played!'},
+       {q:'I ___ the ball before it reached the ground. (catch)',opts:['catched','caught','cated','catches'],a:1,exp:'Catch is IRREGULAR: catch\u2192caught (not "catched")!'},
+       {q:'Mary ___ a hole for the new rose bush. (dig)',opts:['digged','dug','digs','digging'],a:1,exp:'Dig is irregular: dig\u2192dug!'},
+       {q:'Hector ___ his arm when he fell. (break)',opts:['breaked','broke','breaks','broken'],a:1,exp:'Break is irregular: break\u2192broke!'},
+       {q:'We ___ at the beach yesterday. (swim)',opts:['swimmed','swam','swimed','swims'],a:1,exp:'Swim is irregular: swim\u2192swam!'},
+       {q:'I ___ on the plane trip last week. (sleep)',opts:['sleeped','slept','sleeps','sleeping'],a:1,exp:'Sleep is irregular: sleep\u2192slept!'},
+       {q:'Mom ___ some vegetables for dinner. (buy)',opts:['buyed','bought','buys','buying'],a:1,exp:'Buy is irregular: buy\u2192bought!'},
+       {q:'We ___ our yummy school lunch. (eat)',opts:['eated','ate','eats','eaten'],a:1,exp:'Eat is irregular: eat\u2192ate!'},
+       {q:'The teacher ___ that I read my book well. (say)',opts:['sayed','said','says','saying'],a:1,exp:'Say is irregular: say\u2192said!'},
+       {q:'She ___ to close the back door. (forget)',opts:['forgetted','forgot','forgots','forgetting'],a:1,exp:'Forget is irregular: forget\u2192forgot!'}
+     ]},
+     {label:'▶️ Present Tense', fixed:true, questions:[
+       {q:'She ___ to the store. (walk)',opts:['walk','walks','walked','walking'],a:1,exp:'She/he/it adds -s: she walks!'},
+       {q:'My friends ___ at the park. (play)',opts:['plays','play','played','playing'],a:1,exp:'"My friends" = they = no -s: friends play!'},
+       {q:'The baby ___ across the floor. (crawl)',opts:['crawl','crawls','crawled','crawling'],a:1,exp:'The baby = it = adds -s: crawls!'},
+       {q:'I ___ lots of books over the summer. (read)',opts:['reads','read','reading','readed'],a:1,exp:'"I" never adds -s: I read (not "I reads")!'},
+       {q:'The family ___ on the airplane. (fly)',opts:['fly','flys','flies','flying'],a:2,exp:'The family = it = adds -s, and fly\u2192flies (y becomes ies)!'},
+       {q:'He ___ the ball across the field. (kick)',opts:['kick','kicks','kicked','kicking'],a:1,exp:'He adds -s: he kicks!'},
+       {q:'The dogs ___ each other. (chase)',opts:['chases','chase','chased','chasing'],a:1,exp:'"The dogs" = they = no -s: dogs chase!'},
+       {q:'When do we add -s to a present tense verb?',opts:['With I, we, they','With he, she, it','Never','Always'],a:1,exp:'Only he/she/it adds -s: she runs, he jumps, it spins!'},
+       {q:'Which sentence is CORRECT?',opts:['The cat sleep all day.','The cat sleeps all day.','The cat sleeping all day.','The cat slept all days.'],a:1,exp:'The cat = it = adds -s: sleeps!'}
+     ]},
+     {label:'🔗 Compound Sentences (FANBOYS)', fixed:true, questions:[
+       {q:'What does FANBOYS stand for?',opts:['Fun And Nice Boys','For, And, Nor, But, Or, Yet, So','Find A New Book Or Your Story','First Add Numbers Before Other Yellow Signs'],a:1,exp:'FANBOYS = the 7 coordinating conjunctions: For, And, Nor, But, Or, Yet, So!'},
+       {q:'A compound sentence joins two complete thoughts with a comma and a...',opts:['noun','verb','conjunction','adjective'],a:2,exp:'Comma + conjunction (FANBOYS) joins two complete ideas!'},
+       {q:'I went to bed very late, ___ I am tired today.',opts:['but','so','or','nor'],a:1,exp:'"So" shows the result: late bed \u2192 so tired!'},
+       {q:'I enjoy playing hockey, ___ it\u2019s not my favourite sport.',opts:['so','and','but','or'],a:2,exp:'"But" shows a contrast/difference!'},
+       {q:'We could go to the park, ___ we could go to the cinema.',opts:['or','but','so','nor'],a:0,exp:'"Or" shows a choice between two things!'},
+       {q:'A small kitten followed me home, ___ I gave it a bowl of milk.',opts:['but','or','so','nor'],a:2,exp:'"So" shows what happened next as a result!'},
+       {q:'Is this a COMPOUND sentence? "The fluffy cat napped on the sunny windowsill."',opts:['Yes, compound','No, it is simple','It is a question','It is a command'],a:1,exp:'Only ONE complete thought = simple sentence (no FANBOYS joining two ideas)!'},
+       {q:'Is this a COMPOUND sentence? "I wanted to go to the park, but it started to rain."',opts:['Yes, compound','No, it is simple','It is a list','It is a command'],a:0,exp:'Two complete thoughts + comma + "but" = compound!'},
+       {q:'Which sentence is COMPOUND?',opts:['Mom baked blueberry muffins.','The tall sunflower grew quickly.','The popcorn smelled great, so we bought a bucket.','Our class went to the zoo.'],a:2,exp:'Two complete ideas joined by ", so" = compound!'},
+       {q:'How many coordinating conjunctions (FANBOYS) are there?',opts:['Five','Six','Seven','Eight'],a:2,exp:'Seven: For, And, Nor, But, Or, Yet, So!'}
+     ]},
+     {label:'📖 Reading: Informative Text', fixed:true, context:'🐘 INFORMATIVE TEXT: African Elephants\n\nThe African elephant is the largest land animal in the world. A grown male can weigh as much as six cars! Elephants live together in family groups called herds. The herd is led by the oldest and wisest female, who is called the matriarch. She remembers where to find water and food, even during a dry season.\n\nAn elephant\u2019s trunk is one of the most useful body parts in the animal kingdom. Elephants use their trunks to breathe, smell, drink, and even to grab food from tall trees. They also use their trunks to give themselves a dust bath, which protects their skin from the hot sun.\n\nElephants have very large ears. By flapping them, they cool down their bodies on warm days. Elephants are herbivores, which means they only eat plants such as grass, leaves, and fruit. A single elephant can eat up to 150 kilograms of food every day. Sadly, African elephants are in danger because some people hunt them, so many countries now have special parks to keep them safe.',
       questions:[
-       {q:'Which civilization lived HIGH UP in the Andes Mountains?',opts:['Mayas','Aztecs','Incas','All three'],a:2,exp:'The text says "High up in the Andes Mountains lived the Incas."'},
-       {q:'What did the Mayas use to write instead of letters?',opts:['Numbers','Pictures (glyphs)','Animal symbols only','Musical notes'],a:1,exp:'The text says they created "their own clever writing system using pictures."'},
-       {q:'Where did the Aztecs build Tenochtitlán?',opts:['On top of a mountain','In a dense rainforest','In the middle of a lake','In a desert'],a:2,exp:'"The Aztecs built a magnificent city called Tenochtitlán in the middle of a lake."'},
-       {q:'What did the Inca "terraces" look like?',opts:['Round fields','Flat steps cut into hills','Underground tunnels','Floating gardens'],a:1,exp:'"They cut flat steps called terraces into the hills."'},
-       {q:'Which of the three civilizations built tall STONE pyramids?',opts:['Incas','Aztecs','Mayas','None of them'],a:2,exp:'"The Mayas were famous for building tall stone pyramids"!'}
+       {q:'What is the largest land animal in the world?',opts:['The blue whale','The African elephant','The giraffe','The hippopotamus'],a:1,exp:'The text says the African elephant is the largest LAND animal!'},
+       {q:'What is the leader of an elephant herd called?',opts:['The king','The matriarch','The chief','The captain'],a:1,exp:'The herd is led by the oldest female, called the matriarch!'},
+       {q:'Why do elephants flap their large ears?',opts:['To fly','To hear better','To cool down their bodies','To scare lions'],a:2,exp:'Flapping their ears cools them down on warm days!'},
+       {q:'What does "herbivore" mean?',opts:['An animal that eats only meat','An animal that eats only plants','An animal that eats both','An animal that does not eat'],a:1,exp:'A herbivore only eats plants \u2014 grass, leaves, and fruit!'},
+       {q:'Why are many countries building special parks?',opts:['To keep elephants safe from hunters','To sell tickets','To teach elephants tricks','To grow more grass'],a:0,exp:'The parks protect elephants because some people hunt them!'},
+       {q:'Which of these is NOT something elephants use their trunk for?',opts:['Drinking water','Smelling','Flying','Grabbing food'],a:2,exp:'Trunks are used to breathe, smell, drink and grab food \u2014 not to fly!'}
      ]},
      {label:'📝 Full exam (15 Qs)', fixed:true, questions:[
-       {q:'Which word is a NOUN? "My dog has a plaid collar."',opts:['dog','has','plaid','my'],a:0,exp:'Dog is a thing/animal = noun!'},
-       {q:'Which word is an ADJECTIVE? "The large fan blew a cool breeze."',opts:['fan','breeze','large','blew'],a:2,exp:'"Large" describes the fan = adjective!'},
-       {q:'"Put the presents beside the tree." = What type?',opts:['Declarative','Imperative','Interrogative','Exclamatory'],a:1,exp:'It gives a command → Imperative!'},
-       {q:'"Are the presents beside the tree?" = What type?',opts:['Declarative','Imperative','Interrogative','Exclamatory'],a:2,exp:'It asks a question → Interrogative!'},
-       {q:'"Today, we _____ history." (study)',opts:['studied','study','studying','studies'],a:1,exp:'We + present = study!'},
-       {q:'"She is _____ than my brother." (quiet)',opts:['quieter','more quiet','quietest','quiet'],a:0,exp:'Short adjective → add -er = quieter!'},
-       {q:'"The Incas farmed on steep mountains." What tense?',opts:['Present','Past','Future','None'],a:1,exp:'"Farmed" with -ed = past simple!'},
-       {q:'In "The scary witch flew over the moon", NOUNS are:',opts:['scary, flew','witch, moon','over, moon','scary, over'],a:1,exp:'Witch and moon are things = nouns!'},
-       {q:'"Yesterday, the witch ___ across the sky." (fly)',opts:['flies','flew','flyed','is flying'],a:1,exp:'Fly is irregular → past = FLEW!'},
-       {q:'"What a beautiful day!" = What type?',opts:['Declarative','Imperative','Interrogative','Exclamatory'],a:3,exp:'What...! = Exclamatory!'},
-       {q:'Mayas wrote using:',opts:['Letters','Pictures (glyphs)','Numbers','Nothing'],a:1,exp:'The Mayas used glyphs = pictures!'},
-       {q:'The Aztec city of Tenochtitlán was built:',opts:['On a mountain','In a lake','In a desert','In the sea'],a:1,exp:'On an island in the middle of a lake!'},
-       {q:'The Incas lived in the:',opts:['Amazon','Andes Mountains','Pacific Ocean','Atlantic coast'],a:1,exp:'High up in the Andes Mountains!'},
-       {q:'"I ___ to school yesterday." (go)',opts:['go','goes','went','going'],a:2,exp:'Yesterday → past. Go is irregular → WENT!'},
-       {q:'"Close the door." = What type?',opts:['Declarative','Imperative','Interrogative','Exclamatory'],a:1,exp:'Gives a command → Imperative!'}
+       {q:'Synonym for "huge"?',opts:['tiny','gigantic','empty','quiet'],a:1,exp:'Huge = gigantic!'},
+       {q:'Synonym for "start"?',opts:['finish','begin','stop','close'],a:1,exp:'Start = begin!'},
+       {q:'Antonym for "clean"?',opts:['tidy','messy','neat','shiny'],a:1,exp:'Clean \u2194 messy!'},
+       {q:'Antonym for "biggest"?',opts:['largest','smallest','heaviest','tallest'],a:1,exp:'Biggest \u2194 smallest!'},
+       {q:'Which is a PROPER noun?',opts:['dog','France','river','city'],a:1,exp:'France is a specific country = proper noun!'},
+       {q:'Proper nouns always start with a...',opts:['small letter','capital letter','number','comma'],a:1,exp:'Always a capital letter!'},
+       {q:'Past tense of "catch"?',opts:['catched','caught','catches','catching'],a:1,exp:'Catch is irregular \u2192 caught!'},
+       {q:'We ___ at the beach yesterday. (swim)',opts:['swimmed','swam','swims','swimming'],a:1,exp:'Swim \u2192 swam (irregular)!'},
+       {q:'Past tense of "play"?',opts:['plaied','played','plays','playing'],a:1,exp:'Regular: play + ed = played!'},
+       {q:'She ___ to the store. (walk)',opts:['walk','walks','walked','walking'],a:1,exp:'She adds -s = walks!'},
+       {q:'My friends ___ at the park. (play)',opts:['plays','play','played','playing'],a:1,exp:'They = no -s = play!'},
+       {q:'What does FANBOYS stand for?',opts:['Fun And Nice Boys','For, And, Nor, But, Or, Yet, So','First Add New Books','Find A New Yellow Sign'],a:1,exp:'The 7 coordinating conjunctions!'},
+       {q:'I was tired, ___ I went to bed early.',opts:['but','so','or','nor'],a:1,exp:'"So" shows the result!'},
+       {q:'Is this compound? "I wanted to play, but it started to rain."',opts:['Yes','No, it is simple','It is a command','It is a question'],a:0,exp:'Two thoughts + comma + but = compound!'},
+       {q:'Which sentence is SIMPLE (not compound)?',opts:['I like tea, and she likes coffee.','The cat napped on the windowsill.','We can walk, or we can drive.','He ran fast, so he won.'],a:1,exp:'One complete thought = simple sentence!'}
      ]}
    ]},
 
