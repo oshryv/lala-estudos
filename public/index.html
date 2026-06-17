@@ -22,6 +22,15 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 /* TOPBAR */
 .topbar{background:#fff;padding:.6rem 1rem;display:flex;align-items:center;gap:8px;border-bottom:1.5px solid var(--border);flex-wrap:wrap;position:sticky;top:0;z-index:100}
 .topbar-title{font-size:15px;font-weight:900;color:var(--text);margin-right:6px;white-space:nowrap}
+.tri-bar{background:#fff;padding:.45rem 1rem;display:flex;align-items:center;gap:8px;border-bottom:1.5px solid var(--border)}
+.tri-bar .tri-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-right:2px}
+.tri-btn{padding:5px 16px;border-radius:20px;font-size:13px;font-weight:800;cursor:pointer;border:2px solid var(--border);background:var(--card);font-family:'Nunito',sans-serif;color:var(--muted);transition:all .15s}
+.tri-btn.active{color:#fff;border-color:transparent;background:#2C2C2A}
+.tri-empty{background:var(--card);border:1.5px dashed var(--border);border-radius:16px;padding:2.5rem 1.5rem;text-align:center;color:var(--muted)}
+.tri-empty .ico{font-size:38px;display:block;margin-bottom:10px}
+.tri-empty h3{font-size:16px;font-weight:800;color:var(--text);margin-bottom:6px}
+.tri-empty p{font-size:13px;line-height:1.6;max-width:340px;margin:0 auto 14px}
+.tri-empty button{padding:9px 20px;border-radius:22px;border:none;background:#BA7517;color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif}
 .tab{padding:6px 14px;border-radius:20px;font-size:12.5px;font-weight:700;cursor:pointer;border:2px solid var(--border);background:transparent;color:var(--muted);font-family:'Nunito',sans-serif;transition:all .18s;white-space:nowrap}
 .tab.active{color:#fff!important;border-color:transparent!important}
 
@@ -143,10 +152,16 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   <button class="tab" id="t-sim" onclick="showTab('sim','#BA7517')">📋 Simulados</button>
 </div>
 
+<div class="tri-bar">
+  <span class="tri-label">Trimestre</span>
+  <button class="tri-btn" id="tri-1" onclick="setTri(1)">1º Tri</button>
+  <button class="tri-btn active" id="tri-2" onclick="setTri(2)">2º Tri</button>
+</div>
+
 <!-- ===== PAINEL ===== -->
 <div class="screen active" id="dash">
   <div id="dash-main">
-    <div class="dash-grid">
+    <div id="dash-1tri" class="dash-grid">
       <button class="subj-card" style="background:linear-gradient(135deg,#1D9E75,#0F6E56)" onclick="showDetail('science')"><span class="lang">EN</span><span class="emoji">🌿</span><h3>Science</h3><p>Food web, photosynthesis, producers &amp; consumers</p><span class="date">Exam: Mon 13/04</span><div class="bg-ico">🌿</div></button>
       <button class="subj-card" style="background:linear-gradient(135deg,#D4537E,#993556)" onclick="showDetail('portugues')"><span class="lang">PT</span><span class="emoji">✏️</span><h3>Língua Portuguesa</h3><p>Relato pessoal, sílabas, pronomes</p><span class="date">Prova: ter 14/04</span><div class="bg-ico">✏️</div></button>
       <button class="subj-card" style="background:linear-gradient(135deg,#378ADD,#185FA5)" onclick="showDetail('ciencias')"><span class="lang">PT</span><span class="emoji">🗺️</span><h3>Ciências</h3><p>Biomas: Amazônia, Mata Atlântica, Cerrado, Caatinga</p><span class="date">Prova: qui 16/04</span><div class="bg-ico">🗺️</div></button>
@@ -155,6 +170,11 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <button class="subj-card" style="background:linear-gradient(135deg,#E24B4A,#A32D2D)" onclick="showDetail('la')"><span class="lang">EN</span><span class="emoji">📖</span><h3>Language Arts</h3><p>Adjectives, verb tenses, types of sentences</p><span class="date">Exam: Mon 27/04</span><div class="bg-ico">📖</div></button>
       <button class="subj-card" style="background:linear-gradient(135deg,#7F77DD,#534AB7)" onclick="showDetail('geohist')"><span class="lang">PT</span><span class="emoji">🏛️</span><h3>Geo &amp; História</h3><p>Tipos de mapas, influências indígenas</p><span class="date">Prova: seg 28/04</span><div class="bg-ico">🏛️</div></button>
       <button class="subj-card" style="background:linear-gradient(135deg,#5F5E5A,#2C2C2A)" onclick="showDetail('social')"><span class="lang">EN</span><span class="emoji">🌎</span><h3>Social Studies</h3><p>Nomadic people, Mayas, Aztecs, Incas</p><span class="date">Exam: Wed 29/04</span><div class="bg-ico">🌎</div></button>
+    </div>
+    <div id="dash-2tri" class="dash-grid" style="display:none">
+      <button class="subj-card" style="background:linear-gradient(135deg,#E24B4A,#A32D2D)" onclick="goSim('la')"><span class="lang">EN</span><span class="emoji">📖</span><h3>Language Arts</h3><p>Informative text, FANBOYS, synonyms/antonyms, common/proper nouns, present/past tense</p><span class="date">Exam: Mon 22/06</span><div class="bg-ico">📖</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#378ADD,#185FA5)" onclick="goSim('ciencias2')"><span class="lang">PT</span><span class="emoji">💧</span><h3>Ciências</h3><p>Estados físicos da água, ciclo da água</p><span class="date">Prova: ter 23/06</span><div class="bg-ico">💧</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#633806,#412402)" onclick="goSim('math2')"><span class="lang">EN</span><span class="emoji">🔢</span><h3>Math</h3><p>Word problems, lines of symmetry, types of triangles, bar graph</p><span class="date">Exam: Wed 24/06</span><div class="bg-ico">🔢</div></button>
     </div>
   </div>
   <div id="dash-detail" style="display:none"></div>
@@ -863,7 +883,7 @@ var RESUMOS = [
 <script>
 var SIMS=[
   // ===== SCIENCE (mantida como no original - questões dinâmicas por tópico) =====
-  {key:'science', label:'🌿 Science', color:'#1D9E75', lang:'en',
+  {key:'science', tri:1, label:'🌿 Science', color:'#1D9E75', lang:'en',
    subtopics:[
      {label:'☀️ Photosynthesis', fixed:true, questions:[
        {q:'What do plants need to make their own food through photosynthesis?',opts:['Meat, water and air','Sunlight, water and CO₂','Soil, rain and sugar','Oxygen, salt and rocks'],a:1,exp:'Plants use sunlight + water + CO₂ to make food!'},
@@ -908,7 +928,7 @@ var SIMS=[
    ]},
 
   // ===== CIÊNCIAS (mantida igual ao original - já era fixa) =====
-  {key:'ciencias', label:'🗺️ Ciências', color:'#378ADD', lang:'pt',
+  {key:'ciencias', tri:1, label:'🗺️ Ciências (Biomas)', color:'#378ADD', lang:'pt',
    subtopics:[
      {label:'🌍 Bioma x Ecossistema', fixed:true, questions:[
        {q:'O que é um bioma?',opts:['Uma área muito pequena, como um vaso de flores','Uma grande área com mesmo clima, relevo e vegetação','Um único animal que vive sozinho na floresta','O nome científico das plantas do Brasil'],a:1,exp:'Bioma = grande comunidade de plantas e animais com mesmo clima e localização!'},
@@ -955,7 +975,7 @@ var SIMS=[
    ]},
 
   // ===== PORTUGUÊS (mantido do original - dinâmico, mas sem chat) =====
-  {key:'portugues', label:'✏️ Português', color:'#D4537E', lang:'pt',
+  {key:'portugues', tri:1, label:'✏️ Português', color:'#D4537E', lang:'pt',
    subtopics:[
      {label:'📖 Relato pessoal', fixed:true, questions:[
        {q:'Um relato pessoal é sempre narrado em:',opts:['3ª pessoa (ele, ela)','1ª pessoa (eu, nós)','2ª pessoa (tu, você)','Qualquer pessoa'],a:1,exp:'Relato pessoal = o autor conta o que VIVEU, então usa EU/NÓS!'},
@@ -993,7 +1013,7 @@ var SIMS=[
    ]},
 
   // ===== MATEMÁTICA PT (mantido como fixo) =====
-  {key:'matpt', label:'🔢 Matemática', color:'#BA7517', lang:'pt',
+  {key:'matpt', tri:1, label:'🔢 Matemática', color:'#BA7517', lang:'pt',
    subtopics:[
      {label:'🔢 Valor posicional', fixed:true, questions:[
        {q:'No número 3.456, o 4 vale:',opts:['4 unidades','4 dezenas','4 centenas','4 milhares'],a:2,exp:'3.456 = 3 milhares + 4 CENTENAS + 5 dezenas + 6 unidades!'},
@@ -1038,7 +1058,7 @@ var SIMS=[
    ]},
 
   // ===== MATH EN (mantido como fixo) =====
-  {key:'mat', label:'🔢 Math EN', color:'#633806', lang:'en',
+  {key:'mat', tri:1, label:'🔢 Math EN', color:'#633806', lang:'en',
    subtopics:[
      {label:'🔢 Place value', fixed:true, questions:[
        {q:'What is the value of the digit 5 in 3,572?',opts:['5 ones','5 tens','5 hundreds','5 thousands'],a:2,exp:'3,572 → the 5 is in hundreds = 500!'},
@@ -1083,7 +1103,7 @@ var SIMS=[
    ]},
 
   // ===== LANGUAGE ARTS (NOVO — 3 níveis + completo) =====
-  {key:'la', label:'📖 Language Arts', color:'#E24B4A', lang:'en',
+  {key:'la', tri:2, label:'📖 Language Arts', color:'#E24B4A', lang:'en',
    subtopics:[
      {label:'🔁 Synonyms', fixed:true, questions:[
        {q:'What is a SYNONYM?',opts:['A word with the same or similar meaning','A word with the opposite meaning','A naming word','An action word'],a:0,exp:'A synonym is a word that means the SAME (or almost the same) as another word. Big = huge!'},
@@ -1187,7 +1207,7 @@ var SIMS=[
    ]},
 
   // ===== GEO & HISTÓRIA (NOVO — 3 níveis + completo) =====
-  {key:'geohist', label:'🏛️ Geo & Hist', color:'#7F77DD', lang:'pt',
+  {key:'geohist', tri:1, label:'🏛️ Geo & Hist', color:'#7F77DD', lang:'pt',
    subtopics:[
      {label:'🟢 Fácil', fixed:true, questions:[
        {q:'O que significa MISCIGENAÇÃO?',opts:['Mistura de pessoas de diferentes etnias (origens e raças)','Apenas a cultura indígena','Apenas os europeus','Somente os africanos'],a:0,exp:'Miscigenação = mistura de etnias (indígenas, africanos, europeus, asiáticos)!'},
@@ -1230,7 +1250,7 @@ var SIMS=[
    ]},
 
   // ===== SOCIAL STUDIES (NOVO — 3 níveis + completo) =====
-  {key:'social', label:'🌎 Social Studies', color:'#5F5E5A', lang:'en',
+  {key:'social', tri:1, label:'🌎 Social Studies', color:'#5F5E5A', lang:'en',
    subtopics:[
      {label:'🟢 Easy', fixed:true, questions:[
        {q:'A nomad is a person who...',opts:['stays in one place forever','moves from place to place','only lives in cities','never eats food'],a:1,exp:'Nomads move from place to place following food and seasons!'},
@@ -1270,11 +1290,58 @@ var SIMS=[
        {q:'Pizarro defeated the Incas partly because of:',opts:['More soldiers','Guns, horses, and diseases','Better food','Better maps'],a:1,exp:'Technology + diseases = huge advantage!'},
        {q:'Mayas wrote with ___ while Incas used ___:',opts:['letters / numbers','glyphs / quipu','quipu / glyphs','paint / clay'],a:1,exp:'Mayas = glyphs (pictures). Incas = quipu (knotted strings)!'}
      ]}
-   ]}
+   ]},
+  // ===== 2º TRIMESTRE — aguardando fotos do caderno =====
+  {key:'ciencias2', tri:2, pending:true, label:'💧 Ciências', color:'#378ADD', lang:'pt',
+   topicsList:['Estados físicos da água (sólido, líquido, gasoso)','Mudanças de estado (fusão, vaporização, solidificação, condensação)','Ciclo da água (evaporação, condensação, precipitação)'],
+   subtopics:[]},
+  {key:'math2', tri:2, pending:true, label:'🔢 Math', color:'#633806', lang:'en',
+   topicsList:['Word problems (3 operations)','Lines of symmetry','Types of triangles (scalene, equilateral, isosceles)','Bar graphs'],
+   subtopics:[]}
 ];
 </script>
 
 <script>
+// ===== TRIMESTRE =====
+var currentTri = 2;
+function setTri(n){
+  currentTri = n;
+  document.getElementById('tri-1').classList.toggle('active', n===1);
+  document.getElementById('tri-2').classList.toggle('active', n===2);
+  // Painel
+  document.getElementById('dash-1tri').style.display = (n===1)?'':'none';
+  document.getElementById('dash-2tri').style.display = (n===2)?'':'none';
+  hideDetail();
+  // Limpa as navs para forçar rebuild filtrado por trimestre
+  ['sim-nav','mind-nav','res-nav','qf'].forEach(function(id){
+    var el=document.getElementById(id); if(el) el.innerHTML='';
+  });
+  document.getElementById('sim-questions').innerHTML='';
+  document.getElementById('res-content').innerHTML='';
+  document.getElementById('qbox').innerHTML='';
+  // Re-renderiza a aba que está ativa
+  var active = document.querySelector('.screen.active');
+  if(active){
+    var id=active.id;
+    if(id==='sim') buildSimNav();
+    if(id==='mind') buildMindNav();
+    if(id==='res') buildResNav();
+    if(id==='quiz'){buildQF();var f=document.querySelector('.qf-btn');if(f)startQuiz('all',f);}
+  }
+}
+// Atalho do card do 2º tri direto para o simulado
+function goSim(key){
+  showTab('sim','#BA7517');
+  var s=SIMS.find(function(x){return x.key===key;});
+  var btns=document.querySelectorAll('.sim-btn');
+  btns.forEach(function(b){ if(b.dataset.key===key){ b.click(); } });
+}
+// Aviso reutilizável para abas sem conteúdo no trimestre
+function triEmptyHTML(ico,title,msg){
+  return '<div class="tri-empty"><span class="ico">'+ico+'</span><h3>'+title+'</h3><p>'+msg+'</p>'
+    +'<button onclick="showTab(\'sim\',\'#BA7517\')">📋 Ir para os Simulados</button></div>';
+}
+
 // ===== TABS =====
 function showTab(id,col){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -1282,7 +1349,7 @@ function showTab(id,col){
   document.getElementById(id).classList.add('active');
   var btn=document.getElementById('t-'+id);
   btn.classList.add('active');btn.style.background=col;btn.style.color='#fff';btn.style.borderColor=col;
-  if(id==='quiz'){buildQF();startQuiz('all',document.querySelector('.qf-btn'));}
+  if(id==='quiz'){buildQF();var f=document.querySelector('.qf-btn');if(f)startQuiz('all',f);}
   if(id==='sim') buildSimNav();
   if(id==='mind') buildMindNav();
   if(id==='res') buildResNav();
@@ -1310,7 +1377,17 @@ function hideDetail(){document.getElementById('dash-main').style.display='';docu
 var cQ=[],qi=0,sc=0,ans=false,af='all';
 var CATS=[['all','Todas / All','#2C2C2A'],['science','🌿 Science','#1D9E75'],['ciencias','🗺️ Ciências','#378ADD'],['portugues','✏️ Português','#D4537E'],['mat','🔢 Math','#BA7517'],['la','📖 Lang Arts','#E24B4A'],['social','🌎 Social','#5F5E5A'],['geohist','🏛️ Geo & Hist','#7F77DD']];
 function buildQF(){
-  var w=document.getElementById('qf');if(w.childElementCount)return;
+  var w=document.getElementById('qf');
+  var prog=document.querySelector('#quiz .prog-bar');
+  if(currentTri===2){
+    if(w){w.style.display='none';w.innerHTML='';}
+    if(prog)prog.style.display='none';
+    document.getElementById('qbox').innerHTML=triEmptyHTML('🎯','Quiz do 2º trimestre em breve','O quiz rápido do 2º trimestre entra com o conteúdo de Ciências e Math. Por enquanto, treina nas provas pelos Simulados.');
+    return;
+  }
+  if(w)w.style.display='';
+  if(prog)prog.style.display='';
+  if(w.childElementCount)return;
   CATS.forEach((c,i)=>{
     var b=document.createElement('button');b.className='qf-btn'+(i===0?' active':'');
     b.textContent=c[1];if(i===0){b.style.background=c[2];b.style.color='#fff';b.style.borderColor=c[2];}
@@ -1369,7 +1446,25 @@ var MINDS=[
 ];
 function buildMindNav(){
   var nav=document.getElementById('mind-nav');
-  if(!nav||nav.childElementCount)return;
+  if(!nav)return;
+  var hint=document.querySelector('#mind .mind-hint');
+  var maps=document.querySelectorAll('#mind .mind-map');
+  var empty=document.getElementById('mind-empty');
+  if(currentTri===2){
+    nav.style.display='none'; if(hint)hint.style.display='none';
+    maps.forEach(function(m){m.classList.remove('active');m.style.display='none';});
+    if(!empty){empty=document.createElement('div');empty.id='mind-empty';document.getElementById('mind').appendChild(empty);}
+    empty.style.display='';
+    empty.innerHTML=triEmptyHTML('🌿','Mapas do 2º trimestre em breve','Os mapas mentais do 2º trimestre entram com o conteúdo de Ciências e Math. Por enquanto, treina nas provas pelos Simulados.');
+    return;
+  }
+  nav.style.display=''; if(hint)hint.style.display='';
+  maps.forEach(function(m){m.style.display='';});
+  if(empty)empty.style.display='none';
+  if(!document.querySelector('#mind .mind-map.active')){
+    var first=document.getElementById('mm-'+MINDS[0][0]); if(first)first.classList.add('active');
+  }
+  if(nav.childElementCount)return;
   MINDS.forEach((m,i)=>{
     var b=document.createElement('button');
     b.className='mind-btn'+(i===0?' active':'');
@@ -1389,7 +1484,15 @@ function buildMindNav(){
 // ===== RESUMOS (NOVO MÓDULO) =====
 function buildResNav(){
   var nav=document.getElementById('res-nav');
-  if(!nav||nav.childElementCount)return;
+  if(!nav)return;
+  var content=document.getElementById('res-content');
+  if(currentTri===2){
+    nav.style.display='none';
+    content.innerHTML=triEmptyHTML('📝','Resumos do 2º trimestre em breve','Os resumos e dicas do 2º trimestre entram junto com o conteúdo de Ciências e Math. Por enquanto, treina nas provas pelos Simulados.');
+    return;
+  }
+  nav.style.display='';
+  if(nav.childElementCount)return;
   // Coloca as prioritárias primeiro (LA, Geohist, Social)
   var ordered = RESUMOS.slice().sort(function(a,b){
     return (b.priority?1:0) - (a.priority?1:0);
@@ -1439,10 +1542,15 @@ var simAnswers = {};
 
 function buildSimNav(){
   var nav=document.getElementById('sim-nav');
-  if(!nav||nav.childElementCount)return;
-  SIMS.forEach((s,i)=>{
+  if(!nav)return;
+  var list=SIMS.filter(function(s){return s.tri===currentTri;});
+  if(nav.childElementCount && nav.dataset.tri==String(currentTri))return;
+  nav.innerHTML='';
+  nav.dataset.tri=String(currentTri);
+  list.forEach((s,i)=>{
     var b=document.createElement('button');
     b.className='sim-btn'+(i===0?' active':'');
+    b.dataset.key=s.key;
     b.textContent=s.label;
     if(i===0){b.style.background=s.color;b.style.color='#fff';b.style.borderColor=s.color;}
     b.onclick=(function(key){return function(){
@@ -1452,7 +1560,7 @@ function buildSimNav(){
     };})(s.key);
     nav.appendChild(b);
   });
-  loadSim('science');
+  if(list.length) loadSim(list[0].key);
 }
 
 function loadSim(key){
@@ -1472,6 +1580,23 @@ function renderTopicPicker(){
   var header = document.createElement('div');
   header.className = 'exam-header';
   header.style.background = 'linear-gradient(135deg,'+sub.color+','+darken(sub.color)+')';
+  // Matéria do 2º tri ainda sem questões (aguardando caderno)
+  if(sub.pending){
+    header.innerHTML = '<h2>'+sub.label+'</h2><p>'+(pt?'Conteúdo que vai cair na prova:':'Topics for this exam:')+'</p>';
+    wrap.appendChild(header);
+    var box = document.createElement('div');
+    box.className='res-summary';
+    box.style.cssText='background:var(--card);border-radius:14px;border-left:4px solid '+sub.color+';padding:1rem 1.25rem;margin-bottom:12px';
+    var lis=(sub.topicsList||[]).map(function(t){return '<li style="margin-bottom:6px">'+escHtml(t)+'</li>';}).join('');
+    box.innerHTML='<ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.6;color:var(--text)">'+lis+'</ul>';
+    wrap.appendChild(box);
+    var note=document.createElement('div');
+    note.className='tri-empty';
+    note.innerHTML='<span class="ico">📸</span><h3>'+(pt?'Simulado a caminho':'Exam coming soon')+'</h3>'
+      +'<p>'+(pt?'As questões deste simulado entram assim que chegarem as fotos do caderno da Lala.':'The questions will be added as soon as the notebook photos arrive.')+'</p>';
+    wrap.appendChild(note);
+    return;
+  }
   header.innerHTML = '<h2>'+sub.label+'</h2><p>'+(pt?'Escolha o simulado que quer praticar:':'Choose the exam you want to practice:')+'</p>';
   wrap.appendChild(header);
   var grid = document.createElement('div');
@@ -1628,6 +1753,7 @@ function escHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').re
 
 // init
 showTab('dash','#2C2C2A');
+setTri(2);
 </script>
 
 </body>
