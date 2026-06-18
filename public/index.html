@@ -22,6 +22,15 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 /* TOPBAR */
 .topbar{background:#fff;padding:.6rem 1rem;display:flex;align-items:center;gap:8px;border-bottom:1.5px solid var(--border);flex-wrap:wrap;position:sticky;top:0;z-index:100}
 .topbar-title{font-size:15px;font-weight:900;color:var(--text);margin-right:6px;white-space:nowrap}
+.tri-bar{background:#fff;padding:.45rem 1rem;display:flex;align-items:center;gap:8px;border-bottom:1.5px solid var(--border)}
+.tri-bar .tri-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-right:2px}
+.tri-btn{padding:5px 16px;border-radius:20px;font-size:13px;font-weight:800;cursor:pointer;border:2px solid var(--border);background:var(--card);font-family:'Nunito',sans-serif;color:var(--muted);transition:all .15s}
+.tri-btn.active{color:#fff;border-color:transparent;background:#2C2C2A}
+.tri-empty{background:var(--card);border:1.5px dashed var(--border);border-radius:16px;padding:2.5rem 1.5rem;text-align:center;color:var(--muted)}
+.tri-empty .ico{font-size:38px;display:block;margin-bottom:10px}
+.tri-empty h3{font-size:16px;font-weight:800;color:var(--text);margin-bottom:6px}
+.tri-empty p{font-size:13px;line-height:1.6;max-width:340px;margin:0 auto 14px}
+.tri-empty button{padding:9px 20px;border-radius:22px;border:none;background:#BA7517;color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif}
 .tab{padding:6px 14px;border-radius:20px;font-size:12.5px;font-weight:700;cursor:pointer;border:2px solid var(--border);background:transparent;color:var(--muted);font-family:'Nunito',sans-serif;transition:all .18s;white-space:nowrap}
 .tab.active{color:#fff!important;border-color:transparent!important}
 
@@ -143,10 +152,16 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   <button class="tab" id="t-sim" onclick="showTab('sim','#BA7517')">📋 Simulados</button>
 </div>
 
+<div class="tri-bar">
+  <span class="tri-label">Trimestre</span>
+  <button class="tri-btn" id="tri-1" onclick="setTri(1)">1º Tri</button>
+  <button class="tri-btn active" id="tri-2" onclick="setTri(2)">2º Tri</button>
+</div>
+
 <!-- ===== PAINEL ===== -->
 <div class="screen active" id="dash">
   <div id="dash-main">
-    <div class="dash-grid">
+    <div id="dash-1tri" class="dash-grid">
       <button class="subj-card" style="background:linear-gradient(135deg,#1D9E75,#0F6E56)" onclick="showDetail('science')"><span class="lang">EN</span><span class="emoji">🌿</span><h3>Science</h3><p>Food web, photosynthesis, producers &amp; consumers</p><span class="date">Exam: Mon 13/04</span><div class="bg-ico">🌿</div></button>
       <button class="subj-card" style="background:linear-gradient(135deg,#D4537E,#993556)" onclick="showDetail('portugues')"><span class="lang">PT</span><span class="emoji">✏️</span><h3>Língua Portuguesa</h3><p>Relato pessoal, sílabas, pronomes</p><span class="date">Prova: ter 14/04</span><div class="bg-ico">✏️</div></button>
       <button class="subj-card" style="background:linear-gradient(135deg,#378ADD,#185FA5)" onclick="showDetail('ciencias')"><span class="lang">PT</span><span class="emoji">🗺️</span><h3>Ciências</h3><p>Biomas: Amazônia, Mata Atlântica, Cerrado, Caatinga</p><span class="date">Prova: qui 16/04</span><div class="bg-ico">🗺️</div></button>
@@ -155,6 +170,11 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <button class="subj-card" style="background:linear-gradient(135deg,#E24B4A,#A32D2D)" onclick="showDetail('la')"><span class="lang">EN</span><span class="emoji">📖</span><h3>Language Arts</h3><p>Adjectives, verb tenses, types of sentences</p><span class="date">Exam: Mon 27/04</span><div class="bg-ico">📖</div></button>
       <button class="subj-card" style="background:linear-gradient(135deg,#7F77DD,#534AB7)" onclick="showDetail('geohist')"><span class="lang">PT</span><span class="emoji">🏛️</span><h3>Geo &amp; História</h3><p>Tipos de mapas, influências indígenas</p><span class="date">Prova: seg 28/04</span><div class="bg-ico">🏛️</div></button>
       <button class="subj-card" style="background:linear-gradient(135deg,#5F5E5A,#2C2C2A)" onclick="showDetail('social')"><span class="lang">EN</span><span class="emoji">🌎</span><h3>Social Studies</h3><p>Nomadic people, Mayas, Aztecs, Incas</p><span class="date">Exam: Wed 29/04</span><div class="bg-ico">🌎</div></button>
+    </div>
+    <div id="dash-2tri" class="dash-grid" style="display:none">
+      <button class="subj-card" style="background:linear-gradient(135deg,#E24B4A,#A32D2D)" onclick="goSim('la')"><span class="lang">EN</span><span class="emoji">📖</span><h3>Language Arts</h3><p>Informative text, FANBOYS, synonyms/antonyms, common/proper nouns, present/past tense</p><span class="date">Exam: Mon 22/06</span><div class="bg-ico">📖</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#378ADD,#185FA5)" onclick="goSim('ciencias2')"><span class="lang">PT</span><span class="emoji">💧</span><h3>Ciências</h3><p>Estados físicos da água, ciclo da água</p><span class="date">Prova: ter 23/06</span><div class="bg-ico">💧</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#633806,#412402)" onclick="goSim('math2')"><span class="lang">EN</span><span class="emoji">🔢</span><h3>Math</h3><p>Word problems, lines of symmetry, types of triangles, bar graph</p><span class="date">Exam: Wed 24/06</span><div class="bg-ico">🔢</div></button>
     </div>
   </div>
   <div id="dash-detail" style="display:none"></div>
@@ -509,67 +529,63 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 
   <!-- LANGUAGE ARTS -->
   <div class="mind-map" id="mm-la">
-    <svg viewBox="0 0 900 660" xmlns="http://www.w3.org/2000/svg" style="font-family:'Nunito',sans-serif;min-width:700px;width:100%">
-      <rect x="330" y="295" width="240" height="60" rx="30" fill="#E24B4A"/>
-      <text x="450" y="320" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">📖 LANGUAGE ARTS</text>
-      <text x="450" y="340" text-anchor="middle" fill="#FCEBEB" font-size="10">Adjectives · Tenses · Sentences</text>
-      <line x1="430" y1="297" x2="270" y2="168" stroke="#E24B4A" stroke-width="2"/>
-      <rect x="130" y="128" width="220" height="50" rx="12" fill="#F7C1C1"/>
-      <text x="240" y="150" text-anchor="middle" fill="#791F1F" font-size="12" font-weight="800">🏆 Adjectives that Compare</text>
-      <text x="240" y="167" text-anchor="middle" fill="#791F1F" font-size="9.5">More? Most? -er? -est?</text>
-      <line x1="170" y1="130" x2="110" y2="74" stroke="#F09595" stroke-width="1.5"/>
-      <rect x="22" y="38" width="160" height="42" rx="8" fill="#FCEBEB"/>
-      <text x="102" y="55" text-anchor="middle" fill="#791F1F" font-size="9" font-weight="700">Comparative (-er)</text>
-      <text x="102" y="70" text-anchor="middle" fill="#791F1F" font-size="8.5">bigger · taller · faster</text>
-      <line x1="240" y1="128" x2="240" y2="74" stroke="#F09595" stroke-width="1.5"/>
-      <rect x="162" y="38" width="156" height="42" rx="8" fill="#FCEBEB"/>
-      <text x="240" y="55" text-anchor="middle" fill="#791F1F" font-size="9" font-weight="700">Superlative (-est)</text>
-      <text x="240" y="70" text-anchor="middle" fill="#791F1F" font-size="8.5">biggest · tallest · fastest</text>
-      <line x1="310" y1="130" x2="360" y2="74" stroke="#F09595" stroke-width="1.5"/>
-      <rect x="316" y="38" width="155" height="42" rx="8" fill="#FCEBEB"/>
-      <text x="393" y="55" text-anchor="middle" fill="#791F1F" font-size="9" font-weight="700">⚡ Irregular!</text>
-      <text x="393" y="70" text-anchor="middle" fill="#791F1F" font-size="8.5">good→better→best</text>
-      <line x1="568" y1="320" x2="700" y2="240" stroke="#E24B4A" stroke-width="2"/>
-      <rect x="672" y="202" width="210" height="50" rx="12" fill="#F7C1C1"/>
-      <text x="777" y="224" text-anchor="middle" fill="#791F1F" font-size="12" font-weight="800">⏱️ Verb Tenses</text>
-      <text x="777" y="241" text-anchor="middle" fill="#791F1F" font-size="9.5">When did it happen?</text>
-      <line x1="702" y1="204" x2="650" y2="148" stroke="#F09595" stroke-width="1.5"/>
-      <rect x="566" y="112" width="155" height="42" rx="8" fill="#FCEBEB"/>
-      <text x="643" y="129" text-anchor="middle" fill="#791F1F" font-size="9" font-weight="700">Present simple</text>
-      <text x="643" y="144" text-anchor="middle" fill="#791F1F" font-size="8.5">I walk · she walks</text>
-      <line x1="777" y1="202" x2="777" y2="146" stroke="#F09595" stroke-width="1.5"/>
-      <rect x="700" y="108" width="158" height="42" rx="8" fill="#FCEBEB"/>
-      <text x="779" y="125" text-anchor="middle" fill="#791F1F" font-size="9" font-weight="700">Past: add -ed</text>
-      <text x="779" y="140" text-anchor="middle" fill="#791F1F" font-size="8.5">walked · jumped · played</text>
-      <line x1="852" y1="204" x2="868" y2="148" stroke="#F09595" stroke-width="1.5"/>
-      <rect x="828" y="110" width="62" height="42" rx="8" fill="#FCEBEB"/>
-      <text x="859" y="127" text-anchor="middle" fill="#791F1F" font-size="8.5" font-weight="700">Irregular</text>
-      <text x="859" y="141" text-anchor="middle" fill="#791F1F" font-size="8">go→went</text>
-      <line x1="450" y1="354" x2="450" y2="440" stroke="#E24B4A" stroke-width="2"/>
-      <rect x="310" y="436" width="280" height="52" rx="14" fill="#F7C1C1"/>
-      <text x="450" y="459" text-anchor="middle" fill="#791F1F" font-size="12" font-weight="800">❓ Types of Sentences</text>
-      <text x="450" y="476" text-anchor="middle" fill="#791F1F" font-size="9.5">Statement · Question · Exclamation · Command</text>
-      <line x1="350" y1="488" x2="300" y2="540" stroke="#F09595" stroke-width="1.5"/>
-      <rect x="220" y="532" width="155" height="42" rx="8" fill="#FCEBEB"/>
-      <text x="297" y="549" text-anchor="middle" fill="#791F1F" font-size="9" font-weight="700">📄 Statement .</text>
-      <text x="297" y="564" text-anchor="middle" fill="#791F1F" font-size="8.5">I like pizza.</text>
-      <line x1="410" y1="488" x2="390" y2="540" stroke="#F09595" stroke-width="1.5"/>
-      <rect x="324" y="532" width="135" height="42" rx="8" fill="#FCEBEB"/>
-      <text x="391" y="549" text-anchor="middle" fill="#791F1F" font-size="9" font-weight="700">❓ Question ?</text>
-      <text x="391" y="564" text-anchor="middle" fill="#791F1F" font-size="8.5">Do you like pizza?</text>
-      <line x1="490" y1="488" x2="508" y2="540" stroke="#F09595" stroke-width="1.5"/>
-      <rect x="470" y="532" width="130" height="42" rx="8" fill="#FCEBEB"/>
-      <text x="535" y="549" text-anchor="middle" fill="#791F1F" font-size="9" font-weight="700">❗ Exclamation !</text>
-      <text x="535" y="564" text-anchor="middle" fill="#791F1F" font-size="8.5">What a pizza!</text>
-      <line x1="550" y1="488" x2="600" y2="540" stroke="#F09595" stroke-width="1.5"/>
-      <rect x="604" y="532" width="120" height="42" rx="8" fill="#FCEBEB"/>
-      <text x="664" y="549" text-anchor="middle" fill="#791F1F" font-size="9" font-weight="700">👆 Command</text>
-      <text x="664" y="564" text-anchor="middle" fill="#791F1F" font-size="8.5">Eat your pizza.</text>
-      <line x1="332" y1="340" x2="200" y2="400" stroke="#E24B4A" stroke-width="2"/>
-      <rect x="60" y="376" width="200" height="58" rx="12" fill="#F7C1C1"/>
-      <text x="160" y="398" text-anchor="middle" fill="#791F1F" font-size="11" font-weight="800">⚡ Key words for past</text>
-      <text x="160" y="414" text-anchor="middle" fill="#791F1F" font-size="9.5">yesterday · last week</text>
-      <text x="160" y="429" text-anchor="middle" fill="#791F1F" font-size="9.5">last night · ago</text>
+    <svg viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg" style="font-family:'Nunito',sans-serif;min-width:700px;width:100%">
+      <!-- centro -->
+      <rect x="345" y="308" width="210" height="66" rx="33" fill="#E24B4A"/>
+      <text x="450" y="334" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">📖 LANGUAGE ARTS</text>
+      <text x="450" y="354" text-anchor="middle" fill="#FCEBEB" font-size="10">2º Trimestre</text>
+
+      <!-- Synonyms -->
+      <line x1="385" y1="312" x2="255" y2="170" stroke="#E24B4A" stroke-width="2"/>
+      <rect x="120" y="110" width="240" height="62" rx="14" fill="#F7C1C1"/>
+      <text x="240" y="134" text-anchor="middle" fill="#791F1F" font-size="12.5" font-weight="800">🔁 Synonyms</text>
+      <text x="240" y="151" text-anchor="middle" fill="#791F1F" font-size="9.5">same meaning</text>
+      <text x="240" y="165" text-anchor="middle" fill="#791F1F" font-size="8.5">big = huge · start = begin</text>
+
+      <!-- Antonyms -->
+      <line x1="515" y1="312" x2="645" y2="170" stroke="#E24B4A" stroke-width="2"/>
+      <rect x="545" y="110" width="240" height="62" rx="14" fill="#F7C1C1"/>
+      <text x="665" y="134" text-anchor="middle" fill="#791F1F" font-size="12.5" font-weight="800">↔️ Antonyms</text>
+      <text x="665" y="151" text-anchor="middle" fill="#791F1F" font-size="9.5">opposite meaning</text>
+      <text x="665" y="165" text-anchor="middle" fill="#791F1F" font-size="8.5">hot ↔ cold · open ↔ close</text>
+
+      <!-- Common & Proper Nouns -->
+      <line x1="345" y1="346" x2="255" y2="360" stroke="#E24B4A" stroke-width="2"/>
+      <rect x="30" y="326" width="225" height="66" rx="14" fill="#F7C1C1"/>
+      <text x="142" y="350" text-anchor="middle" fill="#791F1F" font-size="11" font-weight="800">🏷️ Common &amp; Proper Nouns</text>
+      <text x="142" y="367" text-anchor="middle" fill="#791F1F" font-size="9">proper = ALWAYS a capital</text>
+      <text x="142" y="381" text-anchor="middle" fill="#791F1F" font-size="8.5">Paris · Fido · April</text>
+
+      <!-- Verb Tenses -->
+      <line x1="555" y1="346" x2="645" y2="332" stroke="#E24B4A" stroke-width="2"/>
+      <rect x="645" y="300" width="225" height="58" rx="14" fill="#F7C1C1"/>
+      <text x="757" y="323" text-anchor="middle" fill="#791F1F" font-size="12" font-weight="800">⏱️ Verb Tenses</text>
+      <text x="757" y="340" text-anchor="middle" fill="#791F1F" font-size="9.5">present (-s) · past (-ed)</text>
+      <line x1="690" y1="358" x2="680" y2="384" stroke="#F09595" stroke-width="1.5"/>
+      <rect x="595" y="384" width="148" height="44" rx="8" fill="#FCEBEB"/>
+      <text x="669" y="402" text-anchor="middle" fill="#791F1F" font-size="8.5" font-weight="700">Regular +ed</text>
+      <text x="669" y="416" text-anchor="middle" fill="#791F1F" font-size="8">walked · played</text>
+      <line x1="818" y1="358" x2="822" y2="384" stroke="#F09595" stroke-width="1.5"/>
+      <rect x="748" y="384" width="132" height="44" rx="8" fill="#FCEBEB"/>
+      <text x="814" y="402" text-anchor="middle" fill="#791F1F" font-size="8.5" font-weight="700">Irregular</text>
+      <text x="814" y="416" text-anchor="middle" fill="#791F1F" font-size="7.5">go→went · swim→swam</text>
+
+      <!-- FANBOYS -->
+      <line x1="390" y1="374" x2="270" y2="472" stroke="#E24B4A" stroke-width="2"/>
+      <rect x="70" y="468" width="290" height="60" rx="14" fill="#F7C1C1"/>
+      <text x="215" y="492" text-anchor="middle" fill="#791F1F" font-size="12" font-weight="800">🔗 FANBOYS = Compound</text>
+      <text x="215" y="509" text-anchor="middle" fill="#791F1F" font-size="9">2 sentences + comma + joining word</text>
+      <line x1="215" y1="528" x2="215" y2="544" stroke="#F09595" stroke-width="1.5"/>
+      <rect x="78" y="544" width="274" height="40" rx="8" fill="#FCEBEB"/>
+      <text x="215" y="563" text-anchor="middle" fill="#791F1F" font-size="9" font-weight="700">For · And · Nor · But · Or · Yet · So</text>
+      <text x="215" y="577" text-anchor="middle" fill="#791F1F" font-size="8">ex: I was tired, so I slept.</text>
+
+      <!-- Reading -->
+      <line x1="510" y1="374" x2="640" y2="472" stroke="#E24B4A" stroke-width="2"/>
+      <rect x="545" y="468" width="265" height="68" rx="14" fill="#F7C1C1"/>
+      <text x="677" y="492" text-anchor="middle" fill="#791F1F" font-size="12" font-weight="800">📖 Reading: Informative</text>
+      <text x="677" y="510" text-anchor="middle" fill="#791F1F" font-size="9.5">real facts about one topic</text>
+      <text x="677" y="525" text-anchor="middle" fill="#791F1F" font-size="8.5">find: title · main idea · details</text>
     </svg>
   </div>
 
@@ -781,7 +797,7 @@ var NC={science:"#1D9E75",ciencias:"#378ADD",portugues:"#D4537E",mat:"#BA7517",l
 
 // ===== RESUMOS (novo módulo) =====
 var RESUMOS = [
-  {key:'science', label:'🌿 Science', color:'#1D9E75', light:'#E1F5EE', dark:'#085041', lang:'en',
+  {key:'science', tri:1, label:'🌿 Science', color:'#1D9E75', light:'#E1F5EE', dark:'#085041', lang:'en',
    summary:'Photosynthesis is how plants make food using sunlight + water + CO₂, producing glucose + oxygen. Plants are PRODUCERS. A food chain shows energy flowing one way (grass → bug → frog → hawk). A food web is many chains connected. Animals are classified by what they eat: herbivores (plants only), carnivores (meat only), omnivores (both). Decomposers (like mushrooms and bacteria) recycle dead matter back to the soil.',
    tips:[
      '🌱 <b>SWC → GO</b>: Sunlight + Water + CO₂ → Glucose + Oxygen',
@@ -790,7 +806,7 @@ var RESUMOS = [
      '🍄 Decomposer = "de-compose" = breaks things apart',
      '☀️ Energy flows ONE WAY up the chain — plants have the most energy'
    ]},
-  {key:'portugues', label:'✏️ Português', color:'#D4537E', light:'#FBEAF0', dark:'#72243E', lang:'pt',
+  {key:'portugues', tri:1, label:'✏️ Português', color:'#D4537E', light:'#FBEAF0', dark:'#72243E', lang:'pt',
    summary:'Relato pessoal é narrado em 1ª pessoa (eu, nós) e conta experiências reais em ordem cronológica. Sílabas podem ser separadas e toda palavra tem uma tônica (mais forte). Classificação: oxítona (tônica na última), paroxítona (penúltima), proparoxítona (antepenúltima — sempre tem acento!). Pronomes substituem o nome: pessoais (eu, tu, ele), possessivos (meu, teu, nosso), demonstrativos (este=perto, esse=médio, aquele=longe).',
    tips:[
      '📖 <b>Relato = EU + ONTEM</b>. Sempre em 1ª pessoa e no passado',
@@ -799,7 +815,7 @@ var RESUMOS = [
      '💡 <b>Proparoxítona SEMPRE tem acento!</b> (sábado, médico, lâmpada, câmera)',
      '🔤 Ordem das palavras: MoNossílaba → DIssílaba → TRIssílaba → POLIssílaba'
    ]},
-  {key:'ciencias', label:'🗺️ Biomas', color:'#378ADD', light:'#E6F1FB', dark:'#0C447C', lang:'pt',
+  {key:'ciencias', tri:1, label:'🗺️ Biomas', color:'#378ADD', light:'#E6F1FB', dark:'#0C447C', lang:'pt',
    summary:'O Brasil tem vários biomas. Amazônia: maior floresta tropical, onça-pintada, ameaça=desmatamento. Cerrado: savana brasileira, lobo-guará, ameaça=agropecuária. Mata Atlântica: litoral, só 12% restam, mico-leão-dourado, ameaça=urbanização. Caatinga: 100% brasileira, asa-branca, ameaça=desertificação. Cada bioma tem plantas e animais únicos adaptados ao seu clima.',
    tips:[
      '🏜️ <b>Caatinga = 100% BR</b>. Nenhum outro país tem!',
@@ -808,7 +824,7 @@ var RESUMOS = [
      '🐆 Amazônia = a MAIOR: maior floresta, maior biodiversidade, mais chuva',
      '🌵 Caatinga = seca, cactos, mandacaru. "Mata branca" porque as árvores perdem folhas'
    ]},
-  {key:'matpt', label:'🔢 Matemática', color:'#BA7517', light:'#FAEEDA', dark:'#633806', lang:'pt',
+  {key:'matpt', tri:1, label:'🔢 Matemática', color:'#BA7517', light:'#FAEEDA', dark:'#633806', lang:'pt',
    summary:'Valor posicional: cada casa vale 10x mais que a da direita (unidade, dezena, centena, milhar). Tabuadas do 6, 7, 8 e 9 são as mais cobradas. Em situações-problema: leia 2x, identifique o que se pede, escolha a operação, confira se faz sentido. Gráficos: leia título e legenda primeiro, depois os eixos. Ordinais: 1º, 2º, 3º…',
    tips:[
      '🔢 Da direita pra esquerda: <b>U-D-C-M</b> (Unidade, Dezena, Centena, Milhar)',
@@ -817,7 +833,7 @@ var RESUMOS = [
      '📊 Todo gráfico tem: título, legenda, eixos → leia PRIMEIRO',
      '🎯 Respondeu? Confira: "faz sentido?" Resposta muito alta ou baixa = errada'
    ]},
-  {key:'mat', label:'🔢 Math EN', color:'#633806', light:'#FAEEDA', dark:'#633806', lang:'en',
+  {key:'mat', tri:1, label:'🔢 Math EN', color:'#633806', light:'#FAEEDA', dark:'#633806', lang:'en',
    summary:'Place value: each place = 10× the right (ones, tens, hundreds, thousands). Time: short hand=hours, long hand=minutes. Quarter past=:15, half past=:30, quarter to=:45. Quadrilaterals: square (4 equal sides + right angles), rectangle (opposite sides equal + right angles), rhombus (4 equal sides, NO right angles), trapezoid (1 pair of parallel sides).',
    tips:[
      '🔢 Right to left: <b>OTHT</b> → Ones, Tens, Hundreds, Thousands',
@@ -826,7 +842,7 @@ var RESUMOS = [
      '🧩 Word problems: 1) What do you <b>Know</b>? 2) What do you <b>Need</b>? 3) Choose <b>Operation</b>. 4) Does it make sense?',
      '⏱️ Elapsed time: Start + Duration = End (like 2:30 + 45 min = 3:15)'
    ]},
-  {key:'la', label:'📖 Language Arts', color:'#E24B4A', light:'#FCEBEB', dark:'#791F1F', lang:'en', priority:true,
+  {key:'la', tri:2, label:'📖 Language Arts', color:'#E24B4A', light:'#FCEBEB', dark:'#791F1F', lang:'en', priority:true,
    summary:'Synonyms = words with the SAME or similar meaning (big = huge, start = begin). Antonyms = words with OPPOSITE meanings (clean \u2194 messy, open \u2194 close). Common nouns = general names (dog, city, month) and are NOT capitalised. Proper nouns = specific names (Fido, Paris, April) and are ALWAYS capitalised. Present tense: he/she/it adds -s (she walks); I/we/they/you do not (they walk). Past tense: regular verbs add -ed (played, washed); irregular verbs change completely (catch\u2192caught, swim\u2192swam, buy\u2192bought, break\u2192broke, sleep\u2192slept). Compound sentence = two complete thoughts joined by a comma + a FANBOYS conjunction (For, And, Nor, But, Or, Yet, So).',
    tips:[
      '🔁 <b>SYNONYM = Same</b>. <b>ANTONYM = Against</b> (opposite). Trick: aNT \u2192 \u201cNot the same\u201d!',
@@ -836,7 +852,7 @@ var RESUMOS = [
      '🔗 <b>FANBOYS</b> = For \u00b7 And \u00b7 Nor \u00b7 But \u00b7 Or \u00b7 Yet \u00b7 So. Join 2 complete thoughts with a <b>comma + FANBOYS</b>',
      '✅ Compound = <b>2 complete ideas</b> (\u201cI was tired, <b>so</b> I slept.\u201d). Simple = just <b>1 idea</b> (\u201cThe cat napped.\u201d)'
    ]},
-    {key:'geohist', label:'🏛️ Geo & História', color:'#7F77DD', light:'#EEEDFE', dark:'#3C3489', lang:'pt', priority:true,
+    {key:'geohist', tri:1, label:'🏛️ Geo & História', color:'#7F77DD', light:'#EEEDFE', dark:'#3C3489', lang:'pt', priority:true,
    summary:'O povo brasileiro é miscigenado — mistura de indígenas, africanos, europeus e asiáticos. Antes dos portugueses, havia 5-7 milhões de indígenas; hoje, 817 mil (0,4% da população). Heranças indígenas: rede, canoa, vassoura, chocalho, vasilhas de barro, palavras tupi (mandioca, caju, abacaxi). Lendas: Iara (rios), Vitória-régia (plantas), Caipora (mato). Mapas: político (fronteiras), físico (relevo), econômico, demográfico, histórico, anamorfose (distorcido). Grandes Navegações: Portugal foi pioneiro no séc XV porque tinha geografia, dinheiro e tecnologia.',
    tips:[
      '🪶 Heranças no dia a dia: <b>REDE · CANOA · VASSOURA · CHOCALHO · BARRO</b>',
@@ -846,7 +862,7 @@ var RESUMOS = [
      '🧜‍♀️ 3 lendas indígenas: <b>Iara</b> (rios) · <b>Vitória-régia</b> (estrela das águas) · <b>Caipora</b> (habitante do mato)',
      '📌 Elementos de todo mapa: <b>título · legenda · escala · rosa dos ventos</b>'
    ]},
-  {key:'social', label:'🌎 Social Studies', color:'#5F5E5A', light:'#F1EFE8', dark:'#2C2C2A', lang:'en', priority:true,
+  {key:'social', tri:1, label:'🌎 Social Studies', color:'#5F5E5A', light:'#F1EFE8', dark:'#2C2C2A', lang:'en', priority:true,
    summary:'Nomadic people move from place to place following food and seasons. They have no permanent homes and are hunters and gatherers. Mayas: lived in Mesoamerica (Mexico/Guatemala), built pyramids, used glyphs (picture writing), had an advanced calendar. Aztecs: built Tenochtitlán on an island in a lake, were fierce warriors, worshipped the sun god Huitzilopochtli, were conquered by Cortés in 1521. Incas: lived in the Andes Mountains/Peru, famous for Machu Picchu, had NO writing system (used quipu — knotted strings), were the largest pre-Columbus empire, farmed on terraces.',
    tips:[
      '🌽 3 civilizations = <b>M-A-I</b>: Mayas → Aztecs → Incas',
@@ -863,7 +879,7 @@ var RESUMOS = [
 <script>
 var SIMS=[
   // ===== SCIENCE (mantida como no original - questões dinâmicas por tópico) =====
-  {key:'science', label:'🌿 Science', color:'#1D9E75', lang:'en',
+  {key:'science', tri:1, label:'🌿 Science', color:'#1D9E75', lang:'en',
    subtopics:[
      {label:'☀️ Photosynthesis', fixed:true, questions:[
        {q:'What do plants need to make their own food through photosynthesis?',opts:['Meat, water and air','Sunlight, water and CO₂','Soil, rain and sugar','Oxygen, salt and rocks'],a:1,exp:'Plants use sunlight + water + CO₂ to make food!'},
@@ -908,7 +924,7 @@ var SIMS=[
    ]},
 
   // ===== CIÊNCIAS (mantida igual ao original - já era fixa) =====
-  {key:'ciencias', label:'🗺️ Ciências', color:'#378ADD', lang:'pt',
+  {key:'ciencias', tri:1, label:'🗺️ Ciências (Biomas)', color:'#378ADD', lang:'pt',
    subtopics:[
      {label:'🌍 Bioma x Ecossistema', fixed:true, questions:[
        {q:'O que é um bioma?',opts:['Uma área muito pequena, como um vaso de flores','Uma grande área com mesmo clima, relevo e vegetação','Um único animal que vive sozinho na floresta','O nome científico das plantas do Brasil'],a:1,exp:'Bioma = grande comunidade de plantas e animais com mesmo clima e localização!'},
@@ -955,7 +971,7 @@ var SIMS=[
    ]},
 
   // ===== PORTUGUÊS (mantido do original - dinâmico, mas sem chat) =====
-  {key:'portugues', label:'✏️ Português', color:'#D4537E', lang:'pt',
+  {key:'portugues', tri:1, label:'✏️ Português', color:'#D4537E', lang:'pt',
    subtopics:[
      {label:'📖 Relato pessoal', fixed:true, questions:[
        {q:'Um relato pessoal é sempre narrado em:',opts:['3ª pessoa (ele, ela)','1ª pessoa (eu, nós)','2ª pessoa (tu, você)','Qualquer pessoa'],a:1,exp:'Relato pessoal = o autor conta o que VIVEU, então usa EU/NÓS!'},
@@ -993,7 +1009,7 @@ var SIMS=[
    ]},
 
   // ===== MATEMÁTICA PT (mantido como fixo) =====
-  {key:'matpt', label:'🔢 Matemática', color:'#BA7517', lang:'pt',
+  {key:'matpt', tri:1, label:'🔢 Matemática', color:'#BA7517', lang:'pt',
    subtopics:[
      {label:'🔢 Valor posicional', fixed:true, questions:[
        {q:'No número 3.456, o 4 vale:',opts:['4 unidades','4 dezenas','4 centenas','4 milhares'],a:2,exp:'3.456 = 3 milhares + 4 CENTENAS + 5 dezenas + 6 unidades!'},
@@ -1038,7 +1054,7 @@ var SIMS=[
    ]},
 
   // ===== MATH EN (mantido como fixo) =====
-  {key:'mat', label:'🔢 Math EN', color:'#633806', lang:'en',
+  {key:'mat', tri:1, label:'🔢 Math EN', color:'#633806', lang:'en',
    subtopics:[
      {label:'🔢 Place value', fixed:true, questions:[
        {q:'What is the value of the digit 5 in 3,572?',opts:['5 ones','5 tens','5 hundreds','5 thousands'],a:2,exp:'3,572 → the 5 is in hundreds = 500!'},
@@ -1083,111 +1099,95 @@ var SIMS=[
    ]},
 
   // ===== LANGUAGE ARTS (NOVO — 3 níveis + completo) =====
-  {key:'la', label:'📖 Language Arts', color:'#E24B4A', lang:'en',
-   subtopics:[
-     {label:'🔁 Synonyms', fixed:true, questions:[
-       {q:'What is a SYNONYM?',opts:['A word with the same or similar meaning','A word with the opposite meaning','A naming word','An action word'],a:0,exp:'A synonym is a word that means the SAME (or almost the same) as another word. Big = huge!'},
-       {q:'Tommy liked watching the HUGE elephant at the zoo. Which word is a synonym for "huge"?',opts:['tiny','gigantic','empty','quiet'],a:1,exp:'Huge = gigantic = very, very big!'},
-       {q:'I tossed a STONE in the lake. Synonym for "stone"?',opts:['pebble','river','splash','wave'],a:0,exp:'A stone and a pebble are both small rocks!'},
-       {q:'Carla knows so many FUNNY jokes. Synonym for "funny"?',opts:['boring','silly','serious','sad'],a:1,exp:'Funny = silly = something that makes you laugh!'},
-       {q:'Will you tell me a STORY, Grandpa? Synonym for "story"?',opts:['song','tale','poem','lie'],a:1,exp:'A story and a tale mean the same thing!'},
-       {q:'Sarah\u2019s bedroom is very NEAT. Synonym for "neat"?',opts:['dirty','messy','tidy','large'],a:2,exp:'Neat = tidy = clean and organised!'},
-       {q:'Ed makes everyone LAUGH. Synonym for "laugh"?',opts:['cry','chuckle','frown','shout'],a:1,exp:'Laugh = chuckle = a happy giggle!'},
-       {q:'You should START your science project tonight. Synonym for "start"?',opts:['finish','begin','stop','close'],a:1,exp:'Start = begin = to get going!'},
-       {q:'Which TWO words are synonyms?',opts:['toasty / chilly','chilly / cool','hot / cold','wet / dry'],a:1,exp:'Chilly and cool both mean a little bit cold!'},
-       {q:'Synonym for "tasty"?',opts:['delicious','ugly','boring','plain'],a:0,exp:'Tasty = delicious = yummy food!'}
-     ]},
-     {label:'↔️ Antonyms', fixed:true, questions:[
-       {q:'What is an ANTONYM?',opts:['A word with the same meaning','A word with the OPPOSITE meaning','A naming word','A describing word'],a:1,exp:'An antonym means the OPPOSITE. Old \u2194 young, hot \u2194 cold!'},
-       {q:'The BEST movie I\u2019ve ever seen is Lion King. Antonym for "best"?',opts:['greatest','worst','better','good'],a:1,exp:'Best \u2194 worst are opposites!'},
-       {q:'My bedroom is usually very CLEAN. Antonym for "clean"?',opts:['tidy','neat','messy','shiny'],a:2,exp:'Clean \u2194 messy are opposites!'},
-       {q:'The store will OPEN at nine o\u2019clock. Antonym for "open"?',opts:['close','start','lock','begin'],a:0,exp:'Open \u2194 close are opposites!'},
-       {q:'Tim ALWAYS finishes his homework. Antonym for "always"?',opts:['often','sometimes','never','usually'],a:2,exp:'Always \u2194 never are opposites!'},
-       {q:'That is the BIGGEST watermelon I\u2019ve ever seen. Antonym for "biggest"?',opts:['largest','smallest','heaviest','roundest'],a:1,exp:'Biggest \u2194 smallest are opposites!'},
-       {q:'If you drop a potato in water, it will SINK. Antonym for "sink"?',opts:['drop','float','fall','swim'],a:1,exp:'Sink \u2194 float are opposites!'},
-       {q:'Uncle Jim has a FAST boat. Antonym for "fast"?',opts:['quick','rapid','slow','speedy'],a:2,exp:'Fast \u2194 slow are opposites!'},
-       {q:'The milk carton is EMPTY. Antonym for "empty"?',opts:['full','open','small','old'],a:0,exp:'Empty \u2194 full are opposites!'},
-       {q:'Antonym for "happy"?',opts:['joyful','cheerful','sad','glad'],a:2,exp:'Happy \u2194 sad are opposites!'}
-     ]},
-     {label:'🏷️ Common & Proper Nouns', fixed:true, questions:[
-       {q:'What is a PROPER noun?',opts:['A general name for any person or thing','The specific name of one person, place or thing','An action word','A describing word'],a:1,exp:'A proper noun names ONE specific thing: Paris, Fido, April. Always a capital letter!'},
-       {q:'Proper nouns ALWAYS begin with a...',opts:['small letter','capital letter','number','question mark'],a:1,exp:'Proper nouns are ALWAYS capitalised, no matter where they are in the sentence!'},
-       {q:'Which word is a PROPER noun?',opts:['dog','country','France','river'],a:2,exp:'France is one specific country = proper noun (capital F)!'},
-       {q:'Which word is a COMMON noun?',opts:['Google','Charles Dickens','mountain','Wikipedia'],a:2,exp:'Mountain is a general word for any mountain = common noun!'},
-       {q:'Next year, we are going to PARIS on holiday. Which is the proper noun?',opts:['year','going','Paris','holiday'],a:2,exp:'Paris is a specific city = proper noun!'},
-       {q:'My friend ALI lives next door. Which is the proper noun?',opts:['friend','Ali','door','next'],a:1,exp:'Ali is a specific person\u2019s name = proper noun!'},
-       {q:'The common noun "city" matches which proper noun?',opts:['Chicago','building','street','town'],a:0,exp:'Chicago is a specific city = proper noun!'},
-       {q:'The proper noun "April" is the name of a specific...',opts:['day','month','holiday','season'],a:1,exp:'April is a specific month = proper noun. "Month" is the common noun!'},
-       {q:'Which is a COMMON noun?',opts:['Nintendo Switch','Fido','games console','Thanksgiving'],a:2,exp:'Games console is general; Nintendo Switch is the proper noun!'},
-       {q:'Which sentence has a PROPER noun?',opts:['The dog ran fast.','We visited Canada.','I love my city.','The river is long.'],a:1,exp:'Canada is a specific country = proper noun (capital C)!'}
-     ]},
-     {label:'⏪ Past Tense (regular + irregular)', fixed:true, questions:[
-       {q:'To make most REGULAR verbs past tense, what do we add?',opts:['-ing','-s','-ed','-er'],a:2,exp:'Regular past tense verbs end in -ed: play\u2192played, wash\u2192washed!'},
-       {q:'Past tense of WASH?',opts:['washing','washed','washes','wash'],a:1,exp:'Wash is regular: wash + ed = washed!'},
-       {q:'Past tense of PLAY?',opts:['plaied','played','playd','plays'],a:1,exp:'Play + ed = played!'},
-       {q:'I ___ the ball before it reached the ground. (catch)',opts:['catched','caught','cated','catches'],a:1,exp:'Catch is IRREGULAR: catch\u2192caught (not "catched")!'},
-       {q:'Mary ___ a hole for the new rose bush. (dig)',opts:['digged','dug','digs','digging'],a:1,exp:'Dig is irregular: dig\u2192dug!'},
-       {q:'Hector ___ his arm when he fell. (break)',opts:['breaked','broke','breaks','broken'],a:1,exp:'Break is irregular: break\u2192broke!'},
-       {q:'We ___ at the beach yesterday. (swim)',opts:['swimmed','swam','swimed','swims'],a:1,exp:'Swim is irregular: swim\u2192swam!'},
-       {q:'I ___ on the plane trip last week. (sleep)',opts:['sleeped','slept','sleeps','sleeping'],a:1,exp:'Sleep is irregular: sleep\u2192slept!'},
-       {q:'Mom ___ some vegetables for dinner. (buy)',opts:['buyed','bought','buys','buying'],a:1,exp:'Buy is irregular: buy\u2192bought!'},
-       {q:'We ___ our yummy school lunch. (eat)',opts:['eated','ate','eats','eaten'],a:1,exp:'Eat is irregular: eat\u2192ate!'},
-       {q:'The teacher ___ that I read my book well. (say)',opts:['sayed','said','says','saying'],a:1,exp:'Say is irregular: say\u2192said!'},
-       {q:'She ___ to close the back door. (forget)',opts:['forgetted','forgot','forgots','forgetting'],a:1,exp:'Forget is irregular: forget\u2192forgot!'}
-     ]},
-     {label:'▶️ Present Tense', fixed:true, questions:[
-       {q:'She ___ to the store. (walk)',opts:['walk','walks','walked','walking'],a:1,exp:'She/he/it adds -s: she walks!'},
-       {q:'My friends ___ at the park. (play)',opts:['plays','play','played','playing'],a:1,exp:'"My friends" = they = no -s: friends play!'},
-       {q:'The baby ___ across the floor. (crawl)',opts:['crawl','crawls','crawled','crawling'],a:1,exp:'The baby = it = adds -s: crawls!'},
-       {q:'I ___ lots of books over the summer. (read)',opts:['reads','read','reading','readed'],a:1,exp:'"I" never adds -s: I read (not "I reads")!'},
-       {q:'The family ___ on the airplane. (fly)',opts:['fly','flys','flies','flying'],a:2,exp:'The family = it = adds -s, and fly\u2192flies (y becomes ies)!'},
-       {q:'He ___ the ball across the field. (kick)',opts:['kick','kicks','kicked','kicking'],a:1,exp:'He adds -s: he kicks!'},
-       {q:'The dogs ___ each other. (chase)',opts:['chases','chase','chased','chasing'],a:1,exp:'"The dogs" = they = no -s: dogs chase!'},
-       {q:'When do we add -s to a present tense verb?',opts:['With I, we, they','With he, she, it','Never','Always'],a:1,exp:'Only he/she/it adds -s: she runs, he jumps, it spins!'},
-       {q:'Which sentence is CORRECT?',opts:['The cat sleep all day.','The cat sleeps all day.','The cat sleeping all day.','The cat slept all days.'],a:1,exp:'The cat = it = adds -s: sleeps!'}
-     ]},
-     {label:'🔗 Compound Sentences (FANBOYS)', fixed:true, questions:[
-       {q:'What does FANBOYS stand for?',opts:['Fun And Nice Boys','For, And, Nor, But, Or, Yet, So','Find A New Book Or Your Story','First Add Numbers Before Other Yellow Signs'],a:1,exp:'FANBOYS = the 7 coordinating conjunctions: For, And, Nor, But, Or, Yet, So!'},
-       {q:'A compound sentence joins two complete thoughts with a comma and a...',opts:['noun','verb','conjunction','adjective'],a:2,exp:'Comma + conjunction (FANBOYS) joins two complete ideas!'},
-       {q:'I went to bed very late, ___ I am tired today.',opts:['but','so','or','nor'],a:1,exp:'"So" shows the result: late bed \u2192 so tired!'},
-       {q:'I enjoy playing hockey, ___ it\u2019s not my favourite sport.',opts:['so','and','but','or'],a:2,exp:'"But" shows a contrast/difference!'},
-       {q:'We could go to the park, ___ we could go to the cinema.',opts:['or','but','so','nor'],a:0,exp:'"Or" shows a choice between two things!'},
-       {q:'A small kitten followed me home, ___ I gave it a bowl of milk.',opts:['but','or','so','nor'],a:2,exp:'"So" shows what happened next as a result!'},
-       {q:'Is this a COMPOUND sentence? "The fluffy cat napped on the sunny windowsill."',opts:['Yes, compound','No, it is simple','It is a question','It is a command'],a:1,exp:'Only ONE complete thought = simple sentence (no FANBOYS joining two ideas)!'},
-       {q:'Is this a COMPOUND sentence? "I wanted to go to the park, but it started to rain."',opts:['Yes, compound','No, it is simple','It is a list','It is a command'],a:0,exp:'Two complete thoughts + comma + "but" = compound!'},
-       {q:'Which sentence is COMPOUND?',opts:['Mom baked blueberry muffins.','The tall sunflower grew quickly.','The popcorn smelled great, so we bought a bucket.','Our class went to the zoo.'],a:2,exp:'Two complete ideas joined by ", so" = compound!'},
-       {q:'How many coordinating conjunctions (FANBOYS) are there?',opts:['Five','Six','Seven','Eight'],a:2,exp:'Seven: For, And, Nor, But, Or, Yet, So!'}
-     ]},
-     {label:'📖 Reading: Informative Text', fixed:true, context:'🐘 INFORMATIVE TEXT: African Elephants\n\nThe African elephant is the largest land animal in the world. A grown male can weigh as much as six cars! Elephants live together in family groups called herds. The herd is led by the oldest and wisest female, who is called the matriarch. She remembers where to find water and food, even during a dry season.\n\nAn elephant\u2019s trunk is one of the most useful body parts in the animal kingdom. Elephants use their trunks to breathe, smell, drink, and even to grab food from tall trees. They also use their trunks to give themselves a dust bath, which protects their skin from the hot sun.\n\nElephants have very large ears. By flapping them, they cool down their bodies on warm days. Elephants are herbivores, which means they only eat plants such as grass, leaves, and fruit. A single elephant can eat up to 150 kilograms of food every day. Sadly, African elephants are in danger because some people hunt them, so many countries now have special parks to keep them safe.',
-      questions:[
-       {q:'What is the largest land animal in the world?',opts:['The blue whale','The African elephant','The giraffe','The hippopotamus'],a:1,exp:'The text says the African elephant is the largest LAND animal!'},
-       {q:'What is the leader of an elephant herd called?',opts:['The king','The matriarch','The chief','The captain'],a:1,exp:'The herd is led by the oldest female, called the matriarch!'},
-       {q:'Why do elephants flap their large ears?',opts:['To fly','To hear better','To cool down their bodies','To scare lions'],a:2,exp:'Flapping their ears cools them down on warm days!'},
-       {q:'What does "herbivore" mean?',opts:['An animal that eats only meat','An animal that eats only plants','An animal that eats both','An animal that does not eat'],a:1,exp:'A herbivore only eats plants \u2014 grass, leaves, and fruit!'},
-       {q:'Why are many countries building special parks?',opts:['To keep elephants safe from hunters','To sell tickets','To teach elephants tricks','To grow more grass'],a:0,exp:'The parks protect elephants because some people hunt them!'},
-       {q:'Which of these is NOT something elephants use their trunk for?',opts:['Drinking water','Smelling','Flying','Grabbing food'],a:2,exp:'Trunks are used to breathe, smell, drink and grab food \u2014 not to fly!'}
-     ]},
-     {label:'📝 Full exam (15 Qs)', fixed:true, questions:[
-       {q:'Synonym for "huge"?',opts:['tiny','gigantic','empty','quiet'],a:1,exp:'Huge = gigantic!'},
-       {q:'Synonym for "start"?',opts:['finish','begin','stop','close'],a:1,exp:'Start = begin!'},
-       {q:'Antonym for "clean"?',opts:['tidy','messy','neat','shiny'],a:1,exp:'Clean \u2194 messy!'},
-       {q:'Antonym for "biggest"?',opts:['largest','smallest','heaviest','tallest'],a:1,exp:'Biggest \u2194 smallest!'},
-       {q:'Which is a PROPER noun?',opts:['dog','France','river','city'],a:1,exp:'France is a specific country = proper noun!'},
-       {q:'Proper nouns always start with a...',opts:['small letter','capital letter','number','comma'],a:1,exp:'Always a capital letter!'},
-       {q:'Past tense of "catch"?',opts:['catched','caught','catches','catching'],a:1,exp:'Catch is irregular \u2192 caught!'},
-       {q:'We ___ at the beach yesterday. (swim)',opts:['swimmed','swam','swims','swimming'],a:1,exp:'Swim \u2192 swam (irregular)!'},
-       {q:'Past tense of "play"?',opts:['plaied','played','plays','playing'],a:1,exp:'Regular: play + ed = played!'},
-       {q:'She ___ to the store. (walk)',opts:['walk','walks','walked','walking'],a:1,exp:'She adds -s = walks!'},
-       {q:'My friends ___ at the park. (play)',opts:['plays','play','played','playing'],a:1,exp:'They = no -s = play!'},
-       {q:'What does FANBOYS stand for?',opts:['Fun And Nice Boys','For, And, Nor, But, Or, Yet, So','First Add New Books','Find A New Yellow Sign'],a:1,exp:'The 7 coordinating conjunctions!'},
-       {q:'I was tired, ___ I went to bed early.',opts:['but','so','or','nor'],a:1,exp:'"So" shows the result!'},
-       {q:'Is this compound? "I wanted to play, but it started to rain."',opts:['Yes','No, it is simple','It is a command','It is a question'],a:0,exp:'Two thoughts + comma + but = compound!'},
-       {q:'Which sentence is SIMPLE (not compound)?',opts:['I like tea, and she likes coffee.','The cat napped on the windowsill.','We can walk, or we can drive.','He ran fast, so he won.'],a:1,exp:'One complete thought = simple sentence!'}
-     ]}
-   ]},
+   {key:'la', tri:2, label:'📖 Language Arts', color:'#E24B4A', lang:'en',
+    subtopics:[
+      {label:'🔗 FANBOYS (Compound Sentences)', fixed:true, questions:[
+        {q:'What does FANBOYS help us remember?',opts:['The 7 joining words (conjunctions)','The days of the week','Types of nouns','Past tense verbs'],a:0,exp:'FANBOYS = For, And, Nor, But, Or, Yet, So \\u2014 the words that join two sentences!'},
+        {q:'Which FANBOYS word means \"because\"?',opts:['And','For','But','Or'],a:1,exp:'For shows a reason \\u2014 it means the same as \"because\".'},
+        {q:'Which FANBOYS word shows a RESULT?',opts:['Or','But','So','Nor'],a:2,exp:'So shows a result: \"It rained, SO we stayed inside.\"'},
+        {q:'Which FANBOYS word shows a CHOICE?',opts:['And','Or','So','For'],a:1,exp:'Or shows a choice: \"Tea OR coffee?\"'},
+        {q:'Which FANBOYS word shows a CHANGE or CONTRAST?',opts:['And','So','But','For'],a:2,exp:'But shows a contrast: \"It is small, BUT it is loud.\"'},
+        {q:'Which FANBOYS word ADDS more information?',opts:['And','But','Or','Nor'],a:0,exp:'And adds more: \"I ran AND I jumped.\"'},
+        {q:'I wanted to play outside, ___ it started to rain.',opts:['so','and','but','or'],a:2,exp:'There is a contrast \\u2014 you wanted to play, but the rain stopped you. Use BUT.'},
+        {q:'Put on your jacket, ___ you will catch a cold.',opts:['but','so','or','for'],a:1,exp:'This shows a result \\u2014 use SO.'},
+        {q:'Tom loved the movie, ___ he bought the poster too.',opts:['but','or','and','nor'],a:2,exp:'This adds more information \\u2014 use AND.'},
+        {q:'We can go to the beach, ___ we can go to the park.',opts:['and','or','so','but'],a:1,exp:'This offers a choice \\u2014 use OR.'},
+        {q:'A compound sentence joins two sentences with a comma and a ___.',opts:['full stop','FANBOYS word','question mark','capital letter'],a:1,exp:'Comma + FANBOYS word = compound sentence!'},
+        {q:'Join correctly: \"The puppy was small. He could bark loudly.\"',opts:['The puppy was small he could bark loudly.','The puppy was small, but he could bark loudly.','The puppy was small but loudly.','The puppy small, he bark loudly.'],a:1,exp:'Two ideas + contrast \\u2192 comma + BUT.'},
+        {q:'Join correctly: \"We can bake cookies. We can feed the ducks.\"',opts:['We can bake cookies, or we can feed the ducks.','We can bake cookies we can feed ducks.','We bake cookies or ducks.','We can bake, cookies or ducks.'],a:0,exp:'A choice between two ideas \\u2192 comma + OR.'},
+        {q:'Which sentence is COMPOUND?',opts:['The fluffy cat napped on the windowsill.','Mom baked blueberry muffins.','I wanted to go out, but it started to rain.','The tall sunflower grew quickly.'],a:2,exp:'It has two full sentences joined by a comma + BUT.'}
+      ]},
+      {label:'↔️ Opposites (Antonyms)', fixed:true, questions:[
+        {q:'An OPPOSITE (antonym) is a word that means...',opts:['the same thing','the opposite thing','a naming word','an action word'],a:1,exp:'Opposites have the opposite meaning: hot \\u2194 cold!'},
+        {q:'What is the opposite of \"fast\"?',opts:['quick','slow','speedy','rapid'],a:1,exp:'Fast \\u2194 slow.'},
+        {q:'What is the opposite of \"happy\"?',opts:['joyful','glad','sad','cheerful'],a:2,exp:'Happy \\u2194 sad.'},
+        {q:'What is the opposite of \"hot\"?',opts:['warm','cold','boiling','toasty'],a:1,exp:'Hot \\u2194 cold.'},
+        {q:'What is the opposite of \"clean\"?',opts:['tidy','neat','dirty','fresh'],a:2,exp:'Clean \\u2194 dirty.'},
+        {q:'What is the opposite of \"heavy\"?',opts:['light','huge','solid','full'],a:0,exp:'Heavy \\u2194 light.'},
+        {q:'Change the bold word to its opposite: \"The turtle is very FAST.\"',opts:['quick','slow','tired','small'],a:1,exp:'The turtle is very SLOW \\u2014 that changes the meaning!'},
+        {q:'Change the opposite: \"My bedroom is so DIRTY.\"',opts:['messy','clean','dark','big'],a:1,exp:'My bedroom is so CLEAN.'},
+        {q:'Change the opposite: \"The soup is too HOT to eat.\"',opts:['warm','cold','spicy','salty'],a:1,exp:'The soup is too COLD to eat.'},
+        {q:'Change the opposite: \"This box is very HEAVY.\"',opts:['light','full','large','hard'],a:0,exp:'This box is very LIGHT.'},
+        {q:'What is the opposite of \"open\"?',opts:['shut','wide','start','enter'],a:0,exp:'Open \\u2194 shut (closed).'},
+        {q:'What is the opposite of \"day\"?',opts:['sun','morning','night','noon'],a:2,exp:'Day \\u2194 night.'}
+      ]},
+      {label:'⏪ Past Simple: Irregular Verbs', fixed:true, questions:[
+        {q:'Irregular verbs are \"rule-breakers\" because they...',opts:['always add -ed','change their spelling completely','never change','add -ing'],a:1,exp:'Regular verbs add -ed (walk\\u2192walked). Irregular verbs change completely (go\\u2192went)!'},
+        {q:'What is the past simple of \"go\"?',opts:['goed','gone','went','goes'],a:2,exp:'go \\u2192 went.'},
+        {q:'What is the past simple of \"see\"?',opts:['seed','saw','seen','sees'],a:1,exp:'see \\u2192 saw.'},
+        {q:'What is the past simple of \"eat\"?',opts:['eated','ate','eaten','eats'],a:1,exp:'eat \\u2192 ate.'},
+        {q:'What is the past simple of \"run\"?',opts:['runned','ran','run','running'],a:1,exp:'run \\u2192 ran.'},
+        {q:'Yesterday, Lily ___ (go) to the zoo.',opts:['goed','go','went','gone'],a:2,exp:'go \\u2192 went.'},
+        {q:'I ___ (see) a beautiful blue bird this morning.',opts:['seen','saw','seed','see'],a:1,exp:'see \\u2192 saw.'},
+        {q:'We ___ (eat) pizza for dinner last night.',opts:['eat','eated','ate','eaten'],a:2,exp:'eat \\u2192 ate.'},
+        {q:'The boys ___ (run) very fast during the race.',opts:['runned','ran','run','runs'],a:1,exp:'run \\u2192 ran.'},
+        {q:'What is the past simple of \"have\"?',opts:['haved','had','haves','having'],a:1,exp:'have \\u2192 had.'},
+        {q:'What is the past simple of \"make\"?',opts:['maked','make','made','making'],a:2,exp:'make \\u2192 made.'},
+        {q:'Which one is an IRREGULAR verb in the past?',opts:['walked','jumped','went','played'],a:2,exp:'walked, jumped and played just add -ed. WENT is irregular (go\\u2192went)!'}
+      ]},
+      {label:'📖 Reading & Comprehension', fixed:true, context:'\\ud83d\\udcd6 Maya\\u2019s Unforgettable Morning\\n\\nYesterday turned into a wonderfully exciting day for Maya. She and her mother embarked on an important trip to the busy farmers\\u2019 market because Maya was determined to find the perfect pumpkin for the autumn festival. The enormous market offered an astonishing variety of fruits and vegetables. Maya briefly considered a basket of shiny red apples, but she ultimately stayed focused on her original plan.\\n\\nShe carefully chose a gigantic orange pumpkin. Her mother bought the pumpkin, and Maya also picked a bundle of golden sunflowers. They drove home immediately, so Maya could begin decorating before lunch. She felt enormous joy as she arranged her treasures by the front door.',
+       questions:[
+        {q:'What was Maya\\u2019s main goal at the farmers\\u2019 market?',opts:['To buy red apples','To find the perfect pumpkin','To eat lunch','To pick sunflowers'],a:1,exp:'The text says she was determined to find the perfect pumpkin for the festival.'},
+        {q:'The word \"enormous\" tells you the market was...',opts:['very small','very large','very quiet','very empty'],a:1,exp:'Enormous means very, very big!'},
+        {q:'The word \"determined\" shows that Maya...',opts:['gave up easily','did not care','would not give up on her plan','was very tired'],a:2,exp:'Determined means she stayed focused and would not give up.'},
+        {q:'Which IRREGULAR past-tense verb is used in the story?',opts:['decorated','bought','arranged','considered'],a:1,exp:'bought (buy\\u2192bought) is irregular. The others just add -ed.'},
+        {q:'\"They drove home immediately, ___ Maya could begin decorating.\" Which FANBOYS word fits?',opts:['but','so','or','nor'],a:1,exp:'It shows a result \\u2192 SO.'},
+        {q:'Maya considered the apples, ___ she stayed focused on the pumpkin.',opts:['so','and','but','for'],a:2,exp:'There is a contrast \\u2192 BUT.'},
+        {q:'Besides the pumpkin, what did Maya pick?',opts:['Red apples','Golden sunflowers','A basket','Vegetables'],a:1,exp:'She also picked a bundle of golden sunflowers.'},
+        {q:'Why did Maya and her mother drive home immediately?',opts:['Because it was raining','So Maya could begin decorating before lunch','To buy more apples','Because the market closed'],a:1,exp:'They hurried home SO she could start decorating \\u2014 a result/reason.'}
+      ]},
+      {label:'🔎 Text Interpretation', fixed:true, context:'\\ud83d\\udc3f\\ufe0f The Little Squirrel and the First Snow\\n\\nThe little squirrel spent the whole autumn collecting acorns and hiding them under the tall oak tree. One morning, when he woke up expecting to find more acorns on the ground, he was surprised to see everything covered in soft white snow. The cold wind made the search even harder. While he was looking at a single acorn in his paws, he forgot about everything around him. Suddenly, he noticed the silence and rushed to hide inside a warm hollow in the tree. Some birds were resting there before their long flight to the south. He decided to ask one of them what was happening, but he was even more surprised by the bird\\u2019s answer. It turned out that winter had arrived before the little squirrel had realised.',
+       questions:[
+        {q:'What did the little squirrel do during autumn?',opts:['He slept all day','He collected acorns and hid them','He flew to the south','He swam in a stream'],a:1,exp:'He spent the whole autumn collecting acorns and hiding them under the oak tree.'},
+        {q:'Why was he surprised when he woke up one morning?',opts:['He found more acorns','Everything was covered in snow','The sun was very hot','The tree had fallen'],a:1,exp:'He expected acorns but saw everything covered in soft white snow.'},
+        {q:'Where did he take shelter from the cold?',opts:['Under a rock','Inside a warm hollow in the tree','In a bird\\u2019s nest','Beside the stream'],a:1,exp:'He rushed to hide inside a warm hollow in the tree.'},
+        {q:'Who did he ask about what was happening?',opts:['Another squirrel','His mother','One of the birds','A rabbit'],a:2,exp:'He decided to ask one of the birds that were resting in the tree.'},
+        {q:'What is the reason for the squirrel\\u2019s surprise?',opts:['He lost his acorns','Winter had arrived before he had realised','The birds left him','He was very hungry'],a:1,exp:'Winter had arrived before the little squirrel had realised it.'},
+        {q:'What did the squirrel do RIGHT AFTER he noticed the silence?',opts:['He ate an acorn','He rushed to hide in the tree hollow','He asked a bird','He fell asleep'],a:1,exp:'First he noticed the silence, then he rushed to hide in the hollow.'},
+        {q:'The word \"rushed\" tells us the squirrel moved...',opts:['very slowly','very quickly','very quietly','very sadly'],a:1,exp:'To rush means to move very quickly.'},
+        {q:'Why were the birds resting in the tree?',opts:['They lived in the oak tree','They were resting before flying south','They were looking for acorns','They were hiding from the squirrel'],a:1,exp:'They were taking a break before their long flight to the south for winter.'}
+      ]},
+      {label:'📝 Full exam (15 Qs)', fixed:true, questions:[
+        {q:'Which FANBOYS word means \"because\"?',opts:['So','For','But','Or'],a:1,exp:'For = because.'},
+        {q:'I was tired, ___ I went to bed early.',opts:['but','or','so','nor'],a:2,exp:'A result \\u2192 SO.'},
+        {q:'She wanted ice cream, ___ the shop was closed.',opts:['so','but','and','or'],a:1,exp:'A contrast \\u2192 BUT.'},
+        {q:'Join correctly: \"Leo built a castle. His sister painted a picture.\"',opts:['Leo built a castle, and his sister painted a picture.','Leo built a castle his sister painted.','Leo built, and painted a picture.','Leo built a castle but picture.'],a:0,exp:'Two ideas added together \\u2192 comma + AND.'},
+        {q:'A compound sentence needs a comma and a ___.',opts:['FANBOYS word','full stop','new paragraph','capital letter'],a:0,exp:'Comma + FANBOYS word!'},
+        {q:'What is the opposite of \"fast\"?',opts:['quick','slow','rapid','speedy'],a:1,exp:'fast \\u2194 slow.'},
+        {q:'Change the opposite: \"The soup is too HOT.\"',opts:['warm','cold','spicy','sweet'],a:1,exp:'hot \\u2194 cold.'},
+        {q:'What is the opposite of \"heavy\"?',opts:['light','full','large','solid'],a:0,exp:'heavy \\u2194 light.'},
+        {q:'What is the past simple of \"go\"?',opts:['goed','went','gone','goes'],a:1,exp:'go \\u2192 went.'},
+        {q:'We ___ (eat) pizza last night.',opts:['eated','ate','eaten','eat'],a:1,exp:'eat \\u2192 ate.'},
+        {q:'The boys ___ (run) in the race.',opts:['runned','ran','run','runs'],a:1,exp:'run \\u2192 ran.'},
+        {q:'Which verb is IRREGULAR?',opts:['played','went','jumped','walked'],a:1,exp:'WENT is irregular (go\\u2192went).'},
+        {q:'I ___ (see) a bird this morning.',opts:['saw','seen','seed','see'],a:0,exp:'see \\u2192 saw.'},
+        {q:'\"Maya stayed focused, ___ she did not buy the apples.\" Which word fits?',opts:['so','but','or','for'],a:0,exp:'A result \\u2192 SO (she stayed focused, so she did not get distracted).'},
+        {q:'In a story, \"enormous\" means a place is...',opts:['tiny','very large','empty','dark'],a:1,exp:'enormous = very big.'}
+      ]}
+    ]},
 
   // ===== GEO & HISTÓRIA (NOVO — 3 níveis + completo) =====
-  {key:'geohist', label:'🏛️ Geo & Hist', color:'#7F77DD', lang:'pt',
+  {key:'geohist', tri:1, label:'🏛️ Geo & Hist', color:'#7F77DD', lang:'pt',
    subtopics:[
      {label:'🟢 Fácil', fixed:true, questions:[
        {q:'O que significa MISCIGENAÇÃO?',opts:['Mistura de pessoas de diferentes etnias (origens e raças)','Apenas a cultura indígena','Apenas os europeus','Somente os africanos'],a:0,exp:'Miscigenação = mistura de etnias (indígenas, africanos, europeus, asiáticos)!'},
@@ -1230,7 +1230,7 @@ var SIMS=[
    ]},
 
   // ===== SOCIAL STUDIES (NOVO — 3 níveis + completo) =====
-  {key:'social', label:'🌎 Social Studies', color:'#5F5E5A', lang:'en',
+  {key:'social', tri:1, label:'🌎 Social Studies', color:'#5F5E5A', lang:'en',
    subtopics:[
      {label:'🟢 Easy', fixed:true, questions:[
        {q:'A nomad is a person who...',opts:['stays in one place forever','moves from place to place','only lives in cities','never eats food'],a:1,exp:'Nomads move from place to place following food and seasons!'},
@@ -1270,11 +1270,120 @@ var SIMS=[
        {q:'Pizarro defeated the Incas partly because of:',opts:['More soldiers','Guns, horses, and diseases','Better food','Better maps'],a:1,exp:'Technology + diseases = huge advantage!'},
        {q:'Mayas wrote with ___ while Incas used ___:',opts:['letters / numbers','glyphs / quipu','quipu / glyphs','paint / clay'],a:1,exp:'Mayas = glyphs (pictures). Incas = quipu (knotted strings)!'}
      ]}
-   ]}
+   ]},
+  // ===== 2º TRIMESTRE — aguardando fotos do caderno =====
+  {key:'ciencias2', tri:2, label:'💧 Ciências', color:'#378ADD', lang:'pt',
+   subtopics:[
+     {label:'💧 Estados Físicos da Água', fixed:true, questions:[
+       {q:'Quantos estados físicos a água pode ter?',opts:['2','3','4','5'],a:1,exp:'A água tem 3 estados: sólido, líquido e gasoso! 💧🧊☁️'},
+       {q:'Quais são os três estados físicos da água?',opts:['Sólido, líquido e gasoso','Quente, morno e frio','Doce, salgado e mineral','Pequeno, médio e grande'],a:0,exp:'Sólido (gelo), líquido (água) e gasoso (vapor)!'},
+       {q:'Cerca de quanto da superfície do nosso planeta é formado por água?',opts:['21%','50%','71%','100%'],a:2,exp:'Cerca de 71% da Terra é água \\u2014 por isso ela parece azul do espaço! 🌎'},
+       {q:'No estado LÍQUIDO, a água...',opts:['tem forma própria e definida','tem volume definido, mas não tem forma própria','não tem volume nem forma','é sempre sólida'],a:1,exp:'No líquido a água tem volume definido, mas toma a forma do recipiente onde está!'},
+       {q:'Quando colocamos água numa jarra e depois num copo, ela...',opts:['muda de quantidade','toma a forma do recipiente','vira gelo','desaparece'],a:1,exp:'A água líquida toma a forma do recipiente (jarra, copo, garrafa)!'},
+       {q:'No estado SÓLIDO, a água tem...',opts:['volume e forma bem definidos','só volume definido','nem forma nem volume','forma que muda sozinha'],a:0,exp:'No sólido (gelo), a água é rígida: tem volume E forma definidos!'},
+       {q:'Quais são exemplos de água no estado SÓLIDO?',opts:['Vapor e nuvem','Gelo e iceberg','Chuva e orvalho','Rio e lago'],a:1,exp:'Gelo e iceberg são água sólida \\u2014 rígidos e com forma definida! 🧊'},
+       {q:'No estado SÓLIDO, as moléculas de água estão...',opts:['bem distantes umas das outras','bem próximas umas das outras','desaparecidas','sempre em movimento rápido'],a:1,exp:'No sólido a força de coesão é grande, então as moléculas ficam bem juntinhas!'},
+       {q:'No estado GASOSO, a água...',opts:['tem forma e volume definidos','não tem forma nem volume definidos','é sempre gelo','fica parada'],a:1,exp:'No gasoso (vapor) a água não tem forma nem volume definidos \\u2014 ela se espalha no ar!'},
+       {q:'No estado GASOSO, as moléculas de água...',opts:['ficam bem próximas','ficam distantes e com muita mobilidade','não se movem','viram gelo'],a:1,exp:'No gasoso as moléculas ficam bem distantes e se movem muito, dispersando no ar!'},
+       {q:'Em qual estado a água tem MAIOR mobilidade das moléculas?',opts:['Sólido','Líquido','Gasoso','São todos iguais'],a:2,exp:'No gasoso as moléculas se movem mais e se espalham rapidamente!'},
+       {q:'O vapor que sai de um Gêiser é um exemplo de água no estado...',opts:['sólido','líquido','gasoso','congelado'],a:2,exp:'O gêiser solta água superaquecida em forma de vapor \\u2014 estado gasoso! ♨️'}
+     ]},
+     {label:'🔄 Mudanças de Estado', fixed:true, questions:[
+       {q:'O que faz a água mudar de um estado para outro?',opts:['A cor da água','A variação de temperatura ou pressão','O tamanho do copo','O dia da semana'],a:1,exp:'Mudanças de estado acontecem por variação de temperatura ou pressão (ganho ou perda de energia)!'},
+       {q:'Para a água ficar no estado LÍQUIDO, a temperatura precisa estar entre...',opts:['0°C e 50°C','1°C e 99°C','100°C e 200°C','-10°C e 0°C'],a:1,exp:'Entre 1°C e 99°C a água fica líquida. Abaixo de 1°C congela, acima de 99°C evapora!'},
+       {q:'A passagem do estado SÓLIDO para o LÍQUIDO chama-se...',opts:['Fusão','Condensação','Sublimação','Solidificação'],a:0,exp:'Fusão = sólido vira líquido (o gelo derrete)! 🧊\\u2192💧'},
+       {q:'Qual é o ponto de fusão da água (quando o gelo derrete)?',opts:['0°C','10°C','50°C','100°C'],a:0,exp:'O gelo derrete a 0°C \\u2014 esse é o ponto de fusão!'},
+       {q:'O derretimento das geleiras na Antártida é um exemplo de...',opts:['Solidificação','Fusão','Condensação','Sublimação'],a:1,exp:'As geleiras derretendo = sólido virando líquido = fusão!'},
+       {q:'A passagem do estado LÍQUIDO para o GASOSO chama-se...',opts:['Solidificação','Fusão','Vaporização','Condensação'],a:2,exp:'Vaporização = líquido vira vapor (gasoso)! 💧\\u2192☁️'},
+       {q:'A passagem GRADUAL (lenta) do líquido para o gasoso, como roupa secando no varal, é a...',opts:['ebulição','evaporação','calefação','fusão'],a:1,exp:'Evaporação é lenta e gradual \\u2014 como a roupa secando no varal! 👕'},
+       {q:'Quando a água ferve na panela, rápido, ocorre a...',opts:['evaporação','ebulição','calefação','solidificação'],a:1,exp:'Ebulição = passagem rápida de líquido para gasoso (água fervendo)!'},
+       {q:'A passagem do estado LÍQUIDO para o SÓLIDO chama-se...',opts:['Fusão','Solidificação','Vaporização','Sublimação'],a:1,exp:'Solidificação = líquido vira sólido (a água congela)! 💧\\u2192🧊'},
+       {q:'Um rio que congela no inverno é um exemplo de...',opts:['fusão','solidificação','evaporação','condensação'],a:1,exp:'Água líquida virando gelo = solidificação!'},
+       {q:'A passagem do estado GASOSO para o LÍQUIDO chama-se...',opts:['Condensação','Fusão','Sublimação','Ebulição'],a:0,exp:'Condensação = vapor (gasoso) vira água (líquido)! ☁️\\u2192💧'},
+       {q:'A garrafa gelada que começa a \"suar\" por fora é um exemplo de...',opts:['fusão','condensação','sublimação','evaporação'],a:1,exp:'O vapor do ar toca a superfície fria e vira gotinhas = condensação!'},
+       {q:'Quando o vidro do carro embaça em dia chuvoso, ocorre a...',opts:['evaporação','solidificação','condensação','fusão'],a:2,exp:'O vapor do ar quente encontra o vidro frio e se condensa em gotinhas!'},
+       {q:'A passagem direta do SÓLIDO para o GASOSO (sem virar líquido) chama-se...',opts:['Fusão','Sublimação','Condensação','Solidificação'],a:1,exp:'Sublimação = sólido vira gasoso direto, sem passar pelo líquido!'},
+       {q:'O gelo-seco soltando \"fumaça\" é um exemplo de...',opts:['fusão','sublimação','condensação','ebulição'],a:1,exp:'O gelo-seco (CO2 sólido) vira gás direto \\u2014 sublimação! Curiosidade: ele não é água!'}
+     ]},
+     {label:'🌧️ Ciclo da Água', fixed:true, questions:[
+       {q:'O que é o ciclo da água?',opts:['O processo permanente em que a água circula e muda de estado na natureza','Um copo de água','Uma chuva forte','Um tipo de rio'],a:0,exp:'É a transformação e circulação contínua da água na natureza, passando por vários estados!'},
+       {q:'O que dá ENERGIA para o ciclo da água acontecer?',opts:['A lua','O sol','O vento','As nuvens'],a:1,exp:'O calor do sol aquece a água e faz tudo começar! ☀️'},
+       {q:'Na EVAPORAÇÃO, o que acontece?',opts:['A chuva cai','A água dos rios e mares aquece e vira vapor, subindo para o ar','A água vira gelo','As nuvens somem'],a:1,exp:'O sol aquece a água dos rios, lagos e oceanos, que evapora e sobe para a atmosfera!'},
+       {q:'Depois que o vapor sobe e esfria no ar, ocorre a CONDENSAÇÃO, que forma...',opts:['gelo no chão','as nuvens','os rios','a chuva ácida'],a:1,exp:'O vapor esfria, condensa em gotículas e forma as nuvens! ☁️'},
+       {q:'A PRECIPITAÇÃO é quando...',opts:['a água evapora','as gotículas ficam pesadas e caem como chuva','o sol aparece','o vento sopra'],a:1,exp:'Quando as gotículas das nuvens ficam pesadas, caem como chuva = precipitação! 🌧️'},
+       {q:'Em regiões muito frias, a precipitação pode cair na forma de...',opts:['vapor','neve ou granizo','nuvem','orvalho'],a:1,exp:'Em lugares bem frios, a água cai como neve ou granizo! ❄️'},
+       {q:'A INFILTRAÇÃO é quando a água...',opts:['evapora dos oceanos','penetra no solo e alimenta os lençóis subterrâneos','vira nuvem','ferve'],a:1,exp:'Parte da água da chuva penetra no solo e alimenta os lençóis de água subterrâneos!'},
+       {q:'No ciclo da água, a TRANSPIRAÇÃO vem...',opts:['dos vulcões','das plantas, que devolvem água à atmosfera','do gelo','dos carros'],a:1,exp:'As plantas absorvem água e devolvem parte dela ao ar pela transpiração! 🌳'},
+       {q:'Quais processos fazem parte do ciclo da água?',opts:['Evaporação, condensação, precipitação, infiltração e transpiração','Só a chuva','Só a evaporação','Fusão e sublimação apenas'],a:0,exp:'Evaporação, condensação, precipitação, infiltração e transpiração \\u2014 todos juntos!'},
+       {q:'Qual é a ordem correta no ciclo da água?',opts:['Precipitação \\u2192 evaporação \\u2192 condensação','Evaporação \\u2192 condensação \\u2192 precipitação','Condensação \\u2192 precipitação \\u2192 evaporação','Infiltração \\u2192 evaporação \\u2192 chuva'],a:1,exp:'A água evapora, depois condensa em nuvens, e depois cai como chuva (precipitação)!'},
+       {q:'Depois de cair como chuva, a água volta para...',opts:['o sol','os oceanos, lagos, rios e continentes','o espaço','o vulcão'],a:1,exp:'A chuva cai sobre oceanos, lagos, rios e continentes \\u2014 e o ciclo recomeça!'},
+       {q:'O ciclo da água se repete...',opts:['uma vez por ano','só no inverno','indefinidamente, sem parar','nunca'],a:2,exp:'O ciclo da água nunca para \\u2014 ele se repete continuamente! 🔄'}
+     ]},
+     {label:'📝 Simulado completo (15 Qs)', fixed:true, questions:[
+       {q:'Quais são os três estados físicos da água?',opts:['Sólido, líquido e gasoso','Frio, morno e quente','Doce, salgado e gelado','Pequeno, médio e grande'],a:0,exp:'Sólido, líquido e gasoso!'},
+       {q:'No estado SÓLIDO, a água tem...',opts:['forma e volume definidos','nenhuma forma','muita mobilidade','forma do recipiente'],a:0,exp:'Sólido = rígido, com forma e volume definidos (gelo)!'},
+       {q:'A água líquida toma a forma...',opts:['de gelo','do recipiente onde está','de nuvem','de vapor'],a:1,exp:'A água líquida toma a forma do copo, jarra ou garrafa!'},
+       {q:'Em qual estado as moléculas ficam mais distantes e se movem mais?',opts:['Sólido','Líquido','Gasoso','Congelado'],a:2,exp:'No gasoso as moléculas ficam bem distantes e com muita mobilidade!'},
+       {q:'A FUSÃO é a passagem de...',opts:['líquido para sólido','sólido para líquido','gasoso para líquido','líquido para gasoso'],a:1,exp:'Fusão = sólido vira líquido (gelo derrete a 0°C)!'},
+       {q:'A passagem de líquido para gasoso chama-se...',opts:['solidificação','vaporização','condensação','fusão'],a:1,exp:'Vaporização = líquido vira vapor!'},
+       {q:'Roupa secando no varal é exemplo de...',opts:['ebulição','evaporação','calefação','fusão'],a:1,exp:'Evaporação \\u2014 a passagem lenta e gradual de líquido para gasoso!'},
+       {q:'A garrafa gelada \"suando\" é exemplo de...',opts:['fusão','condensação','sublimação','solidificação'],a:1,exp:'Condensação \\u2014 o vapor do ar vira gotinhas na superfície fria!'},
+       {q:'A passagem direta de sólido para gasoso chama-se...',opts:['fusão','sublimação','condensação','evaporação'],a:1,exp:'Sublimação \\u2014 sólido vira gasoso sem passar pelo líquido (gelo-seco)!'},
+       {q:'O que dá energia para o ciclo da água?',opts:['A lua','O sol','O vento','O gelo'],a:1,exp:'O calor do sol! ☀️'},
+       {q:'Na condensação do ciclo da água, formam-se...',opts:['rios','nuvens','geleiras','vulcões'],a:1,exp:'O vapor esfria e condensa, formando as nuvens!'},
+       {q:'Quando as gotículas das nuvens ficam pesadas e caem, ocorre a...',opts:['evaporação','precipitação','infiltração','transpiração'],a:1,exp:'Precipitação = a chuva (ou neve/granizo)!'},
+       {q:'A água que penetra no solo e alimenta os lençóis subterrâneos passou pela...',opts:['evaporação','infiltração','condensação','fusão'],a:1,exp:'Infiltração \\u2014 a água entra no solo!'},
+       {q:'Qual a ordem correta?',opts:['Chuva \\u2192 evaporação \\u2192 nuvem','Evaporação \\u2192 condensação \\u2192 precipitação','Nuvem \\u2192 evaporação \\u2192 sol','Infiltração \\u2192 nuvem \\u2192 chuva'],a:1,exp:'A água evapora, condensa em nuvem e cai como chuva!'},
+       {q:'O ciclo da água...',opts:['acontece uma vez só','se repete indefinidamente','só ocorre no mar','nunca muda de estado'],a:1,exp:'O ciclo nunca para \\u2014 se repete para sempre! 🔄'}
+     ]}
+   ]},
+  {key:'math2', tri:2, pending:true, label:'🔢 Math', color:'#633806', lang:'en',
+   topicsList:['Word problems (3 operations)','Lines of symmetry','Types of triangles (scalene, equilateral, isosceles)','Bar graphs'],
+   subtopics:[]}
 ];
 </script>
 
 <script>
+// ===== TRIMESTRE =====
+var currentTri = 2;
+function setTri(n){
+  currentTri = n;
+  document.getElementById('tri-1').classList.toggle('active', n===1);
+  document.getElementById('tri-2').classList.toggle('active', n===2);
+  // Painel
+  document.getElementById('dash-1tri').style.display = (n===1)?'':'none';
+  document.getElementById('dash-2tri').style.display = (n===2)?'':'none';
+  hideDetail();
+  // Limpa as navs para forçar rebuild filtrado por trimestre
+  ['sim-nav','mind-nav','res-nav','qf'].forEach(function(id){
+    var el=document.getElementById(id); if(el) el.innerHTML='';
+  });
+  document.getElementById('sim-questions').innerHTML='';
+  document.getElementById('res-content').innerHTML='';
+  document.getElementById('qbox').innerHTML='';
+  // Re-renderiza a aba que está ativa
+  var active = document.querySelector('.screen.active');
+  if(active){
+    var id=active.id;
+    if(id==='sim') buildSimNav();
+    if(id==='mind') buildMindNav();
+    if(id==='res') buildResNav();
+    if(id==='quiz'){buildQF();var f=document.querySelector('.qf-btn');if(f)startQuiz('all',f);}
+  }
+}
+// Atalho do card do 2º tri direto para o simulado
+function goSim(key){
+  showTab('sim','#BA7517');
+  var s=SIMS.find(function(x){return x.key===key;});
+  var btns=document.querySelectorAll('.sim-btn');
+  btns.forEach(function(b){ if(b.dataset.key===key){ b.click(); } });
+}
+// Aviso reutilizável para abas sem conteúdo no trimestre
+function triEmptyHTML(ico,title,msg){
+  return '<div class="tri-empty"><span class="ico">'+ico+'</span><h3>'+title+'</h3><p>'+msg+'</p>'
+    +'<button onclick="showTab(\'sim\',\'#BA7517\')">📋 Ir para os Simulados</button></div>';
+}
+
 // ===== TABS =====
 function showTab(id,col){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -1282,7 +1391,7 @@ function showTab(id,col){
   document.getElementById(id).classList.add('active');
   var btn=document.getElementById('t-'+id);
   btn.classList.add('active');btn.style.background=col;btn.style.color='#fff';btn.style.borderColor=col;
-  if(id==='quiz'){buildQF();startQuiz('all',document.querySelector('.qf-btn'));}
+  if(id==='quiz'){buildQF();var f=document.querySelector('.qf-btn');if(f)startQuiz('all',f);}
   if(id==='sim') buildSimNav();
   if(id==='mind') buildMindNav();
   if(id==='res') buildResNav();
@@ -1310,7 +1419,17 @@ function hideDetail(){document.getElementById('dash-main').style.display='';docu
 var cQ=[],qi=0,sc=0,ans=false,af='all';
 var CATS=[['all','Todas / All','#2C2C2A'],['science','🌿 Science','#1D9E75'],['ciencias','🗺️ Ciências','#378ADD'],['portugues','✏️ Português','#D4537E'],['mat','🔢 Math','#BA7517'],['la','📖 Lang Arts','#E24B4A'],['social','🌎 Social','#5F5E5A'],['geohist','🏛️ Geo & Hist','#7F77DD']];
 function buildQF(){
-  var w=document.getElementById('qf');if(w.childElementCount)return;
+  var w=document.getElementById('qf');
+  var prog=document.querySelector('#quiz .prog-bar');
+  if(currentTri===2){
+    if(w){w.style.display='none';w.innerHTML='';}
+    if(prog)prog.style.display='none';
+    document.getElementById('qbox').innerHTML=triEmptyHTML('🎯','Quiz do 2º trimestre em breve','O quiz rápido do 2º trimestre entra com o conteúdo de Ciências e Math. Por enquanto, treina nas provas pelos Simulados.');
+    return;
+  }
+  if(w)w.style.display='';
+  if(prog)prog.style.display='';
+  if(w.childElementCount)return;
   CATS.forEach((c,i)=>{
     var b=document.createElement('button');b.className='qf-btn'+(i===0?' active':'');
     b.textContent=c[1];if(i===0){b.style.background=c[2];b.style.color='#fff';b.style.borderColor=c[2];}
@@ -1358,19 +1477,41 @@ function nextQ(){qi++;renderQ();}
 
 // ===== MAPA MENTAL NAV =====
 var MINDS=[
-  ['science','🌿 Science','#1D9E75'],
-  ['ciencias','🗺️ Ciências','#378ADD'],
-  ['portugues','✏️ Português','#D4537E'],
-  ['matpt','🔢 Matemática PT','#BA7517'],
-  ['mat','🔢 Math EN','#633806'],
-  ['la','📖 Language Arts','#E24B4A'],
-  ['geohist','🏛️ Geo & Hist','#7F77DD'],
-  ['social','🌎 Social Studies','#2C2C2A']
+  ['science','🌿 Science','#1D9E75',1],
+  ['ciencias','🗺️ Ciências','#378ADD',1],
+  ['portugues','✏️ Português','#D4537E',1],
+  ['matpt','🔢 Matemática PT','#BA7517',1],
+  ['mat','🔢 Math EN','#633806',1],
+  ['la','📖 Language Arts','#E24B4A',2],
+  ['geohist','🏛️ Geo & Hist','#7F77DD',1],
+  ['social','🌎 Social Studies','#2C2C2A',1]
 ];
 function buildMindNav(){
   var nav=document.getElementById('mind-nav');
-  if(!nav||nav.childElementCount)return;
-  MINDS.forEach((m,i)=>{
+  if(!nav)return;
+  var hint=document.querySelector('#mind .mind-hint');
+  var maps=document.querySelectorAll('#mind .mind-map');
+  var empty=document.getElementById('mind-empty');
+  var list=MINDS.filter(function(m){return (m[3]||1)===currentTri;});
+  if(nav.childElementCount && nav.dataset.tri==String(currentTri))return;
+  nav.innerHTML=''; nav.dataset.tri=String(currentTri);
+  // esconde todos os mapas; mostra só os do trimestre atual
+  var keys=list.map(function(m){return 'mm-'+m[0];});
+  maps.forEach(function(m){
+    m.classList.remove('active');
+    m.style.display = keys.indexOf(m.id)>=0 ? '' : 'none';
+  });
+  if(!list.length){
+    nav.style.display='none'; if(hint)hint.style.display='none';
+    if(!empty){empty=document.createElement('div');empty.id='mind-empty';document.getElementById('mind').appendChild(empty);}
+    empty.style.display='';
+    empty.innerHTML=triEmptyHTML('🌿','Mapas do 2º trimestre em breve','Os mapas de Ciências e Math entram com as fotos do caderno. Por enquanto, treina nas provas pelos Simulados.');
+    return;
+  }
+  if(empty)empty.style.display='none';
+  nav.style.display=''; if(hint)hint.style.display='';
+  var firstMap=document.getElementById('mm-'+list[0][0]); if(firstMap)firstMap.classList.add('active');
+  list.forEach((m,i)=>{
     var b=document.createElement('button');
     b.className='mind-btn'+(i===0?' active':'');
     b.textContent=m[1];
@@ -1389,9 +1530,19 @@ function buildMindNav(){
 // ===== RESUMOS (NOVO MÓDULO) =====
 function buildResNav(){
   var nav=document.getElementById('res-nav');
-  if(!nav||nav.childElementCount)return;
-  // Coloca as prioritárias primeiro (LA, Geohist, Social)
-  var ordered = RESUMOS.slice().sort(function(a,b){
+  if(!nav)return;
+  var content=document.getElementById('res-content');
+  if(nav.childElementCount && nav.dataset.tri==String(currentTri))return;
+  nav.innerHTML=''; nav.dataset.tri=String(currentTri);
+  var list = RESUMOS.filter(function(r){return (r.tri||1)===currentTri;});
+  if(!list.length){
+    nav.style.display='none';
+    content.innerHTML=triEmptyHTML('📝','Resumos do 2º trimestre em breve','Os resumos de Ciências e Math entram com as fotos do caderno. Por enquanto, treina nas provas pelos Simulados.');
+    return;
+  }
+  nav.style.display='';
+  // Prioritárias primeiro (LA, Geohist, Social)
+  var ordered = list.slice().sort(function(a,b){
     return (b.priority?1:0) - (a.priority?1:0);
   });
   ordered.forEach(function(r,i){
@@ -1406,7 +1557,6 @@ function buildResNav(){
     };})(r.key);
     nav.appendChild(b);
   });
-  // Renderiza o primeiro (prioritário)
   renderRes(ordered[0].key);
 }
 
@@ -1439,10 +1589,15 @@ var simAnswers = {};
 
 function buildSimNav(){
   var nav=document.getElementById('sim-nav');
-  if(!nav||nav.childElementCount)return;
-  SIMS.forEach((s,i)=>{
+  if(!nav)return;
+  var list=SIMS.filter(function(s){return s.tri===currentTri;});
+  if(nav.childElementCount && nav.dataset.tri==String(currentTri))return;
+  nav.innerHTML='';
+  nav.dataset.tri=String(currentTri);
+  list.forEach((s,i)=>{
     var b=document.createElement('button');
     b.className='sim-btn'+(i===0?' active':'');
+    b.dataset.key=s.key;
     b.textContent=s.label;
     if(i===0){b.style.background=s.color;b.style.color='#fff';b.style.borderColor=s.color;}
     b.onclick=(function(key){return function(){
@@ -1452,7 +1607,7 @@ function buildSimNav(){
     };})(s.key);
     nav.appendChild(b);
   });
-  loadSim('science');
+  if(list.length) loadSim(list[0].key);
 }
 
 function loadSim(key){
@@ -1472,6 +1627,23 @@ function renderTopicPicker(){
   var header = document.createElement('div');
   header.className = 'exam-header';
   header.style.background = 'linear-gradient(135deg,'+sub.color+','+darken(sub.color)+')';
+  // Matéria do 2º tri ainda sem questões (aguardando caderno)
+  if(sub.pending){
+    header.innerHTML = '<h2>'+sub.label+'</h2><p>'+(pt?'Conteúdo que vai cair na prova:':'Topics for this exam:')+'</p>';
+    wrap.appendChild(header);
+    var box = document.createElement('div');
+    box.className='res-summary';
+    box.style.cssText='background:var(--card);border-radius:14px;border-left:4px solid '+sub.color+';padding:1rem 1.25rem;margin-bottom:12px';
+    var lis=(sub.topicsList||[]).map(function(t){return '<li style="margin-bottom:6px">'+escHtml(t)+'</li>';}).join('');
+    box.innerHTML='<ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.6;color:var(--text)">'+lis+'</ul>';
+    wrap.appendChild(box);
+    var note=document.createElement('div');
+    note.className='tri-empty';
+    note.innerHTML='<span class="ico">📸</span><h3>'+(pt?'Simulado a caminho':'Exam coming soon')+'</h3>'
+      +'<p>'+(pt?'As questões deste simulado entram assim que chegarem as fotos do caderno da Lala.':'The questions will be added as soon as the notebook photos arrive.')+'</p>';
+    wrap.appendChild(note);
+    return;
+  }
   header.innerHTML = '<h2>'+sub.label+'</h2><p>'+(pt?'Escolha o simulado que quer praticar:':'Choose the exam you want to practice:')+'</p>';
   wrap.appendChild(header);
   var grid = document.createElement('div');
@@ -1628,6 +1800,7 @@ function escHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').re
 
 // init
 showTab('dash','#2C2C2A');
+setTri(2);
 </script>
 
 </body>
