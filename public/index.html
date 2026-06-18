@@ -104,6 +104,10 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .q-num{font-size:10px;font-weight:800;letter-spacing:.06em;opacity:.5;margin-bottom:6px;text-transform:uppercase}
 .q-stem{font-size:13.5px;font-weight:700;line-height:1.6;color:var(--text);margin-bottom:10px}
 .q-ctx{background:#f5f4f0;border-left:3px solid var(--border);border-radius:0 8px 8px 0;padding:8px 12px;font-size:12.5px;line-height:1.7;color:var(--muted);margin-bottom:10px;font-style:italic}
+.q-reading{background:#fbfaf7;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:14px;color:var(--text);font-size:14.5px;line-height:1.75}
+.q-reading-title{font-size:16px;font-weight:800;margin-bottom:10px}
+.q-reading p{margin:0 0 10px 0}
+.q-reading p:last-child{margin-bottom:0}
 .mc-opts{display:flex;flex-direction:column;gap:6px}
 .mc-opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border-radius:10px;border:2px solid var(--border);cursor:pointer;font-size:13px;line-height:1.4;color:var(--text);transition:all .15s;background:var(--card);font-family:'Nunito',sans-serif;text-align:left;width:100%}
 .mc-opt:hover{border-color:#bbb;background:#fafaf8}
@@ -1145,27 +1149,37 @@ var SIMS=[
         {q:'What is the past simple of \"make\"?',opts:['maked','make','made','making'],a:2,exp:'make \\u2192 made.'},
         {q:'Which one is an IRREGULAR verb in the past?',opts:['walked','jumped','went','played'],a:2,exp:'walked, jumped and played just add -ed. WENT is irregular (go\\u2192went)!'}
       ]},
-      {label:'📖 Reading & Comprehension', fixed:true, context:'\\ud83d\\udcd6 Maya\\u2019s Unforgettable Morning\\n\\nYesterday turned into a wonderfully exciting day for Maya. She and her mother embarked on an important trip to the busy farmers\\u2019 market because Maya was determined to find the perfect pumpkin for the autumn festival. The enormous market offered an astonishing variety of fruits and vegetables. Maya briefly considered a basket of shiny red apples, but she ultimately stayed focused on her original plan.\\n\\nShe carefully chose a gigantic orange pumpkin. Her mother bought the pumpkin, and Maya also picked a bundle of golden sunflowers. They drove home immediately, so Maya could begin decorating before lunch. She felt enormous joy as she arranged her treasures by the front door.',
+      {label:'📖 Reading & Comprehension', fixed:true,
+       ctxTitle:'🌋 Clara and the Science Fair',
+       ctxParas:[
+         'Last Friday was an important day for Clara. For weeks she had worked hard on a special project for the school science fair. She was determined to build a model volcano that could actually erupt. Her older brother helped her mix the ingredients, and together they painted the mountain a deep, rocky brown.',
+         'When the big moment arrived, Clara felt nervous but excited. She carefully poured the liquid into the top of her volcano. Suddenly, a magnificent fountain of red foam burst out and flowed down the sides! The whole class gasped, and her teacher smiled proudly. Clara did not win first prize, but she felt enormously happy, for she had finally made her idea come to life.'
+       ],
        questions:[
-        {q:'What was Maya\\u2019s main goal at the farmers\\u2019 market?',opts:['To buy red apples','To find the perfect pumpkin','To eat lunch','To pick sunflowers'],a:1,exp:'The text says she was determined to find the perfect pumpkin for the festival.'},
-        {q:'The word \"enormous\" tells you the market was...',opts:['very small','very large','very quiet','very empty'],a:1,exp:'Enormous means very, very big!'},
-        {q:'The word \"determined\" shows that Maya...',opts:['gave up easily','did not care','would not give up on her plan','was very tired'],a:2,exp:'Determined means she stayed focused and would not give up.'},
-        {q:'Which IRREGULAR past-tense verb is used in the story?',opts:['decorated','bought','arranged','considered'],a:1,exp:'bought (buy\\u2192bought) is irregular. The others just add -ed.'},
-        {q:'\"They drove home immediately, ___ Maya could begin decorating.\" Which FANBOYS word fits?',opts:['but','so','or','nor'],a:1,exp:'It shows a result \\u2192 SO.'},
-        {q:'Maya considered the apples, ___ she stayed focused on the pumpkin.',opts:['so','and','but','for'],a:2,exp:'There is a contrast \\u2192 BUT.'},
-        {q:'Besides the pumpkin, what did Maya pick?',opts:['Red apples','Golden sunflowers','A basket','Vegetables'],a:1,exp:'She also picked a bundle of golden sunflowers.'},
-        {q:'Why did Maya and her mother drive home immediately?',opts:['Because it was raining','So Maya could begin decorating before lunch','To buy more apples','Because the market closed'],a:1,exp:'They hurried home SO she could start decorating \\u2014 a result/reason.'}
+        {q:'What did Clara want to build for the science fair?',opts:['A toy rocket','A model volcano that could erupt','A painting of a mountain','A robot'],a:1,exp:'She was determined to build a model volcano that could actually erupt.'},
+        {q:'Who helped Clara mix the ingredients?',opts:['Her teacher','Her mother','Her older brother','Her best friend'],a:2,exp:'Her older brother helped her mix the ingredients.'},
+        {q:'The word "magnificent" tells you the fountain of foam was...',opts:['small and weak','wonderful and impressive','cold and wet','boring'],a:1,exp:'Magnificent means wonderful, grand and impressive!'},
+        {q:'The word "determined" shows that Clara was...',opts:['lazy','focused and would not give up','scared','confused'],a:1,exp:'Determined means she stayed focused and would not give up.'},
+        {q:'Which IRREGULAR past-tense verb is used in the story?',opts:['painted','helped','made','worked'],a:2,exp:'made (make → made) is irregular. painted, helped and worked just add -ed.'},
+        {q:'"Clara did not win first prize, ___ she felt enormously happy." Which FANBOYS word fits?',opts:['so','but','or','nor'],a:1,exp:'There is a contrast → BUT.'},
+        {q:'"She felt happy, ___ she had finally made her idea come to life." Which word gives the REASON?',opts:['so','but','for','or'],a:2,exp:'For means "because" — it gives the reason she was happy!'},
+        {q:'How did Clara feel at the END of the story?',opts:['angry','enormously happy','bored','frightened'],a:1,exp:'Even without first prize, she felt enormously happy!'}
       ]},
-      {label:'🔎 Text Interpretation', fixed:true, context:'\\ud83d\\udc3f\\ufe0f The Little Squirrel and the First Snow\\n\\nThe little squirrel spent the whole autumn collecting acorns and hiding them under the tall oak tree. One morning, when he woke up expecting to find more acorns on the ground, he was surprised to see everything covered in soft white snow. The cold wind made the search even harder. While he was looking at a single acorn in his paws, he forgot about everything around him. Suddenly, he noticed the silence and rushed to hide inside a warm hollow in the tree. Some birds were resting there before their long flight to the south. He decided to ask one of them what was happening, but he was even more surprised by the bird\\u2019s answer. It turned out that winter had arrived before the little squirrel had realised.',
+      {label:'🔎 Text Interpretation', fixed:true,
+       ctxTitle:'✨ Lucas and the Glowing Garden',
+       ctxParas:[
+         'One warm evening, Lucas was getting ready for bed when he noticed tiny lights blinking in the garden. At first he thought he was imagining things, but the little lights kept dancing above the grass. Feeling curious, he grabbed his flashlight and tiptoed quietly into the backyard. The cool night air smelled of fresh flowers.',
+         'He searched everywhere, looking behind the bushes and under the old wooden bench. Suddenly, one of the glowing lights landed gently on his hand. Lucas laughed with relief and delight. The mysterious lights were not magic at all — they were fireflies, visiting his garden for the very first time that summer.'
+       ],
        questions:[
-        {q:'What did the little squirrel do during autumn?',opts:['He slept all day','He collected acorns and hid them','He flew to the south','He swam in a stream'],a:1,exp:'He spent the whole autumn collecting acorns and hiding them under the oak tree.'},
-        {q:'Why was he surprised when he woke up one morning?',opts:['He found more acorns','Everything was covered in snow','The sun was very hot','The tree had fallen'],a:1,exp:'He expected acorns but saw everything covered in soft white snow.'},
-        {q:'Where did he take shelter from the cold?',opts:['Under a rock','Inside a warm hollow in the tree','In a bird\\u2019s nest','Beside the stream'],a:1,exp:'He rushed to hide inside a warm hollow in the tree.'},
-        {q:'Who did he ask about what was happening?',opts:['Another squirrel','His mother','One of the birds','A rabbit'],a:2,exp:'He decided to ask one of the birds that were resting in the tree.'},
-        {q:'What is the reason for the squirrel\\u2019s surprise?',opts:['He lost his acorns','Winter had arrived before he had realised','The birds left him','He was very hungry'],a:1,exp:'Winter had arrived before the little squirrel had realised it.'},
-        {q:'What did the squirrel do RIGHT AFTER he noticed the silence?',opts:['He ate an acorn','He rushed to hide in the tree hollow','He asked a bird','He fell asleep'],a:1,exp:'First he noticed the silence, then he rushed to hide in the hollow.'},
-        {q:'The word \"rushed\" tells us the squirrel moved...',opts:['very slowly','very quickly','very quietly','very sadly'],a:1,exp:'To rush means to move very quickly.'},
-        {q:'Why were the birds resting in the tree?',opts:['They lived in the oak tree','They were resting before flying south','They were looking for acorns','They were hiding from the squirrel'],a:1,exp:'They were taking a break before their long flight to the south for winter.'}
+        {q:'What did Lucas notice in the garden one evening?',opts:['A stray cat','Tiny lights blinking','Falling snow','A bright rainbow'],a:1,exp:'He noticed tiny lights blinking above the grass.'},
+        {q:'Why did Lucas go into the backyard?',opts:['He was hungry','He was curious about the lights','His mother called him','He lost his ball'],a:1,exp:'Feeling curious about the lights, he went to investigate.'},
+        {q:'What did Lucas take with him to the garden?',opts:['A blanket','His flashlight','An umbrella','A camera'],a:1,exp:'He grabbed his flashlight and tiptoed outside.'},
+        {q:'Where did Lucas look for the lights?',opts:['In the kitchen','Behind the bushes and under the bench','Up in a tall tree','Inside the shed'],a:1,exp:'He searched behind the bushes and under the old wooden bench.'},
+        {q:'What were the mysterious lights, in the end?',opts:['Stars','Fairies','Fireflies','Streetlights'],a:2,exp:'They were fireflies — not magic at all!'},
+        {q:'What happened RIGHT BEFORE Lucas laughed with relief?',opts:['He woke up','A glowing light landed on his hand','He turned off the flashlight','He went back to bed'],a:1,exp:'One of the glowing lights landed gently on his hand, then he laughed.'},
+        {q:'The word "tiptoed" tells us Lucas walked...',opts:['loudly','quietly and softly','very fast','backwards'],a:1,exp:'To tiptoe means to walk quietly and softly on your toes.'},
+        {q:'Why was it special that the fireflies came?',opts:['They were very big','It was their first visit that summer','They could talk','They glowed red'],a:1,exp:'They were visiting his garden for the very first time that summer!'}
       ]},
       {label:'📝 Full exam (15 Qs)', fixed:true, questions:[
         {q:'Which FANBOYS word means \"because\"?',opts:['So','For','But','Or'],a:1,exp:'For = because.'},
@@ -1337,9 +1351,91 @@ var SIMS=[
        {q:'O ciclo da água...',opts:['acontece uma vez só','se repete indefinidamente','só ocorre no mar','nunca muda de estado'],a:1,exp:'O ciclo nunca para \\u2014 se repete para sempre! 🔄'}
      ]}
    ]},
-  {key:'math2', tri:2, pending:true, label:'🔢 Math', color:'#633806', lang:'en',
-   topicsList:['Word problems (3 operations)','Lines of symmetry','Types of triangles (scalene, equilateral, isosceles)','Bar graphs'],
-   subtopics:[]}
+  {key:'math2', tri:2, label:'🔢 Math', color:'#633806', lang:'en',
+   subtopics:[
+     {label:'📐 Types of Triangles', fixed:true, questions:[
+       {q:'A triangle with 3 EQUAL sides is called...',opts:['scalene','isosceles','equilateral','right'],a:2,exp:'Equilateral = 3 equal sides (and 3 equal angles)!'},
+       {q:'A triangle with exactly 2 equal sides is called...',opts:['equilateral','isosceles','scalene','right'],a:1,exp:'Isosceles = 2 equal sides!'},
+       {q:'A triangle with 3 DIFFERENT sides (all different lengths) is called...',opts:['equilateral','isosceles','scalene','square'],a:2,exp:'Scalene = every side a different length!'},
+       {q:'A triangle that has one right angle (90°) is called a...',opts:['right triangle','equilateral','isosceles','round triangle'],a:0,exp:'A right triangle has one square corner of exactly 90°!'},
+       {q:'Sides of 3 in, 3 in, 3 in make which triangle?',opts:['scalene','equilateral','isosceles','right'],a:1,exp:'All three sides equal = equilateral!'},
+       {q:'Sides of 5 cm, 5 cm, 8 cm make which triangle?',opts:['equilateral','scalene','isosceles','right'],a:2,exp:'Two equal sides (5 and 5) = isosceles!'},
+       {q:'Sides of 4 m, 6 m, 7 m make which triangle?',opts:['equilateral','isosceles','scalene','right'],a:2,exp:'All sides different = scalene!'},
+       {q:'How many equal sides does an EQUILATERAL triangle have?',opts:['0','1','2','3'],a:3,exp:'All 3 sides are equal!'},
+       {q:'Which triangle has NO equal sides?',opts:['equilateral','isosceles','scalene','none of them'],a:2,exp:'Scalene has no equal sides at all!'},
+       {q:'An equilateral triangle is also a special kind of...',opts:['scalene','right triangle','isosceles triangle','square'],a:2,exp:'Because it has (at least) 2 equal sides, an equilateral counts as isosceles too!'},
+       {q:'Sides of 24 mm, 24 mm, 24 mm make which triangle?',opts:['scalene','isosceles','equilateral','right'],a:2,exp:'All equal = equilateral!'},
+       {q:'The right angle in a right triangle measures exactly...',opts:['45°','60°','90°','180°'],a:2,exp:'A right angle is 90° \\u2014 a perfect square corner!'}
+     ]},
+     {label:'✂️ Lines of Symmetry', fixed:true, questions:[
+       {q:'A line of symmetry divides a shape into...',opts:['two identical mirror halves','three equal parts','two different parts','four corners'],a:0,exp:'Both halves match perfectly when you fold along the line!'},
+       {q:'How many lines of symmetry does a SQUARE have?',opts:['1','2','4','0'],a:2,exp:'A square has 4 lines of symmetry!'},
+       {q:'How many lines of symmetry does a RECTANGLE have?',opts:['1','2','3','4'],a:1,exp:'A rectangle has 2 lines of symmetry (across the middle each way)!'},
+       {q:'How many lines of symmetry does an EQUILATERAL triangle have?',opts:['1','2','3','0'],a:2,exp:'3 equal sides = 3 lines of symmetry!'},
+       {q:'How many lines of symmetry does an ISOSCELES triangle have?',opts:['0','1','2','3'],a:1,exp:'An isosceles triangle has just 1 line of symmetry!'},
+       {q:'How many lines of symmetry does a SCALENE triangle have?',opts:['0','1','2','3'],a:0,exp:'A scalene triangle has NO line of symmetry!'},
+       {q:'How many lines of symmetry does a PARALLELOGRAM have?',opts:['0','1','2','4'],a:0,exp:'A parallelogram has no line of symmetry!'},
+       {q:'How many lines of symmetry does a regular PENTAGON (5 sides) have?',opts:['3','4','5','6'],a:2,exp:'A regular pentagon has 5 lines of symmetry \\u2014 one for each side!'},
+       {q:'How many lines of symmetry does a regular HEXAGON (6 sides) have?',opts:['4','5','6','8'],a:2,exp:'A regular hexagon has 6 lines of symmetry!'},
+       {q:'If you fold a shape along its line of symmetry, the two halves...',opts:['look different','match perfectly','get bigger','disappear'],a:1,exp:'They match perfectly \\u2014 that is what makes it a line of symmetry!'},
+       {q:'Which shape has the MOST lines of symmetry?',opts:['scalene triangle','rectangle','square','parallelogram'],a:2,exp:'The square (4) beats the rectangle (2), scalene (0) and parallelogram (0)!'},
+       {q:'A shape with NO lines of symmetry is...',opts:['a square','a scalene triangle','an equilateral triangle','a circle'],a:1,exp:'A scalene triangle cannot be folded into matching halves!'}
+     ]},
+     {label:'📊 Bar Graphs', fixed:true, context:'\\ud83d\\udcca BAR GRAPH \\u2014 Eggs Laid This Week\\n\\nAunt Lee\\u2019s hens laid this many eggs:\\n\\u2022 Monday = 5 eggs\\n\\u2022 Tuesday = 7 eggs\\n\\u2022 Wednesday = 3 eggs\\n\\u2022 Thursday = 5 eggs\\n\\nUse the data to answer the questions.',
+      questions:[
+       {q:'How many eggs did the hens lay on Monday?',opts:['3','5','7','4'],a:1,exp:'Monday = 5 eggs.'},
+       {q:'How many eggs did they lay on Tuesday?',opts:['5','6','7','8'],a:2,exp:'Tuesday = 7 eggs.'},
+       {q:'On which day did they lay the MOST eggs?',opts:['Monday','Tuesday','Wednesday','Thursday'],a:1,exp:'Tuesday had the most: 7 eggs!'},
+       {q:'On which day did they lay the FEWEST eggs?',opts:['Monday','Tuesday','Wednesday','Thursday'],a:2,exp:'Wednesday had the fewest: only 3 eggs.'},
+       {q:'Did they lay more eggs on Monday or Thursday?',opts:['Monday','Thursday','They were equal','Neither'],a:2,exp:'Both Monday and Thursday had 5 \\u2014 they were equal!'},
+       {q:'How many MORE eggs did they lay on Tuesday than on Wednesday?',opts:['2','3','4','5'],a:2,exp:'7 - 3 = 4 more eggs!'},
+       {q:'How many eggs did the hens lay in TOTAL this week?',opts:['18','19','20','21'],a:2,exp:'5 + 7 + 3 + 5 = 20 eggs!'},
+       {q:'Before reading any bar graph, the FIRST thing you should do is...',opts:['guess the answer','read the title and labels','look at the biggest bar','count the colors'],a:1,exp:'The title and labels tell you what the graph is about!'}
+     ]},
+     {label:'➕ Word Problems (3 operations)', fixed:true, questions:[
+       {q:'Tom has 12 marbles. He buys 15 more, then loses 8. How many does he have now?',opts:['17','19','21','27'],a:1,exp:'12 + 15 = 27, then 27 - 8 = 19!'},
+       {q:'A box holds 6 pencils. How many pencils are in 7 boxes?',opts:['13','36','42','48'],a:2,exp:'6 × 7 = 42 pencils!'},
+       {q:'There are 4 baskets with 9 apples each. 5 apples are eaten. How many are left?',opts:['31','36','40','27'],a:0,exp:'4 × 9 = 36, then 36 - 5 = 31!'},
+       {q:'A cane is made of 18 segments, each 5 cm long. What is the total length?',opts:['23 cm','80 cm','90 cm','95 cm'],a:2,exp:'18 × 5 = 90 cm!'},
+       {q:'5 cans of paint cost $8 each, and 2 brushes cost $6 each. How much is spent in total?',opts:['$40','$48','$52','$60'],a:2,exp:'5 × 8 = 40 and 2 × 6 = 12, so 40 + 12 = $52!'},
+       {q:'There are 4 monkeys. Each eats 3 bananas for breakfast and 2 for lunch. How many bananas in one day?',opts:['9','14','20','24'],a:2,exp:'Each monkey eats 3 + 2 = 5. Then 4 × 5 = 20 bananas!'},
+       {q:'A tree has 4 branches with 8 spots each. 13 birds land on the spots. How many spots are empty?',opts:['17','19','21','32'],a:1,exp:'4 × 8 = 32 spots, then 32 - 13 = 19 empty!'},
+       {q:'There are 3 jars with 10 marbles each. She takes out 12, then adds 5 more. How many now?',opts:['18','23','25','30'],a:1,exp:'3 × 10 = 30, then 30 - 12 = 18, then 18 + 5 = 23!'},
+       {q:'Sarah read 7 pages on Monday, 9 on Tuesday and 5 on Wednesday. How many pages in total?',opts:['19','20','21','23'],a:2,exp:'7 + 9 + 5 = 21 pages!'},
+       {q:'A class has 25 students. 8 go home early. How many remain?',opts:['15','16','17','18'],a:2,exp:'25 - 8 = 17 students!'},
+       {q:'6 bags each have 7 candies. How many candies are there?',opts:['13','36','42','49'],a:2,exp:'6 × 7 = 42 candies!'},
+       {q:'A girl was 160 cm tall. She grew 4 cm every year for 5 years. How tall is she now?',opts:['164 cm','176 cm','180 cm','200 cm'],a:2,exp:'4 × 5 = 20, then 160 + 20 = 180 cm!'}
+     ]},
+     {label:'📏 Area & Perimeter', fixed:true, questions:[
+       {q:'The PERIMETER of a shape is...',opts:['the space inside it','the distance all around the outside','the number of corners','the longest side'],a:1,exp:'Perimeter = the distance all the way around the outside!'},
+       {q:'To find the PERIMETER of a rectangle you...',opts:['multiply length × width','add all the sides','count the corners','divide by 2'],a:1,exp:'Add all four sides: L + L + W + W!'},
+       {q:'The AREA of a shape is...',opts:['the distance around it','the space inside it','the number of sides','the tallest side'],a:1,exp:'Area = the space inside a flat shape!'},
+       {q:'To find the AREA of a rectangle you...',opts:['add all the sides','multiply length × width','count the corners','add length + width'],a:1,exp:'Area = length × width!'},
+       {q:'A rectangle is 15 cm long and 8 cm wide. What is its PERIMETER?',opts:['23 cm','30 cm','46 cm','120 cm'],a:2,exp:'15 + 8 + 15 + 8 = 46 cm!'},
+       {q:'A rectangle is 15 cm long and 8 cm wide. What is its AREA?',opts:['46 cm²','115 cm²','120 cm²','23 cm²'],a:2,exp:'15 × 8 = 120 cm²!'},
+       {q:'A rectangle is 10 cm by 5 cm. What is its AREA?',opts:['15 cm²','30 cm²','50 cm²','100 cm²'],a:2,exp:'10 × 5 = 50 cm²!'},
+       {q:'A rectangle is 10 cm by 5 cm. What is its PERIMETER?',opts:['15 cm','30 cm','50 cm','25 cm'],a:1,exp:'10 + 5 + 10 + 5 = 30 cm!'},
+       {q:'A rectangle is 23 cm by 6 cm. What is its PERIMETER?',opts:['29 cm','46 cm','58 cm','138 cm'],a:2,exp:'23 + 6 + 23 + 6 = 58 cm!'},
+       {q:'Area is measured in...',opts:['centimeters (cm)','square units (like cm² or m²)','liters','degrees'],a:1,exp:'Area uses square units, like cm² or m²!'}
+     ]},
+     {label:'📝 Full exam (15 Qs)', fixed:true, questions:[
+       {q:'A triangle with 3 equal sides is...',opts:['scalene','isosceles','equilateral','right'],a:2,exp:'3 equal sides = equilateral!'},
+       {q:'A triangle with all 3 sides different is...',opts:['equilateral','scalene','isosceles','right'],a:1,exp:'All different = scalene!'},
+       {q:'Sides 5 cm, 5 cm, 8 cm make a(n)...',opts:['equilateral','scalene','isosceles','right'],a:2,exp:'Two equal sides = isosceles!'},
+       {q:'How many lines of symmetry does a square have?',opts:['1','2','4','0'],a:2,exp:'A square has 4!'},
+       {q:'How many lines of symmetry does a scalene triangle have?',opts:['0','1','2','3'],a:0,exp:'A scalene triangle has none!'},
+       {q:'How many lines of symmetry does a rectangle have?',opts:['1','2','3','4'],a:1,exp:'A rectangle has 2!'},
+       {q:'A box holds 6 pencils. How many in 7 boxes?',opts:['13','36','42','48'],a:2,exp:'6 × 7 = 42!'},
+       {q:'4 baskets with 9 apples each, 5 eaten. How many left?',opts:['27','31','36','40'],a:1,exp:'4 × 9 = 36, then - 5 = 31!'},
+       {q:'Tom has 12 marbles, buys 15, loses 8. How many now?',opts:['17','19','21','27'],a:1,exp:'12 + 15 - 8 = 19!'},
+       {q:'A rectangle 10 cm by 5 cm has an AREA of...',opts:['30 cm²','15 cm²','50 cm²','100 cm²'],a:2,exp:'10 × 5 = 50 cm²!'},
+       {q:'A rectangle 15 cm by 8 cm has a PERIMETER of...',opts:['23 cm','46 cm','120 cm','30 cm'],a:1,exp:'15 + 8 + 15 + 8 = 46 cm!'},
+       {q:'Hens laid: Mon 5, Tue 7, Wed 3, Thu 5. On which day were there MOST eggs?',opts:['Monday','Tuesday','Wednesday','Thursday'],a:1,exp:'Tuesday = 7, the most!'},
+       {q:'Hens laid: Mon 5, Tue 7, Wed 3, Thu 5. How many eggs in total?',opts:['18','19','20','21'],a:2,exp:'5 + 7 + 3 + 5 = 20!'},
+       {q:'To find the area of a rectangle you...',opts:['add all sides','multiply length × width','count corners','add length + width'],a:1,exp:'Area = length × width!'},
+       {q:'A girl was 160 cm and grew 4 cm a year for 5 years. How tall now?',opts:['164 cm','176 cm','180 cm','200 cm'],a:2,exp:'4 × 5 = 20, 160 + 20 = 180 cm!'}
+     ]}
+   ]}
 ];
 </script>
 
@@ -1702,8 +1798,20 @@ function renderSimQuestions(sub, subtopic){
   html += '<span class="exam-score" id="sc-dynamic">— / '+questions.length+'</span></div>';
 
   // Texto de contexto (reading comprehension)
-  if(subtopic.context){
-    html += '<div class="q-ctx" style="border-left:4px solid '+color+';font-style:normal;font-weight:500">'+escHtml(subtopic.context).replace(/\n/g,'<br>')+'</div>';
+  if(subtopic.ctxParas || subtopic.context){
+    var ttl='', paras='';
+    if(subtopic.ctxParas){
+      ttl = subtopic.ctxTitle || '';
+      paras = subtopic.ctxParas.map(function(p){return '<p>'+escHtml(p)+'</p>';}).join('');
+    } else {
+      var ctx = subtopic.context, nl = ctx.indexOf('\n\n');
+      ttl = nl>0 ? ctx.slice(0,nl).trim() : '';
+      var body = nl>0 ? ctx.slice(nl+2) : ctx;
+      paras = body.split(/\n\n+/).map(function(p){return '<p>'+escHtml(p.trim()).replace(/\n/g,' ')+'</p>';}).join('');
+    }
+    html += '<div class="q-reading" style="border-left:4px solid '+color+'">'
+      + (ttl?'<div class="q-reading-title" style="color:'+color+'">'+escHtml(ttl)+'</div>':'')
+      + paras + '</div>';
   }
 
   var letters = ['A','B','C','D'];
