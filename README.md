@@ -25,6 +25,18 @@ Para editar:
 2. Commita as mudanças
 3. Vercel redeploya automaticamente em ~30 segundos
 
+## Validar as perguntas
+
+Antes de subir mudanças nas perguntas:
+
+```
+node scripts/validate.js
+```
+
+Confere 4 alternativas, explicação preenchida, índice da resposta, duplicatas, referências a letras e distribuição das respostas, e testa o embaralhamento. Termina com erro (código 1) se algo estiver quebrado.
+
+As alternativas e a ordem das perguntas são embaralhadas a cada tentativa. Para uma pergunta que depende da posição, use `noShuffle:true`. Num simulado em que a ordem importa, use `fixedOrder:true`. Simulados com texto de leitura já mantêm a ordem.
+
 ## Stack
 
 - HTML + CSS + JavaScript puros (sem frameworks)

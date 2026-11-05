@@ -2729,10 +2729,25 @@ function startQuiz(filter,btn){
   af=filter;
   document.querySelectorAll('.qf-btn').forEach(b=>{b.classList.remove('active');b.style.background='';b.style.color='var(--muted)';b.style.borderColor='var(--border)';});
   if(btn){btn.classList.add('active');var cc=CATS.find(c=>c[0]===filter);btn.style.background=cc[2];btn.style.color='#fff';btn.style.borderColor=cc[2];}
-  cQ=filter==='all'?shuf(QUIZ.slice()):shuf(QUIZ.filter(q=>q.cat===filter));
+  cQ=(filter==='all'?shuf(QUIZ.slice()):shuf(QUIZ.filter(q=>q.cat===filter))).map(prepQ);
   qi=0;sc=0;ans=false;renderQ();
 }
 function shuf(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+// Embaralha as alternativas de uma pergunta e remapeia o índice da resposta certa (a).
+// Opções "coringa" (Both / Neither / As duas / Nenhuma...) ficam no fim, na ordem original.
+// Pergunta com noShuffle:true, tipo fill ou sem opts passa direto, sem mudança.
+var TAIL_RE=/^(both\b|neither\b|none of the\b|all of the\b|as duas\b|ambas\b|nenhum[a]?\b|todas as anteriores|todas as alternativas)/i;
+function prepQ(q){
+  if(!q||q.type==='fill'||!q.opts||q.noShuffle) return q;
+  var idx=q.opts.map(function(_,i){return i;});
+  var tail=idx.filter(function(i){return TAIL_RE.test(String(q.opts[i]).trim());});
+  var head=shuf(idx.filter(function(i){return tail.indexOf(i)<0;}));
+  var order=head.concat(tail);
+  var c={};for(var k in q)c[k]=q[k];
+  c.opts=order.map(function(i){return q.opts[i];});
+  c.a=order.indexOf(q.a);
+  return c;
+}
 function renderQ(){
   document.getElementById('prog').style.width=Math.round(qi/cQ.length*100)+'%';
   var box=document.getElementById('qbox');
@@ -2973,14 +2988,18 @@ function startSimTopic(label){
   var subtopic = sub.subtopics.find(function(t){ return t.label===label; });
   if(!subtopic || !subtopic.questions) return;
   simAnswers={};
-  simQuestions = subtopic.questions;
+  // Cada tentativa embaralha as alternativas. A ordem das perguntas também muda,
+  // exceto nos simulados com texto de leitura (as perguntas seguem o texto) ou fixedOrder:true.
+  var qs = subtopic.questions.slice();
+  if(!(subtopic.context || subtopic.ctxParas || subtopic.fixedOrder)) shuf(qs);
+  simQuestions = qs.map(prepQ);
   renderSimQuestions(sub, subtopic);
 }
 
 function renderSimQuestions(sub, subtopic){
   var color = sub.color;
   var lang = sub.lang;
-  var questions = subtopic.questions;
+  var questions = simQuestions;
   var tLabel = currentTopicLabel;
 
   var wrap = document.getElementById('sim-questions');
