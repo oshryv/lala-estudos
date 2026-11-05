@@ -33,20 +33,52 @@ const LETTER_REF = /(\([A-Da-d]\)|\b(letra|alternativa|alternative|option|letter
 const CATS = new Set(['science', 'ciencias', 'portugues', 'mat', 'la', 'geohist', 'social']);
 const nonEmpty = s => typeof s === 'string' && s.trim().length > 0;
 
-function checkQuestion(where, q) {
+const TYPES = new Set(['mc', 'fill', 'vf', 'multi', 'order', 'match', 'classify', 'short']);
+function uniq(arr) { return new Set(arr.map(o => String(o).trim().toLowerCase())).size === arr.length; }
+
+function checkQuestion(where, q, opts = {}) {
   if (!q || typeof q !== 'object') return err(where, 'pergunta não é objeto');
   if (!nonEmpty(q.q)) err(where, 'sem enunciado (q)');
   if (!nonEmpty(q.exp)) err(where, 'sem explicação (exp)');
-  if (q.type === 'fill') {
+  const t = q.type || 'mc';
+  if (!TYPES.has(t)) return err(where, `tipo "${t}" não suportado pelo renderizador`);
+  if (opts.onlyBasic && !['mc', 'fill'].includes(t)) return err(where, `tipo "${t}" não é suportado no Quiz`);
+  if (t === 'fill') {
     if (!Array.isArray(q.accept) || !q.accept.length || !q.accept.every(nonEmpty)) err(where, 'fill sem accept válido');
     return;
   }
-  if (q.type && q.type !== 'mc') { err(where, `tipo "${q.type}" não suportado pelo renderizador`); return; }
+  if (t === 'short') { if (!nonEmpty(q.model)) err(where, 'short sem resposta modelo (model)'); return; }
+  if (t === 'vf') {
+    if (!Array.isArray(q.items) || q.items.length < 2) return err(where, 'vf precisa de 2+ afirmações (items)');
+    if (!q.items.every(i => i && nonEmpty(i.t) && typeof i.v === 'boolean')) err(where, 'vf: cada item precisa de t (texto) e v (true/false)');
+    return;
+  }
+  if (t === 'classify') {
+    if (!Array.isArray(q.cats) || q.cats.length < 2 || !q.cats.every(nonEmpty) || !uniq(q.cats)) return err(where, 'classify precisa de 2+ categorias únicas (cats)');
+    if (!Array.isArray(q.items) || q.items.length < 2) return err(where, 'classify precisa de 2+ itens');
+    if (!q.items.every(i => i && nonEmpty(i.t) && Number.isInteger(i.c) && i.c >= 0 && i.c < q.cats.length)) err(where, 'classify: item com t ou c (índice da categoria) inválido');
+    return;
+  }
+  if (t === 'match') {
+    if (!Array.isArray(q.left) || !Array.isArray(q.right) || q.left.length < 2 || q.left.length !== q.right.length) return err(where, 'match precisa de left e right com o mesmo tamanho (2+)');
+    if (!q.left.every(nonEmpty) || !q.right.every(nonEmpty)) err(where, 'match com item vazio');
+    if (!uniq(q.right)) err(where, 'match com itens repetidos em right');
+    return;
+  }
+  if (t === 'order') {
+    if (!Array.isArray(q.items) || q.items.length < 3 || !q.items.every(nonEmpty) || !uniq(q.items)) err(where, 'order precisa de 3+ itens únicos (items, na ordem certa)');
+    return;
+  }
+  // mc | multi
   if (!Array.isArray(q.opts) || q.opts.length !== 4) { err(where, `precisa de 4 alternativas (tem ${q.opts && q.opts.length})`); return; }
   if (!q.opts.every(nonEmpty)) err(where, 'alternativa vazia');
-  const norm = q.opts.map(o => String(o).trim().toLowerCase());
-  if (new Set(norm).size < 4) err(where, 'alternativas repetidas');
-  if (!Number.isInteger(q.a) || q.a < 0 || q.a > 3) err(where, `resposta (a) inválida: ${q.a}`);
+  if (!uniq(q.opts)) err(where, 'alternativas repetidas');
+  if (t === 'mc') {
+    if (!Number.isInteger(q.a) || q.a < 0 || q.a > 3) err(where, `resposta (a) inválida: ${q.a}`);
+  } else {
+    if (!Array.isArray(q.answers) || q.answers.length < 2 || q.answers.length > 3 || !q.answers.every(x => Number.isInteger(x) && x >= 0 && x <= 3) || new Set(q.answers).size !== q.answers.length)
+      err(where, 'multi precisa de answers com 2 ou 3 índices únicos (0 a 3)');
+  }
   if (!q.noShuffle) {
     const txt = [q.q, q.exp, ...q.opts].join(' ');
     if (LETTER_REF.test(txt)) err(where, 'cita letra de alternativa; use noShuffle:true ou reescreva');
@@ -54,7 +86,7 @@ function checkQuestion(where, q) {
 }
 
 function checkDistribution(where, qs) {
-  const mc = qs.filter(q => q && q.type !== 'fill' && Number.isInteger(q.a));
+  const mc = qs.filter(q => q && (!q.type || q.type === 'mc') && Number.isInteger(q.a));
   if (mc.length < 8) return;
   const c = [0, 0, 0, 0];
   mc.forEach(q => c[q.a]++);
@@ -71,9 +103,10 @@ let nQ = 0;
 SIMS.forEach(s => {
   const w0 = `SIMS/${s.key}`;
   if (keys.has(s.key)) err(w0, 'key duplicada'); keys.add(s.key);
-  if (![1, 2].includes(s.tri)) err(w0, `tri inválido: ${s.tri}`);
+  if (![1, 2, 3].includes(s.tri)) err(w0, `tri inválido: ${s.tri}`);
   if (!['en', 'pt'].includes(s.lang)) err(w0, `lang inválido: ${s.lang}`);
   if (!/^#[0-9a-fA-F]{6}$/.test(s.color || '')) err(w0, `cor inválida: ${s.color}`);
+  if (s.pending) return;
   if (!Array.isArray(s.subtopics) || !s.subtopics.length) return err(w0, 'sem subtopics');
   const labels = new Set();
   s.subtopics.forEach(t => {
@@ -97,24 +130,47 @@ SIMS.forEach(s => {
 // 4) QUIZ
 QUIZ.forEach((q, i) => {
   const w = `QUIZ #${i + 1}`;
-  checkQuestion(w, q);
+  checkQuestion(w, q, { onlyBasic: true });
   if (!CATS.has(q.cat)) err(w, `cat inválida: ${q.cat}`);
   if (!['en', 'pt'].includes(q.lang)) err(w, `lang inválido: ${q.lang}`);
 });
 
-// 5) Teste do embaralhamento: a alternativa certa tem que continuar sendo a mesma
+// 5) Teste do embaralhamento: a resposta certa tem que continuar sendo a mesma
 let shuffled = 0;
 const allQ = [...SIMS.flatMap(s => s.subtopics.flatMap(t => t.questions || [])), ...QUIZ];
-allQ.forEach((q, i) => {
-  if (!q || q.type === 'fill' || !Array.isArray(q.opts) || q.opts.length !== 4 || q.noShuffle) return;
-  const right = q.opts[q.a];
+const sameSet = (a, b) => [...a].sort().join('|') === [...b].sort().join('|');
+function checkShuffle(q, label) {
+  const t = q && (q.type || 'mc');
+  if (!q || q.noShuffle || !TYPES.has(t) || t === 'fill' || t === 'short') return;
   for (let r = 0; r < 20; r++) {
-    const p = prepQ(q);
-    shuffled++;
-    if (p.opts[p.a] !== right) { err(`embaralhar #${i}`, `perdeu a resposta certa em "${String(q.q).slice(0, 50)}"`); break; }
-    if ([...p.opts].sort().join('|') !== [...q.opts].sort().join('|')) { err(`embaralhar #${i}`, 'mudou o conjunto de alternativas'); break; }
+    const p = prepQ(q); shuffled++;
+    if (t === 'mc') {
+      if (!Array.isArray(q.opts) || q.opts.length !== 4) return;
+      if (p.opts[p.a] !== q.opts[q.a]) return err(label, `perdeu a resposta certa em "${String(q.q).slice(0, 50)}"`);
+      if (!sameSet(p.opts, q.opts)) return err(label, 'mudou o conjunto de alternativas');
+    } else if (t === 'multi') {
+      if (!sameSet(p.answers.map(i => p.opts[i]), q.answers.map(i => q.opts[i]))) return err(label, `multi perdeu as respostas certas em "${String(q.q).slice(0, 50)}"`);
+    } else if (t === 'vf' || t === 'classify') {
+      if (!sameSet(p.items.map(i => i.t + '|' + (i.v === undefined ? i.c : i.v)), q.items.map(i => i.t + '|' + (i.v === undefined ? i.c : i.v)))) return err(label, `${t} mudou os itens`);
+    } else if (t === 'match') {
+      if (!sameSet(p.lorder, q.left.map((_, i) => i)) || !sameSet(p.rorder, q.right.map((_, i) => i))) return err(label, 'match com ordem inválida');
+    } else if (t === 'order') {
+      if (!sameSet(p.disp, q.items.map((_, i) => i))) return err(label, 'order com ordem inválida');
+    }
   }
-});
+}
+allQ.forEach((q, i) => checkShuffle(q, `embaralhar #${i}`));
+
+// 5b) Auto-teste dos tipos novos com exemplos sintéticos (não vão para o app)
+const FIX = [
+  { type: 'vf', q: 'x', exp: 'x', items: [{ t: 'a', v: true }, { t: 'b', v: false }, { t: 'c', v: true }] },
+  { type: 'multi', q: 'x', exp: 'x', opts: ['p', 'q', 'r', 's'], answers: [0, 2] },
+  { type: 'order', q: 'x', exp: 'x', items: ['um', 'dois', 'tres', 'quatro'] },
+  { type: 'match', q: 'x', exp: 'x', left: ['a', 'b', 'c'], right: ['1', '2', '3'] },
+  { type: 'classify', q: 'x', exp: 'x', cats: ['k', 'l'], items: [{ t: 'a', c: 0 }, { t: 'b', c: 1 }, { t: 'c', c: 0 }] },
+  { type: 'short', q: 'x', exp: 'x', model: 'm' },
+];
+FIX.forEach((q, i) => { const before = errors.length; checkQuestion(`fixture ${q.type}`, q); checkShuffle(q, `fixture ${q.type}`); if (errors.length > before) console.log(`(fixture ${q.type} falhou)`); });
 
 // Relatório
 warns.forEach(l => console.log(l));

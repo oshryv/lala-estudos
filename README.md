@@ -37,6 +37,21 @@ Confere 4 alternativas, explicação preenchida, índice da resposta, duplicatas
 
 As alternativas e a ordem das perguntas são embaralhadas a cada tentativa. Para uma pergunta que depende da posição, use `noShuffle:true`. Num simulado em que a ordem importa, use `fixedOrder:true`. Simulados com texto de leitura já mantêm a ordem.
 
+## Tipos de pergunta
+
+Todas têm `q` e `exp`. Os tipos novos entram nos simulados (não no Quiz).
+
+- `mc` (padrão): `opts` (4) + `a` (0 a 3)
+- `fill`: `accept:[...]`
+- `vf`: `items:[{t:'afirmação', v:true}, ...]`, cada item é V ou F
+- `multi`: `opts` (4) + `answers:[0,2]` (2 ou 3 certas), nota parcial
+- `order`: `items:[...]` na ordem certa; o app embaralha
+- `match`: `left:[...]` e `right:[...]`, `right[i]` combina com `left[i]`
+- `classify`: `cats:['A','B']` + `items:[{t:'texto', c:0}]` (c = índice da categoria)
+- `short`: `model:'resposta modelo'`, não pontua; a Lala compara e se corrige
+
+O `scripts/validate.js` confere todos os tipos. A matéria de um trimestre ainda sem conteúdo pode ser criada com `pending:true` e `topicsList`.
+
 ## Stack
 
 - HTML + CSS + JavaScript puros (sem frameworks)

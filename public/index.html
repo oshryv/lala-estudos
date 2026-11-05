@@ -121,6 +121,27 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .q-fb.bad{background:var(--red-l);color:var(--red-d)}
 .check-btn{margin-top:1rem;padding:10px 26px;border-radius:22px;font-size:13px;font-weight:800;cursor:pointer;border:none;font-family:'Nunito',sans-serif;color:#fff;transition:opacity .15s}
 .check-btn:hover{opacity:.88}
+.chip-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 0;border-top:1px dashed var(--border)}
+.chip-row:first-child{border-top:none}
+.chip-t{flex:1 1 220px;font-size:13px;line-height:1.45;color:var(--text);font-weight:600}
+.chip-g{display:flex;gap:6px;flex-wrap:wrap}
+.chip{padding:7px 14px;border-radius:18px;border:2px solid var(--border);background:var(--card);font-size:12.5px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;color:var(--text);transition:all .15s}
+.chip.selected{border-color:#7F77DD;background:#EEEDFE;color:#3C3489}
+.chip.correct{border-color:var(--green);background:var(--green-l);color:var(--green-d)}
+.chip.wrong{border-color:var(--red);background:var(--red-l);color:var(--red-d)}
+.q-block.done .chip,.q-block.done .ord-btn,.q-block.done .mc-opt{pointer-events:none}
+.q-sel{padding:8px 10px;border-radius:10px;border:2px solid var(--border);font-size:13px;font-weight:700;font-family:'Nunito',sans-serif;color:var(--text);background:var(--card);max-width:100%}
+.q-sel.correct{border-color:var(--green);background:var(--green-l)}
+.q-sel.wrong{border-color:var(--red);background:var(--red-l)}
+.q-hint{font-size:11.5px;color:var(--muted);margin:-4px 0 8px;font-weight:700}
+.ord-btn{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;border:2px solid var(--border);cursor:pointer;font-size:13px;line-height:1.4;color:var(--text);background:var(--card);font-family:'Nunito',sans-serif;text-align:left;width:100%;margin-bottom:6px}
+.ord-n{min-width:24px;height:24px;border-radius:12px;border:2px solid var(--border);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex:none}
+.ord-btn.selected{border-color:#7F77DD;background:#EEEDFE;color:#3C3489}
+.ord-btn.selected .ord-n{background:#7F77DD;border-color:#7F77DD;color:#fff}
+.ord-btn.correct{border-color:var(--green);background:var(--green-l);color:var(--green-d)}
+.ord-btn.wrong{border-color:var(--red);background:var(--red-l);color:var(--red-d)}
+.q-short{width:100%;box-sizing:border-box;min-height:84px;padding:12px 14px;border:2px solid var(--border);border-radius:12px;font-size:15px;font-weight:600;font-family:Nunito,sans-serif;color:var(--text);background:#fff;outline:none;resize:vertical}
+.q-model{margin-top:8px;font-size:12.5px;line-height:1.55;padding:8px 10px;border-radius:8px;background:#EEEDFE;color:#3C3489;font-weight:700}
 .result-box{border-radius:14px;padding:1.5rem;text-align:center;margin-top:1rem;display:none}
 .result-box.show{display:block}
 .result-box h3{font-size:26px;font-weight:900;margin-bottom:6px}
@@ -160,30 +181,34 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   <span class="tri-label">Trimestre</span>
   <button class="tri-btn" id="tri-1" onclick="setTri(1)">1º Tri</button>
   <button class="tri-btn active" id="tri-2" onclick="setTri(2)">2º Tri</button>
+  <button class="tri-btn" id="tri-3" onclick="setTri(3)">3º Tri</button>
 </div>
 
 <!-- ===== PAINEL ===== -->
 <div class="screen active" id="dash">
   <div id="dash-main">
     <div id="dash-1tri" class="dash-grid">
-      <button class="subj-card" style="background:linear-gradient(135deg,#1D9E75,#0F6E56)" onclick="showDetail('science')"><span class="lang">EN</span><span class="emoji">🌿</span><h3>Science</h3><p>Food web, photosynthesis, producers &amp; consumers</p><span class="date">Exam: Mon 13/04</span><div class="bg-ico">🌿</div></button>
-      <button class="subj-card" style="background:linear-gradient(135deg,#D4537E,#993556)" onclick="showDetail('portugues')"><span class="lang">PT</span><span class="emoji">✏️</span><h3>Língua Portuguesa</h3><p>Relato pessoal, sílabas, pronomes</p><span class="date">Prova: ter 14/04</span><div class="bg-ico">✏️</div></button>
-      <button class="subj-card" style="background:linear-gradient(135deg,#378ADD,#185FA5)" onclick="showDetail('ciencias')"><span class="lang">PT</span><span class="emoji">🗺️</span><h3>Ciências</h3><p>Biomas: Amazônia, Mata Atlântica, Cerrado, Caatinga</p><span class="date">Prova: qui 16/04</span><div class="bg-ico">🗺️</div></button>
-      <button class="subj-card" style="background:linear-gradient(135deg,#BA7517,#854F0B)" onclick="showDetail('matpt')"><span class="lang">PT</span><span class="emoji">🔢</span><h3>Matemática</h3><p>Números, operações, gráficos e situações-problema</p><span class="date">Prova: seg 22/04</span><div class="bg-ico">🔢</div></button>
-      <button class="subj-card" style="background:linear-gradient(135deg,#633806,#412402)" onclick="showDetail('mat')"><span class="lang">EN</span><span class="emoji">🔢</span><h3>Math</h3><p>Place value, time, quadrilaterals, word problems</p><span class="date">Exam: Mon 22/04</span><div class="bg-ico">🔢</div></button>
-      <button class="subj-card" style="background:linear-gradient(135deg,#E24B4A,#A32D2D)" onclick="showDetail('la')"><span class="lang">EN</span><span class="emoji">📖</span><h3>Language Arts</h3><p>Adjectives, verb tenses, types of sentences</p><span class="date">Exam: Mon 27/04</span><div class="bg-ico">📖</div></button>
-      <button class="subj-card" style="background:linear-gradient(135deg,#7F77DD,#534AB7)" onclick="showDetail('geohist')"><span class="lang">PT</span><span class="emoji">🏛️</span><h3>Geo &amp; História</h3><p>Tipos de mapas, influências indígenas</p><span class="date">Prova: seg 28/04</span><div class="bg-ico">🏛️</div></button>
-      <button class="subj-card" style="background:linear-gradient(135deg,#5F5E5A,#2C2C2A)" onclick="showDetail('social')"><span class="lang">EN</span><span class="emoji">🌎</span><h3>Social Studies</h3><p>Nomadic people, Mayas, Aztecs, Incas</p><span class="date">Exam: Wed 29/04</span><div class="bg-ico">🌎</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#1D9E75,#0F6E56)" onclick="showDetail('science')"><span class="lang">EN</span><span class="emoji">🌿</span><h3>Science</h3><p>Food web, photosynthesis, producers &amp; consumers</p><span class="date">Revisão</span><div class="bg-ico">🌿</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#D4537E,#993556)" onclick="showDetail('portugues')"><span class="lang">PT</span><span class="emoji">✏️</span><h3>Língua Portuguesa</h3><p>Relato pessoal, sílabas, pronomes</p><span class="date">Revisão</span><div class="bg-ico">✏️</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#378ADD,#185FA5)" onclick="showDetail('ciencias')"><span class="lang">PT</span><span class="emoji">🗺️</span><h3>Ciências</h3><p>Biomas: Amazônia, Mata Atlântica, Cerrado, Caatinga</p><span class="date">Revisão</span><div class="bg-ico">🗺️</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#BA7517,#854F0B)" onclick="showDetail('matpt')"><span class="lang">PT</span><span class="emoji">🔢</span><h3>Matemática</h3><p>Números, operações, gráficos e situações-problema</p><span class="date">Revisão</span><div class="bg-ico">🔢</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#633806,#412402)" onclick="showDetail('mat')"><span class="lang">EN</span><span class="emoji">🔢</span><h3>Math</h3><p>Place value, time, quadrilaterals, word problems</p><span class="date">Revisão</span><div class="bg-ico">🔢</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#E24B4A,#A32D2D)" onclick="showDetail('la')"><span class="lang">EN</span><span class="emoji">📖</span><h3>Language Arts</h3><p>Adjectives, verb tenses, types of sentences</p><span class="date">Revisão</span><div class="bg-ico">📖</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#7F77DD,#534AB7)" onclick="showDetail('geohist')"><span class="lang">PT</span><span class="emoji">🏛️</span><h3>Geo &amp; História</h3><p>Tipos de mapas, influências indígenas</p><span class="date">Revisão</span><div class="bg-ico">🏛️</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#5F5E5A,#2C2C2A)" onclick="showDetail('social')"><span class="lang">EN</span><span class="emoji">🌎</span><h3>Social Studies</h3><p>Nomadic people, Mayas, Aztecs, Incas</p><span class="date">Revisão</span><div class="bg-ico">🌎</div></button>
     </div>
     <div id="dash-2tri" class="dash-grid" style="display:none">
-      <button class="subj-card" style="background:linear-gradient(135deg,#1D9E75,#085041)" onclick="goSim('science2')"><span class="lang">EN</span><span class="emoji">🔬</span><h3>Science</h3><p>Matter &amp; properties, states, physical/chemical, reversible/irreversible</p><span class="date">Exam: Mon 17/08</span><div class="bg-ico">🔬</div></button>
-      <button class="subj-card" style="background:linear-gradient(135deg,#D4537E,#993556)" onclick="goSim('portugues2')"><span class="lang">PT</span><span class="emoji">📚</span><h3>Língua Portuguesa</h3><p>Divulgação científica, artigos, concordância nominal</p><span class="date">Prova: ter 18/08</span><div class="bg-ico">📚</div></button>
-      <button class="subj-card" style="background:linear-gradient(135deg,#BA7517,#854F0B)" onclick="goSim('matematica2')"><span class="lang">PT</span><span class="emoji">🔢</span><h3>Matemática</h3><p>Milhões, mult/div por dezena, área e perímetro, medidas, gráficos</p><span class="date">Prova: qui 20/08</span><div class="bg-ico">🔢</div></button>
-      <button class="subj-card" style="background:linear-gradient(135deg,#5F5E5A,#2C2C2A)" onclick="goSim('social2')"><span class="lang">EN</span><span class="emoji">🌎</span><h3>Social Studies</h3><p>Age of exploration, trade routes, impacts, maps &amp; compass rose</p><span class="date">Exam: Mon 24/08</span><div class="bg-ico">🌎</div></button>
-      <button class="subj-card" style="background:linear-gradient(135deg,#7F77DD,#534AB7)" onclick="goSim('geohist2')"><span class="lang">PT</span><span class="emoji">🏛️</span><h3>História e Geografia</h3><p>Chegada dos portugueses, ciclos econômicos, influência africana, continentes e coordenadas</p><span class="date">Prova: qua 26/08</span><div class="bg-ico">🏛️</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#1D9E75,#085041)" onclick="goSim('science2')"><span class="lang">EN</span><span class="emoji">🔬</span><h3>Science</h3><p>Matter &amp; properties, states, physical/chemical, reversible/irreversible</p><span class="date">Revisão</span><div class="bg-ico">🔬</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#D4537E,#993556)" onclick="goSim('portugues2')"><span class="lang">PT</span><span class="emoji">📚</span><h3>Língua Portuguesa</h3><p>Divulgação científica, artigos, concordância nominal</p><span class="date">Revisão</span><div class="bg-ico">📚</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#BA7517,#854F0B)" onclick="goSim('matematica2')"><span class="lang">PT</span><span class="emoji">🔢</span><h3>Matemática</h3><p>Milhões, mult/div por dezena, área e perímetro, medidas, gráficos</p><span class="date">Revisão</span><div class="bg-ico">🔢</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#5F5E5A,#2C2C2A)" onclick="goSim('social2')"><span class="lang">EN</span><span class="emoji">🌎</span><h3>Social Studies</h3><p>Age of exploration, trade routes, impacts, maps &amp; compass rose</p><span class="date">Revisão</span><div class="bg-ico">🌎</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#7F77DD,#534AB7)" onclick="goSim('geohist2')"><span class="lang">PT</span><span class="emoji">🏛️</span><h3>História e Geografia</h3><p>Chegada dos portugueses, ciclos econômicos, influência africana, continentes e coordenadas</p><span class="date">Revisão</span><div class="bg-ico">🏛️</div></button>
       <button class="subj-card" style="background:linear-gradient(135deg,#E24B4A,#A32D2D)" onclick="goSim('la')"><span class="lang">EN</span><span class="emoji">📖</span><h3>Language Arts</h3><p>FANBOYS, antônimos, verbos irregulares, reading</p><span class="date">Revisão</span><div class="bg-ico">📖</div></button>
       <button class="subj-card" style="background:linear-gradient(135deg,#378ADD,#185FA5)" onclick="goSim('ciencias2')"><span class="lang">PT</span><span class="emoji">💧</span><h3>Ciências (água)</h3><p>Estados físicos da água, ciclo da água</p><span class="date">Revisão</span><div class="bg-ico">💧</div></button>
       <button class="subj-card" style="background:linear-gradient(135deg,#633806,#412402)" onclick="goSim('math2')"><span class="lang">EN</span><span class="emoji">🔢</span><h3>Math (junho)</h3><p>Word problems, symmetry, triangles, bar graph</p><span class="date">Revisão</span><div class="bg-ico">🔢</div></button>
+    </div>
+    <div id="dash-3tri" class="dash-grid" style="display:none">
+      <div class="tri-empty" style="grid-column:1/-1"><span class="ico">🚀</span><h3>3º trimestre a caminho</h3><p>As matérias e os simulados entram assim que o conteúdo do caderno e da apostila chegar.</p></div>
     </div>
   </div>
   <div id="dash-detail" style="display:none"></div>
@@ -2639,9 +2664,11 @@ function setTri(n){
   currentTri = n;
   document.getElementById('tri-1').classList.toggle('active', n===1);
   document.getElementById('tri-2').classList.toggle('active', n===2);
+  document.getElementById('tri-3').classList.toggle('active', n===3);
   // Painel
   document.getElementById('dash-1tri').style.display = (n===1)?'':'none';
   document.getElementById('dash-2tri').style.display = (n===2)?'':'none';
+  document.getElementById('dash-3tri').style.display = (n===3)?'':'none';
   hideDetail();
   // Limpa as navs para forçar rebuild filtrado por trimestre
   ['sim-nav','mind-nav','res-nav','qf'].forEach(function(id){
@@ -2710,10 +2737,10 @@ var CATS=[['all','Todas / All','#2C2C2A'],['science','🌿 Science','#1D9E75'],[
 function buildQF(){
   var w=document.getElementById('qf');
   var prog=document.querySelector('#quiz .prog-bar');
-  if(currentTri===2){
+  if(currentTri!==1){
     if(w){w.style.display='none';w.innerHTML='';}
     if(prog)prog.style.display='none';
-    document.getElementById('qbox').innerHTML=triEmptyHTML('🎯','Quiz do 2º trimestre em breve','O quiz rápido do 2º trimestre entra com o conteúdo de Ciências e Math. Por enquanto, treina nas provas pelos Simulados.');
+    document.getElementById('qbox').innerHTML=triEmptyHTML('🎯','Quiz do '+currentTri+'º trimestre em breve','O quiz rápido deste trimestre entra com o conteúdo do caderno. Por enquanto, treina pelos Simulados.');
     return;
   }
   if(w)w.style.display='';
@@ -2738,15 +2765,28 @@ function shuf(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i
 // Pergunta com noShuffle:true, tipo fill ou sem opts passa direto, sem mudança.
 var TAIL_RE=/^(both\b|neither\b|none of the\b|all of the\b|as duas\b|ambas\b|nenhum[a]?\b|todas as anteriores|todas as alternativas)/i;
 function prepQ(q){
-  if(!q||q.type==='fill'||!q.opts||q.noShuffle) return q;
-  var idx=q.opts.map(function(_,i){return i;});
-  var tail=idx.filter(function(i){return TAIL_RE.test(String(q.opts[i]).trim());});
-  var head=shuf(idx.filter(function(i){return tail.indexOf(i)<0;}));
-  var order=head.concat(tail);
+  if(!q||q.noShuffle) return q;
+  var t=q.type||'mc';
   var c={};for(var k in q)c[k]=q[k];
-  c.opts=order.map(function(i){return q.opts[i];});
-  c.a=order.indexOf(q.a);
-  return c;
+  if(t==='mc'||t==='multi'){
+    if(!q.opts) return q;
+    var idx=q.opts.map(function(_,i){return i;});
+    var tail=idx.filter(function(i){return TAIL_RE.test(String(q.opts[i]).trim());});
+    var head=shuf(idx.filter(function(i){return tail.indexOf(i)<0;}));
+    var order=head.concat(tail);
+    c.opts=order.map(function(i){return q.opts[i];});
+    if(t==='mc') c.a=order.indexOf(q.a);
+    else c.answers=q.answers.map(function(i){return order.indexOf(i);}).sort(function(x,y){return x-y;});
+    return c;
+  }
+  if(t==='vf'||t==='classify'){ c.items=shuf(q.items.slice()); return c; }
+  if(t==='match'){ var L=q.left.map(function(_,i){return i;}); c.lorder=shuf(L.slice()); c.rorder=shuf(q.right.map(function(_,i){return i;})); return c; }
+  if(t==='order'){
+    var n=q.items.map(function(_,i){return i;}), d=shuf(n.slice()), tries=0;
+    while(d.every(function(v,i){return v===i;}) && n.length>1 && tries++<20) d=shuf(n.slice());
+    c.disp=d; return c;
+  }
+  return q;
 }
 function renderQ(){
   document.getElementById('prog').style.width=Math.round(qi/cQ.length*100)+'%';
@@ -2815,7 +2855,7 @@ function buildMindNav(){
     nav.style.display='none'; if(hint)hint.style.display='none';
     if(!empty){empty=document.createElement('div');empty.id='mind-empty';document.getElementById('mind').appendChild(empty);}
     empty.style.display='';
-    empty.innerHTML=triEmptyHTML('🌿','Mapas do 2º trimestre em breve','Os mapas de Ciências e Math entram com as fotos do caderno. Por enquanto, treina nas provas pelos Simulados.');
+    empty.innerHTML=triEmptyHTML('🌿','Mapas do '+currentTri+'º trimestre em breve','Os mapas deste trimestre entram com o conteúdo do caderno. Por enquanto, treina pelos Simulados.');
     return;
   }
   if(empty)empty.style.display='none';
@@ -2847,7 +2887,7 @@ function buildResNav(){
   var list = RESUMOS.filter(function(r){return (r.tri||1)===currentTri;});
   if(!list.length){
     nav.style.display='none';
-    content.innerHTML=triEmptyHTML('📝','Resumos do 2º trimestre em breve','Os resumos de Ciências e Math entram com as fotos do caderno. Por enquanto, treina nas provas pelos Simulados.');
+    content.innerHTML=triEmptyHTML('📝','Resumos do '+currentTri+'º trimestre em breve','Os resumos deste trimestre entram com o conteúdo do caderno. Por enquanto, treina pelos Simulados.');
     return;
   }
   nav.style.display='';
@@ -2925,6 +2965,7 @@ function buildSimNav(){
     nav.appendChild(b);
   });
   if(list.length) loadSim(list[0].key);
+  else document.getElementById('sim-questions').innerHTML='<div class="tri-empty"><span class="ico">📋</span><h3>Simulados do '+currentTri+'º trimestre em breve</h3><p>Entram assim que o conteúdo do caderno e da apostila chegar.</p></div>';
 }
 
 function loadSim(key){
@@ -3020,7 +3061,7 @@ function renderSimQuestions(sub, subtopic){
   html += '<div class="exam-header" style="background:linear-gradient(135deg,'+color+','+darken(color)+')">';
   html += '<h2>'+sub.label+' — '+tLabel+'</h2>';
   html += '<p style="font-size:12px;opacity:.85">'+(lang==='pt'?'Selecione suas respostas e corrija no final':'Select your answers and check at the end')+'</p>';
-  html += '<span class="exam-score" id="sc-dynamic">— / '+questions.length+'</span></div>';
+  html += '<span class="exam-score" id="sc-dynamic">— / '+questions.filter(function(q){return q.type!=='short';}).length+'</span></div>';
 
   // Texto de contexto (reading comprehension)
   if(subtopic.ctxParas || subtopic.context){
@@ -3044,17 +3085,7 @@ function renderSimQuestions(sub, subtopic){
     html += '<div class="q-block" id="qblock-'+i+'">';
     html += '<div class="q-num">'+(lang==='pt'?'Questão':'Question')+' '+(i+1)+'</div>';
     html += '<div class="q-stem">'+escHtml(q.q)+'</div>';
-    if(q.type==='fill'){
-      html += '<div style="margin-top:10px"><input id="fin-'+i+'" type="text" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="'
-        +(lang==='pt'?'escreva a resposta...':'type your answer...')
-        +'" style="width:100%;box-sizing:border-box;padding:12px 14px;border:2px solid #e0ddd8;border-radius:12px;font-size:16px;font-weight:700;font-family:Nunito,sans-serif;color:#1a1a1a;background:#fff;outline:none" onfocus="this.style.borderColor=\''+color+'\'" onblur="this.style.borderColor=\'#e0ddd8\'"></div>';
-    } else {
-      html += '<div class="mc-opts">';
-      q.opts.forEach(function(opt,j){
-        html += '<button class="mc-opt" onclick="pickSimMC(this,'+i+','+j+')"><span class="mc-letter">'+letters[j]+'</span>'+escHtml(opt)+'</button>';
-      });
-      html += '</div>';
-    }
+    html += renderQBody(q,i,lang,color,letters);
     html += '<div class="q-fb" id="qfb-'+i+'"></div>';
     html += '</div>';
   });
@@ -3070,6 +3101,141 @@ function renderSimQuestions(sub, subtopic){
   var tmp = document.createElement('div');
   tmp.innerHTML = html;
   while(tmp.firstChild) wrap.appendChild(tmp.firstChild);
+}
+
+// ===== TIPOS DE PERGUNTA =====
+// mc | fill | vf | multi | order | match | classify | short
+var VF_LABELS={pt:['Verdadeiro','Falso'],en:['True','False']};
+function rowsSpec(q,lang){
+  if(q.type==='vf'){
+    var L=VF_LABELS[lang]||VF_LABELS.en;
+    return {mode:'chip',choices:L,disp:[0,1],rows:q.items.map(function(it){return {t:it.t,ok:it.v?0:1};})};
+  }
+  if(q.type==='classify'){
+    return {mode:'chip',choices:q.cats,disp:q.cats.map(function(_,i){return i;}),rows:q.items.map(function(it){return {t:it.t,ok:it.c};})};
+  }
+  // match: linha i da esquerda combina com right[i]
+  var lo=q.lorder||q.left.map(function(_,i){return i;});
+  return {mode:'select',choices:q.right,disp:q.rorder||q.right.map(function(_,i){return i;}),rows:lo.map(function(i){return {t:q.left[i],ok:i};})};
+}
+function renderQBody(q,i,lang,color,letters){
+  var pt=lang==='pt', h='', t=q.type||'mc';
+  if(t==='fill'){
+    return '<div style="margin-top:10px"><input id="fin-'+i+'" type="text" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="'
+      +(pt?'escreva a resposta...':'type your answer...')
+      +'" style="width:100%;box-sizing:border-box;padding:12px 14px;border:2px solid #e0ddd8;border-radius:12px;font-size:16px;font-weight:700;font-family:Nunito,sans-serif;color:#1a1a1a;background:#fff;outline:none" onfocus="this.style.borderColor=\''+color+'\'" onblur="this.style.borderColor=\'#e0ddd8\'"></div>';
+  }
+  if(t==='short'){
+    return '<textarea class="q-short" id="shn-'+i+'" placeholder="'+(pt?'escreva sua resposta...':'write your answer...')+'"></textarea><div id="shm-'+i+'"></div>';
+  }
+  if(t==='mc'||t==='multi'){
+    if(t==='multi') h+='<div class="q-hint">'+(pt?'Marque todas as corretas':'Select all that apply')+'</div>';
+    h+='<div class="mc-opts">';
+    q.opts.forEach(function(opt,j){
+      h+='<button class="mc-opt" onclick="'+(t==='multi'?'pickSimMulti':'pickSimMC')+'(this,'+i+','+j+')"><span class="mc-letter">'+letters[j]+'</span>'+escHtml(opt)+'</button>';
+    });
+    return h+'</div>';
+  }
+  if(t==='order'){
+    h+='<div class="q-hint">'+(pt?'Toque na ordem certa (toque de novo para desfazer)':'Tap in the right order (tap again to undo)')+'</div>';
+    q.disp.forEach(function(k){
+      h+='<button class="ord-btn" data-k="'+k+'" onclick="pickOrder(this,'+i+','+k+')"><span class="ord-n"></span>'+escHtml(q.items[k])+'</button>';
+    });
+    return h;
+  }
+  // vf | classify | match
+  var sp=rowsSpec(q,lang);
+  sp.rows.forEach(function(r,ri){
+    h+='<div class="chip-row"><div class="chip-t">'+escHtml(r.t)+'</div>';
+    if(sp.mode==='chip'){
+      h+='<div class="chip-g">';
+      sp.disp.forEach(function(c){ h+='<button class="chip" data-c="'+c+'" onclick="pickRow(this,'+i+','+ri+','+c+')">'+escHtml(sp.choices[c])+'</button>'; });
+      h+='</div>';
+    } else {
+      h+='<select class="q-sel" onchange="pickRowSel(this,'+i+','+ri+')"><option value="">'+(pt?'escolha...':'choose...')+'</option>';
+      sp.disp.forEach(function(c){ h+='<option value="'+c+'">'+escHtml(sp.choices[c])+'</option>'; });
+      h+='</select>';
+    }
+    h+='</div>';
+  });
+  return h;
+}
+function pickRow(el,qi,ri,c){
+  var g=el.parentElement; g.querySelectorAll('.chip').forEach(function(x){x.classList.remove('selected');});
+  el.classList.add('selected');
+  var a=simAnswers[qi]||(simAnswers[qi]=[]); a[ri]=c;
+}
+function pickRowSel(el,qi,ri){
+  var a=simAnswers[qi]||(simAnswers[qi]=[]); a[ri]=el.value===''?undefined:parseInt(el.value,10);
+}
+function pickSimMulti(el,qi,j){
+  var btn=el.closest('.mc-opt')||el; btn.classList.toggle('selected');
+  var a=simAnswers[qi]||(simAnswers[qi]=[]); var p=a.indexOf(j);
+  if(p>=0)a.splice(p,1); else a.push(j);
+}
+function pickOrder(el,qi,k){
+  var a=simAnswers[qi]||(simAnswers[qi]=[]); var p=a.indexOf(k);
+  if(p>=0)a.splice(p,1); else a.push(k);
+  el.parentElement.querySelectorAll('.ord-btn').forEach(function(b){
+    var pos=a.indexOf(parseInt(b.dataset.k,10));
+    b.classList.toggle('selected',pos>=0);
+    b.querySelector('.ord-n').textContent=pos>=0?(pos+1):'';
+  });
+}
+// Corrige uma pergunta de tipo novo. Devolve fração 0..1 (null = não pontua, ex.: short).
+function gradeQ(q,i,lang,fb){
+  var pt=lang==='pt', t=q.type, blk=document.getElementById('qblock-'+i), ans=simAnswers[i], f=0;
+  function say(ok,txt){ if(fb){fb.className='q-fb show '+(ok?'ok':'bad');fb.textContent=(ok?'✅ ':'❌ ')+txt;} }
+  if(t==='short'){
+    var ta=document.getElementById('shn-'+i), m=document.getElementById('shm-'+i);
+    if(ta)ta.disabled=true;
+    if(m)m.innerHTML='<div class="q-model">'+(pt?'📝 Resposta modelo: ':'📝 Model answer: ')+escHtml(q.model||'')+'</div>';
+    if(fb){fb.className='q-fb show ok';fb.textContent='💡 '+(pt?'Compare com a sua e corrija você mesma. ':'Compare with yours and check it yourself. ')+(q.exp||'');}
+    return null;
+  }
+  if(t==='multi'){
+    var opts=blk.querySelectorAll('.mc-opt'), pick=ans||[], good=0, bad=0;
+    q.opts.forEach(function(_,j){
+      var isR=q.answers.indexOf(j)>=0, isP=pick.indexOf(j)>=0;
+      if(isR&&isP)good++; if(!isR&&isP)bad++;
+      opts[j].classList.remove('selected');
+      if(isR)opts[j].classList.add('correct'); else if(isP)opts[j].classList.add('wrong');
+    });
+    f=Math.max(0,(good-bad)/q.answers.length);
+    say(f===1,(f===1?'':(pt?'Certas: ':'Correct: ')+q.answers.map(function(j){return ['A','B','C','D','E','F'][j];}).join(', ')+'. ')+q.exp);
+    return f;
+  }
+  if(t==='order'){
+    var pickd=ans||[], btns=blk.querySelectorAll('.ord-btn'), n=q.items.length, ok=0;
+    for(var k=0;k<n;k++){ if(pickd[k]===k)ok++; }
+    btns.forEach(function(b){
+      var kk=parseInt(b.dataset.k,10), pos=pickd.indexOf(kk);
+      b.classList.remove('selected');
+      b.querySelector('.ord-n').textContent=kk+1;
+      b.classList.add(pos===kk?'correct':'wrong');
+    });
+    f=ok/n;
+    say(f===1,(f===1?'':(pt?'A ordem certa está nos números. ':'The right order is in the numbers. '))+q.exp);
+    return f;
+  }
+  // vf | classify | match
+  var sp=rowsSpec(q,lang), rows=blk.querySelectorAll('.chip-row'), ok2=0, pk=ans||[];
+  sp.rows.forEach(function(r,ri){
+    var row=rows[ri], good=pk[ri]===r.ok;
+    if(good)ok2++;
+    if(sp.mode==='chip'){
+      row.querySelectorAll('.chip').forEach(function(c){
+        var cv=parseInt(c.dataset.c,10); c.classList.remove('selected');
+        if(cv===r.ok)c.classList.add('correct'); else if(cv===pk[ri])c.classList.add('wrong');
+      });
+    } else {
+      var sel=row.querySelector('select'); sel.disabled=true; sel.classList.add(good?'correct':'wrong');
+      if(!good){ var sp2=document.createElement('span'); sp2.className='chip-t'; sp2.style.flex='0 0 100%'; sp2.style.color='var(--green-d)'; sp2.textContent='→ '+sp.choices[r.ok]; row.appendChild(sp2); }
+    }
+  });
+  f=ok2/sp.rows.length;
+  say(f===1,(f===1?'':ok2+'/'+sp.rows.length+' '+(pt?'certas. ':'correct. '))+q.exp);
+  return f;
 }
 
 function normAns(s){
@@ -3089,12 +3255,16 @@ function pickSimMC(el,qIdx,optIdx){
 
 function checkDynamicSim(){
   var score=0;
-  var total=simQuestions.length;
+  var total=simQuestions.filter(function(q){return q.type!=='short';}).length;
   var sub=SIMS.find(function(s){return s.key===currentSimKey;});
   var lang=sub?sub.lang:'en';
 
   simQuestions.forEach(function(q,i){
     var fb=document.getElementById('qfb-'+i);
+    var blkEl=document.getElementById('qblock-'+i); if(blkEl)blkEl.classList.add('done');
+    if(q.type && q.type!=='mc' && q.type!=='fill'){
+      var fr=gradeQ(q,i,lang,fb); if(fr!==null)score+=fr; return;
+    }
     var opts=document.querySelectorAll('#qblock-'+i+' .mc-opt');
     var chosen=simAnswers[i];
     var correct=q.a;
@@ -3128,7 +3298,8 @@ function checkDynamicSim(){
     }
   });
 
-  var pct=Math.round(score/total*100);
+  score=Math.round(score*10)/10;
+  var pct=total?Math.round(score/total*100):100;
   var rb=document.getElementById('rb-dynamic');
   var rh=document.getElementById('rb-dynamic-h');
   var rp=document.getElementById('rb-dynamic-p');
