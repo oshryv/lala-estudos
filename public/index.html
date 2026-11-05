@@ -208,7 +208,14 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <button class="subj-card" style="background:linear-gradient(135deg,#633806,#412402)" onclick="goSim('math2')"><span class="lang">EN</span><span class="emoji">🔢</span><h3>Math (junho)</h3><p>Word problems, symmetry, triangles, bar graph</p><span class="date">Revisão</span><div class="bg-ico">🔢</div></button>
     </div>
     <div id="dash-3tri" class="dash-grid" style="display:none">
-      <div class="tri-empty" style="grid-column:1/-1"><span class="ico">🚀</span><h3>3º trimestre a caminho</h3><p>As matérias e os simulados entram assim que o conteúdo do caderno e da apostila chegar.</p></div>
+      <button class="subj-card" style="background:linear-gradient(135deg,#5F5E5A,#2C2C2A)" onclick="goSim('social3')"><span class="lang">EN</span><span class="emoji">🌎</span><h3>Social Studies</h3><p>Marketplaces and economic systems; communities (urban, suburban, rural); economic sectors</p><span class="date">Exam: Mon 09/11</span><div class="bg-ico">🌎</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#378ADD,#185FA5)" onclick="goSim('ciencias3')"><span class="lang">PT</span><span class="emoji">🦠</span><h3>Ciências</h3><p>Microrganismos (apostila págs 2 a 17)</p><span class="date">Prova: qua 11/11</span><div class="bg-ico">🦠</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#1D9E75,#085041)" onclick="goSim('science3')"><span class="lang">EN</span><span class="emoji">🔬</span><h3>Science</h3><p>Microorganisms, infectious diseases</p><span class="date">Exam: Wed 11/11</span><div class="bg-ico">🔬</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#D4537E,#993556)" onclick="goSim('portugues3')"><span class="lang">PT</span><span class="emoji">📚</span><h3>Língua Portuguesa</h3><p>Lendas brasileiras, tempos verbais, concordância, aposto e vocativo, grafia</p><span class="date">Prova: qui 12/11</span><div class="bg-ico">📚</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#E24B4A,#A32D2D)" onclick="goSim('la3')"><span class="lang">EN</span><span class="emoji">📖</span><h3>Language Arts</h3><p>Adverbs, tenses, relative pronouns, reading comprehension</p><span class="date">Exam: Tue 17/11</span><div class="bg-ico">📖</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#BA7517,#854F0B)" onclick="goSim('matematica3')"><span class="lang">PT</span><span class="emoji">🔢</span><h3>Matemática</h3><p>Multiplicação e divisão por dezena, valor posicional, frações, tabelas e gráficos</p><span class="date">Prova: qui 19/11</span><div class="bg-ico">🔢</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#7F77DD,#534AB7)" onclick="goSim('geohist3')"><span class="lang">PT</span><span class="emoji">🏛️</span><h3>História e Geografia</h3><p>Influência indígena e africana na cultura brasileira; formação territorial (geografia humana)</p><span class="date">Prova: seg 23/11</span><div class="bg-ico">🏛️</div></button>
+      <button class="subj-card" style="background:linear-gradient(135deg,#633806,#412402)" onclick="goSim('math3')"><span class="lang">EN</span><span class="emoji">📐</span><h3>Math</h3><p>Angles with a protractor, sketching angles, ruler (mm, cm), four operations in measurement problems</p><span class="date">Exam: Tue 24/11</span><div class="bg-ico">📐</div></button>
     </div>
   </div>
   <div id="dash-detail" style="display:none"></div>
@@ -2654,6 +2661,16 @@ var SIMS=[
       {type:'fill', q:"O estado de São Paulo fica na região ______.", accept:["sudeste"], exp:"Capital São Paulo, sigla SP, 645 municípios."}
      ]}
   ]},
+  // ===== 3º TRIMESTRE (agenda do Guia de Estudos; perguntas entram depois) =====
+  {key:"social3",tri:3,label:"Social Studies",color:"#5F5E5A",lang:"en",exam:"2026-11-09",pending:true,topicsList:["Marketplaces and economic systems", "Communities: urban, suburban and rural", "Economic sectors"],subtopics:[]},
+  {key:"ciencias3",tri:3,label:"Ciências",color:"#378ADD",lang:"pt",exam:"2026-11-11",pending:true,topicsList:["Microrganismos (apostila do 3º tri, págs 2 a 17)"],subtopics:[]},
+  {key:"science3",tri:3,label:"Science",color:"#1D9E75",lang:"en",exam:"2026-11-11",pending:true,topicsList:["Microorganisms", "Infectious diseases"],subtopics:[]},
+  {key:"portugues3",tri:3,label:"Língua Portuguesa",color:"#D4537E",lang:"pt",exam:"2026-11-12",pending:true,topicsList:["Gênero: lendas brasileiras, leitura e interpretação, características do gênero", "Tempos verbais: presente, passado e futuro", "Concordância nominal e verbal", "Aposto e vocativo", "Grafia correta dos verbos terminados em AM/ÃO", "Grafia correta das palavras terminadas em L e U"],subtopics:[]},
+  {key:"la3",tri:3,label:"Language Arts",color:"#E24B4A",lang:"en",exam:"2026-11-17",pending:true,topicsList:["Adverbs: time, place, manner and frequency", "Past, present and future tenses", "Relative pronouns: that, who, when, where, what", "Reading comprehension"],subtopics:[]},
+  {key:"matematica3",tri:3,label:"Matemática",color:"#BA7517",lang:"pt",exam:"2026-11-19",pending:true,topicsList:["Algoritmo da multiplicação e da divisão por dezena", "Valor posicional", "Representação de números fracionários", "Situações-problema com as 4 operações e com frações", "Situações-problema em tabelas e gráficos de colunas e barras"],subtopics:[]},
+  {key:"geohist3",tri:3,label:"História e Geografia",color:"#7F77DD",lang:"pt",exam:"2026-11-23",pending:true,topicsList:["História: influência dos povos indígenas e africanos na cultura brasileira (apostila págs 20 a 37)", "Geografia: elementos étnico-culturais que contribuíram para a formação territorial do Brasil, geografia humana (apostila págs 39 a 55)"],subtopics:[]},
+  {key:"math3",tri:3,label:"Math",color:"#633806",lang:"en",exam:"2026-11-24",pending:true,topicsList:["Angle measurement using a protractor: acute, right and obtuse", "Sketching angles of specific measure", "Measurement data with a ruler (mm and cm)", "The four operations to solve problems with distances and masses of objects"],subtopics:[]}
+
 ];
 </script>
 
