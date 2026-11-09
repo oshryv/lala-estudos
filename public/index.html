@@ -164,6 +164,35 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .res-tips h4{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;opacity:.6}
 .res-tip{padding:10px 12px;border-radius:10px;margin-bottom:7px;font-size:13px;line-height:1.55;font-weight:600}
 .res-tip:last-child{margin-bottom:0}
+.print-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:20px;font-size:12px;font-weight:800;cursor:pointer;border:2px solid var(--border);background:var(--card);font-family:'Nunito',sans-serif;color:var(--text);margin:0 0 10px auto}
+.print-row{display:flex;justify-content:flex-end}
+/* ===== IMPRESSÃO EM PRETO E BRANCO (mapa mental e resumos) ===== */
+@media print{
+  @page{size:A4;margin:10mm}
+  html,body{background:#fff!important;color:#000!important}
+  body > *:not(.screen){display:none!important}
+  .screen:not(.active){display:none!important}
+  .screen{padding:0!important;max-width:none!important}
+  .print-row,.mind-nav,.mind-hint,.res-nav{display:none!important}
+  /* mapa mental */
+  #mind .mind-map{display:none!important}
+  #mind .mind-map.active{display:block!important;border:none!important;padding:0!important;background:#fff!important;overflow:visible!important}
+  #mind .mind-map svg{width:100%!important;height:auto!important;max-height:272mm!important;filter:grayscale(1) contrast(1.15)}
+  #mind .mind-map svg rect,#mind .mind-map svg circle,#mind .mind-map svg ellipse{fill:#fff!important;stroke:#000!important;stroke-width:1.4!important;opacity:1!important}
+  #mind .mind-map svg rect[opacity]{fill:#e6e6e6!important;stroke:none!important}
+  #mind .mind-map svg text{fill:#000!important}
+  #mind .mind-map svg line,#mind .mind-map svg path{stroke:#000!important;opacity:1!important}
+  /* resumos */
+  #res-content *{color:#000!important;background:#fff!important;box-shadow:none!important;text-shadow:none!important}
+  #res-content .res-header{border:2px solid #000!important;border-radius:12px}
+  #res-content .res-summary,#res-content .res-tips{border:1.5px solid #000!important;border-left-width:5px!important}
+  #res-content .res-summary h4,#res-content .res-tips h4{opacity:1!important}
+  #res-content .res-tip{border:1px solid #777!important;break-inside:avoid}
+  #res-content .res-summary div{break-inside:avoid}
+  #res-content span[style*="border-radius"]{border:1px solid #000!important}
+  #res-content svg{filter:grayscale(1) contrast(1.15)}
+  #res-content svg *{color:initial!important;background:none!important}
+}
 </style>
 </head>
 <body>
@@ -234,6 +263,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   </style>
 
   <div class="mind-nav" id="mind-nav"></div>
+  <div class="print-row"><button class="print-btn" onclick="window.print()">🖨️ Imprimir mapa (preto e branco)</button></div>
   <p class="mind-hint">💡 Role para os lados se o mapa for grande</p>
 
   <!-- SCIENCE -->
@@ -1552,6 +1582,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 <!-- ===== RESUMOS ===== -->
 <div class="screen" id="res">
   <div class="res-nav" id="res-nav"></div>
+  <div class="print-row"><button class="print-btn" onclick="window.print()">🖨️ Imprimir resumo (preto e branco)</button></div>
   <div id="res-content"></div>
 </div>
 
