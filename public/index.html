@@ -3960,6 +3960,7 @@ function renderSimQuestions(sub, subtopic){
     html += '<div class="q-block" id="qblock-'+i+'">';
     html += '<div class="q-num">'+(lang==='pt'?'Questão':'Question')+' '+(i+1)+'</div>';
     html += '<div class="q-stem">'+escHtml(q.q)+'</div>';
+    if(q.svg) html += '<div class="q-fig" style="margin:2px 0 14px;text-align:center;overflow-x:auto">'+q.svg+'</div>';
     html += renderQBody(q,i,lang,color,letters);
     html += '<div class="q-fb" id="qfb-'+i+'"></div>';
     html += '</div>';
